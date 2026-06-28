@@ -41,4 +41,28 @@ public sealed class LengthTests
 
         Assert.That(length, Is.EqualTo(Length.FromMillimeters(50.8)));
     }
+
+    [Test]
+    public void Millimeters_ShouldReturnMillimeterValue()
+    {
+        var length = Length.FromMillimeters(12.5);
+
+        Assert.That(length.Millimeters, Is.EqualTo(12.5));
+    }
+
+    [Test]
+    public void Millimeters_ShouldReturnConvertedCentimeterValue()
+    {
+        var length = Length.FromCentimeters(2.5);
+
+        Assert.That(length.Millimeters, Is.EqualTo(25.0));
+    }
+
+    [Test]
+    public void Millimeters_ShouldReturnConvertedInchValue()
+    {
+        var length = Length.FromInches(2.0);
+
+        Assert.That(length.Millimeters, Is.EqualTo(50.8));
+    }
 }

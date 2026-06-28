@@ -12,6 +12,8 @@ public readonly record struct Length
         _millimeters = millimeters;
     }
 
+    public double Millimeters => _millimeters;
+
     public static Length FromMillimeters(double millimeters)
     {
         return new Length(millimeters);
