@@ -66,4 +66,33 @@ public sealed class ParameterSetTests
 
         Assert.That(result, Is.Null);
     }
+
+    [Test]
+    public void FindByName_WithExistingName_ShouldReturnParameter()
+    {
+        var parameter = new Parameter(new ParameterId("Width"), "Width", ParameterType.Number, 120.0);
+        var parameterSet = new ParameterSet([parameter]);
+
+        var result = parameterSet.FindByName("Width");
+
+        Assert.That(result, Is.SameAs(parameter));
+    }
+
+    [Test]
+    public void FindByName_WithMissingName_ShouldReturnNull()
+    {
+        var parameterSet = new ParameterSet();
+
+        var result = parameterSet.FindByName("Width");
+
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public void FindByName_WithEmptyName_ShouldThrow()
+    {
+        var parameterSet = new ParameterSet();
+
+        Assert.Throws<ArgumentException>(() => _ = parameterSet.FindByName(""));
+    }
 }

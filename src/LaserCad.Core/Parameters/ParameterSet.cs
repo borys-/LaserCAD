@@ -28,6 +28,16 @@ public sealed class ParameterSet
         return _parameters.FirstOrDefault(parameter => parameter.Id == id);
     }
 
+    public Parameter? FindByName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new ArgumentException("Parameter name cannot be empty.", nameof(name));
+        }
+
+        return _parameters.FirstOrDefault(parameter => parameter.Name == name);
+    }
+
     public ParameterSet Add(Parameter parameter)
     {
         ArgumentNullException.ThrowIfNull(parameter);

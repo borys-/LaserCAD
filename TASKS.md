@@ -105,7 +105,7 @@ Zalecenie pracy:
 - [x] 0.5.8 Dodac walidacje wartosci parametru.
 - [x] 0.5.9 Dodac kolekcje `ParameterSet`.
 - [x] 0.5.10 Dodac wyszukiwanie parametru po id.
-- [ ] 0.5.11 Dodac wyszukiwanie parametru po nazwie.
+- [x] 0.5.11 Dodac wyszukiwanie parametru po nazwie.
 - [ ] 0.5.12 Dodac aktualizacje wartosci parametru.
 - [ ] 0.5.13 Dodac testy tworzenia parametrow.
 - [ ] 0.5.14 Dodac testy walidacji minimum i maksimum.
