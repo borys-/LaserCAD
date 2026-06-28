@@ -25,4 +25,12 @@ public sealed class LengthTests
 
         Assert.That(length, Is.Not.EqualTo(Length.FromMillimeters(10.0)));
     }
+
+    [Test]
+    public void FromCentimeters_ShouldCreateEquivalentMillimeterLength()
+    {
+        var length = Length.FromCentimeters(2.5);
+
+        Assert.That(length, Is.EqualTo(Length.FromMillimeters(25.0)));
+    }
 }

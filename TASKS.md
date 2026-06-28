@@ -54,7 +54,7 @@ Zalecenie pracy:
 
 - [x] 0.3.0 Utworzyc typ `Length`.
 - [x] 0.3.1 Dodac fabryke `Length.FromMillimeters`.
-- [ ] 0.3.2 Dodac fabryke `Length.FromCentimeters`.
+- [x] 0.3.2 Dodac fabryke `Length.FromCentimeters`.
 - [ ] 0.3.3 Dodac fabryke `Length.FromInches`.
 - [ ] 0.3.4 Dodac wlasciwosc `Millimeters`.
 - [ ] 0.3.5 Dodac operatory dodawania i odejmowania `Length`.
