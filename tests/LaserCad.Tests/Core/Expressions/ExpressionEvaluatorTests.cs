@@ -106,4 +106,25 @@ public sealed class ExpressionEvaluatorTests
         Assert.That(result.IsSuccess, Is.True);
         Assert.That(result.Value, Is.EqualTo(94.0));
     }
+
+    [Test]
+    public void Evaluate_AfterParameterUpdate_ShouldReturnUpdatedResult()
+    {
+        var evaluator = new ExpressionEvaluator();
+        var parameters = new ParameterSet([
+            new Parameter(new ParameterId("Width"), "Width", ParameterType.Length, Length.FromMillimeters(100.0)),
+            new Parameter(new ParameterId("MaterialThickness"), "Material thickness", ParameterType.Length, Length.FromMillimeters(3.0))
+        ]);
+        var expression = ExpressionFactory.Subtract(
+            ExpressionFactory.Parameter(new ParameterId("Width")),
+            ExpressionFactory.Multiply(
+                ExpressionFactory.Constant(2.0),
+                ExpressionFactory.Parameter(new ParameterId("MaterialThickness"))));
+
+        var updatedParameters = parameters.UpdateValue(new ParameterId("Width"), Length.FromMillimeters(120.0));
+        var result = evaluator.Evaluate(expression, updatedParameters);
+
+        Assert.That(result.IsSuccess, Is.True);
+        Assert.That(result.Value, Is.EqualTo(114.0));
+    }
 }
