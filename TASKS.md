@@ -117,7 +117,7 @@ Zalecenie pracy:
 - [x] 0.6.1 Utworzyc reprezentacje `Expression`.
 - [x] 0.6.2 Dodac wyrazenie stale.
 - [x] 0.6.3 Dodac wyrazenie referencji do parametru.
-- [ ] 0.6.4 Dodac operacje dodawania.
+- [x] 0.6.4 Dodac operacje dodawania.
 - [ ] 0.6.5 Dodac operacje odejmowania.
 - [ ] 0.6.6 Dodac operacje mnozenia.
 - [ ] 0.6.7 Dodac operacje dzielenia.
