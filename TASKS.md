@@ -119,7 +119,7 @@ Zalecenie pracy:
 - [x] 0.6.3 Dodac wyrazenie referencji do parametru.
 - [x] 0.6.4 Dodac operacje dodawania.
 - [x] 0.6.5 Dodac operacje odejmowania.
-- [ ] 0.6.6 Dodac operacje mnozenia.
+- [x] 0.6.6 Dodac operacje mnozenia.
 - [ ] 0.6.7 Dodac operacje dzielenia.
 - [ ] 0.6.8 Dodac ewaluator wyrazen.
 - [ ] 0.6.9 Dodac obsluge brakujacego parametru.

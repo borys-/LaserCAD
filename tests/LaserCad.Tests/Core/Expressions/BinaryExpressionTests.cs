@@ -39,4 +39,15 @@ public sealed class BinaryExpressionTests
 
         Assert.That(expression.OperatorKind, Is.EqualTo(BinaryOperator.Subtract));
     }
+
+    [Test]
+    public void Constructor_ForMultiply_ShouldStoreOperator()
+    {
+        var expression = new BinaryExpression(
+            new ConstantExpression(5.0),
+            BinaryOperator.Multiply,
+            new ConstantExpression(2.0));
+
+        Assert.That(expression.OperatorKind, Is.EqualTo(BinaryOperator.Multiply));
+    }
 }

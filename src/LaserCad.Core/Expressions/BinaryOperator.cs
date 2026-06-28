@@ -3,5 +3,6 @@ namespace LaserCad.Core.Expressions;
 public enum BinaryOperator
 {
     Add,
-    Subtract
+    Subtract,
+    Multiply
 }
