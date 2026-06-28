@@ -103,4 +103,20 @@ public sealed class DependencyGraphTests
 
         Assert.That(affectedParameters, Is.EquivalentTo(new[] { innerWidth, area }));
     }
+
+    [Test]
+    public void GetRecalculationOrder_ForSimpleDependencyChain_ShouldReturnChainOrder()
+    {
+        var graph = new DependencyGraph();
+        var width = new ParameterId("Width");
+        var innerWidth = new ParameterId("InnerWidth");
+        var area = new ParameterId("Area");
+
+        graph.AddDependency(innerWidth, width);
+        graph.AddDependency(area, innerWidth);
+
+        var order = graph.GetRecalculationOrder(width);
+
+        Assert.That(order, Is.EqualTo(new[] { innerWidth, area }));
+    }
 }
