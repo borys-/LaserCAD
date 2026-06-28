@@ -26,3 +26,13 @@ Repozytorium zdalne:
 
 - [docs/ROADMAP.md](docs/ROADMAP.md) - ogolna roadmapa produktu.
 - [TASKS.md](TASKS.md) - szczegolowa lista taskow implementacyjnych.
+
+## Testy
+
+Docelowo testy beda uruchamiane komenda:
+
+```bash
+dotnet test LaserCad.sln
+```
+
+Komenda zacznie wykonywac testy po dodaniu projektow testowych do solution.
