@@ -16,6 +16,8 @@ Po kazdym tasku zaakceptowanym przez uzytkownika nalezy wykonac osobny commit i 
 
 Jeden task z `TASKS.md` powinien odpowiadac jednemu commitowi, chyba ze uzytkownik wyraznie zdecyduje inaczej.
 
+Wiadomosc commita powinna zaczynac sie od numeru taska, np. `0.0.8 Add test instructions`.
+
 Repozytorium zdalne:
 
 - `origin`: `https://github.com/borys-/LaserCAD.git`
