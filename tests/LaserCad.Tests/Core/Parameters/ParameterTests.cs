@@ -59,4 +59,30 @@ public sealed class ParameterTests
 
         Assert.That(parameter.DisplayUnit, Is.Null);
     }
+
+    [Test]
+    public void Constructor_ShouldStoreMinimumValue()
+    {
+        var parameter = new Parameter(
+            new ParameterId("Width"),
+            "Width",
+            ParameterType.Number,
+            120.0,
+            minimumValue: 10.0);
+
+        Assert.That(parameter.MinimumValue, Is.EqualTo(10.0));
+    }
+
+    [Test]
+    public void Constructor_ShouldStoreMaximumValue()
+    {
+        var parameter = new Parameter(
+            new ParameterId("Width"),
+            "Width",
+            ParameterType.Number,
+            120.0,
+            maximumValue: 200.0);
+
+        Assert.That(parameter.MaximumValue, Is.EqualTo(200.0));
+    }
 }

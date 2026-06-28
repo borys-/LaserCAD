@@ -2,7 +2,14 @@ namespace LaserCad.Core.Parameters;
 
 public sealed class Parameter
 {
-    public Parameter(ParameterId id, string name, ParameterType type, object? value, string? displayUnit = null)
+    public Parameter(
+        ParameterId id,
+        string name,
+        ParameterType type,
+        object? value,
+        string? displayUnit = null,
+        object? minimumValue = null,
+        object? maximumValue = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -14,6 +21,8 @@ public sealed class Parameter
         Type = type;
         Value = value;
         DisplayUnit = displayUnit;
+        MinimumValue = minimumValue;
+        MaximumValue = maximumValue;
     }
 
     public ParameterId Id { get; }
@@ -25,4 +34,8 @@ public sealed class Parameter
     public object? Value { get; }
 
     public string? DisplayUnit { get; }
+
+    public object? MinimumValue { get; }
+
+    public object? MaximumValue { get; }
 }
