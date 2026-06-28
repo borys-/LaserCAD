@@ -33,4 +33,18 @@ public sealed class DependencyGraphTests
 
         Assert.That(dependencies, Is.Empty);
     }
+
+    [Test]
+    public void GetRecalculationOrder_ForChangedDependency_ShouldReturnDependentParameter()
+    {
+        var graph = new DependencyGraph();
+        var width = new ParameterId("Width");
+        var innerWidth = new ParameterId("InnerWidth");
+
+        graph.AddDependency(innerWidth, width);
+
+        var order = graph.GetRecalculationOrder(width);
+
+        Assert.That(order, Is.EqualTo(new[] { innerWidth }));
+    }
 }
