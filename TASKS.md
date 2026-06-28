@@ -114,7 +114,7 @@ Zalecenie pracy:
 ## 0.6 Wyrazenia parametryczne
 
 - [x] 0.6.0 Ustalic minimalna skladnie wyrazen, np. `Width - 2 * MaterialThickness`.
-- [ ] 0.6.1 Utworzyc reprezentacje `Expression`.
+- [x] 0.6.1 Utworzyc reprezentacje `Expression`.
 - [ ] 0.6.2 Dodac wyrazenie stale.
 - [ ] 0.6.3 Dodac wyrazenie referencji do parametru.
 - [ ] 0.6.4 Dodac operacje dodawania.
