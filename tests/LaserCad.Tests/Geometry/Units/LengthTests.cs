@@ -192,4 +192,28 @@ public sealed class LengthTests
 
         Assert.That(length >= other, Is.True);
     }
+
+    [Test]
+    public void ToString_ShouldFormatValueInMillimeters()
+    {
+        var length = Length.FromMillimeters(12.5);
+
+        Assert.That(length.ToString(), Is.EqualTo("12.5 mm"));
+    }
+
+    [Test]
+    public void ToString_ShouldUseInvariantCultureByDefault()
+    {
+        var length = Length.FromMillimeters(12.5);
+
+        Assert.That(length.ToString(), Does.Contain("."));
+    }
+
+    [Test]
+    public void ToString_WithFormat_ShouldFormatValueInMillimeters()
+    {
+        var length = Length.FromMillimeters(12.3456);
+
+        Assert.That(length.ToString("0.00", null), Is.EqualTo("12.35 mm"));
+    }
 }

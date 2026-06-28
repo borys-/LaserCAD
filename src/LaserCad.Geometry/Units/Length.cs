@@ -1,8 +1,9 @@
+using System.Globalization;
 using LaserCad.Geometry;
 
 namespace LaserCad.Geometry.Units;
 
-public readonly record struct Length : IComparable<Length>
+public readonly record struct Length : IComparable<Length>, IFormattable
 {
     private const double MillimetersPerCentimeter = 10.0;
     private const double MillimetersPerInch = 25.4;
@@ -49,6 +50,18 @@ public readonly record struct Length : IComparable<Length>
         }
 
         return _millimeters < other._millimeters ? -1 : 1;
+    }
+
+    public override string ToString()
+    {
+        return ToString("0.###", CultureInfo.InvariantCulture);
+    }
+
+    public string ToString(string? format, IFormatProvider? formatProvider)
+    {
+        var value = _millimeters.ToString(format ?? "0.###", formatProvider ?? CultureInfo.InvariantCulture);
+
+        return $"{value} mm";
     }
 
     public static Length operator +(Length left, Length right)
