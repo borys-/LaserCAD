@@ -59,4 +59,15 @@ public sealed class ExpressionEvaluatorTests
         Assert.That(result.IsSuccess, Is.True);
         Assert.That(result.Value, Is.EqualTo(16.0));
     }
+
+    [Test]
+    public void Evaluate_WithMissingParameter_ShouldReturnReadableError()
+    {
+        var evaluator = new ExpressionEvaluator();
+
+        var result = evaluator.Evaluate(new ParameterReferenceExpression(new ParameterId("Width")), new ParameterSet());
+
+        Assert.That(result.IsSuccess, Is.False);
+        Assert.That(result.Error, Is.EqualTo("Parameter 'Width' was not found."));
+    }
 }
