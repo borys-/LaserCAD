@@ -100,4 +100,24 @@ public sealed class CadDocumentTests
         Assert.That(updatedDocument.Parameters.FindById(new ParameterId("Width")), Is.SameAs(parameter));
         Assert.That(document.Parameters.Parameters, Is.Empty);
     }
+
+    [Test]
+    public void Constructor_ShouldCreateEmptyLayerCollection()
+    {
+        var document = new CadDocument();
+
+        Assert.That(document.Layers, Is.Empty);
+    }
+
+    [Test]
+    public void AddLayer_ShouldReturnDocumentWithAddedLayer()
+    {
+        var document = new CadDocument();
+        var layer = new Layer("Cut");
+
+        var updatedDocument = document.AddLayer(layer);
+
+        Assert.That(updatedDocument.Layers, Is.EqualTo(new[] { layer }));
+        Assert.That(document.Layers, Is.Empty);
+    }
 }

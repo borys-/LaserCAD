@@ -8,7 +8,8 @@ public sealed class CadDocument
         Guid? id = null,
         string name = "Untitled",
         int formatVersion = 1,
-        ParameterSet? parameters = null)
+        ParameterSet? parameters = null,
+        IEnumerable<Layer>? layers = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -24,6 +25,12 @@ public sealed class CadDocument
         Name = name;
         FormatVersion = formatVersion;
         Parameters = parameters ?? new ParameterSet();
+        Layers = layers?.ToArray() ?? Array.Empty<Layer>();
+
+        if (Layers.Any(layer => layer is null))
+        {
+            throw new ArgumentException("Document layers cannot contain null values.", nameof(layers));
+        }
 
         if (Id == Guid.Empty)
         {
@@ -39,8 +46,17 @@ public sealed class CadDocument
 
     public ParameterSet Parameters { get; }
 
+    public IReadOnlyList<Layer> Layers { get; }
+
     public CadDocument AddParameter(Parameter parameter)
     {
-        return new CadDocument(Id, Name, FormatVersion, Parameters.Add(parameter));
+        return new CadDocument(Id, Name, FormatVersion, Parameters.Add(parameter), Layers);
+    }
+
+    public CadDocument AddLayer(Layer layer)
+    {
+        ArgumentNullException.ThrowIfNull(layer);
+
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers.Append(layer));
     }
 }
