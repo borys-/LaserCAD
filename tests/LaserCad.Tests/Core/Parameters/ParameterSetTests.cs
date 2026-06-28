@@ -95,4 +95,33 @@ public sealed class ParameterSetTests
 
         Assert.Throws<ArgumentException>(() => _ = parameterSet.FindByName(""));
     }
+
+    [Test]
+    public void UpdateValue_WithExistingId_ShouldReturnSetWithUpdatedValue()
+    {
+        var parameter = new Parameter(new ParameterId("Width"), "Width", ParameterType.Number, 120.0);
+        var parameterSet = new ParameterSet([parameter]);
+
+        var updatedSet = parameterSet.UpdateValue(new ParameterId("Width"), 150.0);
+
+        Assert.That(updatedSet.FindById(new ParameterId("Width"))?.Value, Is.EqualTo(150.0));
+        Assert.That(parameterSet.FindById(new ParameterId("Width"))?.Value, Is.EqualTo(120.0));
+    }
+
+    [Test]
+    public void UpdateValue_WithMissingId_ShouldThrow()
+    {
+        var parameterSet = new ParameterSet();
+
+        Assert.Throws<ArgumentException>(() => _ = parameterSet.UpdateValue(new ParameterId("Width"), 150.0));
+    }
+
+    [Test]
+    public void UpdateValue_WithInvalidValue_ShouldThrow()
+    {
+        var parameter = new Parameter(new ParameterId("Width"), "Width", ParameterType.Number, 120.0);
+        var parameterSet = new ParameterSet([parameter]);
+
+        Assert.Throws<ArgumentException>(() => _ = parameterSet.UpdateValue(new ParameterId("Width"), "150"));
+    }
 }

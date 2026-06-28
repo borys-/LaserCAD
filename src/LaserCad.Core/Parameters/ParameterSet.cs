@@ -44,4 +44,29 @@ public sealed class ParameterSet
 
         return new ParameterSet(_parameters.Append(parameter));
     }
+
+    public ParameterSet UpdateValue(ParameterId id, object? value)
+    {
+        var index = Array.FindIndex(_parameters, parameter => parameter.Id == id);
+
+        if (index < 0)
+        {
+            throw new ArgumentException($"Parameter '{id}' was not found.", nameof(id));
+        }
+
+        var existingParameter = _parameters[index];
+        var updatedParameter = new Parameter(
+            existingParameter.Id,
+            existingParameter.Name,
+            existingParameter.Type,
+            value,
+            existingParameter.DisplayUnit,
+            existingParameter.MinimumValue,
+            existingParameter.MaximumValue);
+
+        var updatedParameters = _parameters.ToArray();
+        updatedParameters[index] = updatedParameter;
+
+        return new ParameterSet(updatedParameters);
+    }
 }
