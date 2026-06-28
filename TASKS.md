@@ -100,7 +100,7 @@ Zalecenie pracy:
 - [x] 0.5.3 Utworzyc `Parameter`.
 - [x] 0.5.4 Dodac nazwe parametru.
 - [x] 0.5.5 Dodac wartosc parametru.
-- [ ] 0.5.6 Dodac opcjonalna jednostke wyswietlania.
+- [x] 0.5.6 Dodac opcjonalna jednostke wyswietlania.
 - [ ] 0.5.7 Dodac opcjonalne minimum i maksimum.
 - [ ] 0.5.8 Dodac walidacje wartosci parametru.
 - [ ] 0.5.9 Dodac kolekcje `ParameterSet`.

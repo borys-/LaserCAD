@@ -2,7 +2,7 @@ namespace LaserCad.Core.Parameters;
 
 public sealed class Parameter
 {
-    public Parameter(ParameterId id, string name, ParameterType type, object? value)
+    public Parameter(ParameterId id, string name, ParameterType type, object? value, string? displayUnit = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -13,6 +13,7 @@ public sealed class Parameter
         Name = name;
         Type = type;
         Value = value;
+        DisplayUnit = displayUnit;
     }
 
     public ParameterId Id { get; }
@@ -22,4 +23,6 @@ public sealed class Parameter
     public ParameterType Type { get; }
 
     public object? Value { get; }
+
+    public string? DisplayUnit { get; }
 }

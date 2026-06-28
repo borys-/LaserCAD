@@ -43,4 +43,20 @@ public sealed class ParameterTests
 
         Assert.That(parameter.Value, Is.EqualTo(120.0));
     }
+
+    [Test]
+    public void Constructor_ShouldStoreDisplayUnit()
+    {
+        var parameter = new Parameter(new ParameterId("Width"), "Width", ParameterType.Length, 120.0, "mm");
+
+        Assert.That(parameter.DisplayUnit, Is.EqualTo("mm"));
+    }
+
+    [Test]
+    public void Constructor_WithoutDisplayUnit_ShouldUseNull()
+    {
+        var parameter = new Parameter(new ParameterId("Width"), "Width", ParameterType.Length, 120.0);
+
+        Assert.That(parameter.DisplayUnit, Is.Null);
+    }
 }
