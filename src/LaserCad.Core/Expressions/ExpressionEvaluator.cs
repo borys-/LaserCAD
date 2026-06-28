@@ -3,8 +3,16 @@ using LaserCad.Geometry.Units;
 
 namespace LaserCad.Core.Expressions;
 
+/// <summary>
+/// Ewaluator wyrazen parametrycznych.
+/// Uzywaj go z obiektem Expression i ParameterSet, aby otrzymac wynik liczbowy albo czytelny blad domenowy.
+/// </summary>
 public sealed class ExpressionEvaluator
 {
+    /// <summary>
+    /// Ewaluje wyrazenie w kontekscie zestawu parametrow.
+    /// Parametry typu Number sa czytane jako double, a Length jako milimetry.
+    /// </summary>
     public ExpressionEvaluationResult Evaluate(Expression expression, ParameterSet parameters)
     {
         ArgumentNullException.ThrowIfNull(expression);
@@ -19,6 +27,10 @@ public sealed class ExpressionEvaluator
         };
     }
 
+    /// <summary>
+    /// Ewaluuje referencje do parametru, pobierajac wartosc z ParameterSet.
+    /// Zwraca blad, jesli parametr nie istnieje albo ma typ nieobslugiwany przez MVP.
+    /// </summary>
     private ExpressionEvaluationResult EvaluateReference(ParameterReferenceExpression expression, ParameterSet parameters)
     {
         var parameter = parameters.FindById(expression.ParameterId);
@@ -36,6 +48,10 @@ public sealed class ExpressionEvaluator
         };
     }
 
+    /// <summary>
+    /// Ewaluuje operacje binarna, najpierw liczac lewa i prawa strone.
+    /// Zwraca pierwszy napotkany blad albo wynik operacji arytmetycznej.
+    /// </summary>
     private ExpressionEvaluationResult EvaluateBinary(BinaryExpression expression, ParameterSet parameters)
     {
         var left = Evaluate(expression.Left, parameters);

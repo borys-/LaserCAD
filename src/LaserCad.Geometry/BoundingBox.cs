@@ -1,11 +1,25 @@
 namespace LaserCad.Geometry;
 
+/// <summary>
+/// Prostokat ograniczajacy w ukladzie 2D.
+/// Uzywaj do szybkiego sprawdzania zasiegu encji, selekcji i eksportu.
+/// </summary>
 public readonly record struct BoundingBox(double MinX, double MinY, double MaxX, double MaxY)
 {
+    /// <summary>
+    /// Szerokosc bounding boxa liczona jako MaxX - MinX.
+    /// </summary>
     public double Width => MaxX - MinX;
 
+    /// <summary>
+    /// Wysokosc bounding boxa liczona jako MaxY - MinY.
+    /// </summary>
     public double Height => MaxY - MinY;
 
+    /// <summary>
+    /// Tworzy bounding box obejmujacy podane punkty.
+    /// Przekaz co najmniej jeden punkt.
+    /// </summary>
     public static BoundingBox FromPoints(params Point2D[] points)
     {
         ArgumentNullException.ThrowIfNull(points);
@@ -31,6 +45,10 @@ public readonly record struct BoundingBox(double MinX, double MinY, double MaxX,
         return new BoundingBox(minX, minY, maxX, maxY);
     }
 
+    /// <summary>
+    /// Zwraca bounding box obejmujacy ten i drugi bounding box.
+    /// Uzywaj przy laczeniu zasiegow wielu encji.
+    /// </summary>
     public BoundingBox Union(BoundingBox other)
     {
         return new BoundingBox(
@@ -40,6 +58,10 @@ public readonly record struct BoundingBox(double MinX, double MinY, double MaxX,
             Math.Max(MaxY, other.MaxY));
     }
 
+    /// <summary>
+    /// Sprawdza, czy punkt miesci sie w bounding boxie z uwzglednieniem tolerancji.
+    /// Uzywaj tolerancji dla stabilnych porownan zmiennoprzecinkowych.
+    /// </summary>
     public bool Contains(Point2D point, double tolerance = GeometryTolerance.Default)
     {
         if (tolerance < 0.0)

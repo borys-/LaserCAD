@@ -2,8 +2,16 @@ using LaserCad.Geometry.Units;
 
 namespace LaserCad.Core.Parameters;
 
+/// <summary>
+/// Reprezentuje pojedynczy parametr domenowy dokumentu albo generatora.
+/// Uzywaj go do przechowywania wartosci parametrycznych z typem, nazwa, jednostka wyswietlania i opcjonalnym zakresem.
+/// </summary>
 public sealed class Parameter
 {
+    /// <summary>
+    /// Tworzy parametr i waliduje zgodnosc wartosci oraz zakresu z podanym ParameterType.
+    /// Dla Length przekazuj Length, dla Number double, dla Boolean bool, a dla Text i Choice string.
+    /// </summary>
     public Parameter(
         ParameterId id,
         string name,
@@ -33,20 +41,46 @@ public sealed class Parameter
         MaximumValue = maximumValue;
     }
 
+    /// <summary>
+    /// Stabilny identyfikator parametru uzywany w wyrazeniach i grafie zaleznosci.
+    /// </summary>
     public ParameterId Id { get; }
 
+    /// <summary>
+    /// Nazwa parametru czytelna dla uzytkownika.
+    /// </summary>
     public string Name { get; }
 
+    /// <summary>
+    /// Typ wartosci parametru, ktory steruje walidacja i sposobem uzycia.
+    /// </summary>
     public ParameterType Type { get; }
 
+    /// <summary>
+    /// Aktualna wartosc parametru.
+    /// Odczytuj ja zgodnie z Type albo przez mechanizmy wyrazen.
+    /// </summary>
     public object? Value { get; }
 
+    /// <summary>
+    /// Opcjonalna jednostka prezentacji, np. "mm"; nie zmienia wewnetrznej wartosci.
+    /// </summary>
     public string? DisplayUnit { get; }
 
+    /// <summary>
+    /// Opcjonalna minimalna wartosc parametru dla typow Length i Number.
+    /// </summary>
     public object? MinimumValue { get; }
 
+    /// <summary>
+    /// Opcjonalna maksymalna wartosc parametru dla typow Length i Number.
+    /// </summary>
     public object? MaximumValue { get; }
 
+    /// <summary>
+    /// Sprawdza, czy przekazana wartosc pasuje do typu parametru.
+    /// Uzywane w konstruktorze, aby parametr nie powstal w niespojnym stanie.
+    /// </summary>
     private static void ValidateValueType(ParameterType type, object? value, string parameterName)
     {
         if (!IsValueValidForType(type, value))
@@ -55,6 +89,10 @@ public sealed class Parameter
         }
     }
 
+    /// <summary>
+    /// Sprawdza, czy wartosc zakresu jest dozwolona dla danego typu parametru.
+    /// Zakres jest wspierany tylko dla Length i Number.
+    /// </summary>
     private static void ValidateRangeType(ParameterType type, object? value, string parameterName)
     {
         if (value is null)
@@ -70,6 +108,10 @@ public sealed class Parameter
         ValidateValueType(type, value, parameterName);
     }
 
+    /// <summary>
+    /// Zwraca informacje, czy wartosc ma typ zgodny z ParameterType.
+    /// Uzywane jako wspolna reguła walidacji wartosci i zakresow.
+    /// </summary>
     private static bool IsValueValidForType(ParameterType type, object? value)
     {
         return type switch
@@ -83,6 +125,10 @@ public sealed class Parameter
         };
     }
 
+    /// <summary>
+    /// Sprawdza, czy minimum nie jest wieksze od maksimum.
+    /// Uzywane tylko dla porownywalnych typow parametrow.
+    /// </summary>
     private static void ValidateRangeOrder(ParameterType type, object? minimumValue, object? maximumValue)
     {
         if (minimumValue is null || maximumValue is null)
@@ -96,6 +142,9 @@ public sealed class Parameter
         }
     }
 
+    /// <summary>
+    /// Sprawdza, czy wartosc parametru miesci sie w opcjonalnym zakresie minimum/maksimum.
+    /// </summary>
     private static void ValidateValueRange(ParameterType type, object? value, object? minimumValue, object? maximumValue)
     {
         if (minimumValue is not null && Compare(type, value, minimumValue) < 0)
@@ -109,6 +158,10 @@ public sealed class Parameter
         }
     }
 
+    /// <summary>
+    /// Porownuje dwie wartosci zakresu zgodnie z typem parametru.
+    /// Obecnie wspiera Length i Number.
+    /// </summary>
     private static int Compare(ParameterType type, object? left, object? right)
     {
         return type switch

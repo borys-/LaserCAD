@@ -1,5 +1,9 @@
 namespace LaserCad.Geometry;
 
+/// <summary>
+/// Macierz 3x3 do transformacji afinicznych 2D we wspolrzednych jednorodnych.
+/// Uzywaj jej do laczenia przesuniecia, obrotu, skalowania i odbicia.
+/// </summary>
 public readonly record struct Matrix3x3(
     double M11,
     double M12,
@@ -11,11 +15,18 @@ public readonly record struct Matrix3x3(
     double M32,
     double M33)
 {
+    /// <summary>
+    /// Macierz jednostkowa, ktora nie zmienia punktow ani wektorow.
+    /// </summary>
     public static Matrix3x3 Identity { get; } = new Matrix3x3(
         1.0, 0.0, 0.0,
         0.0, 1.0, 0.0,
         0.0, 0.0, 1.0);
 
+    /// <summary>
+    /// Tworzy macierz przesuniecia o podane wartosci X i Y.
+    /// Uzywaj do przesuwania punktow w plaszczyznie.
+    /// </summary>
     public static Matrix3x3 CreateTranslation(double offsetX, double offsetY)
     {
         return new Matrix3x3(
@@ -24,6 +35,9 @@ public readonly record struct Matrix3x3(
             0.0, 0.0, 1.0);
     }
 
+    /// <summary>
+    /// Tworzy macierz obrotu o kat w radianach wokol poczatku ukladu.
+    /// </summary>
     public static Matrix3x3 CreateRotation(double angleRadians)
     {
         double cos = Math.Cos(angleRadians);
@@ -35,6 +49,9 @@ public readonly record struct Matrix3x3(
             0.0, 0.0, 1.0);
     }
 
+    /// <summary>
+    /// Tworzy macierz skalowania niezaleznie w osi X i Y.
+    /// </summary>
     public static Matrix3x3 CreateScaling(double scaleX, double scaleY)
     {
         return new Matrix3x3(
@@ -43,16 +60,26 @@ public readonly record struct Matrix3x3(
             0.0, 0.0, 1.0);
     }
 
+    /// <summary>
+    /// Tworzy macierz odbicia wzgledem osi X.
+    /// </summary>
     public static Matrix3x3 CreateReflectionX()
     {
         return CreateScaling(1.0, -1.0);
     }
 
+    /// <summary>
+    /// Tworzy macierz odbicia wzgledem osi Y.
+    /// </summary>
     public static Matrix3x3 CreateReflectionY()
     {
         return CreateScaling(-1.0, 1.0);
     }
 
+    /// <summary>
+    /// Transformuje punkt, uwzgledniajac translacje i wspolrzedna jednorodna.
+    /// Uzywaj dla pozycji geometrycznych.
+    /// </summary>
     public Point2D Transform(Point2D point)
     {
         double x = (M11 * point.X) + (M12 * point.Y) + M13;
@@ -67,6 +94,10 @@ public readonly record struct Matrix3x3(
         return new Point2D(x / w, y / w);
     }
 
+    /// <summary>
+    /// Transformuje wektor bez translacji.
+    /// Uzywaj dla kierunkow i przesuniec, ktore nie maja pozycji absolutnej.
+    /// </summary>
     public Vector2D Transform(Vector2D vector)
     {
         double x = (M11 * vector.X) + (M12 * vector.Y);
@@ -75,6 +106,10 @@ public readonly record struct Matrix3x3(
         return new Vector2D(x, y);
     }
 
+    /// <summary>
+    /// Mnozy dwie macierze, skladajac ich transformacje.
+    /// Wynik stosuj tak, jak zlozona transformacje lewego i prawego argumentu.
+    /// </summary>
     public static Matrix3x3 operator *(Matrix3x3 left, Matrix3x3 right)
     {
         return new Matrix3x3(
