@@ -27,7 +27,7 @@ Zalecenie pracy:
 - [x] 0.1.0 Utworzyc projekt `LaserCad.Core`.
 - [x] 0.1.1 Utworzyc projekt `LaserCad.Geometry`.
 - [x] 0.1.2 Utworzyc projekt `LaserCad.Export.Svg`.
-- [ ] 0.1.3 Utworzyc projekt `LaserCad.Export.Dxf`.
+- [x] 0.1.3 Utworzyc projekt `LaserCad.Export.Dxf`.
 - [ ] 0.1.4 Utworzyc projekt `LaserCad.Tests`.
 - [ ] 0.1.5 Dodac projekty do solution.
 - [ ] 0.1.6 Ustawic docelowa wersje .NET dla bibliotek domenowych.
