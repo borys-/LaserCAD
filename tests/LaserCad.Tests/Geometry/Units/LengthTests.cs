@@ -216,4 +216,28 @@ public sealed class LengthTests
 
         Assert.That(length.ToString("0.00", null), Is.EqualTo("12.35 mm"));
     }
+
+    [Test]
+    public void UnitConversions_FromMillimeters_ShouldKeepMillimeters()
+    {
+        var length = Length.FromMillimeters(123.456);
+
+        Assert.That(length.Millimeters, Is.EqualTo(123.456));
+    }
+
+    [Test]
+    public void UnitConversions_FromCentimeters_ShouldConvertToMillimeters()
+    {
+        var length = Length.FromCentimeters(12.3456);
+
+        Assert.That(length.Millimeters, Is.EqualTo(123.456).Within(GeometryTolerance.Default));
+    }
+
+    [Test]
+    public void UnitConversions_FromInches_ShouldConvertToMillimeters()
+    {
+        var length = Length.FromInches(4.86);
+
+        Assert.That(length.Millimeters, Is.EqualTo(123.444).Within(GeometryTolerance.Default));
+    }
 }

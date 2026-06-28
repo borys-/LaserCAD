@@ -62,7 +62,7 @@ Zalecenie pracy:
 - [x] 0.3.7 Dodac dzielenie `Length` przez liczbe.
 - [x] 0.3.8 Dodac porownania z tolerancja.
 - [x] 0.3.9 Dodac formatowanie do tekstu w mm.
-- [ ] 0.3.10 Dodac testy konwersji jednostek.
+- [x] 0.3.10 Dodac testy konwersji jednostek.
 - [ ] 0.3.11 Dodac testy operacji arytmetycznych.
 - [ ] 0.3.12 Dodac testy porownan z tolerancja.
 
