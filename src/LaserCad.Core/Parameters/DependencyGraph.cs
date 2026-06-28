@@ -60,6 +60,16 @@ public sealed class DependencyGraph
         return order;
     }
 
+    public RecalculationOrderResult CalculateRecalculationOrder(ParameterId changedParameterId)
+    {
+        if (HasCycle())
+        {
+            return RecalculationOrderResult.Failure("Dependency graph contains a cycle.");
+        }
+
+        return RecalculationOrderResult.Success(GetRecalculationOrder(changedParameterId));
+    }
+
     public bool HasCycle()
     {
         var states = new Dictionary<ParameterId, VisitState>();

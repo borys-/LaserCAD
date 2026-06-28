@@ -70,4 +70,21 @@ public sealed class DependencyGraphTests
 
         Assert.That(graph.HasCycle(), Is.True);
     }
+
+    [Test]
+    public void CalculateRecalculationOrder_ForCycle_ShouldReturnError()
+    {
+        var graph = new DependencyGraph();
+        var width = new ParameterId("Width");
+        var innerWidth = new ParameterId("InnerWidth");
+
+        graph.AddDependency(innerWidth, width);
+        graph.AddDependency(width, innerWidth);
+
+        var result = graph.CalculateRecalculationOrder(width);
+
+        Assert.That(result.IsSuccess, Is.False);
+        Assert.That(result.Order, Is.Empty);
+        Assert.That(result.Error, Is.EqualTo("Dependency graph contains a cycle."));
+    }
 }
