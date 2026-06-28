@@ -180,4 +180,19 @@ public sealed class CadDocumentTests
         Assert.That(updatedDocument.MaterialProfile, Is.SameAs(materialProfile));
         Assert.That(document.MaterialProfile, Is.Null);
     }
+
+    [Test]
+    public void Constructor_ShouldCreateEmptyDocument()
+    {
+        var document = new CadDocument();
+
+        Assert.That(document.Id, Is.Not.EqualTo(Guid.Empty));
+        Assert.That(document.Name, Is.EqualTo("Untitled"));
+        Assert.That(document.FormatVersion, Is.EqualTo(1));
+        Assert.That(document.Parameters.Parameters, Is.Empty);
+        Assert.That(document.Layers, Is.Empty);
+        Assert.That(document.Sketches, Is.Empty);
+        Assert.That(document.Generators, Is.Empty);
+        Assert.That(document.MaterialProfile, Is.Null);
+    }
 }

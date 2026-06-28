@@ -157,7 +157,7 @@ Zalecenie pracy:
 - [x] 0.8.11 Utworzyc bazowy kontrakt `Entity`.
 - [x] 0.8.12 Utworzyc `GeneratorInstance`.
 - [x] 0.8.13 Dodac powiazanie generatora z parametrami.
-- [ ] 0.8.14 Dodac test tworzenia pustego dokumentu.
+- [x] 0.8.14 Dodac test tworzenia pustego dokumentu.
 - [ ] 0.8.15 Dodac test dodawania szkicu.
 - [ ] 0.8.16 Dodac test dodawania parametrow dokumentu.
 
