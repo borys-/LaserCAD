@@ -25,6 +25,7 @@ Repozytorium zdalne:
 ## Dokumenty projektu
 
 - [docs/ROADMAP.md](docs/ROADMAP.md) - ogolna roadmapa produktu.
+- [docs/CODING_STANDARDS.md](docs/CODING_STANDARDS.md) - standardy kodowania i pracy nad projektem.
 - [TASKS.md](TASKS.md) - szczegolowa lista taskow implementacyjnych.
 
 ## Testy
