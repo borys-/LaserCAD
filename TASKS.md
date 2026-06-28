@@ -34,7 +34,7 @@ Zalecenie pracy:
 - [x] 0.1.7 Dodac referencje `LaserCad.Core` -> `LaserCad.Geometry`, jesli Core ma korzystac z geometrii.
 - [x] 0.1.8 Dodac referencje exporterow do wymaganych projektow domenowych.
 - [x] 0.1.9 Dodac referencje testow do wszystkich bibliotek domenowych.
-- [ ] 0.1.10 Dodac framework testowy.
+- [x] 0.1.10 Dodac framework testowy.
 - [ ] 0.1.11 Dodac pierwszy test pusty/sanity, aby potwierdzic konfiguracje.
 - [ ] 0.1.12 Uruchomic testy i zapisac komende w `README.md`.
 
