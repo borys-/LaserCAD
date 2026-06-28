@@ -211,4 +211,20 @@ public sealed class CadDocumentTests
         Assert.That(updatedDocument.Sketches, Is.EqualTo(new[] { sketch }));
         Assert.That(document.Sketches, Is.Empty);
     }
+
+    [Test]
+    public void AddParameter_ShouldKeepDocumentMetadata()
+    {
+        var id = Guid.NewGuid();
+        var document = new CadDocument(id, "Box", 2);
+        var parameter = new Parameter(new ParameterId("Width"), "Width", ParameterType.Number, 100.0);
+
+        var updatedDocument = document.AddParameter(parameter);
+
+        Assert.That(updatedDocument.Id, Is.EqualTo(id));
+        Assert.That(updatedDocument.Name, Is.EqualTo("Box"));
+        Assert.That(updatedDocument.FormatVersion, Is.EqualTo(2));
+        Assert.That(updatedDocument.Parameters.FindById(new ParameterId("Width")), Is.SameAs(parameter));
+        Assert.That(document.Parameters.Parameters, Is.Empty);
+    }
 }

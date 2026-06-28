@@ -159,7 +159,7 @@ Zalecenie pracy:
 - [x] 0.8.13 Dodac powiazanie generatora z parametrami.
 - [x] 0.8.14 Dodac test tworzenia pustego dokumentu.
 - [x] 0.8.15 Dodac test dodawania szkicu.
-- [ ] 0.8.16 Dodac test dodawania parametrow dokumentu.
+- [x] 0.8.16 Dodac test dodawania parametrow dokumentu.
 
 ## 0.9 Warstwy i profile materialow
 
