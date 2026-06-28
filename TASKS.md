@@ -171,7 +171,7 @@ Zalecenie pracy:
 - [x] 0.9.5 Dodac role warstwy.
 - [x] 0.9.6 Dodac domyslne warstwy dokumentu.
 - [x] 0.9.7 Utworzyc `MaterialProfile`.
-- [ ] 0.9.8 Dodac nazwe materialu.
+- [x] 0.9.8 Dodac nazwe materialu.
 - [ ] 0.9.9 Dodac grubosc materialu.
 - [ ] 0.9.10 Dodac domyslny kerf.
 - [ ] 0.9.11 Dodac domyslny clearance.
