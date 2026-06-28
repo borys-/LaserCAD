@@ -155,7 +155,7 @@ Zalecenie pracy:
 - [x] 0.8.9 Utworzyc `Sketch`.
 - [x] 0.8.10 Dodac kolekcje encji w szkicu.
 - [x] 0.8.11 Utworzyc bazowy kontrakt `Entity`.
-- [ ] 0.8.12 Utworzyc `GeneratorInstance`.
+- [x] 0.8.12 Utworzyc `GeneratorInstance`.
 - [ ] 0.8.13 Dodac powiazanie generatora z parametrami.
 - [ ] 0.8.14 Dodac test tworzenia pustego dokumentu.
 - [ ] 0.8.15 Dodac test dodawania szkicu.
