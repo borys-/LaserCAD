@@ -10,6 +10,14 @@ Kluczowym zalozeniem projektu jest pelna parametrycznosc. Uzytkownik powinien mo
 
 Solution projektu nosi nazwe `LaserCad`.
 
+## Workflow pracy
+
+Po kazdym tasku zaakceptowanym przez uzytkownika nalezy wykonac commit i push do repozytorium GitHub.
+
+Repozytorium zdalne:
+
+- `origin`: `https://github.com/borys-/LaserCAD.git`
+
 ## Dokumenty projektu
 
 - [ROADMAP.md](ROADMAP.md) - ogolna roadmapa produktu.
