@@ -48,4 +48,14 @@ public readonly record struct Length
     {
         return length * multiplier;
     }
+
+    public static Length operator /(Length length, double divisor)
+    {
+        if (divisor == 0.0)
+        {
+            throw new DivideByZeroException("Length cannot be divided by zero.");
+        }
+
+        return new Length(length._millimeters / divisor);
+    }
 }

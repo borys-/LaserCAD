@@ -97,4 +97,23 @@ public sealed class LengthTests
 
         Assert.That(result.Millimeters, Is.EqualTo(75.0));
     }
+
+    [Test]
+    public void Divide_ByNumber_ShouldReturnScaledLength()
+    {
+        var result = Length.FromMillimeters(75.0) / 3.0;
+
+        Assert.That(result.Millimeters, Is.EqualTo(25.0));
+    }
+
+    [Test]
+    public void Divide_ByZero_ShouldThrow()
+    {
+        var length = Length.FromMillimeters(75.0);
+
+        Assert.Throws<DivideByZeroException>(() =>
+        {
+            _ = length / 0.0;
+        });
+    }
 }
