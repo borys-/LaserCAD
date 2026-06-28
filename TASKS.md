@@ -149,7 +149,7 @@ Zalecenie pracy:
 - [x] 0.8.3 Dodac wersje formatu pliku.
 - [x] 0.8.4 Dodac kolekcje parametrow dokumentu.
 - [x] 0.8.5 Dodac kolekcje warstw.
-- [ ] 0.8.6 Dodac kolekcje szkicow.
+- [x] 0.8.6 Dodac kolekcje szkicow.
 - [ ] 0.8.7 Dodac kolekcje generatorow.
 - [ ] 0.8.8 Dodac profil materialu dokumentu.
 - [ ] 0.8.9 Utworzyc `Sketch`.

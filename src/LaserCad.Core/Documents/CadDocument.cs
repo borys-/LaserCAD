@@ -9,7 +9,8 @@ public sealed class CadDocument
         string name = "Untitled",
         int formatVersion = 1,
         ParameterSet? parameters = null,
-        IEnumerable<Layer>? layers = null)
+        IEnumerable<Layer>? layers = null,
+        IEnumerable<Sketch>? sketches = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -26,10 +27,16 @@ public sealed class CadDocument
         FormatVersion = formatVersion;
         Parameters = parameters ?? new ParameterSet();
         Layers = layers?.ToArray() ?? Array.Empty<Layer>();
+        Sketches = sketches?.ToArray() ?? Array.Empty<Sketch>();
 
         if (Layers.Any(layer => layer is null))
         {
             throw new ArgumentException("Document layers cannot contain null values.", nameof(layers));
+        }
+
+        if (Sketches.Any(sketch => sketch is null))
+        {
+            throw new ArgumentException("Document sketches cannot contain null values.", nameof(sketches));
         }
 
         if (Id == Guid.Empty)
@@ -48,15 +55,24 @@ public sealed class CadDocument
 
     public IReadOnlyList<Layer> Layers { get; }
 
+    public IReadOnlyList<Sketch> Sketches { get; }
+
     public CadDocument AddParameter(Parameter parameter)
     {
-        return new CadDocument(Id, Name, FormatVersion, Parameters.Add(parameter), Layers);
+        return new CadDocument(Id, Name, FormatVersion, Parameters.Add(parameter), Layers, Sketches);
     }
 
     public CadDocument AddLayer(Layer layer)
     {
         ArgumentNullException.ThrowIfNull(layer);
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers.Append(layer));
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers.Append(layer), Sketches);
+    }
+
+    public CadDocument AddSketch(Sketch sketch)
+    {
+        ArgumentNullException.ThrowIfNull(sketch);
+
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches.Append(sketch));
     }
 }

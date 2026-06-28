@@ -120,4 +120,24 @@ public sealed class CadDocumentTests
         Assert.That(updatedDocument.Layers, Is.EqualTo(new[] { layer }));
         Assert.That(document.Layers, Is.Empty);
     }
+
+    [Test]
+    public void Constructor_ShouldCreateEmptySketchCollection()
+    {
+        var document = new CadDocument();
+
+        Assert.That(document.Sketches, Is.Empty);
+    }
+
+    [Test]
+    public void AddSketch_ShouldReturnDocumentWithAddedSketch()
+    {
+        var document = new CadDocument();
+        var sketch = new Sketch();
+
+        var updatedDocument = document.AddSketch(sketch);
+
+        Assert.That(updatedDocument.Sketches, Is.EqualTo(new[] { sketch }));
+        Assert.That(document.Sketches, Is.Empty);
+    }
 }
