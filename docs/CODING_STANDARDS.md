@@ -20,6 +20,8 @@ Ten dokument jest obowiazujacym standardem pracy nad projektem Laser CAD. Kazda 
 - Projekty eksportu moga zalezec od `LaserCad.Core`.
 - `LaserCad.Core` moze zalezec od `LaserCad.Geometry`.
 - Biblioteki domenowe nie moga zalezec od Unity.
+- Zaleznosc moze isc w strone `LaserCad.Unity` -> biblioteki domenowe, ale nigdy odwrotnie.
+- Projekty domenowe nie moga referencjonowac `UnityEngine`, assetow Unity ani typow UI.
 
 ## Namespace
 
