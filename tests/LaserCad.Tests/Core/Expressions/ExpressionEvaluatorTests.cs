@@ -1,6 +1,7 @@
 using LaserCad.Core.Expressions;
 using LaserCad.Core.Parameters;
 using LaserCad.Geometry.Units;
+using ExpressionFactory = LaserCad.Core.Expressions.Expressions;
 
 namespace LaserCad.Tests.Core.Expressions;
 
@@ -84,5 +85,25 @@ public sealed class ExpressionEvaluatorTests
 
         Assert.That(result.IsSuccess, Is.False);
         Assert.That(result.Error, Is.EqualTo("Expression cannot be divided by zero."));
+    }
+
+    [Test]
+    public void Evaluate_WidthMinusTwoTimesMaterialThickness_ShouldReturnInnerWidth()
+    {
+        var evaluator = new ExpressionEvaluator();
+        var parameters = new ParameterSet([
+            new Parameter(new ParameterId("Width"), "Width", ParameterType.Length, Length.FromMillimeters(100.0)),
+            new Parameter(new ParameterId("MaterialThickness"), "Material thickness", ParameterType.Length, Length.FromMillimeters(3.0))
+        ]);
+        var expression = ExpressionFactory.Subtract(
+            ExpressionFactory.Parameter(new ParameterId("Width")),
+            ExpressionFactory.Multiply(
+                ExpressionFactory.Constant(2.0),
+                ExpressionFactory.Parameter(new ParameterId("MaterialThickness"))));
+
+        var result = evaluator.Evaluate(expression, parameters);
+
+        Assert.That(result.IsSuccess, Is.True);
+        Assert.That(result.Value, Is.EqualTo(94.0));
     }
 }

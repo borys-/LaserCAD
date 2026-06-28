@@ -125,7 +125,7 @@ Zalecenie pracy:
 - [x] 0.6.9 Dodac obsluge brakujacego parametru.
 - [x] 0.6.10 Dodac obsluge dzielenia przez zero.
 - [x] 0.6.11 Dodac parser prostych wyrazen tekstowych albo zostawic jawne budowanie AST w MVP.
-- [ ] 0.6.12 Dodac test: `Width - 2 * MaterialThickness`.
+- [x] 0.6.12 Dodac test: `Width - 2 * MaterialThickness`.
 - [ ] 0.6.13 Dodac test: aktualizacja parametru zmienia wynik wyrazenia.
 - [ ] 0.6.14 Dodac test: brakujaca referencja zwraca czytelny blad.
 
