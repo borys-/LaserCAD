@@ -139,7 +139,7 @@ Zalecenie pracy:
 - [x] 0.7.5 Dodac liste parametrow dotknietych zmiana.
 - [x] 0.7.6 Dodac test prostego lancucha zaleznosci.
 - [x] 0.7.7 Dodac test wielu zaleznosci jednego parametru.
-- [ ] 0.7.8 Dodac test wykrywania cyklu.
+- [x] 0.7.8 Dodac test wykrywania cyklu.
 
 ## 0.8 Model dokumentu
 

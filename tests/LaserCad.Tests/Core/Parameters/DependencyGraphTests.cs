@@ -142,4 +142,19 @@ public sealed class DependencyGraphTests
         Assert.That(Array.IndexOf(order, innerWidth), Is.LessThan(Array.IndexOf(order, layoutWidth)));
         Assert.That(Array.IndexOf(order, usableWidth), Is.LessThan(Array.IndexOf(order, layoutWidth)));
     }
+
+    [Test]
+    public void HasCycle_ForLongerCycle_ShouldReturnTrue()
+    {
+        var graph = new DependencyGraph();
+        var width = new ParameterId("Width");
+        var innerWidth = new ParameterId("InnerWidth");
+        var area = new ParameterId("Area");
+
+        graph.AddDependency(innerWidth, width);
+        graph.AddDependency(area, innerWidth);
+        graph.AddDependency(width, area);
+
+        Assert.That(graph.HasCycle(), Is.True);
+    }
 }
