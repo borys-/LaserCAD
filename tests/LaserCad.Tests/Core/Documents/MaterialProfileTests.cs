@@ -76,4 +76,29 @@ public sealed class MaterialProfileTests
         Assert.Throws<ArgumentOutOfRangeException>(
             () => _ = new MaterialProfile("Invalid", defaultKerf: Length.FromMillimeters(-0.1)));
     }
+
+    [Test]
+    public void Constructor_ShouldUseDefaultClearance()
+    {
+        var profile = new MaterialProfile("Custom");
+
+        Assert.That(profile.DefaultClearance, Is.EqualTo(Length.FromMillimeters(0.0)));
+    }
+
+    [Test]
+    public void Constructor_WithDefaultClearance_ShouldStoreDefaultClearance()
+    {
+        var clearance = Length.FromMillimeters(0.1);
+
+        var profile = new MaterialProfile("Plywood 3 mm", defaultClearance: clearance);
+
+        Assert.That(profile.DefaultClearance, Is.EqualTo(clearance));
+    }
+
+    [Test]
+    public void Constructor_WithNegativeDefaultClearance_ShouldThrow()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(
+            () => _ = new MaterialProfile("Invalid", defaultClearance: Length.FromMillimeters(-0.1)));
+    }
 }

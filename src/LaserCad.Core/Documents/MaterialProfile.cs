@@ -12,7 +12,11 @@ public sealed class MaterialProfile
     /// Tworzy profil materialu o podanej nazwie.
     /// Uzywaj nazw opisowych, np. "Plywood 3 mm" albo "Acrylic".
     /// </summary>
-    public MaterialProfile(string name, Length? thickness = null, Length? defaultKerf = null)
+    public MaterialProfile(
+        string name,
+        Length? thickness = null,
+        Length? defaultKerf = null,
+        Length? defaultClearance = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -21,6 +25,7 @@ public sealed class MaterialProfile
 
         Thickness = EnsureNonNegative(thickness ?? Length.FromMillimeters(0.0), nameof(thickness), "Material thickness cannot be negative.");
         DefaultKerf = EnsureNonNegative(defaultKerf ?? Length.FromMillimeters(0.0), nameof(defaultKerf), "Default kerf cannot be negative.");
+        DefaultClearance = EnsureNonNegative(defaultClearance ?? Length.FromMillimeters(0.0), nameof(defaultClearance), "Default clearance cannot be negative.");
 
         Name = name;
     }
@@ -39,6 +44,11 @@ public sealed class MaterialProfile
     /// Domyslna szerokosc szczeliny ciecia dla materialu.
     /// </summary>
     public Length DefaultKerf { get; }
+
+    /// <summary>
+    /// Domyslny luz montazowy dla polaczen generowanych z profilu materialu.
+    /// </summary>
+    public Length DefaultClearance { get; }
 
     /// <summary>
     /// Zwraca dlugosc po sprawdzeniu, ze nie jest ujemna.
