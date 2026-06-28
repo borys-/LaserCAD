@@ -1,4 +1,5 @@
 using LaserCad.Core.Documents;
+using LaserCad.Core.Parameters;
 
 namespace LaserCad.Tests.Core.Documents;
 
@@ -78,5 +79,25 @@ public sealed class CadDocumentTests
     public void Constructor_WithInvalidFormatVersion_ShouldThrow()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => _ = new CadDocument(formatVersion: 0));
+    }
+
+    [Test]
+    public void Constructor_ShouldCreateEmptyParameterSet()
+    {
+        var document = new CadDocument();
+
+        Assert.That(document.Parameters.Parameters, Is.Empty);
+    }
+
+    [Test]
+    public void AddParameter_ShouldReturnDocumentWithAddedParameter()
+    {
+        var document = new CadDocument();
+        var parameter = new Parameter(new ParameterId("Width"), "Width", ParameterType.Number, 100.0);
+
+        var updatedDocument = document.AddParameter(parameter);
+
+        Assert.That(updatedDocument.Parameters.FindById(new ParameterId("Width")), Is.SameAs(parameter));
+        Assert.That(document.Parameters.Parameters, Is.Empty);
     }
 }

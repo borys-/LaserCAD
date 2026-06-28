@@ -1,8 +1,14 @@
+using LaserCad.Core.Parameters;
+
 namespace LaserCad.Core.Documents;
 
 public sealed class CadDocument
 {
-    public CadDocument(Guid? id = null, string name = "Untitled", int formatVersion = 1)
+    public CadDocument(
+        Guid? id = null,
+        string name = "Untitled",
+        int formatVersion = 1,
+        ParameterSet? parameters = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -17,6 +23,7 @@ public sealed class CadDocument
         Id = id ?? Guid.NewGuid();
         Name = name;
         FormatVersion = formatVersion;
+        Parameters = parameters ?? new ParameterSet();
 
         if (Id == Guid.Empty)
         {
@@ -29,4 +36,11 @@ public sealed class CadDocument
     public string Name { get; }
 
     public int FormatVersion { get; }
+
+    public ParameterSet Parameters { get; }
+
+    public CadDocument AddParameter(Parameter parameter)
+    {
+        return new CadDocument(Id, Name, FormatVersion, Parameters.Add(parameter));
+    }
 }
