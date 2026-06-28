@@ -178,7 +178,7 @@ Zalecenie pracy:
 - [x] 0.9.12 Dodac minimalna szerokosc palca.
 - [x] 0.9.13 Dodac profile: sklejka 3 mm, sklejka 4 mm, MDF, akryl.
 - [x] 0.9.14 Dodac test domyslnych warstw.
-- [ ] 0.9.15 Dodac test domyslnych profili materialow.
+- [x] 0.9.15 Dodac test domyslnych profili materialow.
 
 ## 0.10 Zapis i odczyt projektu
 
