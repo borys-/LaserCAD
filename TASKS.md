@@ -14,7 +14,7 @@ Zalecenie pracy:
 - [x] 0.0.0 Utworzyc plik `README.md` z krotkim opisem celu projektu.
 - [x] 0.0.1 Utworzyc plik `.gitignore` dla C#, .NET, Unity i plikow tymczasowych IDE.
 - [x] 0.0.2 Ustalic nazwe solution: `LaserCad`.
-- [ ] 0.0.3 Utworzyc solution `LaserCad.sln`.
+- [x] 0.0.3 Utworzyc solution `LaserCad.sln`.
 - [ ] 0.0.4 Utworzyc katalog `src`.
 - [ ] 0.0.5 Utworzyc katalog `tests`.
 - [ ] 0.0.6 Utworzyc katalog `docs`.
