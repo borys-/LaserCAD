@@ -68,29 +68,29 @@ Zalecenie pracy:
 
 ## 0.4 Matematyka 2D
 
-- [ ] 0.4.0 Utworzyc `Point2D`.
-- [ ] 0.4.1 Dodac `Point2D.X` i `Point2D.Y`.
-- [ ] 0.4.2 Dodac przesuniecie punktu o `Vector2D`.
-- [ ] 0.4.3 Dodac odleglosc miedzy punktami.
-- [ ] 0.4.4 Utworzyc `Vector2D`.
-- [ ] 0.4.5 Dodac dlugosc wektora.
-- [ ] 0.4.6 Dodac normalizacje wektora.
-- [ ] 0.4.7 Dodac iloczyn skalarny.
-- [ ] 0.4.8 Dodac iloczyn wektorowy 2D jako wartosc skalarna.
-- [ ] 0.4.9 Dodac kat miedzy wektorami.
-- [ ] 0.4.10 Utworzyc `BoundingBox`.
-- [ ] 0.4.11 Dodac tworzenie `BoundingBox` z punktow.
-- [ ] 0.4.12 Dodac laczenie dwoch bounding boxow.
-- [ ] 0.4.13 Dodac sprawdzanie, czy punkt jest wewnatrz bounding boxa.
-- [ ] 0.4.14 Utworzyc `Matrix3x3`.
-- [ ] 0.4.15 Dodac macierz przesuniecia.
-- [ ] 0.4.16 Dodac macierz obrotu.
-- [ ] 0.4.17 Dodac macierz skalowania.
-- [ ] 0.4.18 Dodac macierz odbicia.
-- [ ] 0.4.19 Dodac mnozenie macierzy.
-- [ ] 0.4.20 Dodac transformowanie punktu.
-- [ ] 0.4.21 Dodac transformowanie wektora.
-- [ ] 0.4.22 Dodac testy dla wszystkich operacji matematycznych.
+- [x] 0.4.0 Utworzyc `Point2D`.
+- [x] 0.4.1 Dodac `Point2D.X` i `Point2D.Y`.
+- [x] 0.4.2 Dodac przesuniecie punktu o `Vector2D`.
+- [x] 0.4.3 Dodac odleglosc miedzy punktami.
+- [x] 0.4.4 Utworzyc `Vector2D`.
+- [x] 0.4.5 Dodac dlugosc wektora.
+- [x] 0.4.6 Dodac normalizacje wektora.
+- [x] 0.4.7 Dodac iloczyn skalarny.
+- [x] 0.4.8 Dodac iloczyn wektorowy 2D jako wartosc skalarna.
+- [x] 0.4.9 Dodac kat miedzy wektorami.
+- [x] 0.4.10 Utworzyc `BoundingBox`.
+- [x] 0.4.11 Dodac tworzenie `BoundingBox` z punktow.
+- [x] 0.4.12 Dodac laczenie dwoch bounding boxow.
+- [x] 0.4.13 Dodac sprawdzanie, czy punkt jest wewnatrz bounding boxa.
+- [x] 0.4.14 Utworzyc `Matrix3x3`.
+- [x] 0.4.15 Dodac macierz przesuniecia.
+- [x] 0.4.16 Dodac macierz obrotu.
+- [x] 0.4.17 Dodac macierz skalowania.
+- [x] 0.4.18 Dodac macierz odbicia.
+- [x] 0.4.19 Dodac mnozenie macierzy.
+- [x] 0.4.20 Dodac transformowanie punktu.
+- [x] 0.4.21 Dodac transformowanie wektora.
+- [x] 0.4.22 Dodac testy dla wszystkich operacji matematycznych.
 
 ## 0.5 Parametry
 
