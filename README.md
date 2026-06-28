@@ -36,3 +36,13 @@ dotnet test LaserCad.sln
 ```
 
 Komenda zacznie wykonywac testy po dodaniu projektow testowych do solution.
+
+## Build
+
+Aktualna strukture solution mozna sprawdzic komenda:
+
+```bash
+dotnet build LaserCad.sln
+```
+
+Na etapie pustej solution komenda konczy sie powodzeniem, ale moze pokazac ostrzezenie o braku projektow do przywrocenia.
