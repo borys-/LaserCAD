@@ -29,13 +29,13 @@ Repozytorium zdalne:
 
 ## Testy
 
-Docelowo testy beda uruchamiane komenda:
+Testy sa uruchamiane komenda:
 
 ```bash
 dotnet test LaserCad.sln
 ```
 
-Komenda zacznie wykonywac testy po dodaniu projektow testowych do solution.
+Aktualnie solution zawiera projekt `LaserCad.Tests` oparty o NUnit i Moq.
 
 ## Build
 
