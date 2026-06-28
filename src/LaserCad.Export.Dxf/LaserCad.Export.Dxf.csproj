@@ -1,3 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <ItemGroup>
+    <ProjectReference Include="..\LaserCad.Core\LaserCad.Core.csproj" />
+  </ItemGroup>
 </Project>

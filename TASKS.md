@@ -32,7 +32,7 @@ Zalecenie pracy:
 - [x] 0.1.5 Dodac projekty do solution.
 - [x] 0.1.6 Ustawic docelowa wersje .NET dla bibliotek domenowych.
 - [x] 0.1.7 Dodac referencje `LaserCad.Core` -> `LaserCad.Geometry`, jesli Core ma korzystac z geometrii.
-- [ ] 0.1.8 Dodac referencje exporterow do wymaganych projektow domenowych.
+- [x] 0.1.8 Dodac referencje exporterow do wymaganych projektow domenowych.
 - [ ] 0.1.9 Dodac referencje testow do wszystkich bibliotek domenowych.
 - [ ] 0.1.10 Dodac framework testowy.
 - [ ] 0.1.11 Dodac pierwszy test pusty/sanity, aby potwierdzic konfiguracje.
