@@ -16,7 +16,7 @@ Po kazdym tasku zaakceptowanym przez uzytkownika nalezy wykonac osobny commit i 
 
 Jeden task z `TASKS.md` powinien odpowiadac jednemu commitowi, chyba ze uzytkownik wyraznie zdecyduje inaczej.
 
-Wiadomosc commita powinna zaczynac sie od numeru taska, np. `0.0.8 Add test instructions`.
+Wiadomosc commita powinna zaczynac sie od numeru taska i byc po polsku, np. `0.0.8 Dodaj instrukcje uruchamiania testow`.
 
 Repozytorium zdalne:
 
