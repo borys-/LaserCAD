@@ -189,6 +189,14 @@ Warstwy nizej w architekturze nie znaja warstw wyzej:
 - eksport nie wykonuje edycji,
 - Unity nie implementuje logiki geometrycznej drugi raz.
 
+## UI i domena
+
+UI jest adapterem prezentacji. Wyswietla stan dokumentu, zbiera intencje uzytkownika i przekazuje je do bibliotek domenowych jako komendy, zmiany parametrow albo wywolania serwisow.
+
+Obliczenia naleza do domeny. Przeliczanie parametrow, przebudowa geometrii, walidacja wymiarow, logika generatorow, kompensacja kerfu i przygotowanie danych do eksportu powinny byc implementowane w `LaserCad.Core` albo `LaserCad.Geometry`, a nie w Unity ani w kodzie widoku.
+
+Dzieki temu ten sam model moze byc testowany jednostkowo, uzywany przez rozne interfejsy i eksportowany bez zaleznosci od konkretnego UI.
+
 ## Parametrycznosc
 
 Parametrycznosc jest czescia fundamentu:

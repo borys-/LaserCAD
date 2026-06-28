@@ -48,7 +48,7 @@ Zalecenie pracy:
 - [x] 0.2.5 Ustalic, ze biblioteki domenowe nie zaleza od Unity.
 - [x] 0.2.6 Dodac dokument `docs/ARCHITECTURE.md`.
 - [x] 0.2.7 Opisac w architekturze granice projektow.
-- [ ] 0.2.8 Opisac zasade: UI wyswietla dane, domena wykonuje obliczenia.
+- [x] 0.2.8 Opisac zasade: UI wyswietla dane, domena wykonuje obliczenia.
 
 ## 0.3 Jednostki i wartosci wymiarowe
 
