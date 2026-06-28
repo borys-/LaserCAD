@@ -140,4 +140,24 @@ public sealed class CadDocumentTests
         Assert.That(updatedDocument.Sketches, Is.EqualTo(new[] { sketch }));
         Assert.That(document.Sketches, Is.Empty);
     }
+
+    [Test]
+    public void Constructor_ShouldCreateEmptyGeneratorCollection()
+    {
+        var document = new CadDocument();
+
+        Assert.That(document.Generators, Is.Empty);
+    }
+
+    [Test]
+    public void AddGenerator_ShouldReturnDocumentWithAddedGenerator()
+    {
+        var document = new CadDocument();
+        var generator = new GeneratorInstance();
+
+        var updatedDocument = document.AddGenerator(generator);
+
+        Assert.That(updatedDocument.Generators, Is.EqualTo(new[] { generator }));
+        Assert.That(document.Generators, Is.Empty);
+    }
 }

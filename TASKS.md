@@ -150,7 +150,7 @@ Zalecenie pracy:
 - [x] 0.8.4 Dodac kolekcje parametrow dokumentu.
 - [x] 0.8.5 Dodac kolekcje warstw.
 - [x] 0.8.6 Dodac kolekcje szkicow.
-- [ ] 0.8.7 Dodac kolekcje generatorow.
+- [x] 0.8.7 Dodac kolekcje generatorow.
 - [ ] 0.8.8 Dodac profil materialu dokumentu.
 - [ ] 0.8.9 Utworzyc `Sketch`.
 - [ ] 0.8.10 Dodac kolekcje encji w szkicu.

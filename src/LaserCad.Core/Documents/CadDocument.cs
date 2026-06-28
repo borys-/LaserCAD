@@ -10,7 +10,8 @@ public sealed class CadDocument
         int formatVersion = 1,
         ParameterSet? parameters = null,
         IEnumerable<Layer>? layers = null,
-        IEnumerable<Sketch>? sketches = null)
+        IEnumerable<Sketch>? sketches = null,
+        IEnumerable<GeneratorInstance>? generators = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -28,6 +29,7 @@ public sealed class CadDocument
         Parameters = parameters ?? new ParameterSet();
         Layers = layers?.ToArray() ?? Array.Empty<Layer>();
         Sketches = sketches?.ToArray() ?? Array.Empty<Sketch>();
+        Generators = generators?.ToArray() ?? Array.Empty<GeneratorInstance>();
 
         if (Layers.Any(layer => layer is null))
         {
@@ -37,6 +39,11 @@ public sealed class CadDocument
         if (Sketches.Any(sketch => sketch is null))
         {
             throw new ArgumentException("Document sketches cannot contain null values.", nameof(sketches));
+        }
+
+        if (Generators.Any(generator => generator is null))
+        {
+            throw new ArgumentException("Document generators cannot contain null values.", nameof(generators));
         }
 
         if (Id == Guid.Empty)
@@ -57,22 +64,31 @@ public sealed class CadDocument
 
     public IReadOnlyList<Sketch> Sketches { get; }
 
+    public IReadOnlyList<GeneratorInstance> Generators { get; }
+
     public CadDocument AddParameter(Parameter parameter)
     {
-        return new CadDocument(Id, Name, FormatVersion, Parameters.Add(parameter), Layers, Sketches);
+        return new CadDocument(Id, Name, FormatVersion, Parameters.Add(parameter), Layers, Sketches, Generators);
     }
 
     public CadDocument AddLayer(Layer layer)
     {
         ArgumentNullException.ThrowIfNull(layer);
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers.Append(layer), Sketches);
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers.Append(layer), Sketches, Generators);
     }
 
     public CadDocument AddSketch(Sketch sketch)
     {
         ArgumentNullException.ThrowIfNull(sketch);
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches.Append(sketch));
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches.Append(sketch), Generators);
+    }
+
+    public CadDocument AddGenerator(GeneratorInstance generator)
+    {
+        ArgumentNullException.ThrowIfNull(generator);
+
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators.Append(generator));
     }
 }
