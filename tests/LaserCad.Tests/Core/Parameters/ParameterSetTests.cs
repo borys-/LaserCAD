@@ -1,4 +1,5 @@
 using LaserCad.Core.Parameters;
+using LaserCad.Geometry.Units;
 
 namespace LaserCad.Tests.Core.Parameters;
 
@@ -123,5 +124,59 @@ public sealed class ParameterSetTests
         var parameterSet = new ParameterSet([parameter]);
 
         Assert.Throws<ArgumentException>(() => _ = parameterSet.UpdateValue(new ParameterId("Width"), "150"));
+    }
+
+    [Test]
+    public void UpdateValue_ShouldKeepParameterMetadata()
+    {
+        var parameter = new Parameter(
+            new ParameterId("MaterialThickness"),
+            "Material thickness",
+            ParameterType.Length,
+            Length.FromMillimeters(3.0),
+            "mm",
+            Length.FromMillimeters(2.0),
+            Length.FromMillimeters(6.0));
+        var parameterSet = new ParameterSet([parameter]);
+
+        var updatedSet = parameterSet.UpdateValue(
+            new ParameterId("MaterialThickness"),
+            Length.FromMillimeters(4.0));
+        var updatedParameter = updatedSet.FindById(new ParameterId("MaterialThickness"));
+
+        Assert.That(updatedParameter?.Name, Is.EqualTo("Material thickness"));
+        Assert.That(updatedParameter?.Type, Is.EqualTo(ParameterType.Length));
+        Assert.That(updatedParameter?.DisplayUnit, Is.EqualTo("mm"));
+        Assert.That(updatedParameter?.MinimumValue, Is.EqualTo(Length.FromMillimeters(2.0)));
+        Assert.That(updatedParameter?.MaximumValue, Is.EqualTo(Length.FromMillimeters(6.0)));
+        Assert.That(updatedParameter?.Value, Is.EqualTo(Length.FromMillimeters(4.0)));
+    }
+
+    [Test]
+    public void UpdateValue_WithValueBelowMinimum_ShouldThrow()
+    {
+        var parameter = new Parameter(
+            new ParameterId("Width"),
+            "Width",
+            ParameterType.Number,
+            120.0,
+            minimumValue: 10.0);
+        var parameterSet = new ParameterSet([parameter]);
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = parameterSet.UpdateValue(new ParameterId("Width"), 5.0));
+    }
+
+    [Test]
+    public void UpdateValue_WithValueAboveMaximum_ShouldThrow()
+    {
+        var parameter = new Parameter(
+            new ParameterId("Width"),
+            "Width",
+            ParameterType.Number,
+            120.0,
+            maximumValue: 200.0);
+        var parameterSet = new ParameterSet([parameter]);
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = parameterSet.UpdateValue(new ParameterId("Width"), 250.0));
     }
 }
