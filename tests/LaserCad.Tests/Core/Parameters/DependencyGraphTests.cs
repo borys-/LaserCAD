@@ -87,4 +87,20 @@ public sealed class DependencyGraphTests
         Assert.That(result.Order, Is.Empty);
         Assert.That(result.Error, Is.EqualTo("Dependency graph contains a cycle."));
     }
+
+    [Test]
+    public void GetAffectedParameters_ShouldReturnDirectAndTransitiveDependents()
+    {
+        var graph = new DependencyGraph();
+        var width = new ParameterId("Width");
+        var innerWidth = new ParameterId("InnerWidth");
+        var area = new ParameterId("Area");
+
+        graph.AddDependency(innerWidth, width);
+        graph.AddDependency(area, innerWidth);
+
+        var affectedParameters = graph.GetAffectedParameters(width);
+
+        Assert.That(affectedParameters, Is.EquivalentTo(new[] { innerWidth, area }));
+    }
 }

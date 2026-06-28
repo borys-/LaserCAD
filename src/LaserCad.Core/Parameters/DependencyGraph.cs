@@ -70,6 +70,11 @@ public sealed class DependencyGraph
         return RecalculationOrderResult.Success(GetRecalculationOrder(changedParameterId));
     }
 
+    public IReadOnlyList<ParameterId> GetAffectedParameters(ParameterId changedParameterId)
+    {
+        return GetAffectedSet(changedParameterId).ToArray();
+    }
+
     public bool HasCycle()
     {
         var states = new Dictionary<ParameterId, VisitState>();

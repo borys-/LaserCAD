@@ -136,7 +136,7 @@ Zalecenie pracy:
 - [x] 0.7.2 Dodac wyliczanie kolejnosci przeliczania.
 - [x] 0.7.3 Dodac wykrywanie cyklu zaleznosci.
 - [x] 0.7.4 Dodac wynik bledu dla cyklu zaleznosci.
-- [ ] 0.7.5 Dodac liste parametrow dotknietych zmiana.
+- [x] 0.7.5 Dodac liste parametrow dotknietych zmiana.
 - [ ] 0.7.6 Dodac test prostego lancucha zaleznosci.
 - [ ] 0.7.7 Dodac test wielu zaleznosci jednego parametru.
 - [ ] 0.7.8 Dodac test wykrywania cyklu.
