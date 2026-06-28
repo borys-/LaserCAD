@@ -9,7 +9,7 @@ public sealed class ParameterTests
     {
         var id = new ParameterId("Width");
 
-        var parameter = new Parameter(id, "Width", ParameterType.Length);
+        var parameter = new Parameter(id, "Width", ParameterType.Length, 120.0);
 
         Assert.That(parameter.Id, Is.EqualTo(id));
     }
@@ -17,7 +17,7 @@ public sealed class ParameterTests
     [Test]
     public void Constructor_ShouldStoreType()
     {
-        var parameter = new Parameter(new ParameterId("IsOpen"), "Is open", ParameterType.Boolean);
+        var parameter = new Parameter(new ParameterId("IsOpen"), "Is open", ParameterType.Boolean, true);
 
         Assert.That(parameter.Type, Is.EqualTo(ParameterType.Boolean));
     }
@@ -25,7 +25,7 @@ public sealed class ParameterTests
     [Test]
     public void Constructor_ShouldStoreName()
     {
-        var parameter = new Parameter(new ParameterId("Width"), "Width", ParameterType.Length);
+        var parameter = new Parameter(new ParameterId("Width"), "Width", ParameterType.Length, 120.0);
 
         Assert.That(parameter.Name, Is.EqualTo("Width"));
     }
@@ -33,6 +33,14 @@ public sealed class ParameterTests
     [Test]
     public void Constructor_WithEmptyName_ShouldThrow()
     {
-        Assert.Throws<ArgumentException>(() => _ = new Parameter(new ParameterId("Width"), "", ParameterType.Length));
+        Assert.Throws<ArgumentException>(() => _ = new Parameter(new ParameterId("Width"), "", ParameterType.Length, 120.0));
+    }
+
+    [Test]
+    public void Constructor_ShouldStoreValue()
+    {
+        var parameter = new Parameter(new ParameterId("Width"), "Width", ParameterType.Number, 120.0);
+
+        Assert.That(parameter.Value, Is.EqualTo(120.0));
     }
 }
