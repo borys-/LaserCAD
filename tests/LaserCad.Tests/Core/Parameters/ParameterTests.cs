@@ -163,6 +163,68 @@ public sealed class ParameterTests
     }
 
     [Test]
+    public void Constructor_WithValueEqualToMinimum_ShouldCreateParameter()
+    {
+        var parameter = new Parameter(
+            new ParameterId("Width"),
+            "Width",
+            ParameterType.Number,
+            10.0,
+            minimumValue: 10.0,
+            maximumValue: 200.0);
+
+        Assert.That(parameter.Value, Is.EqualTo(10.0));
+    }
+
+    [Test]
+    public void Constructor_WithValueEqualToMaximum_ShouldCreateParameter()
+    {
+        var parameter = new Parameter(
+            new ParameterId("Width"),
+            "Width",
+            ParameterType.Number,
+            200.0,
+            minimumValue: 10.0,
+            maximumValue: 200.0);
+
+        Assert.That(parameter.Value, Is.EqualTo(200.0));
+    }
+
+    [Test]
+    public void Constructor_WithLengthValueBelowMinimum_ShouldThrow()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = new Parameter(
+            new ParameterId("MaterialThickness"),
+            "Material thickness",
+            ParameterType.Length,
+            Length.FromMillimeters(1.0),
+            minimumValue: Length.FromMillimeters(2.0)));
+    }
+
+    [Test]
+    public void Constructor_WithLengthValueAboveMaximum_ShouldThrow()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = new Parameter(
+            new ParameterId("MaterialThickness"),
+            "Material thickness",
+            ParameterType.Length,
+            Length.FromMillimeters(8.0),
+            maximumValue: Length.FromMillimeters(6.0)));
+    }
+
+    [Test]
+    public void Constructor_WithLengthMinimumGreaterThanMaximum_ShouldThrow()
+    {
+        Assert.Throws<ArgumentException>(() => _ = new Parameter(
+            new ParameterId("MaterialThickness"),
+            "Material thickness",
+            ParameterType.Length,
+            Length.FromMillimeters(3.0),
+            minimumValue: Length.FromMillimeters(6.0),
+            maximumValue: Length.FromMillimeters(2.0)));
+    }
+
+    [Test]
     public void Constructor_ShouldCreateLengthParameter()
     {
         var parameter = new Parameter(

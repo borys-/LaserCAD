@@ -108,7 +108,7 @@ Zalecenie pracy:
 - [x] 0.5.11 Dodac wyszukiwanie parametru po nazwie.
 - [x] 0.5.12 Dodac aktualizacje wartosci parametru.
 - [x] 0.5.13 Dodac testy tworzenia parametrow.
-- [ ] 0.5.14 Dodac testy walidacji minimum i maksimum.
+- [x] 0.5.14 Dodac testy walidacji minimum i maksimum.
 - [ ] 0.5.15 Dodac testy aktualizacji wartosci.
 
 ## 0.6 Wyrazenia parametryczne
