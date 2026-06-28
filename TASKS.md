@@ -95,7 +95,7 @@ Zalecenie pracy:
 ## 0.5 Parametry
 
 - [x] 0.5.0 Utworzyc enum `ParameterType`.
-- [ ] 0.5.1 Dodac typy: length, number, boolean, text, choice.
+- [x] 0.5.1 Dodac typy: length, number, boolean, text, choice.
 - [ ] 0.5.2 Utworzyc `ParameterId`.
 - [ ] 0.5.3 Utworzyc `Parameter`.
 - [ ] 0.5.4 Dodac nazwe parametru.
