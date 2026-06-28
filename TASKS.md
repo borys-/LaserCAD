@@ -43,7 +43,7 @@ Zalecenie pracy:
 - [x] 0.2.0 Ustalic konwencje namespace, np. `LaserCad.Geometry`.
 - [x] 0.2.1 Ustalic konwencje nazewnictwa jednostek: klasy w PascalCase, pola prywatne w camelCase.
 - [x] 0.2.2 Dodac podstawowy `.editorconfig`.
-- [ ] 0.2.3 Ustalic tolerancje geometryczna jako stala domenowa.
+- [x] 0.2.3 Ustalic tolerancje geometryczna jako stala domenowa.
 - [ ] 0.2.4 Ustalic, ze wszystkie wymiary domenowe sa w milimetrach.
 - [ ] 0.2.5 Ustalic, ze biblioteki domenowe nie zaleza od Unity.
 - [ ] 0.2.6 Dodac dokument `docs/ARCHITECTURE.md`.
