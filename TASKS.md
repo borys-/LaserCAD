@@ -53,7 +53,7 @@ Zalecenie pracy:
 ## 0.3 Jednostki i wartosci wymiarowe
 
 - [x] 0.3.0 Utworzyc typ `Length`.
-- [ ] 0.3.1 Dodac fabryke `Length.FromMillimeters`.
+- [x] 0.3.1 Dodac fabryke `Length.FromMillimeters`.
 - [ ] 0.3.2 Dodac fabryke `Length.FromCentimeters`.
 - [ ] 0.3.3 Dodac fabryke `Length.FromInches`.
 - [ ] 0.3.4 Dodac wlasciwosc `Millimeters`.
