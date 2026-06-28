@@ -18,7 +18,7 @@ Zalecenie pracy:
 - [x] 0.0.4 Utworzyc katalog `src`.
 - [x] 0.0.5 Utworzyc katalog `tests`.
 - [x] 0.0.6 Utworzyc katalog `docs`.
-- [ ] 0.0.7 Przeniesc lub skopiowac roadmapę do `docs` albo zostawic w root jako dokument glowny.
+- [x] 0.0.7 Przeniesc lub skopiowac roadmapę do `docs` albo zostawic w root jako dokument glowny.
 - [ ] 0.0.8 Dodac krotka instrukcje uruchamiania testow.
 - [ ] 0.0.9 Zweryfikowac, ze repo buduje sie na czystym checkoutcie.
 

@@ -22,5 +22,5 @@ Repozytorium zdalne:
 
 ## Dokumenty projektu
 
-- [ROADMAP.md](ROADMAP.md) - ogolna roadmapa produktu.
+- [docs/ROADMAP.md](docs/ROADMAP.md) - ogolna roadmapa produktu.
 - [TASKS.md](TASKS.md) - szczegolowa lista taskow implementacyjnych.
