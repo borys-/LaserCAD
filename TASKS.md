@@ -46,7 +46,7 @@ Zalecenie pracy:
 - [x] 0.2.3 Ustalic tolerancje geometryczna jako stala domenowa.
 - [x] 0.2.4 Ustalic, ze wszystkie wymiary domenowe sa w milimetrach.
 - [x] 0.2.5 Ustalic, ze biblioteki domenowe nie zaleza od Unity.
-- [ ] 0.2.6 Dodac dokument `docs/ARCHITECTURE.md`.
+- [x] 0.2.6 Dodac dokument `docs/ARCHITECTURE.md`.
 - [ ] 0.2.7 Opisac w architekturze granice projektow.
 - [ ] 0.2.8 Opisac zasade: UI wyswietla dane, domena wykonuje obliczenia.
 
