@@ -170,7 +170,7 @@ Zalecenie pracy:
 - [x] 0.9.4 Dodac kolor warstwy.
 - [x] 0.9.5 Dodac role warstwy.
 - [x] 0.9.6 Dodac domyslne warstwy dokumentu.
-- [ ] 0.9.7 Utworzyc `MaterialProfile`.
+- [x] 0.9.7 Utworzyc `MaterialProfile`.
 - [ ] 0.9.8 Dodac nazwe materialu.
 - [ ] 0.9.9 Dodac grubosc materialu.
 - [ ] 0.9.10 Dodac domyslny kerf.
