@@ -144,7 +144,7 @@ Zalecenie pracy:
 ## 0.8 Model dokumentu
 
 - [x] 0.8.0 Utworzyc `CadDocument`.
-- [ ] 0.8.1 Dodac identyfikator dokumentu.
+- [x] 0.8.1 Dodac identyfikator dokumentu.
 - [ ] 0.8.2 Dodac nazwe dokumentu.
 - [ ] 0.8.3 Dodac wersje formatu pliku.
 - [ ] 0.8.4 Dodac kolekcje parametrow dokumentu.
