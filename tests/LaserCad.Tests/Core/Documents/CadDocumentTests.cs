@@ -195,4 +195,20 @@ public sealed class CadDocumentTests
         Assert.That(document.Generators, Is.Empty);
         Assert.That(document.MaterialProfile, Is.Null);
     }
+
+    [Test]
+    public void AddSketch_ShouldKeepDocumentMetadata()
+    {
+        var id = Guid.NewGuid();
+        var document = new CadDocument(id, "Box", 2);
+        var sketch = new Sketch(name: "Front");
+
+        var updatedDocument = document.AddSketch(sketch);
+
+        Assert.That(updatedDocument.Id, Is.EqualTo(id));
+        Assert.That(updatedDocument.Name, Is.EqualTo("Box"));
+        Assert.That(updatedDocument.FormatVersion, Is.EqualTo(2));
+        Assert.That(updatedDocument.Sketches, Is.EqualTo(new[] { sketch }));
+        Assert.That(document.Sketches, Is.Empty);
+    }
 }

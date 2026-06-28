@@ -158,7 +158,7 @@ Zalecenie pracy:
 - [x] 0.8.12 Utworzyc `GeneratorInstance`.
 - [x] 0.8.13 Dodac powiazanie generatora z parametrami.
 - [x] 0.8.14 Dodac test tworzenia pustego dokumentu.
-- [ ] 0.8.15 Dodac test dodawania szkicu.
+- [x] 0.8.15 Dodac test dodawania szkicu.
 - [ ] 0.8.16 Dodac test dodawania parametrow dokumentu.
 
 ## 0.9 Warstwy i profile materialow
