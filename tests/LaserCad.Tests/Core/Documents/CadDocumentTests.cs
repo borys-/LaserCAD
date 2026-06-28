@@ -35,4 +35,26 @@ public sealed class CadDocumentTests
     {
         Assert.Throws<ArgumentException>(() => _ = new CadDocument(Guid.Empty));
     }
+
+    [Test]
+    public void Constructor_ShouldUseDefaultName()
+    {
+        var document = new CadDocument();
+
+        Assert.That(document.Name, Is.EqualTo("Untitled"));
+    }
+
+    [Test]
+    public void Constructor_WithName_ShouldStoreName()
+    {
+        var document = new CadDocument(name: "Box");
+
+        Assert.That(document.Name, Is.EqualTo("Box"));
+    }
+
+    [Test]
+    public void Constructor_WithEmptyName_ShouldThrow()
+    {
+        Assert.Throws<ArgumentException>(() => _ = new CadDocument(name: ""));
+    }
 }
