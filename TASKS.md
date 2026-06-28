@@ -132,7 +132,7 @@ Zalecenie pracy:
 ## 0.7 Graf zaleznosci parametrow
 
 - [x] 0.7.0 Utworzyc `DependencyGraph`.
-- [ ] 0.7.1 Dodac rejestrowanie zaleznosci parametru od innych parametrow.
+- [x] 0.7.1 Dodac rejestrowanie zaleznosci parametru od innych parametrow.
 - [ ] 0.7.2 Dodac wyliczanie kolejnosci przeliczania.
 - [ ] 0.7.3 Dodac wykrywanie cyklu zaleznosci.
 - [ ] 0.7.4 Dodac wynik bledu dla cyklu zaleznosci.
