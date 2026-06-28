@@ -60,7 +60,7 @@ Zalecenie pracy:
 - [x] 0.3.5 Dodac operatory dodawania i odejmowania `Length`.
 - [x] 0.3.6 Dodac mnozenie `Length` przez liczbe.
 - [x] 0.3.7 Dodac dzielenie `Length` przez liczbe.
-- [ ] 0.3.8 Dodac porownania z tolerancja.
+- [x] 0.3.8 Dodac porownania z tolerancja.
 - [ ] 0.3.9 Dodac formatowanie do tekstu w mm.
 - [ ] 0.3.10 Dodac testy konwersji jednostek.
 - [ ] 0.3.11 Dodac testy operacji arytmetycznych.

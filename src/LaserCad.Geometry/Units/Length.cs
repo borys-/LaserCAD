@@ -1,6 +1,8 @@
+using LaserCad.Geometry;
+
 namespace LaserCad.Geometry.Units;
 
-public readonly record struct Length
+public readonly record struct Length : IComparable<Length>
 {
     private const double MillimetersPerCentimeter = 10.0;
     private const double MillimetersPerInch = 25.4;
@@ -27,6 +29,26 @@ public readonly record struct Length
     public static Length FromInches(double inches)
     {
         return new Length(inches * MillimetersPerInch);
+    }
+
+    public bool IsApproximatelyEqualTo(Length other, double tolerance = GeometryTolerance.Default)
+    {
+        if (tolerance < 0.0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(tolerance), "Tolerance cannot be negative.");
+        }
+
+        return Math.Abs(_millimeters - other._millimeters) <= tolerance;
+    }
+
+    public int CompareTo(Length other)
+    {
+        if (IsApproximatelyEqualTo(other))
+        {
+            return 0;
+        }
+
+        return _millimeters < other._millimeters ? -1 : 1;
     }
 
     public static Length operator +(Length left, Length right)
@@ -57,5 +79,25 @@ public readonly record struct Length
         }
 
         return new Length(length._millimeters / divisor);
+    }
+
+    public static bool operator <(Length left, Length right)
+    {
+        return left.CompareTo(right) < 0;
+    }
+
+    public static bool operator <=(Length left, Length right)
+    {
+        return left.CompareTo(right) <= 0;
+    }
+
+    public static bool operator >(Length left, Length right)
+    {
+        return left.CompareTo(right) > 0;
+    }
+
+    public static bool operator >=(Length left, Length right)
+    {
+        return left.CompareTo(right) >= 0;
     }
 }

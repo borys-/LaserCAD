@@ -1,3 +1,4 @@
+using LaserCad.Geometry;
 using LaserCad.Geometry.Units;
 
 namespace LaserCad.Tests.Geometry.Units;
@@ -115,5 +116,80 @@ public sealed class LengthTests
         {
             _ = length / 0.0;
         });
+    }
+
+    [Test]
+    public void IsApproximatelyEqualTo_ForDifferenceWithinDefaultTolerance_ShouldReturnTrue()
+    {
+        var length = Length.FromMillimeters(10.0);
+        var other = Length.FromMillimeters(10.0 + GeometryTolerance.Default / 2.0);
+
+        Assert.That(length.IsApproximatelyEqualTo(other), Is.True);
+    }
+
+    [Test]
+    public void IsApproximatelyEqualTo_ForDifferenceAboveDefaultTolerance_ShouldReturnFalse()
+    {
+        var length = Length.FromMillimeters(10.0);
+        var other = Length.FromMillimeters(10.0 + GeometryTolerance.Default * 2.0);
+
+        Assert.That(length.IsApproximatelyEqualTo(other), Is.False);
+    }
+
+    [Test]
+    public void IsApproximatelyEqualTo_WithNegativeTolerance_ShouldThrow()
+    {
+        var length = Length.FromMillimeters(10.0);
+        var other = Length.FromMillimeters(10.0);
+
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+        {
+            _ = length.IsApproximatelyEqualTo(other, -GeometryTolerance.Default);
+        });
+    }
+
+    [Test]
+    public void CompareTo_ForDifferenceWithinDefaultTolerance_ShouldReturnZero()
+    {
+        var length = Length.FromMillimeters(10.0);
+        var other = Length.FromMillimeters(10.0 + GeometryTolerance.Default / 2.0);
+
+        Assert.That(length.CompareTo(other), Is.EqualTo(0));
+    }
+
+    [Test]
+    public void LessThan_ForDifferenceAboveDefaultTolerance_ShouldReturnTrue()
+    {
+        var length = Length.FromMillimeters(10.0);
+        var other = Length.FromMillimeters(10.0 + GeometryTolerance.Default * 2.0);
+
+        Assert.That(length < other, Is.True);
+    }
+
+    [Test]
+    public void GreaterThan_ForDifferenceAboveDefaultTolerance_ShouldReturnTrue()
+    {
+        var length = Length.FromMillimeters(10.0 + GeometryTolerance.Default * 2.0);
+        var other = Length.FromMillimeters(10.0);
+
+        Assert.That(length > other, Is.True);
+    }
+
+    [Test]
+    public void LessThanOrEqual_ForDifferenceWithinDefaultTolerance_ShouldReturnTrue()
+    {
+        var length = Length.FromMillimeters(10.0);
+        var other = Length.FromMillimeters(10.0 + GeometryTolerance.Default / 2.0);
+
+        Assert.That(length <= other, Is.True);
+    }
+
+    [Test]
+    public void GreaterThanOrEqual_ForDifferenceWithinDefaultTolerance_ShouldReturnTrue()
+    {
+        var length = Length.FromMillimeters(10.0 + GeometryTolerance.Default / 2.0);
+        var other = Length.FromMillimeters(10.0);
+
+        Assert.That(length >= other, Is.True);
     }
 }
