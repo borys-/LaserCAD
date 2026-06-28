@@ -127,4 +127,21 @@ public sealed class ExpressionEvaluatorTests
         Assert.That(result.IsSuccess, Is.True);
         Assert.That(result.Value, Is.EqualTo(114.0));
     }
+
+    [Test]
+    public void Evaluate_WithMissingReferenceInBinaryExpression_ShouldReturnReadableError()
+    {
+        var evaluator = new ExpressionEvaluator();
+        var parameters = new ParameterSet([
+            new Parameter(new ParameterId("Width"), "Width", ParameterType.Length, Length.FromMillimeters(100.0))
+        ]);
+        var expression = ExpressionFactory.Subtract(
+            ExpressionFactory.Parameter(new ParameterId("Width")),
+            ExpressionFactory.Parameter(new ParameterId("MaterialThickness")));
+
+        var result = evaluator.Evaluate(expression, parameters);
+
+        Assert.That(result.IsSuccess, Is.False);
+        Assert.That(result.Error, Is.EqualTo("Parameter 'MaterialThickness' was not found."));
+    }
 }
