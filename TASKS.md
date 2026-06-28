@@ -30,7 +30,7 @@ Zalecenie pracy:
 - [x] 0.1.3 Utworzyc projekt `LaserCad.Export.Dxf`.
 - [x] 0.1.4 Utworzyc projekt `LaserCad.Tests`.
 - [x] 0.1.5 Dodac projekty do solution.
-- [ ] 0.1.6 Ustawic docelowa wersje .NET dla bibliotek domenowych.
+- [x] 0.1.6 Ustawic docelowa wersje .NET dla bibliotek domenowych.
 - [ ] 0.1.7 Dodac referencje `LaserCad.Core` -> `LaserCad.Geometry`, jesli Core ma korzystac z geometrii.
 - [ ] 0.1.8 Dodac referencje exporterow do wymaganych projektow domenowych.
 - [ ] 0.1.9 Dodac referencje testow do wszystkich bibliotek domenowych.
