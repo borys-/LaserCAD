@@ -65,4 +65,20 @@ public sealed class LengthTests
 
         Assert.That(length.Millimeters, Is.EqualTo(50.8));
     }
+
+    [Test]
+    public void Add_ShouldReturnSumInMillimeters()
+    {
+        var result = Length.FromMillimeters(12.5) + Length.FromCentimeters(2.0);
+
+        Assert.That(result.Millimeters, Is.EqualTo(32.5));
+    }
+
+    [Test]
+    public void Subtract_ShouldReturnDifferenceInMillimeters()
+    {
+        var result = Length.FromInches(2.0) - Length.FromMillimeters(10.8);
+
+        Assert.That(result.Millimeters, Is.EqualTo(40.0));
+    }
 }
