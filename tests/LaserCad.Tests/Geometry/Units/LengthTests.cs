@@ -33,4 +33,12 @@ public sealed class LengthTests
 
         Assert.That(length, Is.EqualTo(Length.FromMillimeters(25.0)));
     }
+
+    [Test]
+    public void FromInches_ShouldCreateEquivalentMillimeterLength()
+    {
+        var length = Length.FromInches(2.0);
+
+        Assert.That(length, Is.EqualTo(Length.FromMillimeters(50.8)));
+    }
 }

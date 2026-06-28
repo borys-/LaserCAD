@@ -3,6 +3,7 @@ namespace LaserCad.Geometry.Units;
 public readonly record struct Length
 {
     private const double MillimetersPerCentimeter = 10.0;
+    private const double MillimetersPerInch = 25.4;
 
     private readonly double _millimeters;
 
@@ -19,5 +20,10 @@ public readonly record struct Length
     public static Length FromCentimeters(double centimeters)
     {
         return new Length(centimeters * MillimetersPerCentimeter);
+    }
+
+    public static Length FromInches(double inches)
+    {
+        return new Length(inches * MillimetersPerInch);
     }
 }
