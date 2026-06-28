@@ -43,4 +43,20 @@ public sealed class LayerTests
 
         Assert.That(layer.Color, Is.SameAs(color));
     }
+
+    [Test]
+    public void Constructor_ShouldUseDefaultRole()
+    {
+        var layer = new Layer("Cut");
+
+        Assert.That(layer.Role, Is.EqualTo(LayerRole.Cut));
+    }
+
+    [Test]
+    public void Constructor_WithRole_ShouldStoreRole()
+    {
+        var layer = new Layer("Engrave", role: LayerRole.Engrave);
+
+        Assert.That(layer.Role, Is.EqualTo(LayerRole.Engrave));
+    }
 }

@@ -2,7 +2,7 @@ namespace LaserCad.Core.Documents;
 
 /// <summary>
 /// Reprezentuje warstwe dokumentu CAD.
-/// Przechowuje nazwe i kolor uzywane pozniej przez eksport oraz UI.
+/// Przechowuje nazwe, kolor i role uzywane pozniej przez eksport oraz UI.
 /// </summary>
 public sealed class Layer
 {
@@ -10,7 +10,7 @@ public sealed class Layer
     /// Tworzy warstwe o podanej nazwie.
     /// Uzywaj nazw zrozumialych dla uzytkownika, np. "Cut" albo "Engrave".
     /// </summary>
-    public Layer(string name, LayerColor? color = null)
+    public Layer(string name, LayerColor? color = null, LayerRole role = LayerRole.Cut)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -19,6 +19,7 @@ public sealed class Layer
 
         Name = name;
         Color = color ?? LayerColor.Black;
+        Role = role;
     }
 
     /// <summary>
@@ -30,4 +31,9 @@ public sealed class Layer
     /// Kolor warstwy uzywany do prezentacji i eksportu.
     /// </summary>
     public LayerColor Color { get; }
+
+    /// <summary>
+    /// Produkcyjna rola warstwy, np. ciecie, grawerowanie albo ignorowanie.
+    /// </summary>
+    public LayerRole Role { get; }
 }
