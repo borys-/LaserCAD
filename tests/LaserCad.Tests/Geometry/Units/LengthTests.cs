@@ -264,4 +264,36 @@ public sealed class LengthTests
 
         Assert.That(result.Millimeters, Is.EqualTo(0.0));
     }
+
+    [Test]
+    public void ToleranceComparison_ForDifferenceExactlyAtDefaultTolerance_ShouldReturnEqual()
+    {
+        var length = Length.FromMillimeters(10.0);
+        var other = Length.FromMillimeters(10.0 + GeometryTolerance.Default);
+
+        Assert.That(length.IsApproximatelyEqualTo(other), Is.True);
+        Assert.That(length.CompareTo(other), Is.EqualTo(0));
+    }
+
+    [Test]
+    public void ToleranceComparison_WithCustomTolerance_ShouldUseProvidedTolerance()
+    {
+        var length = Length.FromMillimeters(10.0);
+        var other = Length.FromMillimeters(10.05);
+
+        Assert.That(length.IsApproximatelyEqualTo(other, 0.1), Is.True);
+        Assert.That(length.IsApproximatelyEqualTo(other, 0.01), Is.False);
+    }
+
+    [Test]
+    public void ToleranceComparison_Operators_ShouldTreatValuesWithinToleranceAsEqual()
+    {
+        var length = Length.FromMillimeters(10.0);
+        var other = Length.FromMillimeters(10.0 + GeometryTolerance.Default / 2.0);
+
+        Assert.That(length < other, Is.False);
+        Assert.That(length > other, Is.False);
+        Assert.That(length <= other, Is.True);
+        Assert.That(length >= other, Is.True);
+    }
 }

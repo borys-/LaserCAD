@@ -64,7 +64,7 @@ Zalecenie pracy:
 - [x] 0.3.9 Dodac formatowanie do tekstu w mm.
 - [x] 0.3.10 Dodac testy konwersji jednostek.
 - [x] 0.3.11 Dodac testy operacji arytmetycznych.
-- [ ] 0.3.12 Dodac testy porownan z tolerancja.
+- [x] 0.3.12 Dodac testy porownan z tolerancja.
 
 ## 0.4 Matematyka 2D
 
