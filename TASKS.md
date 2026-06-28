@@ -44,7 +44,7 @@ Zalecenie pracy:
 - [x] 0.2.1 Ustalic konwencje nazewnictwa jednostek: klasy w PascalCase, pola prywatne w camelCase.
 - [x] 0.2.2 Dodac podstawowy `.editorconfig`.
 - [x] 0.2.3 Ustalic tolerancje geometryczna jako stala domenowa.
-- [ ] 0.2.4 Ustalic, ze wszystkie wymiary domenowe sa w milimetrach.
+- [x] 0.2.4 Ustalic, ze wszystkie wymiary domenowe sa w milimetrach.
 - [ ] 0.2.5 Ustalic, ze biblioteki domenowe nie zaleza od Unity.
 - [ ] 0.2.6 Dodac dokument `docs/ARCHITECTURE.md`.
 - [ ] 0.2.7 Opisac w architekturze granice projektow.

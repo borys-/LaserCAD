@@ -63,6 +63,8 @@ Nazwy powinny opisywac intencje domenowa, np. `MaterialThickness`, `Kerf`, `Fing
 ## Jednostki i liczby
 
 - Wewnetrzna jednostka dlugosci to milimetry.
+- Wszystkie wymiary domenowe, zapis projektu i eksport produkcyjny powinny traktowac wartosci dlugosci jako milimetry, chyba ze API jawnie mowi inaczej.
+- Centymetry, cale i inne jednostki moga pojawiac sie tylko na granicy systemu jako jawna konwersja do milimetrow.
 - Nie uzywac surowego `double` w publicznym API, jesli wartosc oznacza fizyczna dlugosc.
 - Docelowo uzywac typu `Length` dla wymiarow.
 - Parametry takie jak `Kerf`, `MaterialThickness`, `Clearance` i `FingerWidth` musza miec jednoznaczna jednostke.
