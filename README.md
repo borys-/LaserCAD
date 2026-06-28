@@ -12,7 +12,9 @@ Solution projektu nosi nazwe `LaserCad`.
 
 ## Workflow pracy
 
-Po kazdym tasku zaakceptowanym przez uzytkownika nalezy wykonac commit i push do repozytorium GitHub.
+Po kazdym tasku zaakceptowanym przez uzytkownika nalezy wykonac osobny commit i push do repozytorium GitHub.
+
+Jeden task z `TASKS.md` powinien odpowiadac jednemu commitowi, chyba ze uzytkownik wyraznie zdecyduje inaczej.
 
 Repozytorium zdalne:
 
