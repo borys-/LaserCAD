@@ -45,4 +45,25 @@ public sealed class ParameterSetTests
         Assert.That(updatedSet.Parameters, Is.EqualTo(new[] { parameter }));
         Assert.That(parameterSet.Parameters, Is.Empty);
     }
+
+    [Test]
+    public void FindById_WithExistingId_ShouldReturnParameter()
+    {
+        var parameter = new Parameter(new ParameterId("Width"), "Width", ParameterType.Number, 120.0);
+        var parameterSet = new ParameterSet([parameter]);
+
+        var result = parameterSet.FindById(new ParameterId("Width"));
+
+        Assert.That(result, Is.SameAs(parameter));
+    }
+
+    [Test]
+    public void FindById_WithMissingId_ShouldReturnNull()
+    {
+        var parameterSet = new ParameterSet();
+
+        var result = parameterSet.FindById(new ParameterId("Width"));
+
+        Assert.That(result, Is.Null);
+    }
 }

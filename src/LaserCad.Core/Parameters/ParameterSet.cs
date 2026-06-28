@@ -23,6 +23,11 @@ public sealed class ParameterSet
 
     public IReadOnlyList<Parameter> Parameters => _parameters;
 
+    public Parameter? FindById(ParameterId id)
+    {
+        return _parameters.FirstOrDefault(parameter => parameter.Id == id);
+    }
+
     public ParameterSet Add(Parameter parameter)
     {
         ArgumentNullException.ThrowIfNull(parameter);
