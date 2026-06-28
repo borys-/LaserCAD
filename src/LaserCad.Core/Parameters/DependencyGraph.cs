@@ -60,6 +60,21 @@ public sealed class DependencyGraph
         return order;
     }
 
+    public bool HasCycle()
+    {
+        var states = new Dictionary<ParameterId, VisitState>();
+
+        foreach (var parameterId in GetAllParameterIds())
+        {
+            if (VisitForCycle(parameterId, states))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private HashSet<ParameterId> GetAffectedSet(ParameterId changedParameterId)
     {
         var affected = new HashSet<ParameterId>();
@@ -88,5 +103,38 @@ public sealed class DependencyGraph
         return _dependencies
             .Where(pair => pair.Value.Contains(parameterId))
             .Select(pair => pair.Key);
+    }
+
+    private IEnumerable<ParameterId> GetAllParameterIds()
+    {
+        return _dependencies.Keys.Concat(_dependencies.Values.SelectMany(dependencies => dependencies)).Distinct();
+    }
+
+    private bool VisitForCycle(ParameterId parameterId, Dictionary<ParameterId, VisitState> states)
+    {
+        if (states.TryGetValue(parameterId, out var state))
+        {
+            return state == VisitState.Visiting;
+        }
+
+        states[parameterId] = VisitState.Visiting;
+
+        foreach (var dependencyId in GetDependencies(parameterId))
+        {
+            if (VisitForCycle(dependencyId, states))
+            {
+                return true;
+            }
+        }
+
+        states[parameterId] = VisitState.Visited;
+
+        return false;
+    }
+
+    private enum VisitState
+    {
+        Visiting,
+        Visited
     }
 }

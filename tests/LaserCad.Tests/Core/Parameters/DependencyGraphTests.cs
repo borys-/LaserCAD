@@ -47,4 +47,27 @@ public sealed class DependencyGraphTests
 
         Assert.That(order, Is.EqualTo(new[] { innerWidth }));
     }
+
+    [Test]
+    public void HasCycle_ForAcyclicGraph_ShouldReturnFalse()
+    {
+        var graph = new DependencyGraph();
+
+        graph.AddDependency(new ParameterId("InnerWidth"), new ParameterId("Width"));
+
+        Assert.That(graph.HasCycle(), Is.False);
+    }
+
+    [Test]
+    public void HasCycle_ForCyclicGraph_ShouldReturnTrue()
+    {
+        var graph = new DependencyGraph();
+        var width = new ParameterId("Width");
+        var innerWidth = new ParameterId("InnerWidth");
+
+        graph.AddDependency(innerWidth, width);
+        graph.AddDependency(width, innerWidth);
+
+        Assert.That(graph.HasCycle(), Is.True);
+    }
 }
