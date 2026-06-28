@@ -121,7 +121,7 @@ Zalecenie pracy:
 - [x] 0.6.5 Dodac operacje odejmowania.
 - [x] 0.6.6 Dodac operacje mnozenia.
 - [x] 0.6.7 Dodac operacje dzielenia.
-- [ ] 0.6.8 Dodac ewaluator wyrazen.
+- [x] 0.6.8 Dodac ewaluator wyrazen.
 - [ ] 0.6.9 Dodac obsluge brakujacego parametru.
 - [ ] 0.6.10 Dodac obsluge dzielenia przez zero.
 - [ ] 0.6.11 Dodac parser prostych wyrazen tekstowych albo zostawic jawne budowanie AST w MVP.
