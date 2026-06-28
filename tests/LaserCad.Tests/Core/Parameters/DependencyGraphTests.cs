@@ -119,4 +119,27 @@ public sealed class DependencyGraphTests
 
         Assert.That(order, Is.EqualTo(new[] { innerWidth, area }));
     }
+
+    [Test]
+    public void GetRecalculationOrder_ForParameterWithManyDependencies_ShouldRecalculateDependenciesFirst()
+    {
+        var graph = new DependencyGraph();
+        var width = new ParameterId("Width");
+        var innerWidth = new ParameterId("InnerWidth");
+        var usableWidth = new ParameterId("UsableWidth");
+        var layoutWidth = new ParameterId("LayoutWidth");
+
+        graph.AddDependency(innerWidth, width);
+        graph.AddDependency(usableWidth, width);
+        graph.AddDependency(layoutWidth, innerWidth);
+        graph.AddDependency(layoutWidth, usableWidth);
+
+        var order = graph.GetRecalculationOrder(width).ToArray();
+
+        Assert.That(order, Does.Contain(innerWidth));
+        Assert.That(order, Does.Contain(usableWidth));
+        Assert.That(order, Does.Contain(layoutWidth));
+        Assert.That(Array.IndexOf(order, innerWidth), Is.LessThan(Array.IndexOf(order, layoutWidth)));
+        Assert.That(Array.IndexOf(order, usableWidth), Is.LessThan(Array.IndexOf(order, layoutWidth)));
+    }
 }
