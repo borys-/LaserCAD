@@ -4,5 +4,6 @@ public enum BinaryOperator
 {
     Add,
     Subtract,
-    Multiply
+    Multiply,
+    Divide
 }

@@ -120,7 +120,7 @@ Zalecenie pracy:
 - [x] 0.6.4 Dodac operacje dodawania.
 - [x] 0.6.5 Dodac operacje odejmowania.
 - [x] 0.6.6 Dodac operacje mnozenia.
-- [ ] 0.6.7 Dodac operacje dzielenia.
+- [x] 0.6.7 Dodac operacje dzielenia.
 - [ ] 0.6.8 Dodac ewaluator wyrazen.
 - [ ] 0.6.9 Dodac obsluge brakujacego parametru.
 - [ ] 0.6.10 Dodac obsluge dzielenia przez zero.

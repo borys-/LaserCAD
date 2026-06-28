@@ -50,4 +50,15 @@ public sealed class BinaryExpressionTests
 
         Assert.That(expression.OperatorKind, Is.EqualTo(BinaryOperator.Multiply));
     }
+
+    [Test]
+    public void Constructor_ForDivide_ShouldStoreOperator()
+    {
+        var expression = new BinaryExpression(
+            new ConstantExpression(5.0),
+            BinaryOperator.Divide,
+            new ConstantExpression(2.0));
+
+        Assert.That(expression.OperatorKind, Is.EqualTo(BinaryOperator.Divide));
+    }
 }
