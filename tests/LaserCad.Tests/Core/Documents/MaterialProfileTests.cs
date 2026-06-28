@@ -101,4 +101,29 @@ public sealed class MaterialProfileTests
         Assert.Throws<ArgumentOutOfRangeException>(
             () => _ = new MaterialProfile("Invalid", defaultClearance: Length.FromMillimeters(-0.1)));
     }
+
+    [Test]
+    public void Constructor_ShouldUseDefaultMinimumFingerWidth()
+    {
+        var profile = new MaterialProfile("Custom");
+
+        Assert.That(profile.MinimumFingerWidth, Is.EqualTo(Length.FromMillimeters(0.0)));
+    }
+
+    [Test]
+    public void Constructor_WithMinimumFingerWidth_ShouldStoreMinimumFingerWidth()
+    {
+        var minimumFingerWidth = Length.FromMillimeters(6.0);
+
+        var profile = new MaterialProfile("Plywood 3 mm", minimumFingerWidth: minimumFingerWidth);
+
+        Assert.That(profile.MinimumFingerWidth, Is.EqualTo(minimumFingerWidth));
+    }
+
+    [Test]
+    public void Constructor_WithNegativeMinimumFingerWidth_ShouldThrow()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(
+            () => _ = new MaterialProfile("Invalid", minimumFingerWidth: Length.FromMillimeters(-1.0)));
+    }
 }

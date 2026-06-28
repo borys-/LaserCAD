@@ -16,7 +16,8 @@ public sealed class MaterialProfile
         string name,
         Length? thickness = null,
         Length? defaultKerf = null,
-        Length? defaultClearance = null)
+        Length? defaultClearance = null,
+        Length? minimumFingerWidth = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -26,6 +27,7 @@ public sealed class MaterialProfile
         Thickness = EnsureNonNegative(thickness ?? Length.FromMillimeters(0.0), nameof(thickness), "Material thickness cannot be negative.");
         DefaultKerf = EnsureNonNegative(defaultKerf ?? Length.FromMillimeters(0.0), nameof(defaultKerf), "Default kerf cannot be negative.");
         DefaultClearance = EnsureNonNegative(defaultClearance ?? Length.FromMillimeters(0.0), nameof(defaultClearance), "Default clearance cannot be negative.");
+        MinimumFingerWidth = EnsureNonNegative(minimumFingerWidth ?? Length.FromMillimeters(0.0), nameof(minimumFingerWidth), "Minimum finger width cannot be negative.");
 
         Name = name;
     }
@@ -49,6 +51,11 @@ public sealed class MaterialProfile
     /// Domyslny luz montazowy dla polaczen generowanych z profilu materialu.
     /// </summary>
     public Length DefaultClearance { get; }
+
+    /// <summary>
+    /// Minimalna szerokosc palca dla polaczen palcowych generowanych dla materialu.
+    /// </summary>
+    public Length MinimumFingerWidth { get; }
 
     /// <summary>
     /// Zwraca dlugosc po sprawdzeniu, ze nie jest ujemna.
