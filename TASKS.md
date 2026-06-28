@@ -118,7 +118,7 @@ Zalecenie pracy:
 - [x] 0.6.2 Dodac wyrazenie stale.
 - [x] 0.6.3 Dodac wyrazenie referencji do parametru.
 - [x] 0.6.4 Dodac operacje dodawania.
-- [ ] 0.6.5 Dodac operacje odejmowania.
+- [x] 0.6.5 Dodac operacje odejmowania.
 - [ ] 0.6.6 Dodac operacje mnozenia.
 - [ ] 0.6.7 Dodac operacje dzielenia.
 - [ ] 0.6.8 Dodac ewaluator wyrazen.

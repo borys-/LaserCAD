@@ -28,4 +28,15 @@ public sealed class BinaryExpressionTests
     {
         Assert.Throws<ArgumentNullException>(() => _ = new BinaryExpression(new ConstantExpression(1.0), BinaryOperator.Add, null!));
     }
+
+    [Test]
+    public void Constructor_ForSubtract_ShouldStoreOperator()
+    {
+        var expression = new BinaryExpression(
+            new ConstantExpression(5.0),
+            BinaryOperator.Subtract,
+            new ConstantExpression(2.0));
+
+        Assert.That(expression.OperatorKind, Is.EqualTo(BinaryOperator.Subtract));
+    }
 }
