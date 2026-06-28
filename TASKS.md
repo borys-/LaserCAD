@@ -146,7 +146,7 @@ Zalecenie pracy:
 - [x] 0.8.0 Utworzyc `CadDocument`.
 - [x] 0.8.1 Dodac identyfikator dokumentu.
 - [x] 0.8.2 Dodac nazwe dokumentu.
-- [ ] 0.8.3 Dodac wersje formatu pliku.
+- [x] 0.8.3 Dodac wersje formatu pliku.
 - [ ] 0.8.4 Dodac kolekcje parametrow dokumentu.
 - [ ] 0.8.5 Dodac kolekcje warstw.
 - [ ] 0.8.6 Dodac kolekcje szkicow.

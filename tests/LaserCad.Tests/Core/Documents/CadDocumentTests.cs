@@ -57,4 +57,26 @@ public sealed class CadDocumentTests
     {
         Assert.Throws<ArgumentException>(() => _ = new CadDocument(name: ""));
     }
+
+    [Test]
+    public void Constructor_ShouldUseDefaultFormatVersion()
+    {
+        var document = new CadDocument();
+
+        Assert.That(document.FormatVersion, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void Constructor_WithFormatVersion_ShouldStoreFormatVersion()
+    {
+        var document = new CadDocument(formatVersion: 2);
+
+        Assert.That(document.FormatVersion, Is.EqualTo(2));
+    }
+
+    [Test]
+    public void Constructor_WithInvalidFormatVersion_ShouldThrow()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = new CadDocument(formatVersion: 0));
+    }
 }
