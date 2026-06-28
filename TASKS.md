@@ -172,7 +172,7 @@ Zalecenie pracy:
 - [x] 0.9.6 Dodac domyslne warstwy dokumentu.
 - [x] 0.9.7 Utworzyc `MaterialProfile`.
 - [x] 0.9.8 Dodac nazwe materialu.
-- [ ] 0.9.9 Dodac grubosc materialu.
+- [x] 0.9.9 Dodac grubosc materialu.
 - [ ] 0.9.10 Dodac domyslny kerf.
 - [ ] 0.9.11 Dodac domyslny clearance.
 - [ ] 0.9.12 Dodac minimalna szerokosc palca.

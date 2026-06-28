@@ -1,4 +1,5 @@
 using LaserCad.Core.Documents;
+using LaserCad.Geometry.Units;
 
 namespace LaserCad.Tests.Core.Documents;
 
@@ -24,5 +25,30 @@ public sealed class MaterialProfileTests
     public void Constructor_WithEmptyName_ShouldThrow()
     {
         Assert.Throws<ArgumentException>(() => _ = new MaterialProfile(""));
+    }
+
+    [Test]
+    public void Constructor_ShouldUseDefaultThickness()
+    {
+        var profile = new MaterialProfile("Custom");
+
+        Assert.That(profile.Thickness, Is.EqualTo(Length.FromMillimeters(0.0)));
+    }
+
+    [Test]
+    public void Constructor_WithThickness_ShouldStoreThickness()
+    {
+        var thickness = Length.FromMillimeters(3.0);
+
+        var profile = new MaterialProfile("Plywood 3 mm", thickness);
+
+        Assert.That(profile.Thickness, Is.EqualTo(thickness));
+    }
+
+    [Test]
+    public void Constructor_WithNegativeThickness_ShouldThrow()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(
+            () => _ = new MaterialProfile("Invalid", Length.FromMillimeters(-1.0)));
     }
 }
