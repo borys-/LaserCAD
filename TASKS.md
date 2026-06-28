@@ -40,7 +40,7 @@ Zalecenie pracy:
 
 ## 0.2 Standardy techniczne
 
-- [ ] 0.2.0 Ustalic konwencje namespace, np. `LaserCad.Geometry`.
+- [x] 0.2.0 Ustalic konwencje namespace, np. `LaserCad.Geometry`.
 - [ ] 0.2.1 Ustalic konwencje nazewnictwa jednostek: klasy w PascalCase, pola prywatne w camelCase.
 - [ ] 0.2.2 Dodac podstawowy `.editorconfig`.
 - [ ] 0.2.3 Ustalic tolerancje geometryczna jako stala domenowa.
