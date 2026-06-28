@@ -12,18 +12,15 @@ public sealed class MaterialProfile
     /// Tworzy profil materialu o podanej nazwie.
     /// Uzywaj nazw opisowych, np. "Plywood 3 mm" albo "Acrylic".
     /// </summary>
-    public MaterialProfile(string name, Length? thickness = null)
+    public MaterialProfile(string name, Length? thickness = null, Length? defaultKerf = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
             throw new ArgumentException("Material profile name cannot be empty.", nameof(name));
         }
 
-        Thickness = thickness ?? Length.FromMillimeters(0.0);
-        if (Thickness < Length.FromMillimeters(0.0))
-        {
-            throw new ArgumentOutOfRangeException(nameof(thickness), "Material thickness cannot be negative.");
-        }
+        Thickness = EnsureNonNegative(thickness ?? Length.FromMillimeters(0.0), nameof(thickness), "Material thickness cannot be negative.");
+        DefaultKerf = EnsureNonNegative(defaultKerf ?? Length.FromMillimeters(0.0), nameof(defaultKerf), "Default kerf cannot be negative.");
 
         Name = name;
     }
@@ -37,4 +34,22 @@ public sealed class MaterialProfile
     /// Grubosc materialu.
     /// </summary>
     public Length Thickness { get; }
+
+    /// <summary>
+    /// Domyslna szerokosc szczeliny ciecia dla materialu.
+    /// </summary>
+    public Length DefaultKerf { get; }
+
+    /// <summary>
+    /// Zwraca dlugosc po sprawdzeniu, ze nie jest ujemna.
+    /// </summary>
+    private static Length EnsureNonNegative(Length value, string parameterName, string message)
+    {
+        if (value < Length.FromMillimeters(0.0))
+        {
+            throw new ArgumentOutOfRangeException(parameterName, message);
+        }
+
+        return value;
+    }
 }

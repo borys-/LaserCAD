@@ -51,4 +51,29 @@ public sealed class MaterialProfileTests
         Assert.Throws<ArgumentOutOfRangeException>(
             () => _ = new MaterialProfile("Invalid", Length.FromMillimeters(-1.0)));
     }
+
+    [Test]
+    public void Constructor_ShouldUseDefaultKerf()
+    {
+        var profile = new MaterialProfile("Custom");
+
+        Assert.That(profile.DefaultKerf, Is.EqualTo(Length.FromMillimeters(0.0)));
+    }
+
+    [Test]
+    public void Constructor_WithDefaultKerf_ShouldStoreDefaultKerf()
+    {
+        var kerf = Length.FromMillimeters(0.15);
+
+        var profile = new MaterialProfile("Plywood 3 mm", defaultKerf: kerf);
+
+        Assert.That(profile.DefaultKerf, Is.EqualTo(kerf));
+    }
+
+    [Test]
+    public void Constructor_WithNegativeDefaultKerf_ShouldThrow()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(
+            () => _ = new MaterialProfile("Invalid", defaultKerf: Length.FromMillimeters(-0.1)));
+    }
 }
