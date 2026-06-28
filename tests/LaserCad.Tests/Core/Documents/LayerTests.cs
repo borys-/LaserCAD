@@ -25,4 +25,22 @@ public sealed class LayerTests
     {
         Assert.Throws<ArgumentException>(() => _ = new Layer(""));
     }
+
+    [Test]
+    public void Constructor_ShouldUseDefaultColor()
+    {
+        var layer = new Layer("Cut");
+
+        Assert.That(layer.Color, Is.EqualTo(LayerColor.Black));
+    }
+
+    [Test]
+    public void Constructor_WithColor_ShouldStoreColor()
+    {
+        var color = LayerColor.FromHex("#FF0000");
+
+        var layer = new Layer("Cut", color);
+
+        Assert.That(layer.Color, Is.SameAs(color));
+    }
 }

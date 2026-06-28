@@ -167,7 +167,7 @@ Zalecenie pracy:
 - [x] 0.9.1 Dodac role: cut, engrave, score, ignore.
 - [x] 0.9.2 Utworzyc `Layer`.
 - [x] 0.9.3 Dodac nazwe warstwy.
-- [ ] 0.9.4 Dodac kolor warstwy.
+- [x] 0.9.4 Dodac kolor warstwy.
 - [ ] 0.9.5 Dodac role warstwy.
 - [ ] 0.9.6 Dodac domyslne warstwy dokumentu.
 - [ ] 0.9.7 Utworzyc `MaterialProfile`.
