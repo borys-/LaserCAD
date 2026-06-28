@@ -50,6 +50,11 @@ public sealed class ExpressionEvaluator
             return right;
         }
 
+        if (expression.OperatorKind == BinaryOperator.Divide && right.Value == 0.0)
+        {
+            return ExpressionEvaluationResult.Failure("Expression cannot be divided by zero.");
+        }
+
         var result = expression.OperatorKind switch
         {
             BinaryOperator.Add => left.Value + right.Value,

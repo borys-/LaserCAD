@@ -70,4 +70,19 @@ public sealed class ExpressionEvaluatorTests
         Assert.That(result.IsSuccess, Is.False);
         Assert.That(result.Error, Is.EqualTo("Parameter 'Width' was not found."));
     }
+
+    [Test]
+    public void Evaluate_WithDivisionByZero_ShouldReturnReadableError()
+    {
+        var evaluator = new ExpressionEvaluator();
+        var expression = new BinaryExpression(
+            new ConstantExpression(10.0),
+            BinaryOperator.Divide,
+            new ConstantExpression(0.0));
+
+        var result = evaluator.Evaluate(expression, new ParameterSet());
+
+        Assert.That(result.IsSuccess, Is.False);
+        Assert.That(result.Error, Is.EqualTo("Expression cannot be divided by zero."));
+    }
 }
