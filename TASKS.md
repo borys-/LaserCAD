@@ -165,7 +165,7 @@ Zalecenie pracy:
 
 - [x] 0.9.0 Utworzyc enum `LayerRole`.
 - [x] 0.9.1 Dodac role: cut, engrave, score, ignore.
-- [ ] 0.9.2 Utworzyc `Layer`.
+- [x] 0.9.2 Utworzyc `Layer`.
 - [ ] 0.9.3 Dodac nazwe warstwy.
 - [ ] 0.9.4 Dodac kolor warstwy.
 - [ ] 0.9.5 Dodac role warstwy.
