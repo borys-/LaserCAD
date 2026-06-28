@@ -11,7 +11,8 @@ public sealed class CadDocument
         ParameterSet? parameters = null,
         IEnumerable<Layer>? layers = null,
         IEnumerable<Sketch>? sketches = null,
-        IEnumerable<GeneratorInstance>? generators = null)
+        IEnumerable<GeneratorInstance>? generators = null,
+        MaterialProfile? materialProfile = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -30,6 +31,7 @@ public sealed class CadDocument
         Layers = layers?.ToArray() ?? Array.Empty<Layer>();
         Sketches = sketches?.ToArray() ?? Array.Empty<Sketch>();
         Generators = generators?.ToArray() ?? Array.Empty<GeneratorInstance>();
+        MaterialProfile = materialProfile;
 
         if (Layers.Any(layer => layer is null))
         {
@@ -66,29 +68,38 @@ public sealed class CadDocument
 
     public IReadOnlyList<GeneratorInstance> Generators { get; }
 
+    public MaterialProfile? MaterialProfile { get; }
+
     public CadDocument AddParameter(Parameter parameter)
     {
-        return new CadDocument(Id, Name, FormatVersion, Parameters.Add(parameter), Layers, Sketches, Generators);
+        return new CadDocument(Id, Name, FormatVersion, Parameters.Add(parameter), Layers, Sketches, Generators, MaterialProfile);
     }
 
     public CadDocument AddLayer(Layer layer)
     {
         ArgumentNullException.ThrowIfNull(layer);
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers.Append(layer), Sketches, Generators);
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers.Append(layer), Sketches, Generators, MaterialProfile);
     }
 
     public CadDocument AddSketch(Sketch sketch)
     {
         ArgumentNullException.ThrowIfNull(sketch);
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches.Append(sketch), Generators);
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches.Append(sketch), Generators, MaterialProfile);
     }
 
     public CadDocument AddGenerator(GeneratorInstance generator)
     {
         ArgumentNullException.ThrowIfNull(generator);
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators.Append(generator));
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators.Append(generator), MaterialProfile);
+    }
+
+    public CadDocument WithMaterialProfile(MaterialProfile materialProfile)
+    {
+        ArgumentNullException.ThrowIfNull(materialProfile);
+
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, materialProfile);
     }
 }

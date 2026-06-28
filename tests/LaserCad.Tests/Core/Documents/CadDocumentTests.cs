@@ -160,4 +160,24 @@ public sealed class CadDocumentTests
         Assert.That(updatedDocument.Generators, Is.EqualTo(new[] { generator }));
         Assert.That(document.Generators, Is.Empty);
     }
+
+    [Test]
+    public void Constructor_ShouldUseNoMaterialProfileByDefault()
+    {
+        var document = new CadDocument();
+
+        Assert.That(document.MaterialProfile, Is.Null);
+    }
+
+    [Test]
+    public void WithMaterialProfile_ShouldReturnDocumentWithMaterialProfile()
+    {
+        var document = new CadDocument();
+        var materialProfile = new MaterialProfile("Plywood 3 mm");
+
+        var updatedDocument = document.WithMaterialProfile(materialProfile);
+
+        Assert.That(updatedDocument.MaterialProfile, Is.SameAs(materialProfile));
+        Assert.That(document.MaterialProfile, Is.Null);
+    }
 }
