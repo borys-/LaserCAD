@@ -11,4 +11,18 @@ public sealed class LayerTests
 
         Assert.That(layer, Is.Not.Null);
     }
+
+    [Test]
+    public void Constructor_ShouldStoreName()
+    {
+        var layer = new Layer("Cut");
+
+        Assert.That(layer.Name, Is.EqualTo("Cut"));
+    }
+
+    [Test]
+    public void Constructor_WithEmptyName_ShouldThrow()
+    {
+        Assert.Throws<ArgumentException>(() => _ = new Layer(""));
+    }
 }
