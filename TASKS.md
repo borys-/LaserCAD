@@ -58,7 +58,7 @@ Zalecenie pracy:
 - [x] 0.3.3 Dodac fabryke `Length.FromInches`.
 - [x] 0.3.4 Dodac wlasciwosc `Millimeters`.
 - [x] 0.3.5 Dodac operatory dodawania i odejmowania `Length`.
-- [ ] 0.3.6 Dodac mnozenie `Length` przez liczbe.
+- [x] 0.3.6 Dodac mnozenie `Length` przez liczbe.
 - [ ] 0.3.7 Dodac dzielenie `Length` przez liczbe.
 - [ ] 0.3.8 Dodac porownania z tolerancja.
 - [ ] 0.3.9 Dodac formatowanie do tekstu w mm.

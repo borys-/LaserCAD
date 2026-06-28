@@ -38,4 +38,14 @@ public readonly record struct Length
     {
         return new Length(left._millimeters - right._millimeters);
     }
+
+    public static Length operator *(Length length, double multiplier)
+    {
+        return new Length(length._millimeters * multiplier);
+    }
+
+    public static Length operator *(double multiplier, Length length)
+    {
+        return length * multiplier;
+    }
 }

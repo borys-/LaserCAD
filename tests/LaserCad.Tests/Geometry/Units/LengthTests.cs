@@ -81,4 +81,20 @@ public sealed class LengthTests
 
         Assert.That(result.Millimeters, Is.EqualTo(40.0));
     }
+
+    [Test]
+    public void Multiply_ByNumber_ShouldReturnScaledLength()
+    {
+        var result = Length.FromCentimeters(2.5) * 3.0;
+
+        Assert.That(result.Millimeters, Is.EqualTo(75.0));
+    }
+
+    [Test]
+    public void Multiply_NumberByLength_ShouldReturnScaledLength()
+    {
+        var result = 3.0 * Length.FromCentimeters(2.5);
+
+        Assert.That(result.Millimeters, Is.EqualTo(75.0));
+    }
 }
