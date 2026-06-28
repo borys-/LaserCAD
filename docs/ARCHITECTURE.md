@@ -68,6 +68,90 @@ Zawiera testy jednostkowe dla bibliotek domenowych i eksporterow.
 
 Testy uzywaja NUnit i Moq.
 
+## Granice projektow
+
+### Granica geometrii
+
+`LaserCad.Geometry` jest najnizsza warstwa domenowa.
+
+Moze zawierac:
+
+- typy matematyczne,
+- typy geometryczne,
+- tolerancje,
+- transformacje,
+- algorytmy geometryczne.
+
+Nie moze zawierac:
+
+- dokumentu CAD,
+- warstw produkcyjnych,
+- profili materialowych,
+- generatorow,
+- eksportu SVG/DXF,
+- zaleznosci od Unity.
+
+### Granica core
+
+`LaserCad.Core` modeluje intencje projektu CAD.
+
+Moze zawierac:
+
+- dokument,
+- szkice,
+- encje,
+- parametry,
+- wyrazenia,
+- warstwy,
+- profile materialowe,
+- generatory,
+- operacje edycyjne.
+
+Nie moze zawierac:
+
+- kodu UI,
+- typow Unity,
+- logiki rysowania widoku,
+- szczegolow formatu SVG/DXF poza neutralnymi danymi domenowymi.
+
+### Granica exporterow
+
+`LaserCad.Export.Svg` i `LaserCad.Export.Dxf` sa adapterami wyjsciowymi.
+
+Moga zawierac:
+
+- mapowanie domeny na format pliku,
+- opcje eksportu,
+- serializacje wyniku eksportu.
+
+Nie moga zawierac:
+
+- logiki edycji dokumentu,
+- generatorow geometrii domenowej,
+- interakcji UI,
+- zaleznosci od Unity.
+
+### Granica Unity
+
+`LaserCad.Unity` jest adapterem UI.
+
+Moze zawierac:
+
+- renderowanie,
+- kontrolery wejscia,
+- kamere,
+- grid,
+- snap wizualny,
+- panele narzedzi i parametrow.
+
+Nie moze duplikowac logiki domenowej, ktora nalezy do `LaserCad.Core` albo `LaserCad.Geometry`.
+
+### Granica testow
+
+`LaserCad.Tests` moze zalezec od wszystkich bibliotek testowanych.
+
+Testy nie powinny wymuszac zmian w API tylko dla wygody testu. Jesli API jest trudne do testowania, nalezy poprawic projekt domenowy, a nie obchodzic go przez szczegoly implementacji.
+
 ## Kierunek zaleznosci
 
 Dozwolony kierunek zaleznosci:
