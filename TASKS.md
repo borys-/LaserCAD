@@ -164,7 +164,7 @@ Zalecenie pracy:
 ## 0.9 Warstwy i profile materialow
 
 - [x] 0.9.0 Utworzyc enum `LayerRole`.
-- [ ] 0.9.1 Dodac role: cut, engrave, score, ignore.
+- [x] 0.9.1 Dodac role: cut, engrave, score, ignore.
 - [ ] 0.9.2 Utworzyc `Layer`.
 - [ ] 0.9.3 Dodac nazwe warstwy.
 - [ ] 0.9.4 Dodac kolor warstwy.

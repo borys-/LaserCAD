@@ -6,4 +6,23 @@ namespace LaserCad.Core.Documents;
 /// </summary>
 public enum LayerRole
 {
+    /// <summary>
+    /// Warstwa przeznaczona do pelnego ciecia konturu.
+    /// </summary>
+    Cut,
+
+    /// <summary>
+    /// Warstwa przeznaczona do grawerowania powierzchniowego.
+    /// </summary>
+    Engrave,
+
+    /// <summary>
+    /// Warstwa przeznaczona do lekkiego nacinania albo znakowania linii.
+    /// </summary>
+    Score,
+
+    /// <summary>
+    /// Warstwa ignorowana przez eksport produkcyjny.
+    /// </summary>
+    Ignore
 }
