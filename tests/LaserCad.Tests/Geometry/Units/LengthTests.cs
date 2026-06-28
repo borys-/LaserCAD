@@ -240,4 +240,28 @@ public sealed class LengthTests
 
         Assert.That(length.Millimeters, Is.EqualTo(123.444).Within(GeometryTolerance.Default));
     }
+
+    [Test]
+    public void Arithmetic_ShouldAddSubtractMultiplyAndDivideMixedUnits()
+    {
+        var result = ((Length.FromCentimeters(3.0) + Length.FromInches(1.0)) - Length.FromMillimeters(5.4)) * 2.0 / 4.0;
+
+        Assert.That(result.Millimeters, Is.EqualTo(25.0).Within(GeometryTolerance.Default));
+    }
+
+    [Test]
+    public void Arithmetic_ShouldAllowNegativeResults()
+    {
+        var result = Length.FromMillimeters(10.0) - Length.FromCentimeters(2.0);
+
+        Assert.That(result.Millimeters, Is.EqualTo(-10.0));
+    }
+
+    [Test]
+    public void Arithmetic_ShouldPreserveZeroLength()
+    {
+        var result = (Length.FromMillimeters(10.0) - Length.FromCentimeters(1.0)) * 5.0;
+
+        Assert.That(result.Millimeters, Is.EqualTo(0.0));
+    }
 }
