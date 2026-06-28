@@ -176,7 +176,7 @@ Zalecenie pracy:
 - [x] 0.9.10 Dodac domyslny kerf.
 - [x] 0.9.11 Dodac domyslny clearance.
 - [x] 0.9.12 Dodac minimalna szerokosc palca.
-- [ ] 0.9.13 Dodac profile: sklejka 3 mm, sklejka 4 mm, MDF, akryl.
+- [x] 0.9.13 Dodac profile: sklejka 3 mm, sklejka 4 mm, MDF, akryl.
 - [ ] 0.9.14 Dodac test domyslnych warstw.
 - [ ] 0.9.15 Dodac test domyslnych profili materialow.
 
