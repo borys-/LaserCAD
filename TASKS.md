@@ -24,7 +24,7 @@ Zalecenie pracy:
 
 ## 0.1 Projekty i zaleznosci
 
-- [ ] 0.1.0 Utworzyc projekt `LaserCad.Core`.
+- [x] 0.1.0 Utworzyc projekt `LaserCad.Core`.
 - [ ] 0.1.1 Utworzyc projekt `LaserCad.Geometry`.
 - [ ] 0.1.2 Utworzyc projekt `LaserCad.Export.Svg`.
 - [ ] 0.1.3 Utworzyc projekt `LaserCad.Export.Dxf`.
