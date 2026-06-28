@@ -102,7 +102,7 @@ Zalecenie pracy:
 - [x] 0.5.5 Dodac wartosc parametru.
 - [x] 0.5.6 Dodac opcjonalna jednostke wyswietlania.
 - [x] 0.5.7 Dodac opcjonalne minimum i maksimum.
-- [ ] 0.5.8 Dodac walidacje wartosci parametru.
+- [x] 0.5.8 Dodac walidacje wartosci parametru.
 - [ ] 0.5.9 Dodac kolekcje `ParameterSet`.
 - [ ] 0.5.10 Dodac wyszukiwanie parametru po id.
 - [ ] 0.5.11 Dodac wyszukiwanie parametru po nazwie.
