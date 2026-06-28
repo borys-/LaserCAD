@@ -153,7 +153,7 @@ Zalecenie pracy:
 - [x] 0.8.7 Dodac kolekcje generatorow.
 - [x] 0.8.8 Dodac profil materialu dokumentu.
 - [x] 0.8.9 Utworzyc `Sketch`.
-- [ ] 0.8.10 Dodac kolekcje encji w szkicu.
+- [x] 0.8.10 Dodac kolekcje encji w szkicu.
 - [ ] 0.8.11 Utworzyc bazowy kontrakt `Entity`.
 - [ ] 0.8.12 Utworzyc `GeneratorInstance`.
 - [ ] 0.8.13 Dodac powiazanie generatora z parametrami.
