@@ -161,4 +161,59 @@ public sealed class ParameterTests
             "Front",
             minimumValue: "A"));
     }
+
+    [Test]
+    public void Constructor_ShouldCreateLengthParameter()
+    {
+        var parameter = new Parameter(
+            new ParameterId("MaterialThickness"),
+            "Material thickness",
+            ParameterType.Length,
+            Length.FromMillimeters(3.0),
+            "mm");
+
+        Assert.That(parameter.Id, Is.EqualTo(new ParameterId("MaterialThickness")));
+        Assert.That(parameter.Type, Is.EqualTo(ParameterType.Length));
+        Assert.That(parameter.Value, Is.EqualTo(Length.FromMillimeters(3.0)));
+    }
+
+    [Test]
+    public void Constructor_ShouldCreateNumberParameter()
+    {
+        var parameter = new Parameter(new ParameterId("FingerCount"), "Finger count", ParameterType.Number, 7.0);
+
+        Assert.That(parameter.Id, Is.EqualTo(new ParameterId("FingerCount")));
+        Assert.That(parameter.Type, Is.EqualTo(ParameterType.Number));
+        Assert.That(parameter.Value, Is.EqualTo(7.0));
+    }
+
+    [Test]
+    public void Constructor_ShouldCreateBooleanParameter()
+    {
+        var parameter = new Parameter(new ParameterId("HasLid"), "Has lid", ParameterType.Boolean, false);
+
+        Assert.That(parameter.Id, Is.EqualTo(new ParameterId("HasLid")));
+        Assert.That(parameter.Type, Is.EqualTo(ParameterType.Boolean));
+        Assert.That(parameter.Value, Is.False);
+    }
+
+    [Test]
+    public void Constructor_ShouldCreateTextParameter()
+    {
+        var parameter = new Parameter(new ParameterId("Label"), "Label", ParameterType.Text, "Front");
+
+        Assert.That(parameter.Id, Is.EqualTo(new ParameterId("Label")));
+        Assert.That(parameter.Type, Is.EqualTo(ParameterType.Text));
+        Assert.That(parameter.Value, Is.EqualTo("Front"));
+    }
+
+    [Test]
+    public void Constructor_ShouldCreateChoiceParameter()
+    {
+        var parameter = new Parameter(new ParameterId("JointMode"), "Joint mode", ParameterType.Choice, "Tight");
+
+        Assert.That(parameter.Id, Is.EqualTo(new ParameterId("JointMode")));
+        Assert.That(parameter.Type, Is.EqualTo(ParameterType.Choice));
+        Assert.That(parameter.Value, Is.EqualTo("Tight"));
+    }
 }
