@@ -36,7 +36,7 @@ public sealed class CadDocument
         Name = name;
         FormatVersion = formatVersion;
         Parameters = parameters ?? new ParameterSet();
-        Layers = layers?.ToArray() ?? Array.Empty<Layer>();
+        Layers = layers?.ToArray() ?? DefaultLayers.All.ToArray();
         Sketches = sketches?.ToArray() ?? Array.Empty<Sketch>();
         Generators = generators?.ToArray() ?? Array.Empty<GeneratorInstance>();
         MaterialProfile = materialProfile;

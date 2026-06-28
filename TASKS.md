@@ -169,7 +169,7 @@ Zalecenie pracy:
 - [x] 0.9.3 Dodac nazwe warstwy.
 - [x] 0.9.4 Dodac kolor warstwy.
 - [x] 0.9.5 Dodac role warstwy.
-- [ ] 0.9.6 Dodac domyslne warstwy dokumentu.
+- [x] 0.9.6 Dodac domyslne warstwy dokumentu.
 - [ ] 0.9.7 Utworzyc `MaterialProfile`.
 - [ ] 0.9.8 Dodac nazwe materialu.
 - [ ] 0.9.9 Dodac grubosc materialu.

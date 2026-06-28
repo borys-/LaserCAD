@@ -102,17 +102,17 @@ public sealed class CadDocumentTests
     }
 
     [Test]
-    public void Constructor_ShouldCreateEmptyLayerCollection()
+    public void Constructor_ShouldCreateDefaultLayerCollection()
     {
         var document = new CadDocument();
 
-        Assert.That(document.Layers, Is.Empty);
+        Assert.That(document.Layers, Is.EqualTo(DefaultLayers.All));
     }
 
     [Test]
     public void AddLayer_ShouldReturnDocumentWithAddedLayer()
     {
-        var document = new CadDocument();
+        var document = new CadDocument(layers: Array.Empty<Layer>());
         var layer = new Layer("Cut");
 
         var updatedDocument = document.AddLayer(layer);
@@ -190,7 +190,7 @@ public sealed class CadDocumentTests
         Assert.That(document.Name, Is.EqualTo("Untitled"));
         Assert.That(document.FormatVersion, Is.EqualTo(1));
         Assert.That(document.Parameters.Parameters, Is.Empty);
-        Assert.That(document.Layers, Is.Empty);
+        Assert.That(document.Layers, Is.EqualTo(DefaultLayers.All));
         Assert.That(document.Sketches, Is.Empty);
         Assert.That(document.Generators, Is.Empty);
         Assert.That(document.MaterialProfile, Is.Null);
