@@ -120,6 +120,11 @@ public sealed class Dimension
             return ApplyRectangleWidth(rectangle);
         }
 
+        if (Kind == DimensionKind.Height && entity is RectangleEntity heightRectangle)
+        {
+            return ApplyRectangleHeight(heightRectangle);
+        }
+
         throw new InvalidOperationException($"Dimension kind '{Kind}' is not supported for entity '{entity.GetType().Name}'.");
     }
 
@@ -145,6 +150,20 @@ public sealed class Dimension
             new Point2D(bounds.MinX, bounds.MinY),
             Value.Millimeters,
             height,
+            rectangle.Id,
+            rectangle.LayerName,
+            rectangle.DimensionBindings);
+    }
+
+    private RectangleEntity ApplyRectangleHeight(RectangleEntity rectangle)
+    {
+        var bounds = rectangle.Bounds;
+        var width = bounds.MaxX - bounds.MinX;
+
+        return new RectangleEntity(
+            new Point2D(bounds.MinX, bounds.MinY),
+            width,
+            Value.Millimeters,
             rectangle.Id,
             rectangle.LayerName,
             rectangle.DimensionBindings);

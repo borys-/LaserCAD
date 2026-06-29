@@ -36,4 +36,18 @@ public sealed class DimensionApplyTests
         Assert.That(updatedRectangle.Id, Is.EqualTo(rectangle.Id));
         Assert.That(updatedRectangle.Bounds, Is.EqualTo(new BoundingBox(2.0, 3.0, 22.0, 8.0)));
     }
+
+    [Test]
+    public void Apply_WithRectangleHeight_ShouldResizeRectangleHeight()
+    {
+        var rectangle = new RectangleEntity(new Point2D(2.0, 3.0), 10.0, 5.0);
+        var sketch = new Sketch(entities: new[] { rectangle });
+        var dimension = new Dimension(rectangle.Id, DimensionKind.Height, Length.FromMillimeters(12.0));
+
+        var updatedSketch = dimension.Apply(sketch);
+
+        var updatedRectangle = (RectangleEntity)updatedSketch.Entities[0];
+        Assert.That(updatedRectangle.Id, Is.EqualTo(rectangle.Id));
+        Assert.That(updatedRectangle.Bounds, Is.EqualTo(new BoundingBox(2.0, 3.0, 12.0, 15.0)));
+    }
 }
