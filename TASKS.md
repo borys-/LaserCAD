@@ -387,15 +387,15 @@ Zalecenie pracy:
 
 ## 4.1 Eksport SVG - encje
 
-- [ ] 4.1.0 Dodac eksport `LineEntity` jako `line`.
-- [ ] 4.1.1 Dodac eksport `RectangleEntity` jako `rect` albo `path`.
-- [ ] 4.1.2 Dodac eksport `CircleEntity` jako `circle`.
-- [ ] 4.1.3 Dodac eksport `ArcEntity` jako `path`.
-- [ ] 4.1.4 Dodac eksport `PolylineEntity` jako `polyline` albo `path`.
-- [ ] 4.1.5 Dodac mapowanie koloru warstwy.
-- [ ] 4.1.6 Dodac pomijanie warstwy `ignore`.
-- [ ] 4.1.7 Dodac test eksportu kazdej encji.
-- [ ] 4.1.8 Dodac test eksportu warstw.
+- [x] 4.1.0 Dodac eksport `LineEntity` jako `line`.
+- [x] 4.1.1 Dodac eksport `RectangleEntity` jako `rect` albo `path`.
+- [x] 4.1.2 Dodac eksport `CircleEntity` jako `circle`.
+- [x] 4.1.3 Dodac eksport `ArcEntity` jako `path`.
+- [x] 4.1.4 Dodac eksport `PolylineEntity` jako `polyline` albo `path`.
+- [x] 4.1.5 Dodac mapowanie koloru warstwy.
+- [x] 4.1.6 Dodac pomijanie warstwy `ignore`.
+- [x] 4.1.7 Dodac test eksportu kazdej encji.
+- [x] 4.1.8 Dodac test eksportu warstw.
 
 ## 4.2 Eksport DXF
 
@@ -672,7 +672,7 @@ Zalecenie pracy:
 - [ ] MVP.0.7 Zaimplementowac generator finger joint dla prostych krawedzi.
 - [ ] MVP.0.8 Zaimplementowac generator otwartego pudelka.
 - [ ] MVP.0.9 Zaimplementowac kompensacje kerfu dla prostych konturow.
-- [ ] MVP.0.10 Zaimplementowac eksport SVG.
+- [x] MVP.0.10 Zaimplementowac eksport SVG.
 - [ ] MVP.0.11 Zaimplementowac prosty widok Unity 2D.
 - [ ] MVP.0.12 Zaimplementowac panel zmiany parametrow pudelka.
 - [ ] MVP.0.13 Potwierdzic, ze zmiana parametru przebudowuje pudelko.
