@@ -17,7 +17,8 @@ public sealed class BoxGeneratorOptions
         Length? materialThickness = null,
         Length? kerf = null,
         Length? fingerWidth = null,
-        Length? clearance = null)
+        Length? clearance = null,
+        BoxGeneratorType boxType = BoxGeneratorType.Open)
     {
         Width = width ?? Length.FromMillimeters(100.0);
         Depth = depth ?? Length.FromMillimeters(80.0);
@@ -26,6 +27,7 @@ public sealed class BoxGeneratorOptions
         Kerf = kerf ?? Length.FromMillimeters(0.0);
         FingerWidth = fingerWidth ?? Length.FromMillimeters(10.0);
         Clearance = clearance ?? Length.FromMillimeters(0.0);
+        BoxType = boxType;
     }
 
     /// <summary>
@@ -62,4 +64,9 @@ public sealed class BoxGeneratorOptions
     /// Dodatkowy luz montazowy dla polaczen scianek pudelka.
     /// </summary>
     public Length Clearance { get; }
+
+    /// <summary>
+    /// Wariant konstrukcyjny pudelka.
+    /// </summary>
+    public BoxGeneratorType BoxType { get; }
 }
