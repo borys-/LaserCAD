@@ -8,8 +8,14 @@ public readonly record struct Arc2D
 {
     /// <summary>
     /// Tworzy luk o podanym srodku, promieniu oraz katach w radianach.
+    /// Domyslny kierunek luku jest przeciwny do ruchu wskazowek zegara.
     /// </summary>
-    public Arc2D(Point2D center, double radius, double startAngleRadians, double endAngleRadians)
+    public Arc2D(
+        Point2D center,
+        double radius,
+        double startAngleRadians,
+        double endAngleRadians,
+        ArcDirection direction = ArcDirection.Counterclockwise)
     {
         if (radius <= 0.0)
         {
@@ -20,6 +26,7 @@ public readonly record struct Arc2D
         Radius = radius;
         StartAngleRadians = startAngleRadians;
         EndAngleRadians = endAngleRadians;
+        Direction = direction;
     }
 
     /// <summary>
@@ -41,4 +48,9 @@ public readonly record struct Arc2D
     /// Kat koncowy luku w radianach.
     /// </summary>
     public double EndAngleRadians { get; }
+
+    /// <summary>
+    /// Kierunek przejscia po luku od kata poczatkowego do koncowego.
+    /// </summary>
+    public ArcDirection Direction { get; }
 }
