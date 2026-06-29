@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using LaserCad.Core.Documents;
+using LaserCad.Geometry;
 using UnityEngine;
 
 namespace LaserCad.Unity
@@ -10,6 +11,15 @@ namespace LaserCad.Unity
     /// </summary>
     public sealed class SelectionService : MonoBehaviour
     {
+        [SerializeField]
+        private Camera workspaceCamera;
+
+        [SerializeField]
+        private LaserCadApplicationController applicationController;
+
+        [SerializeField]
+        private float clickToleranceMillimeters = 2f;
+
         private readonly HashSet<Guid> selectedEntityIds = new HashSet<Guid>();
 
         /// <summary>
@@ -26,6 +36,14 @@ namespace LaserCad.Unity
         public int SelectionCount
         {
             get { return selectedEntityIds.Count; }
+        }
+
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                SelectAtMousePosition();
+            }
         }
 
         /// <summary>
@@ -71,6 +89,72 @@ namespace LaserCad.Unity
         public bool IsSelected(ISketchEntity entity)
         {
             return entity != null && selectedEntityIds.Contains(entity.Id);
+        }
+
+        private void SelectAtMousePosition()
+        {
+            var entity = FindEntityAtMousePosition();
+            if (entity != null)
+            {
+                SelectOnly(entity);
+            }
+        }
+
+        private ISketchEntity FindEntityAtMousePosition()
+        {
+            if (workspaceCamera == null)
+            {
+                return null;
+            }
+
+            var world = workspaceCamera.ScreenToWorldPoint(Input.mousePosition);
+            return FindNearestEntity(new Vector2(world.x, world.y));
+        }
+
+        private ISketchEntity FindNearestEntity(Vector2 position)
+        {
+            ISketchEntity bestEntity = null;
+            var bestDistance = float.PositiveInfinity;
+
+            foreach (var entity in GetEntities())
+            {
+                var distance = GetDistanceToBounds(position, entity.Bounds);
+                if (distance <= clickToleranceMillimeters && distance < bestDistance)
+                {
+                    bestEntity = entity;
+                    bestDistance = distance;
+                }
+            }
+
+            return bestEntity;
+        }
+
+        private IEnumerable<ISketchEntity> GetEntities()
+        {
+            if (applicationController == null || applicationController.CurrentDocument == null)
+            {
+                yield break;
+            }
+
+            foreach (var sketch in applicationController.CurrentDocument.Sketches)
+            {
+                foreach (var entity in sketch.Entities)
+                {
+                    yield return entity;
+                }
+            }
+        }
+
+        private static float GetDistanceToBounds(Vector2 position, BoundingBox bounds)
+        {
+            var dx = Mathf.Max(
+                Mathf.Max((float)bounds.MinX - position.x, 0f),
+                position.x - (float)bounds.MaxX);
+            var dy = Mathf.Max(
+                Mathf.Max((float)bounds.MinY - position.y, 0f),
+                position.y - (float)bounds.MaxY);
+
+            return Mathf.Sqrt(dx * dx + dy * dy);
         }
     }
 }
