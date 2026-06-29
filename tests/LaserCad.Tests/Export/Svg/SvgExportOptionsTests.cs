@@ -20,4 +20,15 @@ public class SvgExportOptionsTests
             StrokeWidthMillimeters = -0.1,
         });
     }
+
+    [Test]
+    public void ExportedLayerNames_ShouldTrimEmptyNamesAndDuplicates()
+    {
+        var options = new SvgExportOptions
+        {
+            ExportedLayerNames = new[] { " Cut ", "", "Cut", "Engrave" },
+        };
+
+        Assert.That(options.ExportedLayerNames, Is.EqualTo(new[] { "Cut", "Engrave" }));
+    }
 }
