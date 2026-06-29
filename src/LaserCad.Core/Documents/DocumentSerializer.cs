@@ -1,3 +1,6 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 namespace LaserCad.Core.Documents;
 
 /// <summary>
@@ -6,6 +9,13 @@ namespace LaserCad.Core.Documents;
 /// </summary>
 public sealed class DocumentSerializer
 {
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        WriteIndented = true
+    };
+
     /// <summary>
     /// Biezaca wersja formatu pliku obslugiwana przez serializer.
     /// </summary>
@@ -18,7 +28,13 @@ public sealed class DocumentSerializer
     {
         ArgumentNullException.ThrowIfNull(document);
 
-        throw new NotImplementedException("Document serialization is not implemented yet.");
+        var dto = new DocumentDto
+        {
+            Id = document.Id,
+            Name = document.Name
+        };
+
+        return JsonSerializer.Serialize(dto, JsonOptions);
     }
 
     /// <summary>
@@ -32,5 +48,12 @@ public sealed class DocumentSerializer
         }
 
         throw new NotImplementedException("Document deserialization is not implemented yet.");
+    }
+
+    private sealed class DocumentDto
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; } = string.Empty;
     }
 }
