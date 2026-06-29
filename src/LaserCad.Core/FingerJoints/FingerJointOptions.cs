@@ -14,12 +14,14 @@ public sealed class FingerJointOptions
         Length? fingerWidth = null,
         Length? minimumFingerWidth = null,
         Length? maximumFingerWidth = null,
-        bool startWithFinger = true)
+        bool startWithFinger = true,
+        bool endWithFinger = true)
     {
         FingerWidth = fingerWidth ?? Length.FromMillimeters(0.0);
         MinimumFingerWidth = minimumFingerWidth ?? Length.FromMillimeters(0.0);
         MaximumFingerWidth = maximumFingerWidth ?? Length.FromMillimeters(0.0);
         StartWithFinger = startWithFinger;
+        EndWithFinger = endWithFinger;
     }
 
     /// <summary>
@@ -41,4 +43,9 @@ public sealed class FingerJointOptions
     /// Okresla, czy profil krawedzi ma zaczynac sie od wystajacego palca.
     /// </summary>
     public bool StartWithFinger { get; }
+
+    /// <summary>
+    /// Okresla, czy profil krawedzi ma konczyc sie wystajacym palcem.
+    /// </summary>
+    public bool EndWithFinger { get; }
 }
