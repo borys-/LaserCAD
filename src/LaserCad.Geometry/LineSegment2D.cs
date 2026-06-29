@@ -37,6 +37,11 @@ public readonly record struct LineSegment2D
     public Vector2D Direction => (End - Start).Normalize();
 
     /// <summary>
+    /// Bounding box obejmujacy punkt poczatkowy i koncowy odcinka.
+    /// </summary>
+    public BoundingBox Bounds => BoundingBox.FromPoints(Start, End);
+
+    /// <summary>
     /// Zwraca punkt posredni dla parametru t z zakresu od 0 do 1.
     /// Dla t = 0 zwraca poczatek, dla t = 1 zwraca koniec.
     /// </summary>
