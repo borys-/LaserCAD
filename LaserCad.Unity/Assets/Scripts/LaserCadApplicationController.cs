@@ -1,4 +1,5 @@
 using System;
+using LaserCad.Core.BoxGenerators;
 using LaserCad.Core.Documents;
 using LaserCad.Geometry;
 using UnityEngine;
@@ -21,6 +22,11 @@ namespace LaserCad.Unity
         /// </summary>
         public CadDocument CurrentDocument { get; private set; }
 
+        /// <summary>
+        /// Aktualne opcje generatora pudelka prezentowane w UI.
+        /// </summary>
+        public BoxGeneratorOptions CurrentBoxOptions { get; private set; }
+
         private void Awake()
         {
             Initialize();
@@ -31,11 +37,25 @@ namespace LaserCad.Unity
         /// </summary>
         public void Initialize()
         {
+            CurrentBoxOptions = new BoxGeneratorOptions();
             CurrentDocument = loadDemoDocument ? CreateDemoDocument() : new CadDocument();
             if (documentInfoView != null)
             {
                 documentInfoView.Show(CurrentDocument);
             }
+        }
+
+        /// <summary>
+        /// Aktualizuje opcje generatora pudelka po walidacji domenowej.
+        /// </summary>
+        public void SetBoxOptions(BoxGeneratorOptions options)
+        {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            CurrentBoxOptions = options;
         }
 
         private static CadDocument CreateDemoDocument()

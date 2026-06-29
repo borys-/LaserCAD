@@ -378,7 +378,7 @@ Zalecenie pracy:
 
 - [x] 3.5.0 Dodac renderer geometrii dokumentu 2D w Unity.
 - [x] 3.5.1 Dodac startowy dokument demonstracyjny z podstawowymi encjami.
-- [ ] 3.5.2 Dodac panel parametrow generatora pudelka.
+- [x] 3.5.2 Dodac panel parametrow generatora pudelka.
 - [ ] 3.5.3 Dodac przebudowe podgladu po zmianie parametrow pudelka.
 - [ ] 3.5.4 Dodac panel eksportu SVG.
 - [ ] 3.5.5 Dodac panel eksportu DXF.
