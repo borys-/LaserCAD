@@ -445,17 +445,17 @@ Zalecenie pracy:
 
 ## 6.0 Constraints
 
-- [ ] 6.0.0 Utworzyc bazowy kontrakt constraintu.
-- [ ] 6.0.1 Dodac `HorizontalConstraint`.
-- [ ] 6.0.2 Dodac `VerticalConstraint`.
-- [ ] 6.0.3 Dodac `ParallelConstraint`.
-- [ ] 6.0.4 Dodac `PerpendicularConstraint`.
-- [ ] 6.0.5 Dodac `CoincidentConstraint`.
-- [ ] 6.0.6 Dodac `EqualConstraint`.
-- [ ] 6.0.7 Dodac prosty solver dla ograniczonego zestawu przypadkow MVP.
-- [ ] 6.0.8 Dodac test horizontal.
-- [ ] 6.0.9 Dodac test vertical.
-- [ ] 6.0.10 Dodac test coincident.
+- [x] 6.0.0 Utworzyc bazowy kontrakt constraintu.
+- [x] 6.0.1 Dodac `HorizontalConstraint`.
+- [x] 6.0.2 Dodac `VerticalConstraint`.
+- [x] 6.0.3 Dodac `ParallelConstraint`.
+- [x] 6.0.4 Dodac `PerpendicularConstraint`.
+- [x] 6.0.5 Dodac `CoincidentConstraint`.
+- [x] 6.0.6 Dodac `EqualConstraint`.
+- [x] 6.0.7 Dodac prosty solver dla ograniczonego zestawu przypadkow MVP.
+- [x] 6.0.8 Dodac test horizontal.
+- [x] 6.0.9 Dodac test vertical.
+- [x] 6.0.10 Dodac test coincident.
 
 ## 6.1 Dimensions
 

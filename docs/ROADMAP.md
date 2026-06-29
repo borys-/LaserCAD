@@ -254,6 +254,10 @@ Pelne wymiary szkicu, constraints, solver zaleznosci geometrycznych, promien okr
   - `Clearance`.
 - Powiazanie wymiarow szkicu z parametrami dokumentu.
 
+### Ograniczenia solvera constraints MVP
+
+Solver constraints w pierwszym kroku jest deterministycznym solverem sekwencyjnym dla prostych relacji liniowych. Obsluguje `LineEntity` oraz constrainty horizontal, vertical, parallel, perpendicular, coincident i equal przez zastosowanie ich w przekazanej kolejnosci. Nie jest to jeszcze pelny solver ukladu rownan geometrycznych: nie wykrywa sprzecznych constraintow, nie iteruje do zbieznosci i nie optymalizuje wielu rozwiazan.
+
 ## Faza 7 - Generator finger joint
 
 ### Algorytm
