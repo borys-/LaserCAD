@@ -14,10 +14,18 @@ public sealed class WorkspaceCameraController : MonoBehaviour
     [SerializeField]
     private float initialOrthographicSize = 100f;
 
+    [SerializeField]
+    private float zoomSensitivity = 12f;
+
     private void Awake()
     {
         workspaceCamera ??= GetComponent<Camera>();
         ConfigureOrthographicCamera();
+    }
+
+    private void Update()
+    {
+        HandleZoom();
     }
 
     private void ConfigureOrthographicCamera()
@@ -29,5 +37,21 @@ public sealed class WorkspaceCameraController : MonoBehaviour
 
         workspaceCamera.orthographic = true;
         workspaceCamera.orthographicSize = initialOrthographicSize;
+    }
+
+    private void HandleZoom()
+    {
+        if (workspaceCamera is null)
+        {
+            return;
+        }
+
+        var scrollDelta = Input.mouseScrollDelta.y;
+        if (Mathf.Approximately(scrollDelta, 0f))
+        {
+            return;
+        }
+
+        workspaceCamera.orthographicSize -= scrollDelta * zoomSensitivity;
     }
 }
