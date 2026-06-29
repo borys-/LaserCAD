@@ -104,6 +104,20 @@ public sealed class BoxGeneratorTests
         Assert.That(frontPanel.Bounds.MaxX, Is.GreaterThan(100.0));
     }
 
+    [Test]
+    public void GenerateSketch_ShouldLayOutPanelsOnPlane()
+    {
+        var generator = new BoxGenerator();
+
+        Sketch sketch = generator.GenerateSketch(new BoxGeneratorOptions());
+
+        var frontPanel = (PolylineEntity)sketch.Entities[0];
+        var backPanel = (PolylineEntity)sketch.Entities[1];
+        var leftPanel = (PolylineEntity)sketch.Entities[2];
+        Assert.That(backPanel.Bounds.MinX, Is.GreaterThan(frontPanel.Bounds.MinX));
+        Assert.That(leftPanel.Bounds.MinX, Is.GreaterThan(backPanel.Bounds.MinX));
+    }
+
     private static void AssertPanelBounds(BoundingBox bounds, double expectedWidth, double expectedHeight)
     {
         Assert.That(bounds.MaxX - bounds.MinX, Is.EqualTo(expectedWidth).Within(0.000001));
