@@ -183,7 +183,7 @@ Zalecenie pracy:
 ## 0.10 Zapis i odczyt projektu
 
 - [x] 0.10.0 Ustalic format pliku projektu, np. JSON.
-- [ ] 0.10.1 Utworzyc `DocumentSerializer`.
+- [x] 0.10.1 Utworzyc `DocumentSerializer`.
 - [ ] 0.10.2 Dodac serializacje pustego dokumentu.
 - [ ] 0.10.3 Dodac deserializacje pustego dokumentu.
 - [ ] 0.10.4 Dodac serializacje parametrow.
