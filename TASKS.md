@@ -307,7 +307,7 @@ Zalecenie pracy:
 - [x] 2.2.2 Dodac aktualizacje prostokata po zmianie parametru wysokosci.
 - [x] 2.2.3 Dodac aktualizacje okregu po zmianie parametru srednicy.
 - [x] 2.2.4 Dodac test przebudowy szkicu po zmianie parametru.
-- [ ] 2.2.5 Opisac ograniczenia parametrycznego szkicu w MVP.
+- [x] 2.2.5 Opisac ograniczenia parametrycznego szkicu w MVP.
 
 ## 2.3 Trwalosc szkicow
 

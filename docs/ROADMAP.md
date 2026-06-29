@@ -154,6 +154,14 @@ Offset zewnetrzny i wewnetrzny sa traktowane jako operacje pomocnicze pod przysz
   - ignore.
 - Przechowywanie relacji miedzy sketchami, parametrami i generatorami.
 
+### Ograniczenia parametrycznego szkicu MVP
+
+Parametryczny szkic w MVP przechowuje proste powiazania wymiaru encji z parametrem dokumentu. Obslugiwane sa szerokosc i wysokosc prostokata oraz srednica okregu, a wartosci wymiarow musza pochodzic z parametrow typu `Length`.
+
+Przebudowa szkicu jest niemutujaca i zachowuje identyfikatory encji oraz powiazania wymiarow. Prostokat jest przebudowywany jako prostokat osiowy opisany przez bounding box, wiec MVP nie jest jeszcze solverem constraintow i nie zachowuje dowolnych obrotow ani relacji geometrycznych po przebudowie parametrycznej.
+
+Pelne wymiary szkicu, constraints, solver zaleznosci geometrycznych, promien okregu jako osobny wymiar oraz parametryzacja linii, luk, polilinii i tekstu pozostaja zakresem pozniejszych faz.
+
 ## Faza 3 - Unity
 
 - Kamera:
