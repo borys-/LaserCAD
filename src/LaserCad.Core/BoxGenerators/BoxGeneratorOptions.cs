@@ -14,12 +14,14 @@ public sealed class BoxGeneratorOptions
         Length? width = null,
         Length? depth = null,
         Length? height = null,
-        Length? materialThickness = null)
+        Length? materialThickness = null,
+        Length? kerf = null)
     {
         Width = width ?? Length.FromMillimeters(100.0);
         Depth = depth ?? Length.FromMillimeters(80.0);
         Height = height ?? Length.FromMillimeters(50.0);
         MaterialThickness = materialThickness ?? Length.FromMillimeters(3.0);
+        Kerf = kerf ?? Length.FromMillimeters(0.0);
     }
 
     /// <summary>
@@ -41,4 +43,9 @@ public sealed class BoxGeneratorOptions
     /// Grubosc materialu uzywana przez generator polaczen i scianek.
     /// </summary>
     public Length MaterialThickness { get; }
+
+    /// <summary>
+    /// Szerokosc szczeliny ciecia lasera uwzgledniana przy generowaniu pudelka.
+    /// </summary>
+    public Length Kerf { get; }
 }
