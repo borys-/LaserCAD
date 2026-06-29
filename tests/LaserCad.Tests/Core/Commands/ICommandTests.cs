@@ -18,4 +18,13 @@ public sealed class ICommandTests
         Assert.That(method, Is.Not.Null);
         Assert.That(method!.ReturnType.Name, Is.EqualTo("CadDocument"));
     }
+
+    [Test]
+    public void ICommand_ShouldDeclareUndo()
+    {
+        var method = typeof(ICommand).GetMethod(nameof(ICommand.Undo));
+
+        Assert.That(method, Is.Not.Null);
+        Assert.That(method!.ReturnType.Name, Is.EqualTo("CadDocument"));
+    }
 }

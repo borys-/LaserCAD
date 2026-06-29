@@ -11,4 +11,9 @@ public interface ICommand
     /// Wykonuje komende na dokumencie i zwraca nowa wersje dokumentu.
     /// </summary>
     CadDocument Execute(CadDocument document);
+
+    /// <summary>
+    /// Cofa komende na dokumencie i zwraca nowa wersje dokumentu.
+    /// </summary>
+    CadDocument Undo(CadDocument document);
 }
