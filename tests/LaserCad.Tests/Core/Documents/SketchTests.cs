@@ -1,5 +1,7 @@
 using LaserCad.Core.Documents;
+using LaserCad.Core.Parameters;
 using LaserCad.Geometry;
+using LaserCad.Geometry.Units;
 
 namespace LaserCad.Tests.Core.Documents;
 
@@ -111,6 +113,33 @@ public sealed class SketchTests
         Assert.That(scaled.Segment.End, Is.EqualTo(new Point2D(8.0, 0.0)));
         Assert.That(mirrored.Segment.Start, Is.EqualTo(new Point2D(-2.0, 0.0)));
         Assert.That(mirrored.Segment.End, Is.EqualTo(new Point2D(-4.0, 0.0)));
+    }
+
+    [Test]
+    public void RebuildFromParameters_ShouldUpdateBoundSketchEntities()
+    {
+        var rectangle = new RectangleEntity(new Point2D(0.0, 0.0), 10.0, 5.0)
+            .BindDimension(new EntityDimensionBinding(EntityDimensionKind.Width, new ParameterId("Width")))
+            .BindDimension(new EntityDimensionBinding(EntityDimensionKind.Height, new ParameterId("Height")));
+        var circle = new CircleEntity(new Circle2D(new Point2D(50.0, 50.0), 4.0))
+            .BindDimension(new EntityDimensionBinding(EntityDimensionKind.Diameter, new ParameterId("Diameter")));
+        var sketch = new Sketch(entities: new Entity[] { rectangle, circle });
+        var parameters = new ParameterSet(new[]
+        {
+            new Parameter(new ParameterId("Width"), "Width", ParameterType.Length, Length.FromMillimeters(20.0)),
+            new Parameter(new ParameterId("Height"), "Height", ParameterType.Length, Length.FromMillimeters(12.0)),
+            new Parameter(new ParameterId("Diameter"), "Diameter", ParameterType.Length, Length.FromMillimeters(30.0)),
+        });
+
+        var rebuilt = sketch.RebuildFromParameters(parameters);
+
+        var rebuiltRectangle = (RectangleEntity)rebuilt.Entities[0];
+        var rebuiltCircle = (CircleEntity)rebuilt.Entities[1];
+        Assert.That(rebuiltRectangle.Bounds, Is.EqualTo(new BoundingBox(0.0, 0.0, 20.0, 12.0)));
+        Assert.That(rebuiltCircle.Circle.Radius, Is.EqualTo(15.0));
+        Assert.That(rebuiltRectangle.Id, Is.EqualTo(rectangle.Id));
+        Assert.That(rebuiltCircle.Id, Is.EqualTo(circle.Id));
+        Assert.That(sketch.Entities[0], Is.SameAs(rectangle));
     }
 
     private sealed class TestEntity : Entity

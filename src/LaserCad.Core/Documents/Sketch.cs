@@ -1,4 +1,5 @@
 using LaserCad.Geometry;
+using LaserCad.Core.Parameters;
 
 namespace LaserCad.Core.Documents;
 
@@ -130,6 +131,17 @@ public sealed class Sketch
         return TransformEntity(entityId, transform);
     }
 
+    /// <summary>
+    /// Zwraca nowy szkic z encjami przebudowanymi na podstawie aktualnych parametrow.
+    /// MVP obsluguje parametryczne prostokaty i okregi.
+    /// </summary>
+    public Sketch RebuildFromParameters(ParameterSet parameters)
+    {
+        ArgumentNullException.ThrowIfNull(parameters);
+
+        return new Sketch(Id, Name, Entities.Select(entity => RebuildEntityFromParameters(entity, parameters)));
+    }
+
     private Entity FindEntity(Guid entityId)
     {
         return Entities.FirstOrDefault(entity => entity.Id == entityId)
@@ -140,5 +152,15 @@ public sealed class Sketch
     {
         return entity.Transform(transform) as Entity
             ?? throw new InvalidOperationException("Sketch entity transform must return an Entity instance.");
+    }
+
+    private static Entity RebuildEntityFromParameters(Entity entity, ParameterSet parameters)
+    {
+        return entity switch
+        {
+            RectangleEntity rectangle => rectangle.RebuildFromParameters(parameters),
+            CircleEntity circle => circle.RebuildFromParameters(parameters),
+            _ => entity,
+        };
     }
 }
