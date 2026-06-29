@@ -365,13 +365,13 @@ Zalecenie pracy:
 
 ## 3.4 Zaznaczanie
 
-- [ ] 3.4.0 Utworzyc `SelectionService`.
-- [ ] 3.4.1 Dodac zaznaczanie kliknieciem.
-- [ ] 3.4.2 Dodac odznaczanie kliknieciem w puste miejsce.
-- [ ] 3.4.3 Dodac multi-select z klawiszem modyfikatora.
-- [ ] 3.4.4 Dodac zaznaczanie prostokatem.
-- [ ] 3.4.5 Dodac highlight zaznaczonych encji.
-- [ ] 3.4.6 Dodac panel wlasciwosci zaznaczenia.
+- [x] 3.4.0 Utworzyc `SelectionService`.
+- [x] 3.4.1 Dodac zaznaczanie kliknieciem.
+- [x] 3.4.2 Dodac odznaczanie kliknieciem w puste miejsce.
+- [x] 3.4.3 Dodac multi-select z klawiszem modyfikatora.
+- [x] 3.4.4 Dodac zaznaczanie prostokatem.
+- [x] 3.4.5 Dodac highlight zaznaczonych encji.
+- [x] 3.4.6 Dodac panel wlasciwosci zaznaczenia.
 - [x] 3.4.7 Podpiac zaznaczanie do sceny roboczej.
 
 ## 4.0 Eksport SVG - fundament
