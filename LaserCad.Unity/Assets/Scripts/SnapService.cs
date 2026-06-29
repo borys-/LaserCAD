@@ -38,25 +38,35 @@ namespace LaserCad.Unity
         }
 
         /// <summary>
+        /// Maksymalna odleglosc wyboru kandydata snapowania.
+        /// </summary>
+        public float SnapRadiusMillimeters
+        {
+            get { return snapRadiusMillimeters; }
+            set { snapRadiusMillimeters = Mathf.Max(0f, value); }
+        }
+
+        /// <summary>
         /// Przyciaga pozycje do najlepszego kandydata snapowania.
         /// </summary>
         public SnapResult Snap(Vector2 worldPosition, IEnumerable<ISketchEntity> entities)
         {
             var best = new SnapResult(worldPosition, false, SnapPriority.Grid);
-            var bestDistance = snapRadiusMillimeters;
+            var bestDistance = float.PositiveInfinity;
 
             if (snapToGrid)
             {
                 TrySelectCandidate(
                     new SnapCandidate(SnapToGrid(worldPosition), SnapPriority.Grid),
                     worldPosition,
+                    snapRadiusMillimeters,
                     ref best,
                     ref bestDistance);
             }
 
             foreach (var candidate in GetEntityPointCandidates(entities))
             {
-                TrySelectCandidate(candidate, worldPosition, ref best, ref bestDistance);
+                TrySelectCandidate(candidate, worldPosition, snapRadiusMillimeters, ref best, ref bestDistance);
             }
 
             return best;
@@ -73,16 +83,30 @@ namespace LaserCad.Unity
         private static void TrySelectCandidate(
             SnapCandidate candidate,
             Vector2 sourcePosition,
+            float snapRadius,
             ref SnapResult best,
             ref float bestDistance)
         {
             var distance = Vector2.Distance(sourcePosition, candidate.Position);
-            if (distance > bestDistance)
+            if (distance > snapRadius)
             {
                 return;
             }
 
-            if (best.HasSnap && candidate.Priority < best.Priority && Mathf.Approximately(distance, bestDistance))
+            if (distance > bestDistance)
+            {
+                if (!best.HasSnap || candidate.Priority <= best.Priority)
+                {
+                    return;
+                }
+            }
+
+            if (best.HasSnap && candidate.Priority < best.Priority)
+            {
+                return;
+            }
+
+            if (best.HasSnap && candidate.Priority == best.Priority && distance >= bestDistance)
             {
                 return;
             }
