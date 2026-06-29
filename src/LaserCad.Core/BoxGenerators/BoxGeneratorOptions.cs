@@ -16,7 +16,8 @@ public sealed class BoxGeneratorOptions
         Length? height = null,
         Length? materialThickness = null,
         Length? kerf = null,
-        Length? fingerWidth = null)
+        Length? fingerWidth = null,
+        Length? clearance = null)
     {
         Width = width ?? Length.FromMillimeters(100.0);
         Depth = depth ?? Length.FromMillimeters(80.0);
@@ -24,6 +25,7 @@ public sealed class BoxGeneratorOptions
         MaterialThickness = materialThickness ?? Length.FromMillimeters(3.0);
         Kerf = kerf ?? Length.FromMillimeters(0.0);
         FingerWidth = fingerWidth ?? Length.FromMillimeters(10.0);
+        Clearance = clearance ?? Length.FromMillimeters(0.0);
     }
 
     /// <summary>
@@ -55,4 +57,9 @@ public sealed class BoxGeneratorOptions
     /// Docelowa szerokosc palca dla polaczen palcowych scianek.
     /// </summary>
     public Length FingerWidth { get; }
+
+    /// <summary>
+    /// Dodatkowy luz montazowy dla polaczen scianek pudelka.
+    /// </summary>
+    public Length Clearance { get; }
 }
