@@ -112,4 +112,76 @@ public sealed class DocumentSerializerTests
         Assert.That(hasLid, Is.Not.Null);
         Assert.That(hasLid!.Value, Is.True);
     }
+
+    [Test]
+    public void Serialize_WithLayers_ShouldWriteLayerValues()
+    {
+        var document = new CadDocument(layers:
+        [
+            new Layer("Cut", LayerColor.FromHex("#ff0000"), LayerRole.Cut),
+            new Layer("Engrave", LayerColor.FromHex("#0000ff"), LayerRole.Engrave)
+        ]);
+        var serializer = new DocumentSerializer();
+
+        var json = serializer.Serialize(document);
+        using var parsedJson = JsonDocument.Parse(json);
+        var layers = parsedJson.RootElement.GetProperty("layers");
+
+        Assert.That(layers.GetArrayLength(), Is.EqualTo(2));
+        Assert.That(layers[0].GetProperty("name").GetString(), Is.EqualTo("Cut"));
+        Assert.That(layers[0].GetProperty("color").GetString(), Is.EqualTo("#FF0000"));
+        Assert.That(layers[0].GetProperty("role").GetString(), Is.EqualTo("Cut"));
+        Assert.That(layers[1].GetProperty("role").GetString(), Is.EqualTo("Engrave"));
+    }
+
+    [Test]
+    public void Deserialize_WithLayers_ShouldReadLayerValues()
+    {
+        var id = Guid.NewGuid();
+        var json = $$"""
+        {
+          "id": "{{id}}",
+          "name": "Box",
+          "layers": [
+            {
+              "name": "Cut",
+              "color": "#FF0000",
+              "role": "Cut"
+            },
+            {
+              "name": "Engrave",
+              "color": "#0000FF",
+              "role": "Engrave"
+            }
+          ]
+        }
+        """;
+        var serializer = new DocumentSerializer();
+
+        var document = serializer.Deserialize(json);
+
+        Assert.That(document.Layers, Has.Count.EqualTo(2));
+        Assert.That(document.Layers[0].Name, Is.EqualTo("Cut"));
+        Assert.That(document.Layers[0].Color, Is.EqualTo(LayerColor.FromHex("#FF0000")));
+        Assert.That(document.Layers[0].Role, Is.EqualTo(LayerRole.Cut));
+        Assert.That(document.Layers[1].Role, Is.EqualTo(LayerRole.Engrave));
+    }
+
+    [Test]
+    public void Deserialize_WithEmptyLayers_ShouldKeepEmptyLayerCollection()
+    {
+        var id = Guid.NewGuid();
+        var json = $$"""
+        {
+          "id": "{{id}}",
+          "name": "Box",
+          "layers": []
+        }
+        """;
+        var serializer = new DocumentSerializer();
+
+        var document = serializer.Deserialize(json);
+
+        Assert.That(document.Layers, Is.Empty);
+    }
 }

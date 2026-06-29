@@ -34,7 +34,8 @@ public sealed class DocumentSerializer
         {
             Id = document.Id,
             Name = document.Name,
-            Parameters = document.Parameters.Parameters.Select(ToDto).ToArray()
+            Parameters = document.Parameters.Parameters.Select(ToDto).ToArray(),
+            Layers = document.Layers.Select(ToDto).ToArray()
         };
 
         return JsonSerializer.Serialize(dto, JsonOptions);
@@ -54,8 +55,27 @@ public sealed class DocumentSerializer
             ?? throw new InvalidOperationException("Document JSON could not be deserialized.");
 
         var parameters = new ParameterSet((dto.Parameters ?? Array.Empty<ParameterDto>()).Select(ToDomain));
+        var layers = dto.Layers?.Select(ToDomain).ToArray();
 
-        return new CadDocument(dto.Id, dto.Name, parameters: parameters);
+        return new CadDocument(dto.Id, dto.Name, parameters: parameters, layers: layers);
+    }
+
+    private static LayerDto ToDto(Layer layer)
+    {
+        return new LayerDto
+        {
+            Name = layer.Name,
+            Color = layer.Color.Hex,
+            Role = layer.Role.ToString()
+        };
+    }
+
+    private static Layer ToDomain(LayerDto dto)
+    {
+        return new Layer(
+            dto.Name,
+            LayerColor.FromHex(dto.Color),
+            Enum.Parse<LayerRole>(dto.Role, ignoreCase: false));
     }
 
     private static ParameterDto ToDto(Parameter parameter)
@@ -134,6 +154,8 @@ public sealed class DocumentSerializer
         public string Name { get; set; } = string.Empty;
 
         public ParameterDto[]? Parameters { get; set; }
+
+        public LayerDto[]? Layers { get; set; }
     }
 
     private sealed class ParameterDto
@@ -151,5 +173,14 @@ public sealed class DocumentSerializer
         public object? MinimumValue { get; set; }
 
         public object? MaximumValue { get; set; }
+    }
+
+    private sealed class LayerDto
+    {
+        public string Name { get; set; } = string.Empty;
+
+        public string Color { get; set; } = string.Empty;
+
+        public string Role { get; set; } = string.Empty;
     }
 }
