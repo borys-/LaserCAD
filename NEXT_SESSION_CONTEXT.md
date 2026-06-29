@@ -1,5 +1,30 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po poprawkach zaznaczania 3.4.8-3.4.9
+
+- W tej sesji poprawiono dwa problemy UX zaznaczania w Unity:
+  - podczas przeciagania widoczny jest prostokat zaznaczania,
+  - klikniecie trafia w realna geometrie linii, prostokatow i polilinii, zamiast polegac tylko na bounding boxie.
+- Nowe commity:
+  - `23b76c7 3.4.8 Pokaz prostokat zaznaczania`,
+  - `18b07bd 3.4.9 Popraw hit-test zaznaczania`.
+- Do `TASKS.md` dopisano i odhaczono:
+  - `3.4.8 Pokazac prostokat zaznaczania podczas przeciagania`,
+  - `3.4.9 Poprawic hit-test klikniecia dla linii, prostokatow i polilinii`.
+- Zmiany techniczne:
+  - `SelectionService` wystawia `IsDraggingSelection`, `DragStartScreenPosition` i `DragCurrentScreenPosition`,
+  - `SelectionHighlightRenderer` rysuje obrys prostokata przeciagania,
+  - `SelectionService` ma geometryczny hit-test segmentow dla `LineEntity`, `RectangleEntity`, `PolylineEntity`, a dodatkowo poprawione trafianie w `CircleEntity` i `ArcEntity`.
+- Do sprawdzenia w aplikacji:
+  - klik na obrys prostokata demo powinien zaznaczyc prostokat,
+  - klik na lamana/polilinie powinien ja zaznaczyc,
+  - przeciaganie LPM powinno pokazywac niebieski prostokat zaznaczania,
+  - zaznaczanie prostokatem powinno nadal wybierac encje przecinajace jego obszar.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `390/390`,
+  - `dotnet build src\LaserCad.Core\LaserCad.Core.csproj -f netstandard2.1 --no-restore` przechodzi,
+  - `cmd /c build.bat` zakonczyl sie sukcesem i wygenerowal `C:\borys\CAD\bin\release\LaserCad\LaserCad.exe`.
+
 ## Aktualizacja po sekcji 3.5 GUI funkcji domenowych - start
 
 - W tej sesji rozpoczeto prace nad widocznym GUI dla dotychczasowych funkcjonalnosci domenowych.
