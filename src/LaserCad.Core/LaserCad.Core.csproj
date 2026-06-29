@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net9.0;netstandard2.1</TargetFrameworks>
+    <CopyLocalLockFileAssemblies Condition="'$(TargetFramework)' == 'netstandard2.1'">true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
