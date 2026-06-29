@@ -91,6 +91,19 @@ public sealed class BoxGeneratorTests
         AssertPanelBounds(lidPanel.Bounds, expectedWidth: 106.0, expectedHeight: 86.0);
     }
 
+    [Test]
+    public void GenerateSketch_ShouldAddFingerJointsToPanelEdges()
+    {
+        var generator = new BoxGenerator();
+
+        Sketch sketch = generator.GenerateSketch(new BoxGeneratorOptions());
+
+        var frontPanel = (PolylineEntity)sketch.Entities[0];
+        Assert.That(frontPanel.Polyline.Points, Has.Count.GreaterThan(12));
+        Assert.That(frontPanel.Bounds.MinX, Is.LessThan(0.0));
+        Assert.That(frontPanel.Bounds.MaxX, Is.GreaterThan(100.0));
+    }
+
     private static void AssertPanelBounds(BoundingBox bounds, double expectedWidth, double expectedHeight)
     {
         Assert.That(bounds.MaxX - bounds.MinX, Is.EqualTo(expectedWidth).Within(0.000001));
