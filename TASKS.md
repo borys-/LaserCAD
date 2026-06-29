@@ -436,12 +436,12 @@ Zalecenie pracy:
 
 ## 5.2 Feature tree
 
-- [ ] 5.2.0 Utworzyc model elementu drzewa historii.
-- [ ] 5.2.1 Dodac wpis dla generatora.
-- [ ] 5.2.2 Dodac wpis dla operacji edycyjnej.
-- [ ] 5.2.3 Dodac aktywowanie/dezaktywowanie operacji.
-- [ ] 5.2.4 Dodac przebudowe dokumentu od feature tree.
-- [ ] 5.2.5 Dodac test prostego drzewa: generator + move.
+- [x] 5.2.0 Utworzyc model elementu drzewa historii.
+- [x] 5.2.1 Dodac wpis dla generatora.
+- [x] 5.2.2 Dodac wpis dla operacji edycyjnej.
+- [x] 5.2.3 Dodac aktywowanie/dezaktywowanie operacji.
+- [x] 5.2.4 Dodac przebudowe dokumentu od feature tree.
+- [x] 5.2.5 Dodac test prostego drzewa: generator + move.
 
 ## 6.0 Constraints
 
