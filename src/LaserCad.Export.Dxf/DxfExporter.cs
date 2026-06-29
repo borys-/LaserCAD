@@ -1,4 +1,5 @@
 using LaserCad.Core.Documents;
+using LaserCad.Geometry;
 using System.Globalization;
 using System.Text;
 
@@ -9,6 +10,8 @@ namespace LaserCad.Export.Dxf;
 /// </summary>
 public sealed class DxfExporter
 {
+    private const double FullTurnDegrees = 360.0;
+
     /// <summary>
     /// Eksportuje dokument CAD do DXF zgodnie z podanymi opcjami.
     /// </summary>
@@ -48,6 +51,10 @@ public sealed class DxfExporter
         {
             WriteCircle(writer, circle);
         }
+        else if (entity is ArcEntity arc)
+        {
+            WriteArc(writer, arc);
+        }
     }
 
     private static void WriteLine(DxfWriter writer, LineEntity entity)
@@ -67,6 +74,38 @@ public sealed class DxfExporter
         writer.WritePair(10, entity.Circle.Center.X);
         writer.WritePair(20, entity.Circle.Center.Y);
         writer.WritePair(40, entity.Circle.Radius);
+    }
+
+    private static void WriteArc(DxfWriter writer, ArcEntity entity)
+    {
+        double startAngleDegrees = ToDxfAngleDegrees(entity.Arc.StartAngleRadians);
+        double endAngleDegrees = ToDxfAngleDegrees(entity.Arc.EndAngleRadians);
+
+        if (entity.Arc.Direction == ArcDirection.Clockwise)
+        {
+            (startAngleDegrees, endAngleDegrees) = (endAngleDegrees, startAngleDegrees);
+        }
+
+        writer.WritePair(0, "ARC");
+        writer.WritePair(8, entity.LayerName);
+        writer.WritePair(10, entity.Arc.Center.X);
+        writer.WritePair(20, entity.Arc.Center.Y);
+        writer.WritePair(40, entity.Arc.Radius);
+        writer.WritePair(50, startAngleDegrees);
+        writer.WritePair(51, endAngleDegrees);
+    }
+
+    private static double ToDxfAngleDegrees(double angleRadians)
+    {
+        double angleDegrees = angleRadians * 180.0 / Math.PI;
+        double normalized = angleDegrees % FullTurnDegrees;
+
+        if (normalized < 0.0)
+        {
+            normalized += FullTurnDegrees;
+        }
+
+        return normalized;
     }
 
     private sealed class DxfWriter

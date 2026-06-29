@@ -57,4 +57,33 @@ public class DxfExporterTests
         Assert.That(dxf, Does.Contain("8\r\nScore\r\n"));
         Assert.That(dxf, Does.Contain("10\r\n2\r\n20\r\n3\r\n40\r\n4\r\n"));
     }
+
+    [Test]
+    public void Export_WithArcEntity_ShouldWriteArcEntity()
+    {
+        var document = new CadDocument(layers: Array.Empty<Layer>())
+            .AddSketch(new Sketch().AddEntity(new ArcEntity(
+                new Arc2D(new Point2D(2, 3), 4, 0, Math.PI / 2.0),
+                layerName: "Cut")));
+        var exporter = new DxfExporter();
+
+        string dxf = exporter.Export(document);
+
+        Assert.That(dxf, Does.Contain("0\r\nARC\r\n"));
+        Assert.That(dxf, Does.Contain("8\r\nCut\r\n"));
+        Assert.That(dxf, Does.Contain("10\r\n2\r\n20\r\n3\r\n40\r\n4\r\n50\r\n0\r\n51\r\n90\r\n"));
+    }
+
+    [Test]
+    public void Export_WithClockwiseArcEntity_ShouldSwapDxfAngles()
+    {
+        var document = new CadDocument(layers: Array.Empty<Layer>())
+            .AddSketch(new Sketch().AddEntity(new ArcEntity(
+                new Arc2D(new Point2D(2, 3), 4, 0, Math.PI / 2.0, ArcDirection.Clockwise))));
+        var exporter = new DxfExporter();
+
+        string dxf = exporter.Export(document);
+
+        Assert.That(dxf, Does.Contain("50\r\n90\r\n51\r\n0\r\n"));
+    }
 }
