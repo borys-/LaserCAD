@@ -311,7 +311,7 @@ Zalecenie pracy:
 
 ## 2.3 Trwalosc szkicow
 
-- [ ] 2.3.0 Ustalic kontrakt JSON dla szkicow i encji.
+- [x] 2.3.0 Ustalic kontrakt JSON dla szkicow i encji.
 - [ ] 2.3.1 Dodac serializacje `LineEntity`.
 - [ ] 2.3.2 Dodac serializacje `RectangleEntity`.
 - [ ] 2.3.3 Dodac serializacje `CircleEntity`.

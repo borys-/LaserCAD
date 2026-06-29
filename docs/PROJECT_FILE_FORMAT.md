@@ -11,8 +11,11 @@ Plik zapisuje stabilny kontrakt DTO, a nie bezposrednia serializacje klas domeno
 - Kolory warstw sa zapisywane jako tekst `#RRGGBB`.
 - Parametry zapisuja `id`, `name`, `type`, `value`, opcjonalne `displayUnit`, `minimumValue` i `maximumValue`.
 - Profil materialu zapisuje nazwe oraz wszystkie wymiary produkcyjne w milimetrach.
-- Szkice i generatory pozostaja poza zakresem pierwszego formatu zapisu, dopoki ich encje nie maja stabilnego kontraktu plikowego.
-- Gdy szkice wejda do formatu pliku, kontrakt encji powinien objac takze powiazania wymiarow z parametrami, np. szerokosc prostokata -> `Width`.
+- Szkice sa zapisywane w polu `sketches` jako lista obiektow z `id`, `name` i `entities`.
+- Encje szkicu maja wspolne pola `type`, `id`, `layerName` oraz opcjonalne `dimensionBindings`.
+- Geometria encji jest zapisywana jawnie: punkty jako `{ "x": 0, "y": 0 }`, okregi i luki przez srodek, promien i katy w radianach.
+- Powiazania wymiarow zapisuja `dimension` oraz `parameterId`, np. szerokosc prostokata -> `Width`.
+- Generatory pozostaja poza zakresem pierwszego formatu zapisu, dopoki ich kontrakt plikowy nie bedzie stabilny.
 
 ## Przykladowy dokument
 
@@ -27,6 +30,31 @@ Plik zapisuje stabilny kontrakt DTO, a nie bezposrednia serializacje klas domeno
       "name": "Cut",
       "color": "#FF0000",
       "role": "Cut"
+    }
+  ],
+  "sketches": [
+    {
+      "id": "76fe8508-2290-4f05-b2d0-e28dd42ef1c5",
+      "name": "Front panel",
+      "entities": [
+        {
+          "type": "Rectangle",
+          "id": "4184a82d-e894-4de9-b36b-25a68d94384e",
+          "layerName": "Cut",
+          "corners": [
+            { "x": 0, "y": 0 },
+            { "x": 120, "y": 0 },
+            { "x": 120, "y": 80 },
+            { "x": 0, "y": 80 }
+          ],
+          "dimensionBindings": [
+            {
+              "dimension": "Width",
+              "parameterId": "Width"
+            }
+          ]
+        }
+      ]
     }
   ],
   "materialProfile": null
