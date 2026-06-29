@@ -222,5 +222,5 @@ MonoBehaviour:
   workspaceCamera: {fileID: 1002}
   lineMaterial: {fileID: 0}
   isVisible: 1
-  gridExtentMillimeters: 500
+  minorStepMillimeters: 1
   lineColor: {r: 0.24, g: 0.24, b: 0.24, a: 1}
