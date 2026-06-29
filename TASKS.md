@@ -483,18 +483,18 @@ Zalecenie pracy:
 
 ## 7.1 Finger joint - algorytm
 
-- [ ] 7.1.0 Utworzyc `FingerJointGenerator`.
-- [ ] 7.1.1 Dodac podzial krawedzi na segmenty.
-- [ ] 7.1.2 Dodac dobor liczby zebow.
-- [ ] 7.1.3 Dodac wymuszanie symetrii.
-- [ ] 7.1.4 Dodac generowanie profilu krawedzi.
-- [ ] 7.1.5 Dodac kompensacje grubosci materialu.
-- [ ] 7.1.6 Dodac kompensacje kerfu.
-- [ ] 7.1.7 Dodac kompensacje clearance.
-- [ ] 7.1.8 Dodac test krawedzi 100 mm.
-- [ ] 7.1.9 Dodac test symetrii.
-- [ ] 7.1.10 Dodac test zaczynania od zeba.
-- [ ] 7.1.11 Dodac test zaczynania od wciecia.
+- [x] 7.1.0 Utworzyc `FingerJointGenerator`.
+- [x] 7.1.1 Dodac podzial krawedzi na segmenty.
+- [x] 7.1.2 Dodac dobor liczby zebow.
+- [x] 7.1.3 Dodac wymuszanie symetrii.
+- [x] 7.1.4 Dodac generowanie profilu krawedzi.
+- [x] 7.1.5 Dodac kompensacje grubosci materialu.
+- [x] 7.1.6 Dodac kompensacje kerfu.
+- [x] 7.1.7 Dodac kompensacje clearance.
+- [x] 7.1.8 Dodac test krawedzi 100 mm.
+- [x] 7.1.9 Dodac test symetrii.
+- [x] 7.1.10 Dodac test zaczynania od zeba.
+- [x] 7.1.11 Dodac test zaczynania od wciecia.
 
 ## 8.0 Generator pudelka
 
@@ -669,7 +669,7 @@ Zalecenie pracy:
 - [x] MVP.0.4 Zaimplementowac prosty graf zaleznosci parametrow.
 - [x] MVP.0.5 Zaimplementowac `CadDocument`, `Sketch`, `Layer`, `MaterialProfile`.
 - [x] MVP.0.6 Zaimplementowac zapis i odczyt JSON.
-- [ ] MVP.0.7 Zaimplementowac generator finger joint dla prostych krawedzi.
+- [x] MVP.0.7 Zaimplementowac generator finger joint dla prostych krawedzi.
 - [ ] MVP.0.8 Zaimplementowac generator otwartego pudelka.
 - [ ] MVP.0.9 Zaimplementowac kompensacje kerfu dla prostych konturow.
 - [x] MVP.0.10 Zaimplementowac eksport SVG.

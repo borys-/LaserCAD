@@ -1,5 +1,47 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 7.1 Finger joint - algorytm
+
+- W tej sesji wykonano cala sekcje `7.1 Finger joint - algorytm` i odhaczono ja w `TASKS.md`.
+- Nowe commity tej sesji:
+  - `901a395 7.1.0 Utworz wynik generatora finger joint`,
+  - `ba99c85 7.1.1 Dodaj algorytm profilu finger joint`,
+  - `dd3721b 7.1.8 Dodaj testy generatora finger joint`.
+- Dodano domenowy generator dla prostych krawedzi w `LaserCad.Core.FingerJoints`.
+- Nowe typy:
+  - `FingerJointSegmentKind`: `Finger`, `Slot`,
+  - `FingerJointSegment`: typ segmentu, offset od poczatku krawedzi, dlugosc, punkt startu i konca na krawedzi,
+  - `FingerJointProfile`: segmenty, punkty lamanej profilu, grubosc materialu, wysuniecie palca, cofniecie wciecia, kompensacja kerfu i clearance,
+  - `FingerJointGenerator`.
+- `FingerJointGenerator.GenerateEdge(LineSegment2D edge, Length materialThickness, FingerJointOptions? options = null)`:
+  - obsluguje tylko pojedyncza prosta krawedz,
+  - normalna zewnetrzna jest po lewej stronie kierunku krawedzi,
+  - dobiera rowna liczbe segmentow wedlug `FingerWidth` i zakresu min/max,
+  - wymusza zgodnosc poczatku i konca z `StartWithFinger`/`EndWithFinger`,
+  - generuje punkty lamanej profilu,
+  - uzywa grubosci materialu jako bazowej glebokosci palca,
+  - dodaje polowe kerfu do wysuniecia palca i do cofniecia wciecia,
+  - dla clearance: `Tight = 0`, `Neutral = clearance / 2`, `Loose = clearance`.
+- Dodano testy w `tests/LaserCad.Tests/Core/FingerJoints/FingerJointGeneratorTests.cs`:
+  - podstawowe generowanie profilu,
+  - krawedz 100 mm,
+  - symetria segmentow,
+  - start od palca,
+  - start od wciecia,
+  - kompensacja grubosci materialu,
+  - kompensacja kerfu,
+  - kompensacja clearance.
+- `docs/ROADMAP.md` ma nowa sekcje `Ograniczenia algorytmu finger joint MVP`.
+- Po przegladzie planu odhaczono `MVP.0.7`, bo generator finger joint dla prostych krawedzi jest zaimplementowany w domenie.
+- Nie odhaczono taskow `8.x`, `9.x` ani Unity:
+  - nie ma jeszcze generatora pelnych scianek pudelka,
+  - nie ma laczenia naroznikow wielu krawedzi,
+  - nie ma rozkladania elementow 2D,
+  - nie ma jeszcze widocznej geometrii finger joint w aplikacji Unity.
+- `dotnet test LaserCad.sln --no-restore` przechodzi: `384/384` testow zielone.
+- Do sprawdzenia w aplikacji Unity po buildzie: sekcja `7.1` dodaje logike domenowa generatora profilu finger joint, ale nie dodaje UI ani renderowania tej geometrii. Po uruchomieniu aplikacji widoczny ekran powinien pozostac jak po poprzednich sekcjach: scena robocza z kamera, gridem, snap markerem, zaznaczaniem i panelem informacji/wlasciwosci.
+- Nastepna niewykonana sekcja wedlug `TASKS.md`: `8.0 Generator pudelka`.
+
 ## Aktualizacja po sekcji 7.0 Finger joint - model danych
 
 - W tej sesji wykonano cala sekcje `7.0 Finger joint - model danych` i odhaczono ja w `TASKS.md`.

@@ -284,6 +284,12 @@ Solver constraints w pierwszym kroku jest deterministycznym solverem sekwencyjny
 
 Model danych polaczenia palcowego zawiera opcje potrzebne do przyszlego generatora: szerokosc palca, minimalna i maksymalna szerokosc, poczatek i koniec zebem, tryb dopasowania oraz kerf i clearance. Sekcja 7.0 nie generuje jeszcze geometrii krawedzi; algorytm podzialu, symetria i kompensacja zostaja w sekcji 7.1.
 
+### Ograniczenia algorytmu finger joint MVP
+
+Generator finger joint w MVP obsluguje pojedyncza prosta krawedz i zwraca segmenty podzialu oraz punkty lamanej profilu. Normalna zewnetrzna jest liczona po lewej stronie kierunku krawedzi. Algorytm dobiera rowna szerokosc segmentow mieszczaca sie w zakresie min/max, wymusza zgodnosc poczatku i konca z opcjami `StartWithFinger` oraz `EndWithFinger`, a glebokosc profilu wyznacza z grubosci materialu, kerfu i clearance.
+
+To nie jest jeszcze generator pelnych scianek pudelka: nie laczy naroznikow wielu krawedzi, nie rozklada elementow na arkuszu i nie tworzy kompletnego konturu sciany. Ten zakres pozostaje w generatorze pudelka 8.x oraz pozniejszej kompensacji kerfu 9.x.
+
 ## Faza 8 - Generatory
 
 - Box:
