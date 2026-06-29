@@ -106,6 +106,12 @@ namespace LaserCad.Unity
                     {
                         yield return new SnapCandidate(ToVector2(corner), SnapPriority.EntityPoint);
                     }
+
+                    yield return new SnapCandidate(GetBoundsCenter(rectangle.Bounds), SnapPriority.EntityCenter);
+                }
+                else if (entity is CircleEntity circle)
+                {
+                    yield return new SnapCandidate(ToVector2(circle.Circle.Center), SnapPriority.EntityCenter);
                 }
                 else if (entity is PolylineEntity polyline)
                 {
@@ -129,6 +135,13 @@ namespace LaserCad.Unity
         private static Vector2 ToVector2(Point2D point)
         {
             return new Vector2((float)point.X, (float)point.Y);
+        }
+
+        private static Vector2 GetBoundsCenter(BoundingBox bounds)
+        {
+            return new Vector2(
+                (float)((bounds.MinX + bounds.MaxX) * 0.5),
+                (float)((bounds.MinY + bounds.MaxY) * 0.5));
         }
     }
 }
