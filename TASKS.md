@@ -324,7 +324,7 @@ Zalecenie pracy:
 ## 3.0 Integracja Unity - baza
 
 - [x] 3.0.0 Utworzyc projekt Unity `LaserCad.Unity`.
-- [ ] 3.0.1 Podlaczyc biblioteki domenowe do Unity.
+- [x] 3.0.1 Podlaczyc biblioteki domenowe do Unity.
 - [ ] 3.0.2 Utworzyc scene robocza 2D.
 - [ ] 3.0.3 Utworzyc glowny kontroler aplikacji.
 - [ ] 3.0.4 Zaladowac pusty `CadDocument` w Unity.
