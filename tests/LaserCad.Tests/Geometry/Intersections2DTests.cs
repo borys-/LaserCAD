@@ -56,4 +56,25 @@ public sealed class Intersections2DTests
             Assert.That(result.Point, Is.EqualTo(new Point2D(5.0, 0.0)));
         });
     }
+
+    [Test]
+    public void IntersectSegments_CollinearOverlappingSegments_ShouldReturnOverlapSegment()
+    {
+        LineSegment2D left = new LineSegment2D(
+            new Point2D(0.0, 0.0),
+            new Point2D(10.0, 0.0));
+        LineSegment2D right = new LineSegment2D(
+            new Point2D(4.0, 0.0),
+            new Point2D(14.0, 0.0));
+
+        IntersectionResult result = Intersections2D.Intersect(left, right);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.IsOverlap, Is.True);
+            Assert.That(result.OverlapSegment, Is.EqualTo(new LineSegment2D(
+                new Point2D(4.0, 0.0),
+                new Point2D(10.0, 0.0))));
+        });
+    }
 }
