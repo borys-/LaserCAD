@@ -165,4 +165,30 @@ public class SvgExporterTests
         Assert.That(svg, Does.Contain("<path d=\"M 70 0 A 10 10 0 0 1 60 10\" stroke=\"#000000\" />"));
         Assert.That(svg, Does.Contain("<path d=\"M 80 0 L 90 5 L 100 0\" stroke=\"#000000\" />"));
     }
+
+    [Test]
+    public void Export_WithExportedLayerNames_ShouldWriteOnlySelectedLayer()
+    {
+        var layers = new[]
+        {
+            new Layer("Cut", LayerColor.FromHex("#FF0000"), LayerRole.Cut),
+            new Layer("Engrave", LayerColor.FromHex("#0000FF"), LayerRole.Engrave),
+        };
+        var sketch = new Sketch()
+            .AddEntity(new LineEntity(
+                new LineSegment2D(new Point2D(0, 0), new Point2D(10, 0)),
+                layerName: "Cut"))
+            .AddEntity(new LineEntity(
+                new LineSegment2D(new Point2D(100, 100), new Point2D(120, 120)),
+                layerName: "Engrave"));
+        var document = new CadDocument(layers: layers).AddSketch(sketch);
+        var options = new SvgExportOptions { ExportedLayerNames = new[] { "Engrave" } };
+        var exporter = new SvgExporter();
+
+        string svg = exporter.Export(document, options);
+
+        Assert.That(svg, Does.Not.Contain("stroke=\"#FF0000\""));
+        Assert.That(svg, Does.Contain("<line x1=\"100\" y1=\"100\" x2=\"120\" y2=\"120\" stroke=\"#0000FF\" />"));
+        Assert.That(svg, Does.Contain("viewBox=\"100 100 20 20\""));
+    }
 }
