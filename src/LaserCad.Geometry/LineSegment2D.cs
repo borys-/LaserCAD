@@ -24,4 +24,9 @@ public readonly record struct LineSegment2D
     /// Punkt koncowy odcinka.
     /// </summary>
     public Point2D End { get; }
+
+    /// <summary>
+    /// Dlugosc odcinka w milimetrach domenowych.
+    /// </summary>
+    public double Length => Start.DistanceTo(End);
 }
