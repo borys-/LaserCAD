@@ -9,4 +9,13 @@ public sealed class ICommandTests
     {
         Assert.That(typeof(ICommand).IsInterface, Is.True);
     }
+
+    [Test]
+    public void ICommand_ShouldDeclareExecute()
+    {
+        var method = typeof(ICommand).GetMethod(nameof(ICommand.Execute));
+
+        Assert.That(method, Is.Not.Null);
+        Assert.That(method!.ReturnType.Name, Is.EqualTo("CadDocument"));
+    }
 }
