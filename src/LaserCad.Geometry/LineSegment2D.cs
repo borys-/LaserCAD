@@ -56,4 +56,14 @@ public readonly record struct LineSegment2D
             Start.X + ((End.X - Start.X) * t),
             Start.Y + ((End.Y - Start.Y) * t));
     }
+
+    /// <summary>
+    /// Zwraca odcinek po zastosowaniu transformacji afinicznej.
+    /// </summary>
+    public LineSegment2D Transform(Matrix3x3 transform)
+    {
+        return new LineSegment2D(
+            transform.Transform(Start),
+            transform.Transform(End));
+    }
 }
