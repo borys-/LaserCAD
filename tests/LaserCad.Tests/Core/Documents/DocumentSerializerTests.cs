@@ -1,6 +1,7 @@
 using System.Text.Json;
 using LaserCad.Core.Documents;
 using LaserCad.Core.Parameters;
+using LaserCad.Geometry;
 using LaserCad.Geometry.Units;
 
 namespace LaserCad.Tests.Core.Documents;
@@ -357,5 +358,142 @@ public sealed class DocumentSerializerTests
         Assert.That(roundTrippedDocument.Layers[1].Name, Is.EqualTo("Labels"));
         Assert.That(roundTrippedDocument.Layers[1].Color, Is.EqualTo(LayerColor.FromHex("#00AA00")));
         Assert.That(roundTrippedDocument.Layers[1].Role, Is.EqualTo(LayerRole.Engrave));
+    }
+
+    [Test]
+    public void RoundTrip_WithSketchAndEntities_ShouldPreserveSketchGeometry()
+    {
+        var sketchId = Guid.NewGuid();
+        var lineId = Guid.NewGuid();
+        var rectangleId = Guid.NewGuid();
+        var circleId = Guid.NewGuid();
+        var arcId = Guid.NewGuid();
+        var polylineId = Guid.NewGuid();
+        var textId = Guid.NewGuid();
+        var document = new CadDocument(name: "Sketch document", layers: DefaultLayers.All)
+            .AddSketch(new Sketch(
+                sketchId,
+                "Panel",
+                [
+                    new LineEntity(new LineSegment2D(new Point2D(0.0, 0.0), new Point2D(10.0, 5.0)), lineId, "Cut"),
+                    new RectangleEntity(new Point2D(1.0, 2.0), 30.0, 20.0, rectangleId, "Cut"),
+                    new CircleEntity(new Circle2D(new Point2D(40.0, 20.0), 5.0), circleId, "Cut"),
+                    new ArcEntity(new Arc2D(new Point2D(50.0, 25.0), 8.0, 0.25, 1.25, ArcDirection.Clockwise), arcId, "Score"),
+                    new PolylineEntity(new Polyline2D(
+                        [
+                            new Point2D(0.0, 0.0),
+                            new Point2D(5.0, 0.0),
+                            new Point2D(5.0, 5.0)
+                        ],
+                        isClosed: true),
+                        polylineId,
+                        "Cut"),
+                    new TextEntity("Front", new Point2D(3.0, 4.0), 6.0, textId, "Engrave")
+                ]));
+        var serializer = new DocumentSerializer();
+
+        var json = serializer.Serialize(document);
+        var roundTrippedDocument = serializer.Deserialize(json);
+        var roundTrippedSketch = roundTrippedDocument.Sketches.Single();
+
+        Assert.That(roundTrippedSketch.Id, Is.EqualTo(sketchId));
+        Assert.That(roundTrippedSketch.Name, Is.EqualTo("Panel"));
+        Assert.That(roundTrippedSketch.Entities, Has.Count.EqualTo(6));
+
+        var line = (LineEntity)roundTrippedSketch.Entities[0];
+        Assert.That(line.Id, Is.EqualTo(lineId));
+        Assert.That(line.LayerName, Is.EqualTo("Cut"));
+        Assert.That(line.Segment.Start, Is.EqualTo(new Point2D(0.0, 0.0)));
+        Assert.That(line.Segment.End, Is.EqualTo(new Point2D(10.0, 5.0)));
+
+        var rectangle = (RectangleEntity)roundTrippedSketch.Entities[1];
+        Assert.That(rectangle.Id, Is.EqualTo(rectangleId));
+        Assert.That(rectangle.Corners[0], Is.EqualTo(new Point2D(1.0, 2.0)));
+        Assert.That(rectangle.Corners[2], Is.EqualTo(new Point2D(31.0, 22.0)));
+
+        var circle = (CircleEntity)roundTrippedSketch.Entities[2];
+        Assert.That(circle.Id, Is.EqualTo(circleId));
+        Assert.That(circle.Circle.Center, Is.EqualTo(new Point2D(40.0, 20.0)));
+        Assert.That(circle.Circle.Radius, Is.EqualTo(5.0));
+
+        var arc = (ArcEntity)roundTrippedSketch.Entities[3];
+        Assert.That(arc.Id, Is.EqualTo(arcId));
+        Assert.That(arc.LayerName, Is.EqualTo("Score"));
+        Assert.That(arc.Arc.Center, Is.EqualTo(new Point2D(50.0, 25.0)));
+        Assert.That(arc.Arc.Radius, Is.EqualTo(8.0));
+        Assert.That(arc.Arc.StartAngleRadians, Is.EqualTo(0.25));
+        Assert.That(arc.Arc.EndAngleRadians, Is.EqualTo(1.25));
+        Assert.That(arc.Arc.Direction, Is.EqualTo(ArcDirection.Clockwise));
+
+        var polyline = (PolylineEntity)roundTrippedSketch.Entities[4];
+        Assert.That(polyline.Id, Is.EqualTo(polylineId));
+        Assert.That(polyline.Polyline.Points, Is.EqualTo(new[]
+        {
+            new Point2D(0.0, 0.0),
+            new Point2D(5.0, 0.0),
+            new Point2D(5.0, 5.0)
+        }));
+        Assert.That(polyline.Polyline.IsClosed, Is.True);
+
+        var text = (TextEntity)roundTrippedSketch.Entities[5];
+        Assert.That(text.Id, Is.EqualTo(textId));
+        Assert.That(text.LayerName, Is.EqualTo("Engrave"));
+        Assert.That(text.Text, Is.EqualTo("Front"));
+        Assert.That(text.Position, Is.EqualTo(new Point2D(3.0, 4.0)));
+        Assert.That(text.Height, Is.EqualTo(6.0));
+    }
+
+    [Test]
+    public void Serialize_WithSketchEntities_ShouldWriteEntityTypes()
+    {
+        var document = new CadDocument(layers: Array.Empty<Layer>())
+            .AddSketch(new Sketch(entities:
+            [
+                new LineEntity(new LineSegment2D(new Point2D(0.0, 0.0), new Point2D(10.0, 0.0))),
+                new RectangleEntity(new Point2D(0.0, 0.0), 10.0, 5.0),
+                new CircleEntity(new Circle2D(new Point2D(5.0, 5.0), 2.0)),
+                new ArcEntity(new Arc2D(new Point2D(5.0, 5.0), 2.0, 0.0, 1.0)),
+                new PolylineEntity(new Polyline2D([new Point2D(0.0, 0.0), new Point2D(1.0, 1.0)])),
+                new TextEntity("Label", new Point2D(0.0, 0.0), 3.0)
+            ]));
+        var serializer = new DocumentSerializer();
+
+        var json = serializer.Serialize(document);
+        using var parsedJson = JsonDocument.Parse(json);
+        var entities = parsedJson.RootElement.GetProperty("sketches")[0].GetProperty("entities");
+
+        Assert.That(entities[0].GetProperty("type").GetString(), Is.EqualTo("Line"));
+        Assert.That(entities[1].GetProperty("type").GetString(), Is.EqualTo("Rectangle"));
+        Assert.That(entities[2].GetProperty("type").GetString(), Is.EqualTo("Circle"));
+        Assert.That(entities[3].GetProperty("type").GetString(), Is.EqualTo("Arc"));
+        Assert.That(entities[4].GetProperty("type").GetString(), Is.EqualTo("Polyline"));
+        Assert.That(entities[5].GetProperty("type").GetString(), Is.EqualTo("Text"));
+    }
+
+    [Test]
+    public void RoundTrip_WithDimensionBindings_ShouldPreserveBindings()
+    {
+        var widthId = new ParameterId("Width");
+        var diameterId = new ParameterId("Diameter");
+        var document = new CadDocument(layers: Array.Empty<Layer>())
+            .AddSketch(new Sketch(entities:
+            [
+                new RectangleEntity(new Point2D(0.0, 0.0), 10.0, 5.0)
+                    .BindDimension(new EntityDimensionBinding(EntityDimensionKind.Width, widthId)),
+                new CircleEntity(new Circle2D(new Point2D(5.0, 5.0), 2.0))
+                    .BindDimension(new EntityDimensionBinding(EntityDimensionKind.Diameter, diameterId))
+            ]));
+        var serializer = new DocumentSerializer();
+
+        var roundTrippedDocument = serializer.Deserialize(serializer.Serialize(document));
+        var rectangle = (RectangleEntity)roundTrippedDocument.Sketches.Single().Entities[0];
+        var circle = (CircleEntity)roundTrippedDocument.Sketches.Single().Entities[1];
+
+        Assert.That(rectangle.DimensionBindings, Has.Count.EqualTo(1));
+        Assert.That(rectangle.DimensionBindings[0].Dimension, Is.EqualTo(EntityDimensionKind.Width));
+        Assert.That(rectangle.DimensionBindings[0].ParameterId, Is.EqualTo(widthId));
+        Assert.That(circle.DimensionBindings, Has.Count.EqualTo(1));
+        Assert.That(circle.DimensionBindings[0].Dimension, Is.EqualTo(EntityDimensionKind.Diameter));
+        Assert.That(circle.DimensionBindings[0].ParameterId, Is.EqualTo(diameterId));
     }
 }

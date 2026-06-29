@@ -312,14 +312,14 @@ Zalecenie pracy:
 ## 2.3 Trwalosc szkicow
 
 - [x] 2.3.0 Ustalic kontrakt JSON dla szkicow i encji.
-- [ ] 2.3.1 Dodac serializacje `LineEntity`.
-- [ ] 2.3.2 Dodac serializacje `RectangleEntity`.
-- [ ] 2.3.3 Dodac serializacje `CircleEntity`.
-- [ ] 2.3.4 Dodac serializacje `ArcEntity`.
-- [ ] 2.3.5 Dodac serializacje `PolylineEntity`.
-- [ ] 2.3.6 Dodac serializacje `TextEntity` placeholder.
-- [ ] 2.3.7 Dodac test round-trip dokumentu ze szkicem i encjami.
-- [ ] 2.3.8 Dodac serializacje powiazan wymiarow encji z parametrami.
+- [x] 2.3.1 Dodac serializacje `LineEntity`.
+- [x] 2.3.2 Dodac serializacje `RectangleEntity`.
+- [x] 2.3.3 Dodac serializacje `CircleEntity`.
+- [x] 2.3.4 Dodac serializacje `ArcEntity`.
+- [x] 2.3.5 Dodac serializacje `PolylineEntity`.
+- [x] 2.3.6 Dodac serializacje `TextEntity` placeholder.
+- [x] 2.3.7 Dodac test round-trip dokumentu ze szkicem i encjami.
+- [x] 2.3.8 Dodac serializacje powiazan wymiarow encji z parametrami.
 
 ## 3.0 Integracja Unity - baza
 

@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using LaserCad.Core.Parameters;
+using LaserCad.Geometry;
 using LaserCad.Geometry.Units;
 
 namespace LaserCad.Core.Documents;
@@ -38,6 +39,7 @@ public sealed class DocumentSerializer
             Name = document.Name,
             Parameters = document.Parameters.Parameters.Select(ToDto).ToArray(),
             Layers = document.Layers.Select(ToDto).ToArray(),
+            Sketches = document.Sketches.Select(ToDto).ToArray(),
             MaterialProfile = document.MaterialProfile is null ? null : ToDto(document.MaterialProfile)
         };
 
@@ -59,11 +61,12 @@ public sealed class DocumentSerializer
 
         var parameters = new ParameterSet((dto.Parameters ?? Array.Empty<ParameterDto>()).Select(ToDomain));
         var layers = dto.Layers?.Select(ToDomain).ToArray();
+        var sketches = (dto.Sketches ?? Array.Empty<SketchDto>()).Select(ToDomain).ToArray();
         var materialProfile = dto.MaterialProfile is null ? null : ToDomain(dto.MaterialProfile);
         var formatVersion = dto.FormatVersion == 0 ? SupportedFormatVersion : dto.FormatVersion;
         EnsureSupportedFormatVersion(formatVersion);
 
-        return new CadDocument(dto.Id, dto.Name, formatVersion, parameters, layers, materialProfile: materialProfile);
+        return new CadDocument(dto.Id, dto.Name, formatVersion, parameters, layers, sketches, materialProfile: materialProfile);
     }
 
     private static void EnsureSupportedFormatVersion(int formatVersion)
@@ -183,6 +186,169 @@ public sealed class DocumentSerializer
         };
     }
 
+    private static SketchDto ToDto(Sketch sketch)
+    {
+        return new SketchDto
+        {
+            Id = sketch.Id,
+            Name = sketch.Name,
+            Entities = sketch.Entities.Select(ToDto).ToArray()
+        };
+    }
+
+    private static Sketch ToDomain(SketchDto dto)
+    {
+        return new Sketch(dto.Id, dto.Name, (dto.Entities ?? Array.Empty<EntityDto>()).Select(ToDomain));
+    }
+
+    private static EntityDto ToDto(Entity entity)
+    {
+        var dto = new EntityDto
+        {
+            Id = entity.Id,
+            LayerName = entity.LayerName,
+            DimensionBindings = entity.DimensionBindings.Select(ToDto).ToArray()
+        };
+
+        return entity switch
+        {
+            LineEntity line => dto with
+            {
+                Type = "Line",
+                Start = ToDto(line.Segment.Start),
+                End = ToDto(line.Segment.End)
+            },
+            RectangleEntity rectangle => dto with
+            {
+                Type = "Rectangle",
+                Corners = rectangle.Corners.Select(ToDto).ToArray()
+            },
+            CircleEntity circle => dto with
+            {
+                Type = "Circle",
+                Center = ToDto(circle.Circle.Center),
+                Radius = circle.Circle.Radius
+            },
+            ArcEntity arc => dto with
+            {
+                Type = "Arc",
+                Center = ToDto(arc.Arc.Center),
+                Radius = arc.Arc.Radius,
+                StartAngleRadians = arc.Arc.StartAngleRadians,
+                EndAngleRadians = arc.Arc.EndAngleRadians,
+                Direction = arc.Arc.Direction.ToString()
+            },
+            PolylineEntity polyline => dto with
+            {
+                Type = "Polyline",
+                Points = polyline.Polyline.Points.Select(ToDto).ToArray(),
+                IsClosed = polyline.Polyline.IsClosed
+            },
+            TextEntity text => dto with
+            {
+                Type = "Text",
+                Text = text.Text,
+                Position = ToDto(text.Position),
+                Height = text.Height
+            },
+            _ => throw new NotSupportedException($"Sketch entity type '{entity.GetType().Name}' is not supported.")
+        };
+    }
+
+    private static Entity ToDomain(EntityDto dto)
+    {
+        return dto.Type switch
+        {
+            "Line" => new LineEntity(
+                new LineSegment2D(ToDomain(dto.Start), ToDomain(dto.End)),
+                dto.Id,
+                dto.LayerName),
+            "Rectangle" => new RectangleEntity(
+                RequiredPoints(dto.Corners, dto.Type),
+                dto.Id,
+                dto.LayerName,
+                ToDomain(dto.DimensionBindings)),
+            "Circle" => new CircleEntity(
+                new Circle2D(ToDomain(dto.Center), RequiredDouble(dto.Radius, nameof(dto.Radius))),
+                dto.Id,
+                dto.LayerName,
+                ToDomain(dto.DimensionBindings)),
+            "Arc" => new ArcEntity(
+                new Arc2D(
+                    ToDomain(dto.Center),
+                    RequiredDouble(dto.Radius, nameof(dto.Radius)),
+                    RequiredDouble(dto.StartAngleRadians, nameof(dto.StartAngleRadians)),
+                    RequiredDouble(dto.EndAngleRadians, nameof(dto.EndAngleRadians)),
+                    Enum.Parse<ArcDirection>(RequiredString(dto.Direction, nameof(dto.Direction)), ignoreCase: false)),
+                dto.Id,
+                dto.LayerName),
+            "Polyline" => new PolylineEntity(
+                new Polyline2D(RequiredPoints(dto.Points, dto.Type), dto.IsClosed),
+                dto.Id,
+                dto.LayerName),
+            "Text" => new TextEntity(
+                RequiredString(dto.Text, nameof(dto.Text)),
+                ToDomain(dto.Position),
+                RequiredDouble(dto.Height, nameof(dto.Height)),
+                dto.Id,
+                dto.LayerName),
+            _ => throw new NotSupportedException($"Sketch entity type '{dto.Type}' is not supported.")
+        };
+    }
+
+    private static DimensionBindingDto ToDto(EntityDimensionBinding binding)
+    {
+        return new DimensionBindingDto
+        {
+            Dimension = binding.Dimension.ToString(),
+            ParameterId = binding.ParameterId.Value
+        };
+    }
+
+    private static EntityDimensionBinding[] ToDomain(DimensionBindingDto[]? dtos)
+    {
+        return (dtos ?? Array.Empty<DimensionBindingDto>())
+            .Select(dto => new EntityDimensionBinding(
+                Enum.Parse<EntityDimensionKind>(dto.Dimension, ignoreCase: false),
+                new ParameterId(dto.ParameterId)))
+            .ToArray();
+    }
+
+    private static PointDto ToDto(Point2D point)
+    {
+        return new PointDto
+        {
+            X = point.X,
+            Y = point.Y
+        };
+    }
+
+    private static Point2D ToDomain(PointDto? dto)
+    {
+        if (dto is null)
+        {
+            throw new InvalidOperationException("Point DTO is required.");
+        }
+
+        return new Point2D(dto.X, dto.Y);
+    }
+
+    private static Point2D[] RequiredPoints(PointDto[]? points, string entityType)
+    {
+        return points?.Select(ToDomain).ToArray()
+            ?? throw new InvalidOperationException($"Entity '{entityType}' requires points.");
+    }
+
+    private static double RequiredDouble(double? value, string propertyName)
+    {
+        return value ?? throw new InvalidOperationException($"Property '{propertyName}' is required.");
+    }
+
+    private static string RequiredString(string? value, string propertyName)
+    {
+        return value ?? throw new InvalidOperationException($"Property '{propertyName}' is required.");
+    }
+
     private sealed class DocumentDto
     {
         public int FormatVersion { get; set; }
@@ -194,6 +360,8 @@ public sealed class DocumentSerializer
         public ParameterDto[]? Parameters { get; set; }
 
         public LayerDto[]? Layers { get; set; }
+
+        public SketchDto[]? Sketches { get; set; }
 
         public MaterialProfileDto? MaterialProfile { get; set; }
     }
@@ -235,5 +403,65 @@ public sealed class DocumentSerializer
         public double DefaultClearanceMillimeters { get; set; }
 
         public double MinimumFingerWidthMillimeters { get; set; }
+    }
+
+    private sealed class SketchDto
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; } = string.Empty;
+
+        public EntityDto[]? Entities { get; set; }
+    }
+
+    private sealed record EntityDto
+    {
+        public string Type { get; init; } = string.Empty;
+
+        public Guid Id { get; init; }
+
+        public string LayerName { get; init; } = string.Empty;
+
+        public PointDto? Start { get; init; }
+
+        public PointDto? End { get; init; }
+
+        public PointDto[]? Corners { get; init; }
+
+        public PointDto? Center { get; init; }
+
+        public double? Radius { get; init; }
+
+        public double? StartAngleRadians { get; init; }
+
+        public double? EndAngleRadians { get; init; }
+
+        public string? Direction { get; init; }
+
+        public PointDto[]? Points { get; init; }
+
+        public bool IsClosed { get; init; }
+
+        public string? Text { get; init; }
+
+        public PointDto? Position { get; init; }
+
+        public double? Height { get; init; }
+
+        public DimensionBindingDto[]? DimensionBindings { get; init; }
+    }
+
+    private sealed class PointDto
+    {
+        public double X { get; set; }
+
+        public double Y { get; set; }
+    }
+
+    private sealed class DimensionBindingDto
+    {
+        public string Dimension { get; set; } = string.Empty;
+
+        public string ParameterId { get; set; } = string.Empty;
     }
 }
