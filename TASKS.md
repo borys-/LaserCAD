@@ -529,20 +529,20 @@ Zalecenie pracy:
 
 ## 8.1 Generator pudelka - geometria
 
-- [ ] 8.1.0 Utworzyc `BoxGenerator`.
-- [ ] 8.1.1 Wygenerowac przednia scianke.
-- [ ] 8.1.2 Wygenerowac tylna scianke.
-- [ ] 8.1.3 Wygenerowac lewa scianke.
-- [ ] 8.1.4 Wygenerowac prawa scianke.
-- [ ] 8.1.5 Wygenerowac dno.
-- [ ] 8.1.6 Wygenerowac pokrywe dla trybu z pokrywa.
-- [ ] 8.1.7 Dodac finger jointy na krawedziach.
-- [ ] 8.1.8 Rozlozyc elementy na plaszczyznie 2D.
-- [ ] 8.1.9 Dodac marginesy miedzy elementami.
-- [ ] 8.1.10 Dodac warstwy cut dla konturow.
-- [ ] 8.1.11 Dodac test liczby wygenerowanych scianek.
-- [ ] 8.1.12 Dodac test zmiany `Width` przebudowuje geometrie.
-- [ ] 8.1.13 Dodac test zmiany `MaterialThickness` przebudowuje finger jointy.
+- [x] 8.1.0 Utworzyc `BoxGenerator`.
+- [x] 8.1.1 Wygenerowac przednia scianke.
+- [x] 8.1.2 Wygenerowac tylna scianke.
+- [x] 8.1.3 Wygenerowac lewa scianke.
+- [x] 8.1.4 Wygenerowac prawa scianke.
+- [x] 8.1.5 Wygenerowac dno.
+- [x] 8.1.6 Wygenerowac pokrywe dla trybu z pokrywa.
+- [x] 8.1.7 Dodac finger jointy na krawedziach.
+- [x] 8.1.8 Rozlozyc elementy na plaszczyznie 2D.
+- [x] 8.1.9 Dodac marginesy miedzy elementami.
+- [x] 8.1.10 Dodac warstwy cut dla konturow.
+- [x] 8.1.11 Dodac test liczby wygenerowanych scianek.
+- [x] 8.1.12 Dodac test zmiany `Width` przebudowuje geometrie.
+- [x] 8.1.13 Dodac test zmiany `MaterialThickness` przebudowuje finger jointy.
 
 ## 8.2 Pozostale generatory
 
@@ -687,7 +687,7 @@ Zalecenie pracy:
 - [x] MVP.0.5 Zaimplementowac `CadDocument`, `Sketch`, `Layer`, `MaterialProfile`.
 - [x] MVP.0.6 Zaimplementowac zapis i odczyt JSON.
 - [x] MVP.0.7 Zaimplementowac generator finger joint dla prostych krawedzi.
-- [ ] MVP.0.8 Zaimplementowac generator otwartego pudelka.
+- [x] MVP.0.8 Zaimplementowac generator otwartego pudelka.
 - [ ] MVP.0.9 Zaimplementowac kompensacje kerfu dla prostych konturow.
 - [x] MVP.0.10 Zaimplementowac eksport SVG.
 - [ ] MVP.0.11 Zaimplementowac prosty widok Unity 2D.

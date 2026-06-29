@@ -311,6 +311,12 @@ Sekcja 8.0 definiuje model opcji generatora pudelka: szerokosc, glebokosc, wysok
 
 To nie jest jeszcze generator geometrii scianek. Tworzenie scian, dodawanie finger jointow, rozklad elementow na plaszczyznie 2D i warstwy produkcyjne pozostaja zakresem sekcji 8.1.
 
+### Ograniczenia geometrii generatora pudelka MVP
+
+Generator pudelka w pierwszej wersji tworzy szkic 2D z konturami scianek jako zamkniete `PolylineEntity` na warstwie `Cut`. Dla trybu otwartego generuje przod, tyl, lewa scianke, prawa scianke i dno; dla trybu z pokrywa dodaje szosty panel pokrywy. Kontury uzywaja domenowego `FingerJointGenerator`, sa rozlozone w jednym rzedzie na plaszczyznie 2D i maja staly margines miedzy elementami.
+
+To nadal model MVP: generator nie opisuje jeszcze zaleznosci montazowych miedzy konkretnymi krawedziami scianek, nie rozroznia palcow i wciec komplementarnych dla sasiednich elementow, nie zapisuje instancji generatora w dokumencie i nie wykonuje pelnej kompensacji kerfu konturow z klasyfikacja wewnetrzna/zewnetrzna. Ten zakres pozostaje dla kolejnych sekcji UI, kerfu i modelu generatorow.
+
 ## Faza 9 - Kerf
 
 - Kompensacja:
