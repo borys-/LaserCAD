@@ -1,5 +1,33 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po tasku 3.5.3 Przebudowa podgladu pudelka
+
+- Po sekcji `8.1` wykonano kolejny odblokowany task Unity: `3.5.3 Dodac przebudowe podgladu po zmianie parametrow pudelka`.
+- Nowy commit:
+  - `7c4db27 3.5.3 Przebuduj podglad pudelka po zmianie parametrow`.
+- Zmiana techniczna:
+  - `LaserCadApplicationController.SetBoxOptions(BoxGeneratorOptions)` nie tylko zapisuje opcje, ale tworzy nowy dokument `Podglad pudelka`,
+  - dokument zawiera szkic z `BoxGenerator.GenerateSketch(options)`,
+  - zachowywany jest aktualny profil materialu dokumentu, a gdy go brakuje, uzywany jest `DefaultMaterialProfiles.Plywood3Mm`,
+  - `DocumentInfoView` jest odswiezany po przebudowie dokumentu.
+- Widoczne po odpaleniu aplikacji:
+  - start nadal pokazuje demo dokument,
+  - po zmianie wartosci w panelu `Generator pudelka` i kliknieciu `Zastosuj` demo dokument zostanie zastapiony czerwonymi konturami paneli pudelka,
+  - dla typu `Otwarte` powinno byc widac 5 rozlozonych paneli z finger jointami,
+  - dla typu `Z pokrywa` powinno byc widac 6 paneli,
+  - zmiana `Szerokosc` zmienia front/dno/pokrywe,
+  - zmiana `Material` zmienia glebokosc/wysuniecie finger jointow.
+- Po przegladzie planu odhaczono:
+  - `3.5.3`,
+  - `MVP.0.13`, bo zmiana parametru w UI przebudowuje widoczny podglad pudelka.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `404/404`,
+  - `dotnet build src\LaserCad.Core\LaserCad.Core.csproj -f netstandard2.1 --no-restore` przechodzi bez ostrzezen,
+  - `cmd /c build.bat` zakonczyl sie sukcesem i wygenerowal `C:\borys\CAD\bin\release\LaserCad\LaserCad.exe`.
+- Nastepny najlepszy krok wedlug `TASKS.md`:
+  - `3.5.4 Dodac panel eksportu SVG`,
+  - potem `3.5.5 Dodac panel eksportu DXF`.
+
 ## Aktualizacja po sekcji 8.1 Generator pudelka - geometria
 
 - W tej sesji wykonano cala sekcje `8.1 Generator pudelka - geometria` i odhaczono ja w `TASKS.md`.
