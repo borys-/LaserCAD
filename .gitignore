@@ -57,8 +57,10 @@ sysinfo.txt
 
 # Unity local domain plugin build outputs
 LaserCad.Unity/Assets/Plugins/LaserCad.Domain/*.dll
+LaserCad.Unity/Assets/Plugins/LaserCad.Domain/*.dll.meta
 LaserCad.Unity/Assets/Plugins/LaserCad.Domain/*.pdb
 LaserCad.Unity/Assets/Plugins/LaserCad.Domain/*.deps.json
+LaserCad.Unity/Assets/Plugins/LaserCad.Domain/*.deps.json.meta
 
 # Unity asset store tools
 AssetStoreTools*
