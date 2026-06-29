@@ -13,11 +13,13 @@ public sealed class BoxGeneratorOptions
     public BoxGeneratorOptions(
         Length? width = null,
         Length? depth = null,
-        Length? height = null)
+        Length? height = null,
+        Length? materialThickness = null)
     {
         Width = width ?? Length.FromMillimeters(100.0);
         Depth = depth ?? Length.FromMillimeters(80.0);
         Height = height ?? Length.FromMillimeters(50.0);
+        MaterialThickness = materialThickness ?? Length.FromMillimeters(3.0);
     }
 
     /// <summary>
@@ -34,4 +36,9 @@ public sealed class BoxGeneratorOptions
     /// Wysokosc pudelka mierzona w milimetrach.
     /// </summary>
     public Length Height { get; }
+
+    /// <summary>
+    /// Grubosc materialu uzywana przez generator polaczen i scianek.
+    /// </summary>
+    public Length MaterialThickness { get; }
 }
