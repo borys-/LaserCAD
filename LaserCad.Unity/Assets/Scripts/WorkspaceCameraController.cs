@@ -18,6 +18,12 @@ public sealed class WorkspaceCameraController : MonoBehaviour
     private float zoomSensitivity = 12f;
 
     [SerializeField]
+    private float minimumOrthographicSize = 5f;
+
+    [SerializeField]
+    private float maximumOrthographicSize = 500f;
+
+    [SerializeField]
     private KeyCode resetViewKey = KeyCode.Home;
 
     private Vector3 initialPosition;
@@ -48,7 +54,7 @@ public sealed class WorkspaceCameraController : MonoBehaviour
         }
 
         transform.position = initialPosition;
-        workspaceCamera.orthographicSize = initialOrthographicSize;
+        workspaceCamera.orthographicSize = ClampOrthographicSize(initialOrthographicSize);
     }
 
     private void ConfigureOrthographicCamera()
@@ -59,7 +65,7 @@ public sealed class WorkspaceCameraController : MonoBehaviour
         }
 
         workspaceCamera.orthographic = true;
-        workspaceCamera.orthographicSize = initialOrthographicSize;
+        workspaceCamera.orthographicSize = ClampOrthographicSize(initialOrthographicSize);
     }
 
     private void HandleZoom()
@@ -75,7 +81,8 @@ public sealed class WorkspaceCameraController : MonoBehaviour
             return;
         }
 
-        workspaceCamera.orthographicSize -= scrollDelta * zoomSensitivity;
+        var requestedSize = workspaceCamera.orthographicSize - scrollDelta * zoomSensitivity;
+        workspaceCamera.orthographicSize = ClampOrthographicSize(requestedSize);
     }
 
     private void HandlePan()
@@ -109,5 +116,10 @@ public sealed class WorkspaceCameraController : MonoBehaviour
         {
             ResetView();
         }
+    }
+
+    private float ClampOrthographicSize(float requestedSize)
+    {
+        return Mathf.Clamp(requestedSize, minimumOrthographicSize, maximumOrthographicSize);
     }
 }

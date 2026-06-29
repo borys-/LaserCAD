@@ -337,7 +337,7 @@ Zalecenie pracy:
 - [x] 3.1.1 Dodac zoom kolkiem myszy.
 - [x] 3.1.2 Dodac pan srodkowym przyciskiem lub prawym przyciskiem myszy.
 - [x] 3.1.3 Dodac reset widoku.
-- [ ] 3.1.4 Dodac ograniczenia minimalnego i maksymalnego zoomu.
+- [x] 3.1.4 Dodac ograniczenia minimalnego i maksymalnego zoomu.
 - [ ] 3.1.5 Dodac test manualny kamery do checklisty QA.
 
 ## 3.2 Grid
