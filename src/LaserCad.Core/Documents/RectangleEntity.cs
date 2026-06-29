@@ -98,6 +98,11 @@ public sealed class RectangleEntity : Entity
             {
                 width = GetLengthParameter(parameters, binding).Millimeters;
             }
+
+            if (binding.Dimension == EntityDimensionKind.Height)
+            {
+                height = GetLengthParameter(parameters, binding).Millimeters;
+            }
         }
 
         return new RectangleEntity(

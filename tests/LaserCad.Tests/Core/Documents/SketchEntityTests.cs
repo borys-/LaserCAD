@@ -123,6 +123,23 @@ public sealed class SketchEntityTests
     }
 
     [Test]
+    public void RectangleEntity_RebuildFromParameters_ShouldUpdateHeight()
+    {
+        var rectangle = new RectangleEntity(new Point2D(2.0, 3.0), 10.0, 5.0)
+            .BindDimension(new EntityDimensionBinding(EntityDimensionKind.Height, new ParameterId("Height")));
+        var parameters = new ParameterSet(new[]
+        {
+            new Parameter(new ParameterId("Height"), "Height", ParameterType.Length, Length.FromMillimeters(15.0)),
+        });
+
+        var rebuilt = rectangle.RebuildFromParameters(parameters);
+
+        Assert.That(rebuilt.Bounds, Is.EqualTo(new BoundingBox(2.0, 3.0, 12.0, 18.0)));
+        Assert.That(rebuilt.Id, Is.EqualTo(rectangle.Id));
+        Assert.That(rebuilt.DimensionBindings, Has.Count.EqualTo(1));
+    }
+
+    [Test]
     public void Transform_ShouldKeepIdentityAndLayer()
     {
         var id = Guid.NewGuid();

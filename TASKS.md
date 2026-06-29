@@ -304,7 +304,7 @@ Zalecenie pracy:
 
 - [x] 2.2.0 Dodac mozliwosc przypisania wymiaru encji do parametru.
 - [x] 2.2.1 Dodac aktualizacje prostokata po zmianie parametru szerokosci.
-- [ ] 2.2.2 Dodac aktualizacje prostokata po zmianie parametru wysokosci.
+- [x] 2.2.2 Dodac aktualizacje prostokata po zmianie parametru wysokosci.
 - [ ] 2.2.3 Dodac aktualizacje okregu po zmianie parametru srednicy.
 - [ ] 2.2.4 Dodac test przebudowy szkicu po zmianie parametru.
 - [ ] 2.2.5 Opisac ograniczenia parametrycznego szkicu w MVP.
