@@ -376,14 +376,14 @@ Zalecenie pracy:
 
 ## 4.0 Eksport SVG - fundament
 
-- [ ] 4.0.0 Utworzyc `SvgExportOptions`.
-- [ ] 4.0.1 Dodac jednostke eksportu: mm.
-- [ ] 4.0.2 Dodac ustawienie grubosci linii.
-- [ ] 4.0.3 Dodac ustawienie eksportowanych warstw.
-- [ ] 4.0.4 Utworzyc `SvgExporter`.
-- [ ] 4.0.5 Dodac eksport pustego dokumentu.
-- [ ] 4.0.6 Dodac poprawny `viewBox`.
-- [ ] 4.0.7 Dodac test snapshot dla pustego SVG.
+- [x] 4.0.0 Utworzyc `SvgExportOptions`.
+- [x] 4.0.1 Dodac jednostke eksportu: mm.
+- [x] 4.0.2 Dodac ustawienie grubosci linii.
+- [x] 4.0.3 Dodac ustawienie eksportowanych warstw.
+- [x] 4.0.4 Utworzyc `SvgExporter`.
+- [x] 4.0.5 Dodac eksport pustego dokumentu.
+- [x] 4.0.6 Dodac poprawny `viewBox`.
+- [x] 4.0.7 Dodac test snapshot dla pustego SVG.
 
 ## 4.1 Eksport SVG - encje
 
