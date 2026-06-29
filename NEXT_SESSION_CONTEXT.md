@@ -6,7 +6,8 @@
 - Nowe commity tej sesji:
   - `901a395 7.1.0 Utworz wynik generatora finger joint`,
   - `ba99c85 7.1.1 Dodaj algorytm profilu finger joint`,
-  - `dd3721b 7.1.8 Dodaj testy generatora finger joint`.
+  - `dd3721b 7.1.8 Dodaj testy generatora finger joint`,
+  - `a662e94 7.1 Odhacz algorytm finger joint`.
 - Dodano domenowy generator dla prostych krawedzi w `LaserCad.Core.FingerJoints`.
 - Nowe typy:
   - `FingerJointSegmentKind`: `Finger`, `Slot`,
