@@ -25,6 +25,7 @@ namespace LaserCad.Unity
 
         private readonly HashSet<Guid> selectedEntityIds = new HashSet<Guid>();
         private Vector2 mouseDownScreenPosition;
+        private Vector2 currentMouseScreenPosition;
         private bool isPointerDown;
 
         /// <summary>
@@ -43,12 +44,46 @@ namespace LaserCad.Unity
             get { return selectedEntityIds.Count; }
         }
 
+        /// <summary>
+        /// Informuje, czy uzytkownik przeciaga aktualnie prostokat zaznaczania.
+        /// </summary>
+        public bool IsDraggingSelection
+        {
+            get
+            {
+                return isPointerDown
+                    && Vector2.Distance(mouseDownScreenPosition, currentMouseScreenPosition) >= dragThresholdPixels;
+            }
+        }
+
+        /// <summary>
+        /// Pozycja ekranu, w ktorej zaczelo sie aktualne przeciaganie.
+        /// </summary>
+        public Vector2 DragStartScreenPosition
+        {
+            get { return mouseDownScreenPosition; }
+        }
+
+        /// <summary>
+        /// Aktualna pozycja ekranu podczas przeciagania.
+        /// </summary>
+        public Vector2 DragCurrentScreenPosition
+        {
+            get { return currentMouseScreenPosition; }
+        }
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
                 isPointerDown = true;
                 mouseDownScreenPosition = Input.mousePosition;
+                currentMouseScreenPosition = mouseDownScreenPosition;
+            }
+
+            if (isPointerDown)
+            {
+                currentMouseScreenPosition = Input.mousePosition;
             }
 
             if (isPointerDown && Input.GetMouseButtonUp(0))
