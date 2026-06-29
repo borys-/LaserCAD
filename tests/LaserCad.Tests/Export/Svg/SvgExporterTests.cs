@@ -53,4 +53,16 @@ public class SvgExporterTests
 
         Assert.That(svg, Does.Contain("<line x1=\"1\" y1=\"2\" x2=\"3\" y2=\"4\" />"));
     }
+
+    [Test]
+    public void Export_WithRectangleEntity_ShouldWriteClosedPathElement()
+    {
+        var document = new CadDocument(layers: Array.Empty<Layer>())
+            .AddSketch(new Sketch().AddEntity(new RectangleEntity(new Point2D(1, 2), 3, 4)));
+        var exporter = new SvgExporter();
+
+        string svg = exporter.Export(document);
+
+        Assert.That(svg, Does.Contain("<path d=\"M 1 2 L 4 2 L 4 6 L 1 6 Z\" />"));
+    }
 }

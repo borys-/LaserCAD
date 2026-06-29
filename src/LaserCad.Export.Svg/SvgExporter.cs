@@ -54,6 +54,7 @@ public sealed class SvgExporter
         return entity switch
         {
             LineEntity line => CreateLineElement(line),
+            RectangleEntity rectangle => CreateRectangleElement(rectangle),
             _ => null,
         };
     }
@@ -66,6 +67,13 @@ public sealed class SvgExporter
             new XAttribute("y1", FormatNumber(entity.Segment.Start.Y)),
             new XAttribute("x2", FormatNumber(entity.Segment.End.X)),
             new XAttribute("y2", FormatNumber(entity.Segment.End.Y)));
+    }
+
+    private static XElement CreateRectangleElement(RectangleEntity entity)
+    {
+        return new XElement(
+            SvgNamespace + "path",
+            new XAttribute("d", FormatClosedPath(entity.Corners)));
     }
 
     private static BoundingBox CalculateBounds(CadDocument document)
@@ -88,6 +96,31 @@ public sealed class SvgExporter
             FormatNumber(bounds.MinY),
             FormatNumber(bounds.Width),
             FormatNumber(bounds.Height));
+    }
+
+    private static string FormatClosedPath(IReadOnlyList<Point2D> points)
+    {
+        return string.Concat(FormatOpenPath(points), " Z");
+    }
+
+    private static string FormatOpenPath(IReadOnlyList<Point2D> points)
+    {
+        var commands = new List<string>
+        {
+            string.Concat("M ", FormatPoint(points[0])),
+        };
+
+        for (int index = 1; index < points.Count; index++)
+        {
+            commands.Add(string.Concat("L ", FormatPoint(points[index])));
+        }
+
+        return string.Join(" ", commands);
+    }
+
+    private static string FormatPoint(Point2D point)
+    {
+        return string.Concat(FormatNumber(point.X), " ", FormatNumber(point.Y));
     }
 
     private static string FormatMillimeters(double value)
