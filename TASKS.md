@@ -354,13 +354,14 @@ Zalecenie pracy:
 
 ## 3.3 Snap
 
-- [ ] 3.3.0 Utworzyc `SnapService`.
-- [ ] 3.3.1 Dodac snap do siatki.
-- [ ] 3.3.2 Dodac snap do punktow encji.
-- [ ] 3.3.3 Dodac snap do srodka okregu/prostokata.
-- [ ] 3.3.4 Dodac snap do koncow linii.
-- [ ] 3.3.5 Dodac priorytety snapowania.
-- [ ] 3.3.6 Dodac wizualny marker snapu.
+- [x] 3.3.0 Utworzyc `SnapService`.
+- [x] 3.3.1 Dodac snap do siatki.
+- [x] 3.3.2 Dodac snap do punktow encji.
+- [x] 3.3.3 Dodac snap do srodka okregu/prostokata.
+- [x] 3.3.4 Dodac snap do koncow linii.
+- [x] 3.3.5 Dodac priorytety snapowania.
+- [x] 3.3.6 Dodac wizualny marker snapu.
+- [x] 3.3.7 Dodac test manualny snapu do checklisty QA.
 
 ## 3.4 Zaznaczanie
 
