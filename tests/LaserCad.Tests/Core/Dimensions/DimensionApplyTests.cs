@@ -65,4 +65,19 @@ public sealed class DimensionApplyTests
         Assert.That(updatedCircle.Circle.Center, Is.EqualTo(circle.Circle.Center));
         Assert.That(updatedCircle.Circle.Radius, Is.EqualTo(15.0));
     }
+
+    [Test]
+    public void Apply_WithCircleRadius_ShouldResizeCircleRadius()
+    {
+        var circle = new CircleEntity(new Circle2D(new Point2D(10.0, 20.0), 4.0));
+        var sketch = new Sketch(entities: new[] { circle });
+        var dimension = new Dimension(circle.Id, DimensionKind.Radius, Length.FromMillimeters(12.0));
+
+        var updatedSketch = dimension.Apply(sketch);
+
+        var updatedCircle = (CircleEntity)updatedSketch.Entities[0];
+        Assert.That(updatedCircle.Id, Is.EqualTo(circle.Id));
+        Assert.That(updatedCircle.Circle.Center, Is.EqualTo(circle.Circle.Center));
+        Assert.That(updatedCircle.Circle.Radius, Is.EqualTo(12.0));
+    }
 }
