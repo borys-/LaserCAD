@@ -118,6 +118,22 @@ public sealed class BoxGeneratorTests
         Assert.That(leftPanel.Bounds.MinX, Is.GreaterThan(backPanel.Bounds.MinX));
     }
 
+    [Test]
+    public void GenerateSketch_ShouldKeepMarginsBetweenPanels()
+    {
+        var generator = new BoxGenerator();
+
+        Sketch sketch = generator.GenerateSketch(new BoxGeneratorOptions());
+
+        for (int index = 1; index < sketch.Entities.Count; index++)
+        {
+            var previous = (PolylineEntity)sketch.Entities[index - 1];
+            var current = (PolylineEntity)sketch.Entities[index];
+
+            Assert.That(current.Bounds.MinX - previous.Bounds.MaxX, Is.GreaterThan(0.0));
+        }
+    }
+
     private static void AssertPanelBounds(BoundingBox bounds, double expectedWidth, double expectedHeight)
     {
         Assert.That(bounds.MaxX - bounds.MinX, Is.EqualTo(expectedWidth).Within(0.000001));
