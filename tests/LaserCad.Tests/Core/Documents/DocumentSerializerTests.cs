@@ -296,4 +296,55 @@ public sealed class DocumentSerializerTests
         Assert.That(roundTrippedDocument.Generators, Is.Empty);
         Assert.That(roundTrippedDocument.MaterialProfile, Is.Null);
     }
+
+    [Test]
+    public void RoundTrip_WithParametersAndLayers_ShouldPreserveDocumentValues()
+    {
+        var id = Guid.NewGuid();
+        var document = new CadDocument(
+                id,
+                "Parametric box",
+                layers:
+                [
+                    new Layer("Cut", LayerColor.FromHex("#FF0000"), LayerRole.Cut),
+                    new Layer("Labels", LayerColor.FromHex("#00AA00"), LayerRole.Engrave)
+                ])
+            .AddParameter(new Parameter(
+                new ParameterId("Width"),
+                "Width",
+                ParameterType.Length,
+                Length.FromMillimeters(120.0),
+                "mm",
+                Length.FromMillimeters(10.0),
+                Length.FromMillimeters(300.0)))
+            .AddParameter(new Parameter(new ParameterId("FingerCount"), "Finger count", ParameterType.Number, 7.0))
+            .AddParameter(new Parameter(new ParameterId("HasLid"), "Has lid", ParameterType.Boolean, false))
+            .AddParameter(new Parameter(new ParameterId("Label"), "Label", ParameterType.Text, "Front"))
+            .AddParameter(new Parameter(new ParameterId("JointMode"), "Joint mode", ParameterType.Choice, "Tight"));
+        var serializer = new DocumentSerializer();
+
+        var json = serializer.Serialize(document);
+        var roundTrippedDocument = serializer.Deserialize(json);
+        var width = roundTrippedDocument.Parameters.FindById(new ParameterId("Width"));
+
+        Assert.That(roundTrippedDocument.Id, Is.EqualTo(id));
+        Assert.That(roundTrippedDocument.Name, Is.EqualTo("Parametric box"));
+        Assert.That(roundTrippedDocument.Parameters.Parameters, Has.Count.EqualTo(5));
+        Assert.That(width, Is.Not.Null);
+        Assert.That(width!.Value, Is.EqualTo(Length.FromMillimeters(120.0)));
+        Assert.That(width.DisplayUnit, Is.EqualTo("mm"));
+        Assert.That(width.MinimumValue, Is.EqualTo(Length.FromMillimeters(10.0)));
+        Assert.That(width.MaximumValue, Is.EqualTo(Length.FromMillimeters(300.0)));
+        Assert.That(roundTrippedDocument.Parameters.FindById(new ParameterId("FingerCount"))!.Value, Is.EqualTo(7.0));
+        Assert.That(roundTrippedDocument.Parameters.FindById(new ParameterId("HasLid"))!.Value, Is.False);
+        Assert.That(roundTrippedDocument.Parameters.FindById(new ParameterId("Label"))!.Value, Is.EqualTo("Front"));
+        Assert.That(roundTrippedDocument.Parameters.FindById(new ParameterId("JointMode"))!.Value, Is.EqualTo("Tight"));
+        Assert.That(roundTrippedDocument.Layers, Has.Count.EqualTo(2));
+        Assert.That(roundTrippedDocument.Layers[0].Name, Is.EqualTo("Cut"));
+        Assert.That(roundTrippedDocument.Layers[0].Color, Is.EqualTo(LayerColor.FromHex("#FF0000")));
+        Assert.That(roundTrippedDocument.Layers[0].Role, Is.EqualTo(LayerRole.Cut));
+        Assert.That(roundTrippedDocument.Layers[1].Name, Is.EqualTo("Labels"));
+        Assert.That(roundTrippedDocument.Layers[1].Color, Is.EqualTo(LayerColor.FromHex("#00AA00")));
+        Assert.That(roundTrippedDocument.Layers[1].Role, Is.EqualTo(LayerRole.Engrave));
+    }
 }
