@@ -399,14 +399,14 @@ Zalecenie pracy:
 
 ## 4.2 Eksport DXF
 
-- [ ] 4.2.0 Utworzyc `DxfExportOptions`.
-- [ ] 4.2.1 Utworzyc `DxfExporter`.
-- [ ] 4.2.2 Dodac eksport `LINE`.
-- [ ] 4.2.3 Dodac eksport `CIRCLE`.
-- [ ] 4.2.4 Dodac eksport `ARC`.
-- [ ] 4.2.5 Dodac eksport `LWPOLYLINE`.
-- [ ] 4.2.6 Dodac warstwy DXF.
-- [ ] 4.2.7 Dodac test podstawowego pliku DXF.
+- [x] 4.2.0 Utworzyc `DxfExportOptions`.
+- [x] 4.2.1 Utworzyc `DxfExporter`.
+- [x] 4.2.2 Dodac eksport `LINE`.
+- [x] 4.2.3 Dodac eksport `CIRCLE`.
+- [x] 4.2.4 Dodac eksport `ARC`.
+- [x] 4.2.5 Dodac eksport `LWPOLYLINE`.
+- [x] 4.2.6 Dodac warstwy DXF.
+- [x] 4.2.7 Dodac test podstawowego pliku DXF.
 
 ## 5.0 Komendy edycyjne
 
