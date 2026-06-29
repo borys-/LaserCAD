@@ -122,4 +122,29 @@ public sealed class DimensionApplyTests
 
         Assert.Throws<InvalidOperationException>(() => _ = dimension.Apply(sketch, parameters));
     }
+
+    [Test]
+    public void Apply_AfterParameterValueChange_ShouldUpdateDimension()
+    {
+        var line = new LineEntity(new LineSegment2D(new Point2D(0.0, 0.0), new Point2D(5.0, 0.0)));
+        var sketch = new Sketch(entities: new[] { line });
+        var parameterId = new ParameterId("LineLength");
+        var dimension = new Dimension(
+            line.Id,
+            DimensionKind.Length,
+            Length.FromMillimeters(5.0),
+            parameterId: parameterId);
+        var parameters = new ParameterSet(new[]
+        {
+            new Parameter(parameterId, "Line length", ParameterType.Length, Length.FromMillimeters(5.0)),
+        });
+
+        var updatedParameters = parameters.UpdateValue(parameterId, Length.FromMillimeters(25.0));
+        var rebuiltSketch = dimension.Apply(sketch, updatedParameters);
+
+        var rebuiltLine = (LineEntity)rebuiltSketch.Entities[0];
+        Assert.That(rebuiltLine.Segment.Start, Is.EqualTo(line.Segment.Start));
+        Assert.That(rebuiltLine.Segment.End, Is.EqualTo(new Point2D(25.0, 0.0)));
+        Assert.That(rebuiltLine.Segment.Length, Is.EqualTo(25.0).Within(GeometryTolerance.Default));
+    }
 }
