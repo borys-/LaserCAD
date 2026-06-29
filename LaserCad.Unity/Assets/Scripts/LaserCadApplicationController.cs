@@ -11,6 +11,8 @@ namespace LaserCad.Unity
     /// </summary>
     public sealed class LaserCadApplicationController : MonoBehaviour
     {
+        private readonly BoxGenerator boxGenerator = new BoxGenerator();
+
         [SerializeField]
         private DocumentInfoView documentInfoView;
 
@@ -56,6 +58,22 @@ namespace LaserCad.Unity
             }
 
             CurrentBoxOptions = options;
+            CurrentDocument = CreateBoxPreviewDocument(options);
+            if (documentInfoView != null)
+            {
+                documentInfoView.Show(CurrentDocument);
+            }
+        }
+
+        private CadDocument CreateBoxPreviewDocument(BoxGeneratorOptions options)
+        {
+            var materialProfile = CurrentDocument != null && CurrentDocument.MaterialProfile != null
+                ? CurrentDocument.MaterialProfile
+                : DefaultMaterialProfiles.Plywood3Mm;
+
+            return new CadDocument(name: "Podglad pudelka")
+                .WithMaterialProfile(materialProfile)
+                .AddSketch(boxGenerator.GenerateSketch(options));
         }
 
         private static CadDocument CreateDemoDocument()

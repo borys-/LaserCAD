@@ -382,7 +382,7 @@ Zalecenie pracy:
 - [x] 3.5.0 Dodac renderer geometrii dokumentu 2D w Unity.
 - [x] 3.5.1 Dodac startowy dokument demonstracyjny z podstawowymi encjami.
 - [x] 3.5.2 Dodac panel parametrow generatora pudelka.
-- [ ] 3.5.3 Dodac przebudowe podgladu po zmianie parametrow pudelka.
+- [x] 3.5.3 Dodac przebudowe podgladu po zmianie parametrow pudelka.
   Uwaga: ten task powinien bazowac na domenowym `BoxGenerator` z sekcji `8.1`, zeby UI nie duplikowalo logiki geometrii.
 - [ ] 3.5.4 Dodac panel eksportu SVG.
 - [ ] 3.5.5 Dodac panel eksportu DXF.
@@ -692,7 +692,7 @@ Zalecenie pracy:
 - [x] MVP.0.10 Zaimplementowac eksport SVG.
 - [ ] MVP.0.11 Zaimplementowac prosty widok Unity 2D.
 - [ ] MVP.0.12 Zaimplementowac panel zmiany parametrow pudelka.
-- [ ] MVP.0.13 Potwierdzic, ze zmiana parametru przebudowuje pudelko.
+- [x] MVP.0.13 Potwierdzic, ze zmiana parametru przebudowuje pudelko.
 - [ ] MVP.0.14 Wyeksportowac SVG pudelka testowego.
 - [ ] MVP.0.15 Otworzyc SVG w zewnetrznym programie i potwierdzic skale w mm.
 - [ ] MVP.0.16 Uruchomic komplet testow jednostkowych.
