@@ -280,6 +280,10 @@ Solver constraints w pierwszym kroku jest deterministycznym solverem sekwencyjny
 - Konczy zebem.
 - Tryb ciasny, neutralny lub luzny.
 
+### Ograniczenia modelu finger joint MVP
+
+Model danych polaczenia palcowego zawiera opcje potrzebne do przyszlego generatora: szerokosc palca, minimalna i maksymalna szerokosc, poczatek i koniec zebem, tryb dopasowania oraz kerf i clearance. Sekcja 7.0 nie generuje jeszcze geometrii krawedzi; algorytm podzialu, symetria i kompensacja zostaja w sekcji 7.1.
+
 ## Faza 8 - Generatory
 
 - Box:

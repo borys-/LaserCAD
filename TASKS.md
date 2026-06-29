@@ -470,16 +470,16 @@ Zalecenie pracy:
 
 ## 7.0 Finger joint - model danych
 
-- [ ] 7.0.0 Utworzyc `FingerJointOptions`.
-- [ ] 7.0.1 Dodac szerokosc palca.
-- [ ] 7.0.2 Dodac minimalna szerokosc palca.
-- [ ] 7.0.3 Dodac maksymalna szerokosc palca.
-- [ ] 7.0.4 Dodac flage zaczynania od zeba.
-- [ ] 7.0.5 Dodac flage konczenia zebem.
-- [ ] 7.0.6 Dodac tryb ciasny/neutralny/luzny.
-- [ ] 7.0.7 Dodac kerf i clearance.
-- [ ] 7.0.8 Dodac walidacje opcji.
-- [ ] 7.0.9 Dodac test walidacji opcji.
+- [x] 7.0.0 Utworzyc `FingerJointOptions`.
+- [x] 7.0.1 Dodac szerokosc palca.
+- [x] 7.0.2 Dodac minimalna szerokosc palca.
+- [x] 7.0.3 Dodac maksymalna szerokosc palca.
+- [x] 7.0.4 Dodac flage zaczynania od zeba.
+- [x] 7.0.5 Dodac flage konczenia zebem.
+- [x] 7.0.6 Dodac tryb ciasny/neutralny/luzny.
+- [x] 7.0.7 Dodac kerf i clearance.
+- [x] 7.0.8 Dodac walidacje opcji.
+- [x] 7.0.9 Dodac test walidacji opcji.
 
 ## 7.1 Finger joint - algorytm
 
