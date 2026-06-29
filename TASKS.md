@@ -424,15 +424,15 @@ Zalecenie pracy:
 
 ## 5.1 Undo i redo
 
-- [ ] 5.1.0 Utworzyc `UndoRedoStack`.
-- [ ] 5.1.1 Dodac stos undo.
-- [ ] 5.1.2 Dodac stos redo.
-- [ ] 5.1.3 Dodac czyszczenie redo po nowej komendzie.
-- [ ] 5.1.4 Dodac limit historii.
-- [ ] 5.1.5 Dodac grupowanie komend.
-- [ ] 5.1.6 Dodac test undo.
-- [ ] 5.1.7 Dodac test redo.
-- [ ] 5.1.8 Dodac test czyszczenia redo.
+- [x] 5.1.0 Utworzyc `UndoRedoStack`.
+- [x] 5.1.1 Dodac stos undo.
+- [x] 5.1.2 Dodac stos redo.
+- [x] 5.1.3 Dodac czyszczenie redo po nowej komendzie.
+- [x] 5.1.4 Dodac limit historii.
+- [x] 5.1.5 Dodac grupowanie komend.
+- [x] 5.1.6 Dodac test undo.
+- [x] 5.1.7 Dodac test redo.
+- [x] 5.1.8 Dodac test czyszczenia redo.
 
 ## 5.2 Feature tree
 
