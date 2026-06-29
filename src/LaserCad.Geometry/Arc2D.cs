@@ -7,9 +7,9 @@ namespace LaserCad.Geometry;
 public readonly record struct Arc2D
 {
     /// <summary>
-    /// Tworzy luk o podanym srodku i promieniu.
+    /// Tworzy luk o podanym srodku, promieniu oraz katach w radianach.
     /// </summary>
-    public Arc2D(Point2D center, double radius)
+    public Arc2D(Point2D center, double radius, double startAngleRadians, double endAngleRadians)
     {
         if (radius <= 0.0)
         {
@@ -18,6 +18,8 @@ public readonly record struct Arc2D
 
         Center = center;
         Radius = radius;
+        StartAngleRadians = startAngleRadians;
+        EndAngleRadians = endAngleRadians;
     }
 
     /// <summary>
@@ -29,4 +31,14 @@ public readonly record struct Arc2D
     /// Promien luku w milimetrach domenowych.
     /// </summary>
     public double Radius { get; }
+
+    /// <summary>
+    /// Kat poczatkowy luku w radianach.
+    /// </summary>
+    public double StartAngleRadians { get; }
+
+    /// <summary>
+    /// Kat koncowy luku w radianach.
+    /// </summary>
+    public double EndAngleRadians { get; }
 }
