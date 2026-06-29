@@ -124,6 +124,7 @@ Nazwy powinny opisywac intencje domenowa, np. `MaterialThickness`, `Kerf`, `Fing
 ## Git i taski
 
 - Jeden task z `TASKS.md` powinien odpowiadac jednemu commitowi.
+- Kazdy fix, zmiana techniczna, zmiana w kodzie, konfiguracji albo dokumentacji powinna byc osobnym commitem z opisem po polsku.
 - Kazdy zaakceptowany task nalezy wypchnac na GitHuba.
 - Wiadomosc commita powinna zaczynac sie od numeru taska i byc po polsku, np. `0.2.2 Dodaj editorconfig`.
 - Dla zmian organizacyjnych bez numeru taska commit powinien miec krotki polski opis.
