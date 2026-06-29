@@ -24,10 +24,16 @@ namespace LaserCad.Unity
         private float mediumStepMillimeters = 5f;
 
         [SerializeField]
+        private float majorStepMillimeters = 10f;
+
+        [SerializeField]
         private Color minorLineColor = new Color(0.20f, 0.20f, 0.20f, 1f);
 
         [SerializeField]
         private Color mediumLineColor = new Color(0.31f, 0.31f, 0.31f, 1f);
+
+        [SerializeField]
+        private Color majorLineColor = new Color(0.44f, 0.44f, 0.44f, 1f);
 
         private void Awake()
         {
@@ -38,6 +44,7 @@ namespace LaserCad.Unity
         {
             minorStepMillimeters = Mathf.Max(0.1f, minorStepMillimeters);
             mediumStepMillimeters = Mathf.Max(minorStepMillimeters, mediumStepMillimeters);
+            majorStepMillimeters = Mathf.Max(mediumStepMillimeters, majorStepMillimeters);
         }
 
         private void OnRenderObject()
@@ -68,6 +75,10 @@ namespace LaserCad.Unity
             GL.Color(mediumLineColor);
             DrawVerticalLines(bounds, mediumStepMillimeters);
             DrawHorizontalLines(bounds, mediumStepMillimeters);
+
+            GL.Color(majorLineColor);
+            DrawVerticalLines(bounds, majorStepMillimeters);
+            DrawHorizontalLines(bounds, majorStepMillimeters);
 
             GL.End();
             GL.PopMatrix();
