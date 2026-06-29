@@ -20,14 +20,16 @@ public sealed class BoxGeneratorOptions
         Length? clearance = null,
         BoxGeneratorType boxType = BoxGeneratorType.Open)
     {
-        Width = width ?? Length.FromMillimeters(100.0);
-        Depth = depth ?? Length.FromMillimeters(80.0);
-        Height = height ?? Length.FromMillimeters(50.0);
-        MaterialThickness = materialThickness ?? Length.FromMillimeters(3.0);
-        Kerf = kerf ?? Length.FromMillimeters(0.0);
-        FingerWidth = fingerWidth ?? Length.FromMillimeters(10.0);
-        Clearance = clearance ?? Length.FromMillimeters(0.0);
+        Width = EnsurePositive(width ?? Length.FromMillimeters(100.0), nameof(width), "Box width must be greater than zero.");
+        Depth = EnsurePositive(depth ?? Length.FromMillimeters(80.0), nameof(depth), "Box depth must be greater than zero.");
+        Height = EnsurePositive(height ?? Length.FromMillimeters(50.0), nameof(height), "Box height must be greater than zero.");
+        MaterialThickness = EnsurePositive(materialThickness ?? Length.FromMillimeters(3.0), nameof(materialThickness), "Material thickness must be greater than zero.");
+        Kerf = EnsureNonNegative(kerf ?? Length.FromMillimeters(0.0), nameof(kerf), "Kerf cannot be negative.");
+        FingerWidth = EnsurePositive(fingerWidth ?? Length.FromMillimeters(10.0), nameof(fingerWidth), "Finger width must be greater than zero.");
+        Clearance = EnsureNonNegative(clearance ?? Length.FromMillimeters(0.0), nameof(clearance), "Clearance cannot be negative.");
         BoxType = boxType;
+
+        EnsureBoxCanContainMaterial();
     }
 
     /// <summary>
@@ -69,4 +71,53 @@ public sealed class BoxGeneratorOptions
     /// Wariant konstrukcyjny pudelka.
     /// </summary>
     public BoxGeneratorType BoxType { get; }
+
+    /// <summary>
+    /// Zwraca dlugosc po sprawdzeniu, ze jest dodatnia.
+    /// </summary>
+    private static Length EnsurePositive(Length value, string parameterName, string message)
+    {
+        if (value <= Length.FromMillimeters(0.0))
+        {
+            throw new ArgumentOutOfRangeException(parameterName, message);
+        }
+
+        return value;
+    }
+
+    /// <summary>
+    /// Zwraca dlugosc po sprawdzeniu, ze nie jest ujemna.
+    /// </summary>
+    private static Length EnsureNonNegative(Length value, string parameterName, string message)
+    {
+        if (value < Length.FromMillimeters(0.0))
+        {
+            throw new ArgumentOutOfRangeException(parameterName, message);
+        }
+
+        return value;
+    }
+
+    /// <summary>
+    /// Sprawdza minimalny rozmiar pudelka wzgledem grubosci materialu.
+    /// </summary>
+    private void EnsureBoxCanContainMaterial()
+    {
+        var minimumOuterSize = MaterialThickness * 2.0;
+
+        if (Width <= minimumOuterSize)
+        {
+            throw new ArgumentOutOfRangeException(nameof(Width), "Box width must be greater than twice the material thickness.");
+        }
+
+        if (Depth <= minimumOuterSize)
+        {
+            throw new ArgumentOutOfRangeException(nameof(Depth), "Box depth must be greater than twice the material thickness.");
+        }
+
+        if (Height <= MaterialThickness)
+        {
+            throw new ArgumentOutOfRangeException(nameof(Height), "Box height must be greater than material thickness.");
+        }
+    }
 }
