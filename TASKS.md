@@ -319,6 +319,7 @@ Zalecenie pracy:
 - [ ] 2.3.5 Dodac serializacje `PolylineEntity`.
 - [ ] 2.3.6 Dodac serializacje `TextEntity` placeholder.
 - [ ] 2.3.7 Dodac test round-trip dokumentu ze szkicem i encjami.
+- [ ] 2.3.8 Dodac serializacje powiazan wymiarow encji z parametrami.
 
 ## 3.0 Integracja Unity - baza
 

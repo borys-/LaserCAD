@@ -12,6 +12,7 @@ Plik zapisuje stabilny kontrakt DTO, a nie bezposrednia serializacje klas domeno
 - Parametry zapisuja `id`, `name`, `type`, `value`, opcjonalne `displayUnit`, `minimumValue` i `maximumValue`.
 - Profil materialu zapisuje nazwe oraz wszystkie wymiary produkcyjne w milimetrach.
 - Szkice i generatory pozostaja poza zakresem pierwszego formatu zapisu, dopoki ich encje nie maja stabilnego kontraktu plikowego.
+- Gdy szkice wejda do formatu pliku, kontrakt encji powinien objac takze powiazania wymiarow z parametrami, np. szerokosc prostokata -> `Width`.
 
 ## Przykladowy dokument
 
