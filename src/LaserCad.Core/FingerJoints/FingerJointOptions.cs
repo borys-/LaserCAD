@@ -20,14 +20,24 @@ public sealed class FingerJointOptions
         Length? kerf = null,
         Length? clearance = null)
     {
-        FingerWidth = fingerWidth ?? Length.FromMillimeters(0.0);
-        MinimumFingerWidth = minimumFingerWidth ?? Length.FromMillimeters(0.0);
-        MaximumFingerWidth = maximumFingerWidth ?? Length.FromMillimeters(0.0);
+        FingerWidth = EnsurePositive(fingerWidth ?? Length.FromMillimeters(1.0), nameof(fingerWidth), "Finger width must be greater than zero.");
+        MinimumFingerWidth = EnsurePositive(minimumFingerWidth ?? FingerWidth, nameof(minimumFingerWidth), "Minimum finger width must be greater than zero.");
+        MaximumFingerWidth = EnsurePositive(maximumFingerWidth ?? FingerWidth, nameof(maximumFingerWidth), "Maximum finger width must be greater than zero.");
         StartWithFinger = startWithFinger;
         EndWithFinger = endWithFinger;
         FitMode = fitMode;
-        Kerf = kerf ?? Length.FromMillimeters(0.0);
-        Clearance = clearance ?? Length.FromMillimeters(0.0);
+        Kerf = EnsureNonNegative(kerf ?? Length.FromMillimeters(0.0), nameof(kerf), "Kerf cannot be negative.");
+        Clearance = EnsureNonNegative(clearance ?? Length.FromMillimeters(0.0), nameof(clearance), "Clearance cannot be negative.");
+
+        if (MinimumFingerWidth > MaximumFingerWidth)
+        {
+            throw new ArgumentException("Minimum finger width cannot be greater than maximum finger width.", nameof(minimumFingerWidth));
+        }
+
+        if (FingerWidth < MinimumFingerWidth || FingerWidth > MaximumFingerWidth)
+        {
+            throw new ArgumentOutOfRangeException(nameof(fingerWidth), "Finger width must be within minimum and maximum finger width.");
+        }
     }
 
     /// <summary>
@@ -69,4 +79,30 @@ public sealed class FingerJointOptions
     /// Dodatkowy luz montazowy dla polaczenia.
     /// </summary>
     public Length Clearance { get; }
+
+    /// <summary>
+    /// Zwraca dlugosc po sprawdzeniu, ze jest dodatnia.
+    /// </summary>
+    private static Length EnsurePositive(Length value, string parameterName, string message)
+    {
+        if (value <= Length.FromMillimeters(0.0))
+        {
+            throw new ArgumentOutOfRangeException(parameterName, message);
+        }
+
+        return value;
+    }
+
+    /// <summary>
+    /// Zwraca dlugosc po sprawdzeniu, ze nie jest ujemna.
+    /// </summary>
+    private static Length EnsureNonNegative(Length value, string parameterName, string message)
+    {
+        if (value < Length.FromMillimeters(0.0))
+        {
+            throw new ArgumentOutOfRangeException(parameterName, message);
+        }
+
+        return value;
+    }
 }
