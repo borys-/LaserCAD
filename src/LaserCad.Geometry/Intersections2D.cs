@@ -62,6 +62,51 @@ public static class Intersections2D
         return IntersectionResult.None();
     }
 
+    /// <summary>
+    /// Oblicza przeciecie linii nieskonczonej i odcinka.
+    /// </summary>
+    public static IntersectionResult Intersect(Line2D line, LineSegment2D segment)
+    {
+        Vector2D segmentDirection = segment.End - segment.Start;
+
+        if (IsZero(segmentDirection.Length))
+        {
+            return PointOnLine(segment.Start, line)
+                ? IntersectionResult.FromPoint(segment.Start)
+                : IntersectionResult.None();
+        }
+
+        double denominator = line.Direction.Cross(segmentDirection);
+        Vector2D difference = segment.Start - line.Point;
+
+        if (IsZero(denominator))
+        {
+            if (PointOnLine(segment.Start, line))
+            {
+                return IntersectionResult.FromOverlap(segment);
+            }
+
+            return IntersectionResult.Parallel();
+        }
+
+        double u = difference.Cross(line.Direction) / denominator;
+
+        if (IsWithinUnitRange(u))
+        {
+            return IntersectionResult.FromPoint(segment.PointAt(ClampUnit(u)));
+        }
+
+        return IntersectionResult.None();
+    }
+
+    /// <summary>
+    /// Oblicza przeciecie odcinka i linii nieskonczonej.
+    /// </summary>
+    public static IntersectionResult Intersect(LineSegment2D segment, Line2D line)
+    {
+        return Intersect(line, segment);
+    }
+
     private static bool IsZero(double value)
     {
         return Math.Abs(value) <= GeometryTolerance.Default;
@@ -129,6 +174,11 @@ public static class Intersections2D
         double t = fromStart.Dot(segmentDirection) / lengthSquared;
 
         return IsWithinUnitRange(t);
+    }
+
+    private static bool PointOnLine(Point2D point, Line2D line)
+    {
+        return IsZero((point - line.Point).Cross(line.Direction));
     }
 
     private static bool IsWithinUnitRange(double value)
