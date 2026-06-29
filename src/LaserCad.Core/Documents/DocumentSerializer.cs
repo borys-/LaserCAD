@@ -60,6 +60,10 @@ public sealed class DocumentSerializer
         var layers = dto.Layers?.Select(ToDomain).ToArray();
         var materialProfile = dto.MaterialProfile is null ? null : ToDomain(dto.MaterialProfile);
         var formatVersion = dto.FormatVersion == 0 ? SupportedFormatVersion : dto.FormatVersion;
+        if (formatVersion != SupportedFormatVersion)
+        {
+            throw new NotSupportedException($"Document format version {formatVersion} is not supported.");
+        }
 
         return new CadDocument(dto.Id, dto.Name, formatVersion, parameters, layers, materialProfile: materialProfile);
     }

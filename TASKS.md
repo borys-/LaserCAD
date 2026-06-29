@@ -190,7 +190,7 @@ Zalecenie pracy:
 - [x] 0.10.5 Dodac serializacje warstw.
 - [x] 0.10.6 Dodac serializacje profilu materialu.
 - [x] 0.10.7 Dodac pole wersji formatu.
-- [ ] 0.10.8 Dodac blad dla nieobslugiwanej wersji.
+- [x] 0.10.8 Dodac blad dla nieobslugiwanej wersji.
 - [ ] 0.10.9 Dodac test round-trip pustego dokumentu.
 - [ ] 0.10.10 Dodac test round-trip dokumentu z parametrami i warstwami.
 

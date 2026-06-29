@@ -256,4 +256,22 @@ public sealed class DocumentSerializerTests
 
         Assert.That(document.FormatVersion, Is.EqualTo(1));
     }
+
+    [Test]
+    public void Deserialize_WithUnsupportedFormatVersion_ShouldThrow()
+    {
+        var id = Guid.NewGuid();
+        var json = $$"""
+        {
+          "formatVersion": 999,
+          "id": "{{id}}",
+          "name": "Box"
+        }
+        """;
+        var serializer = new DocumentSerializer();
+
+        var exception = Assert.Throws<NotSupportedException>(() => _ = serializer.Deserialize(json));
+
+        Assert.That(exception!.Message, Does.Contain("999"));
+    }
 }
