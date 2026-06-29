@@ -34,4 +34,13 @@ public readonly record struct Circle2D
     /// Obwod okregu w milimetrach domenowych.
     /// </summary>
     public double Circumference => 2.0 * Math.PI * Radius;
+
+    /// <summary>
+    /// Bounding box obejmujacy caly okreg.
+    /// </summary>
+    public BoundingBox Bounds => new BoundingBox(
+        Center.X - Radius,
+        Center.Y - Radius,
+        Center.X + Radius,
+        Center.Y + Radius);
 }
