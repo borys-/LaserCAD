@@ -29,6 +29,18 @@ public sealed class BoxGeneratorTests
         AssertPanelBounds(frontPanel.Bounds, expectedWidth: 106.0, expectedHeight: 56.0);
     }
 
+    [Test]
+    public void GenerateSketch_ShouldCreateBackPanel()
+    {
+        var generator = new BoxGenerator();
+
+        Sketch sketch = generator.GenerateSketch(new BoxGeneratorOptions());
+
+        var backPanel = (PolylineEntity)sketch.Entities[1];
+        Assert.That(backPanel.Polyline.IsClosed, Is.True);
+        AssertPanelBounds(backPanel.Bounds, expectedWidth: 106.0, expectedHeight: 56.0);
+    }
+
     private static void AssertPanelBounds(BoundingBox bounds, double expectedWidth, double expectedHeight)
     {
         Assert.That(bounds.MaxX - bounds.MinX, Is.EqualTo(expectedWidth).Within(0.000001));
