@@ -16,6 +16,12 @@ public readonly record struct IntersectionResult
         Point = point;
     }
 
+    private IntersectionResult(IntersectionKind kind, LineSegment2D? overlapSegment)
+        : this(kind)
+    {
+        OverlapSegment = overlapSegment;
+    }
+
     /// <summary>
     /// Rodzaj wyniku przeciecia.
     /// </summary>
@@ -25,6 +31,12 @@ public readonly record struct IntersectionResult
     /// Punkt przeciecia, jesli wynik ma rodzaj <see cref="IntersectionKind.Point"/>.
     /// </summary>
     public Point2D? Point { get; }
+
+    /// <summary>
+    /// Wspolny odcinek, jesli wynik oznacza skonczony nakladajacy sie zakres.
+    /// Dla wspolliniowych linii nieskonczonych wartosc moze byc pusta.
+    /// </summary>
+    public LineSegment2D? OverlapSegment { get; }
 
     /// <summary>
     /// Zwraca wynik oznaczajacy brak przeciecia.
@@ -64,4 +76,25 @@ public readonly record struct IntersectionResult
     /// Okresla, czy wynik oznacza rownolegle, niewspolliniowe obiekty.
     /// </summary>
     public bool IsParallel => Kind == IntersectionKind.Parallel;
+
+    /// <summary>
+    /// Zwraca wynik oznaczajacy wspolliniowosc bez skonczonego zakresu.
+    /// </summary>
+    public static IntersectionResult Overlap()
+    {
+        return new IntersectionResult(IntersectionKind.Overlap);
+    }
+
+    /// <summary>
+    /// Zwraca wynik oznaczajacy wspolny odcinek nakladajacych sie obiektow.
+    /// </summary>
+    public static IntersectionResult FromOverlap(LineSegment2D overlapSegment)
+    {
+        return new IntersectionResult(IntersectionKind.Overlap, overlapSegment);
+    }
+
+    /// <summary>
+    /// Okresla, czy wynik oznacza wspolliniowosc albo nakladajacy sie zakres.
+    /// </summary>
+    public bool IsOverlap => Kind == IntersectionKind.Overlap;
 }
