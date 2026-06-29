@@ -93,4 +93,21 @@ public class SvgExporterTests
 
         Assert.That(svg, Does.Contain("<path d=\"M 10 0 A 10 10 0 0 1 0 10\" />"));
     }
+
+    [Test]
+    public void Export_WithPolylineEntity_ShouldWritePathElement()
+    {
+        var document = new CadDocument(layers: Array.Empty<Layer>())
+            .AddSketch(new Sketch().AddEntity(new PolylineEntity(new Polyline2D(new[]
+            {
+                new Point2D(1, 2),
+                new Point2D(3, 4),
+                new Point2D(5, 6),
+            }))));
+        var exporter = new SvgExporter();
+
+        string svg = exporter.Export(document);
+
+        Assert.That(svg, Does.Contain("<path d=\"M 1 2 L 3 4 L 5 6\" />"));
+    }
 }

@@ -58,6 +58,7 @@ public sealed class SvgExporter
             RectangleEntity rectangle => CreateRectangleElement(rectangle),
             CircleEntity circle => CreateCircleElement(circle),
             ArcEntity arc => CreateArcElement(arc),
+            PolylineEntity polyline => CreatePolylineElement(polyline),
             _ => null,
         };
     }
@@ -107,6 +108,15 @@ public sealed class SvgExporter
             largeArcFlag,
             sweepFlag,
             FormatPoint(end));
+
+        return new XElement(SvgNamespace + "path", new XAttribute("d", path));
+    }
+
+    private static XElement CreatePolylineElement(PolylineEntity entity)
+    {
+        string path = entity.Polyline.IsClosed
+            ? FormatClosedPath(entity.Polyline.Points)
+            : FormatOpenPath(entity.Polyline.Points);
 
         return new XElement(SvgNamespace + "path", new XAttribute("d", path));
     }
