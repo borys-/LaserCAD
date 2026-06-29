@@ -10,6 +10,7 @@ namespace LaserCad.Export.Svg;
 /// </summary>
 public sealed class SvgExporter
 {
+    private const double FullTurnRadians = Math.PI * 2.0;
     private static readonly XNamespace SvgNamespace = "http://www.w3.org/2000/svg";
 
     /// <summary>
@@ -56,6 +57,7 @@ public sealed class SvgExporter
             LineEntity line => CreateLineElement(line),
             RectangleEntity rectangle => CreateRectangleElement(rectangle),
             CircleEntity circle => CreateCircleElement(circle),
+            ArcEntity arc => CreateArcElement(arc),
             _ => null,
         };
     }
@@ -84,6 +86,29 @@ public sealed class SvgExporter
             new XAttribute("cx", FormatNumber(entity.Circle.Center.X)),
             new XAttribute("cy", FormatNumber(entity.Circle.Center.Y)),
             new XAttribute("r", FormatNumber(entity.Circle.Radius)));
+    }
+
+    private static XElement CreateArcElement(ArcEntity entity)
+    {
+        var arc = entity.Arc;
+        var start = arc.PointAt(0.0);
+        var end = arc.PointAt(1.0);
+        var largeArcFlag = GetSweepAngle(arc) > Math.PI ? "1" : "0";
+        var sweepFlag = arc.Direction == ArcDirection.Counterclockwise ? "1" : "0";
+
+        string path = string.Join(
+            " ",
+            "M",
+            FormatPoint(start),
+            "A",
+            FormatNumber(arc.Radius),
+            FormatNumber(arc.Radius),
+            "0",
+            largeArcFlag,
+            sweepFlag,
+            FormatPoint(end));
+
+        return new XElement(SvgNamespace + "path", new XAttribute("d", path));
     }
 
     private static BoundingBox CalculateBounds(CadDocument document)
@@ -131,6 +156,27 @@ public sealed class SvgExporter
     private static string FormatPoint(Point2D point)
     {
         return string.Concat(FormatNumber(point.X), " ", FormatNumber(point.Y));
+    }
+
+    private static double GetSweepAngle(Arc2D arc)
+    {
+        double delta = arc.Direction == ArcDirection.Counterclockwise
+            ? arc.EndAngleRadians - arc.StartAngleRadians
+            : arc.StartAngleRadians - arc.EndAngleRadians;
+
+        return NormalizePositiveAngle(delta);
+    }
+
+    private static double NormalizePositiveAngle(double angle)
+    {
+        double result = angle % FullTurnRadians;
+
+        if (result < 0.0)
+        {
+            result += FullTurnRadians;
+        }
+
+        return result;
     }
 
     private static string FormatMillimeters(double value)
