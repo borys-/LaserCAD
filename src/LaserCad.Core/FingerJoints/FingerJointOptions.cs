@@ -15,13 +15,15 @@ public sealed class FingerJointOptions
         Length? minimumFingerWidth = null,
         Length? maximumFingerWidth = null,
         bool startWithFinger = true,
-        bool endWithFinger = true)
+        bool endWithFinger = true,
+        FingerJointFitMode fitMode = FingerJointFitMode.Neutral)
     {
         FingerWidth = fingerWidth ?? Length.FromMillimeters(0.0);
         MinimumFingerWidth = minimumFingerWidth ?? Length.FromMillimeters(0.0);
         MaximumFingerWidth = maximumFingerWidth ?? Length.FromMillimeters(0.0);
         StartWithFinger = startWithFinger;
         EndWithFinger = endWithFinger;
+        FitMode = fitMode;
     }
 
     /// <summary>
@@ -48,4 +50,9 @@ public sealed class FingerJointOptions
     /// Okresla, czy profil krawedzi ma konczyc sie wystajacym palcem.
     /// </summary>
     public bool EndWithFinger { get; }
+
+    /// <summary>
+    /// Tryb dopasowania polaczenia palcowego.
+    /// </summary>
+    public FingerJointFitMode FitMode { get; }
 }
