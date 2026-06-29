@@ -36,7 +36,36 @@ public sealed class SvgExporter
             new XAttribute("stroke", "#000000"),
             new XAttribute("stroke-width", FormatNumber(options.StrokeWidthMillimeters)));
 
+        foreach (Entity entity in document.Sketches.SelectMany(sketch => sketch.Entities))
+        {
+            var element = CreateElement(entity);
+
+            if (element is not null)
+            {
+                svg.Add(element);
+            }
+        }
+
         return new XDocument(new XDeclaration("1.0", "utf-8", null), svg).ToString(SaveOptions.DisableFormatting);
+    }
+
+    private static XElement? CreateElement(Entity entity)
+    {
+        return entity switch
+        {
+            LineEntity line => CreateLineElement(line),
+            _ => null,
+        };
+    }
+
+    private static XElement CreateLineElement(LineEntity entity)
+    {
+        return new XElement(
+            SvgNamespace + "line",
+            new XAttribute("x1", FormatNumber(entity.Segment.Start.X)),
+            new XAttribute("y1", FormatNumber(entity.Segment.Start.Y)),
+            new XAttribute("x2", FormatNumber(entity.Segment.End.X)),
+            new XAttribute("y2", FormatNumber(entity.Segment.End.Y)));
     }
 
     private static BoundingBox CalculateBounds(CadDocument document)

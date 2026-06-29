@@ -40,4 +40,17 @@ public class SvgExporterTests
         Assert.That(svg, Does.Contain("height=\"40mm\""));
         Assert.That(svg, Does.Contain("viewBox=\"10 20 30 40\""));
     }
+
+    [Test]
+    public void Export_WithLineEntity_ShouldWriteLineElement()
+    {
+        var document = new CadDocument(layers: Array.Empty<Layer>())
+            .AddSketch(new Sketch().AddEntity(new LineEntity(
+                new LineSegment2D(new Point2D(1, 2), new Point2D(3, 4)))));
+        var exporter = new SvgExporter();
+
+        string svg = exporter.Export(document);
+
+        Assert.That(svg, Does.Contain("<line x1=\"1\" y1=\"2\" x2=\"3\" y2=\"4\" />"));
+    }
 }
