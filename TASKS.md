@@ -374,6 +374,19 @@ Zalecenie pracy:
 - [x] 3.4.6 Dodac panel wlasciwosci zaznaczenia.
 - [x] 3.4.7 Podpiac zaznaczanie do sceny roboczej.
 
+## 3.5 GUI funkcji domenowych
+
+- [ ] 3.5.0 Dodac renderer geometrii dokumentu 2D w Unity.
+- [ ] 3.5.1 Dodac startowy dokument demonstracyjny z podstawowymi encjami.
+- [ ] 3.5.2 Dodac panel parametrow generatora pudelka.
+- [ ] 3.5.3 Dodac przebudowe podgladu po zmianie parametrow pudelka.
+- [ ] 3.5.4 Dodac panel eksportu SVG.
+- [ ] 3.5.5 Dodac panel eksportu DXF.
+- [ ] 3.5.6 Dodac panel profilu materialu i warstw.
+- [ ] 3.5.7 Dodac panel historii undo/redo i komend edycyjnych MVP.
+- [ ] 3.5.8 Dodac panel informacji o constraints i dimensions MVP.
+- [ ] 3.5.9 Dodac manualna checkliste GUI funkcji domenowych.
+
 ## 4.0 Eksport SVG - fundament
 
 - [x] 4.0.0 Utworzyc `SvgExportOptions`.
