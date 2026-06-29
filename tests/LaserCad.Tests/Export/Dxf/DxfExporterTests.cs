@@ -41,4 +41,20 @@ public class DxfExporterTests
         Assert.That(dxf, Does.Contain("8\r\nCut\r\n"));
         Assert.That(dxf, Does.Contain("10\r\n1\r\n20\r\n2\r\n11\r\n3\r\n21\r\n4\r\n"));
     }
+
+    [Test]
+    public void Export_WithCircleEntity_ShouldWriteCircleEntity()
+    {
+        var document = new CadDocument(layers: Array.Empty<Layer>())
+            .AddSketch(new Sketch().AddEntity(new CircleEntity(
+                new Circle2D(new Point2D(2, 3), 4),
+                layerName: "Score")));
+        var exporter = new DxfExporter();
+
+        string dxf = exporter.Export(document);
+
+        Assert.That(dxf, Does.Contain("0\r\nCIRCLE\r\n"));
+        Assert.That(dxf, Does.Contain("8\r\nScore\r\n"));
+        Assert.That(dxf, Does.Contain("10\r\n2\r\n20\r\n3\r\n40\r\n4\r\n"));
+    }
 }

@@ -44,6 +44,10 @@ public sealed class DxfExporter
         {
             WriteLine(writer, line);
         }
+        else if (entity is CircleEntity circle)
+        {
+            WriteCircle(writer, circle);
+        }
     }
 
     private static void WriteLine(DxfWriter writer, LineEntity entity)
@@ -54,6 +58,15 @@ public sealed class DxfExporter
         writer.WritePair(20, entity.Segment.Start.Y);
         writer.WritePair(11, entity.Segment.End.X);
         writer.WritePair(21, entity.Segment.End.Y);
+    }
+
+    private static void WriteCircle(DxfWriter writer, CircleEntity entity)
+    {
+        writer.WritePair(0, "CIRCLE");
+        writer.WritePair(8, entity.LayerName);
+        writer.WritePair(10, entity.Circle.Center.X);
+        writer.WritePair(20, entity.Circle.Center.Y);
+        writer.WritePair(40, entity.Circle.Radius);
     }
 
     private sealed class DxfWriter
