@@ -25,7 +25,8 @@ public sealed class SvgExporter
 
         options ??= new SvgExportOptions();
 
-        BoundingBox bounds = CalculateBounds(document);
+        var layersByName = document.Layers.ToDictionary(layer => layer.Name, StringComparer.Ordinal);
+        BoundingBox bounds = CalculateBounds(document, options, layersByName);
 
         var svg = new XElement(
             SvgNamespace + "svg",
@@ -37,11 +38,9 @@ public sealed class SvgExporter
             new XAttribute("stroke", "#000000"),
             new XAttribute("stroke-width", FormatNumber(options.StrokeWidthMillimeters)));
 
-        var layersByName = document.Layers.ToDictionary(layer => layer.Name, StringComparer.Ordinal);
-
         foreach (Entity entity in document.Sketches.SelectMany(sketch => sketch.Entities))
         {
-            if (!ShouldExportEntity(entity, options))
+            if (!ShouldExportEntity(entity, options, layersByName))
             {
                 continue;
             }
@@ -73,8 +72,16 @@ public sealed class SvgExporter
         return element;
     }
 
-    private static bool ShouldExportEntity(Entity entity, SvgExportOptions options)
+    private static bool ShouldExportEntity(
+        Entity entity,
+        SvgExportOptions options,
+        IReadOnlyDictionary<string, Layer> layersByName)
     {
+        if (layersByName.TryGetValue(entity.LayerName, out var layer) && layer.Role == LayerRole.Ignore)
+        {
+            return false;
+        }
+
         return options.ExportedLayerNames is null
             || options.ExportedLayerNames.Any(layerName => string.Equals(layerName, entity.LayerName, StringComparison.Ordinal));
     }
@@ -144,12 +151,20 @@ public sealed class SvgExporter
         return new XElement(SvgNamespace + "path", new XAttribute("d", path));
     }
 
-    private static BoundingBox CalculateBounds(CadDocument document)
+    private static BoundingBox CalculateBounds(
+        CadDocument document,
+        SvgExportOptions options,
+        IReadOnlyDictionary<string, Layer> layersByName)
     {
         BoundingBox? bounds = null;
 
         foreach (Entity entity in document.Sketches.SelectMany(sketch => sketch.Entities))
         {
+            if (!ShouldExportEntity(entity, options, layersByName))
+            {
+                continue;
+            }
+
             bounds = bounds.HasValue ? bounds.Value.Union(entity.Bounds) : entity.Bounds;
         }
 

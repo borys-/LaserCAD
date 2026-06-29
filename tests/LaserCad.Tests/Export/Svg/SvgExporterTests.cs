@@ -124,4 +124,19 @@ public class SvgExporterTests
 
         Assert.That(svg, Does.Contain("<line x1=\"1\" y1=\"2\" x2=\"3\" y2=\"4\" stroke=\"#AA1100\" />"));
     }
+
+    [Test]
+    public void Export_WithIgnoreLayer_ShouldSkipEntity()
+    {
+        var document = new CadDocument(layers: new[] { new Layer("Ignore", LayerColor.FromHex("#808080"), LayerRole.Ignore) })
+            .AddSketch(new Sketch().AddEntity(new LineEntity(
+                new LineSegment2D(new Point2D(10, 20), new Point2D(30, 40)),
+                layerName: "Ignore")));
+        var exporter = new SvgExporter();
+
+        string svg = exporter.Export(document);
+
+        Assert.That(svg, Does.Not.Contain("<line"));
+        Assert.That(svg, Does.Contain("viewBox=\"0 0 0 0\""));
+    }
 }
