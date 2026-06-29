@@ -65,4 +65,16 @@ public class SvgExporterTests
 
         Assert.That(svg, Does.Contain("<path d=\"M 1 2 L 4 2 L 4 6 L 1 6 Z\" />"));
     }
+
+    [Test]
+    public void Export_WithCircleEntity_ShouldWriteCircleElement()
+    {
+        var document = new CadDocument(layers: Array.Empty<Layer>())
+            .AddSketch(new Sketch().AddEntity(new CircleEntity(new Circle2D(new Point2D(2, 3), 4))));
+        var exporter = new SvgExporter();
+
+        string svg = exporter.Export(document);
+
+        Assert.That(svg, Does.Contain("<circle cx=\"2\" cy=\"3\" r=\"4\" />"));
+    }
 }

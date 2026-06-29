@@ -55,6 +55,7 @@ public sealed class SvgExporter
         {
             LineEntity line => CreateLineElement(line),
             RectangleEntity rectangle => CreateRectangleElement(rectangle),
+            CircleEntity circle => CreateCircleElement(circle),
             _ => null,
         };
     }
@@ -74,6 +75,15 @@ public sealed class SvgExporter
         return new XElement(
             SvgNamespace + "path",
             new XAttribute("d", FormatClosedPath(entity.Corners)));
+    }
+
+    private static XElement CreateCircleElement(CircleEntity entity)
+    {
+        return new XElement(
+            SvgNamespace + "circle",
+            new XAttribute("cx", FormatNumber(entity.Circle.Center.X)),
+            new XAttribute("cy", FormatNumber(entity.Circle.Center.Y)),
+            new XAttribute("r", FormatNumber(entity.Circle.Radius)));
     }
 
     private static BoundingBox CalculateBounds(CadDocument document)
