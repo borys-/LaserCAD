@@ -7,15 +7,26 @@ namespace LaserCad.Geometry;
 public readonly record struct Circle2D
 {
     /// <summary>
-    /// Tworzy okreg o podanym srodku.
+    /// Tworzy okreg o podanym srodku i promieniu.
     /// </summary>
-    public Circle2D(Point2D center)
+    public Circle2D(Point2D center, double radius)
     {
+        if (radius <= 0.0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(radius), "Radius must be positive.");
+        }
+
         Center = center;
+        Radius = radius;
     }
 
     /// <summary>
     /// Srodek okregu.
     /// </summary>
     public Point2D Center { get; }
+
+    /// <summary>
+    /// Promien okregu w milimetrach domenowych.
+    /// </summary>
+    public double Radius { get; }
 }
