@@ -1,5 +1,6 @@
 using LaserCad.Core.Dimensions;
 using LaserCad.Core.Documents;
+using LaserCad.Core.Parameters;
 using LaserCad.Geometry;
 using LaserCad.Geometry.Units;
 
@@ -79,5 +80,46 @@ public sealed class DimensionApplyTests
         Assert.That(updatedCircle.Id, Is.EqualTo(circle.Id));
         Assert.That(updatedCircle.Circle.Center, Is.EqualTo(circle.Circle.Center));
         Assert.That(updatedCircle.Circle.Radius, Is.EqualTo(12.0));
+    }
+
+    [Test]
+    public void Apply_WithBoundLengthParameter_ShouldUseParameterValue()
+    {
+        var rectangle = new RectangleEntity(new Point2D(0.0, 0.0), 10.0, 5.0);
+        var sketch = new Sketch(entities: new[] { rectangle });
+        var parameterId = new ParameterId("Width");
+        var dimension = new Dimension(
+            rectangle.Id,
+            DimensionKind.Width,
+            Length.FromMillimeters(10.0),
+            parameterId: parameterId);
+        var parameters = new ParameterSet(new[]
+        {
+            new Parameter(parameterId, "Width", ParameterType.Length, Length.FromMillimeters(42.0)),
+        });
+
+        var updatedSketch = dimension.Apply(sketch, parameters);
+
+        var updatedRectangle = (RectangleEntity)updatedSketch.Entities[0];
+        Assert.That(updatedRectangle.Bounds, Is.EqualTo(new BoundingBox(0.0, 0.0, 42.0, 5.0)));
+    }
+
+    [Test]
+    public void Apply_WithNonLengthParameter_ShouldThrow()
+    {
+        var rectangle = new RectangleEntity(new Point2D(0.0, 0.0), 10.0, 5.0);
+        var sketch = new Sketch(entities: new[] { rectangle });
+        var parameterId = new ParameterId("Width");
+        var dimension = new Dimension(
+            rectangle.Id,
+            DimensionKind.Width,
+            Length.FromMillimeters(10.0),
+            parameterId: parameterId);
+        var parameters = new ParameterSet(new[]
+        {
+            new Parameter(parameterId, "Width", ParameterType.Number, 42.0),
+        });
+
+        Assert.Throws<InvalidOperationException>(() => _ = dimension.Apply(sketch, parameters));
     }
 }

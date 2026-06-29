@@ -97,10 +97,33 @@ public sealed class Dimension
             throw new ArgumentNullException(nameof(sketch));
         }
 
+        return Apply(sketch, Value);
+    }
+
+    /// <summary>
+    /// Zwraca szkic z encja przebudowana wartoscia wymiaru albo powiazanego parametru.
+    /// </summary>
+    public Sketch Apply(Sketch sketch, ParameterSet parameters)
+    {
+        if (sketch is null)
+        {
+            throw new ArgumentNullException(nameof(sketch));
+        }
+
+        if (parameters is null)
+        {
+            throw new ArgumentNullException(nameof(parameters));
+        }
+
+        return Apply(sketch, ResolveValue(parameters));
+    }
+
+    private Sketch Apply(Sketch sketch, Length value)
+    {
         var entity = sketch.Entities.FirstOrDefault(candidate => candidate.Id == EntityId)
             ?? throw new InvalidOperationException($"Sketch entity '{EntityId}' was not found.");
 
-        var updatedEntity = ApplyToEntity(entity);
+        var updatedEntity = ApplyToEntity(entity, value);
 
         return new Sketch(
             sketch.Id,
@@ -108,42 +131,66 @@ public sealed class Dimension
             sketch.Entities.Select(candidate => candidate.Id == EntityId ? updatedEntity : candidate));
     }
 
-    private Entity ApplyToEntity(Entity entity)
+    private Entity ApplyToEntity(Entity entity, Length value)
     {
         if (Kind == DimensionKind.Length && entity is LineEntity line)
         {
-            return ApplyLength(line);
+            return ApplyLength(line, value);
         }
 
         if (Kind == DimensionKind.Width && entity is RectangleEntity rectangle)
         {
-            return ApplyRectangleWidth(rectangle);
+            return ApplyRectangleWidth(rectangle, value);
         }
 
         if (Kind == DimensionKind.Height && entity is RectangleEntity heightRectangle)
         {
-            return ApplyRectangleHeight(heightRectangle);
+            return ApplyRectangleHeight(heightRectangle, value);
         }
 
         if (Kind == DimensionKind.Diameter && entity is CircleEntity circle)
         {
-            return ApplyCircleDiameter(circle);
+            return ApplyCircleDiameter(circle, value);
         }
 
         if (Kind == DimensionKind.Radius && entity is CircleEntity radiusCircle)
         {
-            return ApplyCircleRadius(radiusCircle);
+            return ApplyCircleRadius(radiusCircle, value);
         }
 
         throw new InvalidOperationException($"Dimension kind '{Kind}' is not supported for entity '{entity.GetType().Name}'.");
     }
 
-    private LineEntity ApplyLength(LineEntity line)
+    private Length ResolveValue(ParameterSet parameters)
+    {
+        if (ParameterId is null)
+        {
+            return Value;
+        }
+
+        var parameterId = ParameterId.Value;
+        var parameter = parameters.FindById(parameterId)
+            ?? throw new ArgumentException($"Parameter '{parameterId}' was not found.", nameof(parameters));
+
+        if (parameter.Type != ParameterType.Length || parameter.Value is not Length length)
+        {
+            throw new InvalidOperationException($"Parameter '{parameterId}' must be a Length parameter.");
+        }
+
+        if (length.Millimeters <= 0.0)
+        {
+            throw new InvalidOperationException($"Parameter '{parameterId}' must be positive.");
+        }
+
+        return length;
+    }
+
+    private static LineEntity ApplyLength(LineEntity line, Length value)
     {
         var direction = line.Segment.Direction;
         var end = new Point2D(
-            line.Segment.Start.X + (direction.X * Value.Millimeters),
-            line.Segment.Start.Y + (direction.Y * Value.Millimeters));
+            line.Segment.Start.X + (direction.X * value.Millimeters),
+            line.Segment.Start.Y + (direction.Y * value.Millimeters));
 
         return new LineEntity(
             new LineSegment2D(line.Segment.Start, end),
@@ -151,21 +198,21 @@ public sealed class Dimension
             line.LayerName);
     }
 
-    private RectangleEntity ApplyRectangleWidth(RectangleEntity rectangle)
+    private static RectangleEntity ApplyRectangleWidth(RectangleEntity rectangle, Length value)
     {
         var bounds = rectangle.Bounds;
         var height = bounds.MaxY - bounds.MinY;
 
         return new RectangleEntity(
             new Point2D(bounds.MinX, bounds.MinY),
-            Value.Millimeters,
+            value.Millimeters,
             height,
             rectangle.Id,
             rectangle.LayerName,
             rectangle.DimensionBindings);
     }
 
-    private RectangleEntity ApplyRectangleHeight(RectangleEntity rectangle)
+    private static RectangleEntity ApplyRectangleHeight(RectangleEntity rectangle, Length value)
     {
         var bounds = rectangle.Bounds;
         var width = bounds.MaxX - bounds.MinX;
@@ -173,25 +220,25 @@ public sealed class Dimension
         return new RectangleEntity(
             new Point2D(bounds.MinX, bounds.MinY),
             width,
-            Value.Millimeters,
+            value.Millimeters,
             rectangle.Id,
             rectangle.LayerName,
             rectangle.DimensionBindings);
     }
 
-    private CircleEntity ApplyCircleDiameter(CircleEntity circle)
+    private static CircleEntity ApplyCircleDiameter(CircleEntity circle, Length value)
     {
         return new CircleEntity(
-            new Circle2D(circle.Circle.Center, Value.Millimeters / 2.0),
+            new Circle2D(circle.Circle.Center, value.Millimeters / 2.0),
             circle.Id,
             circle.LayerName,
             circle.DimensionBindings);
     }
 
-    private CircleEntity ApplyCircleRadius(CircleEntity circle)
+    private static CircleEntity ApplyCircleRadius(CircleEntity circle, Length value)
     {
         return new CircleEntity(
-            new Circle2D(circle.Circle.Center, Value.Millimeters),
+            new Circle2D(circle.Circle.Center, value.Millimeters),
             circle.Id,
             circle.LayerName,
             circle.DimensionBindings);
