@@ -134,6 +134,16 @@ public sealed class BoxGeneratorTests
         }
     }
 
+    [Test]
+    public void GenerateSketch_ShouldPutPanelContoursOnCutLayer()
+    {
+        var generator = new BoxGenerator();
+
+        Sketch sketch = generator.GenerateSketch(new BoxGeneratorOptions(boxType: BoxGeneratorType.WithLid));
+
+        Assert.That(sketch.Entities.Select(entity => entity.LayerName), Is.All.EqualTo(DefaultLayers.Cut.Name));
+    }
+
     private static void AssertPanelBounds(BoundingBox bounds, double expectedWidth, double expectedHeight)
     {
         Assert.That(bounds.MaxX - bounds.MinX, Is.EqualTo(expectedWidth).Within(0.000001));
