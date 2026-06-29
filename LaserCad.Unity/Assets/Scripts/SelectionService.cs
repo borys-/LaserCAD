@@ -222,7 +222,7 @@ namespace LaserCad.Unity
 
             foreach (var entity in GetEntities())
             {
-                var distance = GetDistanceToBounds(position, entity.Bounds);
+                var distance = GetDistanceToEntity(position, entity);
                 if (distance <= clickToleranceMillimeters && distance < bestDistance)
                 {
                     bestEntity = entity;
@@ -231,6 +231,122 @@ namespace LaserCad.Unity
             }
 
             return bestEntity;
+        }
+
+        private static float GetDistanceToEntity(Vector2 position, ISketchEntity entity)
+        {
+            var line = entity as LineEntity;
+            if (line != null)
+            {
+                return GetDistanceToSegment(position, ToVector2(line.Segment.Start), ToVector2(line.Segment.End));
+            }
+
+            var rectangle = entity as RectangleEntity;
+            if (rectangle != null)
+            {
+                return GetDistanceToClosedPoints(position, rectangle.Corners);
+            }
+
+            var polyline = entity as PolylineEntity;
+            if (polyline != null)
+            {
+                return GetDistanceToPolyline(position, polyline.Polyline);
+            }
+
+            var circle = entity as CircleEntity;
+            if (circle != null)
+            {
+                return Mathf.Abs(Vector2.Distance(position, ToVector2(circle.Circle.Center)) - (float)circle.Circle.Radius);
+            }
+
+            var arc = entity as ArcEntity;
+            if (arc != null)
+            {
+                return GetDistanceToArc(position, arc.Arc);
+            }
+
+            return GetDistanceToBounds(position, entity.Bounds);
+        }
+
+        private static float GetDistanceToPolyline(Vector2 position, Polyline2D polyline)
+        {
+            var bestDistance = float.PositiveInfinity;
+
+            for (var index = 1; index < polyline.Points.Count; index++)
+            {
+                bestDistance = Mathf.Min(
+                    bestDistance,
+                    GetDistanceToSegment(position, ToVector2(polyline.Points[index - 1]), ToVector2(polyline.Points[index])));
+            }
+
+            if (polyline.IsClosed && polyline.Points.Count > 1)
+            {
+                bestDistance = Mathf.Min(
+                    bestDistance,
+                    GetDistanceToSegment(
+                        position,
+                        ToVector2(polyline.Points[polyline.Points.Count - 1]),
+                        ToVector2(polyline.Points[0])));
+            }
+
+            return bestDistance;
+        }
+
+        private static float GetDistanceToClosedPoints(Vector2 position, IReadOnlyList<Point2D> points)
+        {
+            var bestDistance = float.PositiveInfinity;
+
+            for (var index = 1; index < points.Count; index++)
+            {
+                bestDistance = Mathf.Min(
+                    bestDistance,
+                    GetDistanceToSegment(position, ToVector2(points[index - 1]), ToVector2(points[index])));
+            }
+
+            if (points.Count > 1)
+            {
+                bestDistance = Mathf.Min(
+                    bestDistance,
+                    GetDistanceToSegment(position, ToVector2(points[points.Count - 1]), ToVector2(points[0])));
+            }
+
+            return bestDistance;
+        }
+
+        private static float GetDistanceToArc(Vector2 position, Arc2D arc)
+        {
+            const int SegmentCount = 48;
+            var bestDistance = float.PositiveInfinity;
+            var previous = ToVector2(arc.PointAt(0.0));
+
+            for (var index = 1; index <= SegmentCount; index++)
+            {
+                var current = ToVector2(arc.PointAt(index / (double)SegmentCount));
+                bestDistance = Mathf.Min(bestDistance, GetDistanceToSegment(position, previous, current));
+                previous = current;
+            }
+
+            return bestDistance;
+        }
+
+        private static float GetDistanceToSegment(Vector2 position, Vector2 start, Vector2 end)
+        {
+            var segment = end - start;
+            var lengthSquared = segment.sqrMagnitude;
+
+            if (lengthSquared <= Mathf.Epsilon)
+            {
+                return Vector2.Distance(position, start);
+            }
+
+            var t = Mathf.Clamp01(Vector2.Dot(position - start, segment) / lengthSquared);
+            var nearest = start + (segment * t);
+            return Vector2.Distance(position, nearest);
+        }
+
+        private static Vector2 ToVector2(Point2D point)
+        {
+            return new Vector2((float)point.X, (float)point.Y);
         }
 
         private IEnumerable<ISketchEntity> GetEntities()
