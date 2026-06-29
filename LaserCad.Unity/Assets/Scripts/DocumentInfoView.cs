@@ -1,5 +1,5 @@
 using LaserCad.Core.Documents;
-using TMPro;
+using System.Reflection;
 using UnityEngine;
 
 namespace LaserCad.Unity
@@ -10,10 +10,10 @@ namespace LaserCad.Unity
     public sealed class DocumentInfoView : MonoBehaviour
     {
         [SerializeField]
-        private TMP_Text documentNameText;
+        private MonoBehaviour documentNameText;
 
         [SerializeField]
-        private TMP_Text documentStatsText;
+        private MonoBehaviour documentStatsText;
 
         /// <summary>
         /// Aktualizuje teksty UI na podstawie dokumentu domenowego.
@@ -23,13 +23,23 @@ namespace LaserCad.Unity
         {
             if (documentNameText != null)
             {
-                documentNameText.text = document.Name;
+                SetText(documentNameText, document.Name);
             }
 
             if (documentStatsText != null)
             {
-                documentStatsText.text =
-                    $"Format: {document.FormatVersion} | Layers: {document.Layers.Count} | Sketches: {document.Sketches.Count}";
+                SetText(
+                    documentStatsText,
+                    $"Format: {document.FormatVersion} | Layers: {document.Layers.Count} | Sketches: {document.Sketches.Count}");
+            }
+        }
+
+        private static void SetText(MonoBehaviour target, string value)
+        {
+            PropertyInfo textProperty = target.GetType().GetProperty("text");
+            if (textProperty != null && textProperty.CanWrite && textProperty.PropertyType == typeof(string))
+            {
+                textProperty.SetValue(target, value);
             }
         }
     }
