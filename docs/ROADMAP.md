@@ -126,6 +126,12 @@ Po zmianie dowolnego parametru caly model powinien automatycznie sie przebudowac
   - kierunek konturu,
   - podstawowe offsety.
 
+### Ograniczenia offsetu MVP
+
+Offset w pierwszej wersji kernela geometrii obsluguje tylko zamkniete, proste i wypukle polygony z krawedziami liniowymi. Algorytm nie obsluguje jeszcze luk, polilinii otwartych, polygonow wkleslych, samoprzeciec ani zaawansowanego laczenia krawedzi po offsecie.
+
+Offset zewnetrzny i wewnetrzny sa traktowane jako operacje pomocnicze pod przyszla kompensacje kerfu. Pelna kompensacja kerfu, klasyfikacja konturow jako zewnetrznych/wewnetrznych oraz obsluga otworow pozostaja zakresem fazy 9.
+
 ## Faza 2 - Sketch
 
 - Obiekty:

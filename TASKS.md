@@ -261,15 +261,16 @@ Zalecenie pracy:
 
 ## 1.4 Offsety i kontury
 
-- [ ] 1.4.0 Utworzyc kontrakt `Contour2D`.
-- [ ] 1.4.1 Dodac wykrywanie, czy kontur jest domkniety.
-- [ ] 1.4.2 Dodac wykrywanie samoprzeciec dla prostych polygonow.
-- [ ] 1.4.3 Dodac prosty offset polygonu wypuklego.
-- [ ] 1.4.4 Dodac offset zewnetrzny.
-- [ ] 1.4.5 Dodac offset wewnetrzny.
-- [ ] 1.4.6 Dodac test offsetu kwadratu na zewnatrz.
-- [ ] 1.4.7 Dodac test offsetu kwadratu do wewnatrz.
-- [ ] 1.4.8 Oznaczyc ograniczenia offsetu MVP w dokumentacji.
+- [x] 1.4.0 Utworzyc kontrakt `Contour2D`.
+- [x] 1.4.1 Dodac wykrywanie, czy kontur jest domkniety.
+- [x] 1.4.2 Dodac wykrywanie samoprzeciec dla prostych polygonow.
+- [x] 1.4.3 Dodac prosty offset polygonu wypuklego.
+- [x] 1.4.4 Dodac offset zewnetrzny.
+- [x] 1.4.5 Dodac offset wewnetrzny.
+- [x] 1.4.6 Dodac test offsetu kwadratu na zewnatrz.
+- [x] 1.4.7 Dodac test offsetu kwadratu do wewnatrz.
+- [x] 1.4.8 Oznaczyc ograniczenia offsetu MVP w dokumentacji.
+- [x] 1.4.9 Dodac test odrzucenia polygonu niewypuklego przez offset MVP.
 
 ## 2.0 Encje szkicu
 
