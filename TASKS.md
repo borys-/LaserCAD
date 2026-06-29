@@ -344,12 +344,13 @@ Zalecenie pracy:
 
 ## 3.2 Grid
 
-- [ ] 3.2.0 Utworzyc renderer siatki.
-- [ ] 3.2.1 Dodac siatke 1 mm.
-- [ ] 3.2.2 Dodac mocniejsza linie co 5 mm.
-- [ ] 3.2.3 Dodac mocniejsza linie co 10 mm.
-- [ ] 3.2.4 Dodac dopasowanie grubosci linii do zoomu.
-- [ ] 3.2.5 Dodac mozliwosc wlaczenia i wylaczenia siatki.
+- [x] 3.2.0 Utworzyc renderer siatki.
+- [x] 3.2.1 Dodac siatke 1 mm.
+- [x] 3.2.2 Dodac mocniejsza linie co 5 mm.
+- [x] 3.2.3 Dodac mocniejsza linie co 10 mm.
+- [x] 3.2.4 Dodac dopasowanie grubosci linii do zoomu.
+- [x] 3.2.5 Dodac mozliwosc wlaczenia i wylaczenia siatki.
+- [x] 3.2.6 Podpiac renderer siatki do sceny roboczej.
 
 ## 3.3 Snap
 
