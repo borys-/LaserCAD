@@ -12,10 +12,12 @@ public sealed class BoxGeneratorOptions
     /// </summary>
     public BoxGeneratorOptions(
         Length? width = null,
-        Length? depth = null)
+        Length? depth = null,
+        Length? height = null)
     {
         Width = width ?? Length.FromMillimeters(100.0);
         Depth = depth ?? Length.FromMillimeters(80.0);
+        Height = height ?? Length.FromMillimeters(50.0);
     }
 
     /// <summary>
@@ -27,4 +29,9 @@ public sealed class BoxGeneratorOptions
     /// Glebokosc pudelka mierzona w milimetrach.
     /// </summary>
     public Length Depth { get; }
+
+    /// <summary>
+    /// Wysokosc pudelka mierzona w milimetrach.
+    /// </summary>
+    public Length Height { get; }
 }
