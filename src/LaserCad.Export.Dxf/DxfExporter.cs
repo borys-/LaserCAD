@@ -55,6 +55,14 @@ public sealed class DxfExporter
         {
             WriteArc(writer, arc);
         }
+        else if (entity is PolylineEntity polyline)
+        {
+            WritePolyline(writer, polyline.LayerName, polyline.Polyline.Points, polyline.Polyline.IsClosed);
+        }
+        else if (entity is RectangleEntity rectangle)
+        {
+            WritePolyline(writer, rectangle.LayerName, rectangle.Corners, isClosed: true);
+        }
     }
 
     private static void WriteLine(DxfWriter writer, LineEntity entity)
@@ -93,6 +101,24 @@ public sealed class DxfExporter
         writer.WritePair(40, entity.Arc.Radius);
         writer.WritePair(50, startAngleDegrees);
         writer.WritePair(51, endAngleDegrees);
+    }
+
+    private static void WritePolyline(
+        DxfWriter writer,
+        string layerName,
+        IReadOnlyList<Point2D> points,
+        bool isClosed)
+    {
+        writer.WritePair(0, "LWPOLYLINE");
+        writer.WritePair(8, layerName);
+        writer.WritePair(90, points.Count.ToString(CultureInfo.InvariantCulture));
+        writer.WritePair(70, isClosed ? "1" : "0");
+
+        foreach (Point2D point in points)
+        {
+            writer.WritePair(10, point.X);
+            writer.WritePair(20, point.Y);
+        }
     }
 
     private static double ToDxfAngleDegrees(double angleRadians)

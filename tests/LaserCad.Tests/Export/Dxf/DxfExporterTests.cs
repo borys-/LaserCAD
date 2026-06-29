@@ -86,4 +86,43 @@ public class DxfExporterTests
 
         Assert.That(dxf, Does.Contain("50\r\n90\r\n51\r\n0\r\n"));
     }
+
+    [Test]
+    public void Export_WithPolylineEntity_ShouldWriteLwPolylineEntity()
+    {
+        var document = new CadDocument(layers: Array.Empty<Layer>())
+            .AddSketch(new Sketch().AddEntity(new PolylineEntity(
+                new Polyline2D(new[]
+                {
+                    new Point2D(1, 2),
+                    new Point2D(3, 4),
+                    new Point2D(5, 6),
+                }),
+                layerName: "Cut")));
+        var exporter = new DxfExporter();
+
+        string dxf = exporter.Export(document);
+
+        Assert.That(dxf, Does.Contain("0\r\nLWPOLYLINE\r\n"));
+        Assert.That(dxf, Does.Contain("8\r\nCut\r\n90\r\n3\r\n70\r\n0\r\n"));
+        Assert.That(dxf, Does.Contain("10\r\n1\r\n20\r\n2\r\n10\r\n3\r\n20\r\n4\r\n10\r\n5\r\n20\r\n6\r\n"));
+    }
+
+    [Test]
+    public void Export_WithRectangleEntity_ShouldWriteClosedLwPolylineEntity()
+    {
+        var document = new CadDocument(layers: Array.Empty<Layer>())
+            .AddSketch(new Sketch().AddEntity(new RectangleEntity(
+                new Point2D(1, 2),
+                3,
+                4,
+                layerName: "Cut")));
+        var exporter = new DxfExporter();
+
+        string dxf = exporter.Export(document);
+
+        Assert.That(dxf, Does.Contain("0\r\nLWPOLYLINE\r\n"));
+        Assert.That(dxf, Does.Contain("8\r\nCut\r\n90\r\n4\r\n70\r\n1\r\n"));
+        Assert.That(dxf, Does.Contain("10\r\n1\r\n20\r\n2\r\n10\r\n4\r\n20\r\n2\r\n10\r\n4\r\n20\r\n6\r\n10\r\n1\r\n20\r\n6\r\n"));
+    }
 }
