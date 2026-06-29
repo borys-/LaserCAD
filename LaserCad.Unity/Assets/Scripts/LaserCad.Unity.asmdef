@@ -3,7 +3,8 @@
   "rootNamespace": "LaserCad.Unity",
   "references": [
     "LaserCad.Core",
-    "LaserCad.Geometry"
+    "LaserCad.Geometry",
+    "Unity.TextMeshPro"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
