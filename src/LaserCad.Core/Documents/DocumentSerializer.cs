@@ -47,7 +47,10 @@ public sealed class DocumentSerializer
             throw new ArgumentException("Document JSON cannot be empty.", nameof(json));
         }
 
-        throw new NotImplementedException("Document deserialization is not implemented yet.");
+        var dto = JsonSerializer.Deserialize<DocumentDto>(json, JsonOptions)
+            ?? throw new InvalidOperationException("Document JSON could not be deserialized.");
+
+        return new CadDocument(dto.Id, dto.Name);
     }
 
     private sealed class DocumentDto
