@@ -1,4 +1,6 @@
 using LaserCad.Core.Documents;
+using System.Globalization;
+using System.Xml.Linq;
 
 namespace LaserCad.Export.Svg;
 
@@ -7,6 +9,8 @@ namespace LaserCad.Export.Svg;
 /// </summary>
 public sealed class SvgExporter
 {
+    private static readonly XNamespace SvgNamespace = "http://www.w3.org/2000/svg";
+
     /// <summary>
     /// Eksportuje dokument CAD do SVG zgodnie z podanymi opcjami.
     /// </summary>
@@ -19,6 +23,25 @@ public sealed class SvgExporter
 
         options ??= new SvgExportOptions();
 
-        return string.Empty;
+        var svg = new XElement(
+            SvgNamespace + "svg",
+            new XAttribute("xmlns", SvgNamespace.NamespaceName),
+            new XAttribute("width", FormatMillimeters(0)),
+            new XAttribute("height", FormatMillimeters(0)),
+            new XAttribute("fill", "none"),
+            new XAttribute("stroke", "#000000"),
+            new XAttribute("stroke-width", FormatNumber(options.StrokeWidthMillimeters)));
+
+        return new XDocument(new XDeclaration("1.0", "utf-8", null), svg).ToString(SaveOptions.DisableFormatting);
+    }
+
+    private static string FormatMillimeters(double value)
+    {
+        return string.Concat(FormatNumber(value), "mm");
+    }
+
+    private static string FormatNumber(double value)
+    {
+        return value.ToString("0.######", CultureInfo.InvariantCulture);
     }
 }
