@@ -1,5 +1,6 @@
 using LaserCad.Core.Documents;
 using LaserCad.Core.Parameters;
+using LaserCad.Geometry;
 using LaserCad.Geometry.Units;
 
 namespace LaserCad.Core.Dimensions;
@@ -84,5 +85,49 @@ public sealed class Dimension
     public Dimension BindToParameter(ParameterId parameterId)
     {
         return new Dimension(EntityId, Kind, Value, Id, Name, parameterId);
+    }
+
+    /// <summary>
+    /// Zwraca szkic z encja przebudowana tak, aby spelniala wartosc wymiaru.
+    /// </summary>
+    public Sketch Apply(Sketch sketch)
+    {
+        if (sketch is null)
+        {
+            throw new ArgumentNullException(nameof(sketch));
+        }
+
+        var entity = sketch.Entities.FirstOrDefault(candidate => candidate.Id == EntityId)
+            ?? throw new InvalidOperationException($"Sketch entity '{EntityId}' was not found.");
+
+        var updatedEntity = ApplyToEntity(entity);
+
+        return new Sketch(
+            sketch.Id,
+            sketch.Name,
+            sketch.Entities.Select(candidate => candidate.Id == EntityId ? updatedEntity : candidate));
+    }
+
+    private Entity ApplyToEntity(Entity entity)
+    {
+        if (Kind == DimensionKind.Length && entity is LineEntity line)
+        {
+            return ApplyLength(line);
+        }
+
+        throw new InvalidOperationException($"Dimension kind '{Kind}' is not supported for entity '{entity.GetType().Name}'.");
+    }
+
+    private LineEntity ApplyLength(LineEntity line)
+    {
+        var direction = line.Segment.Direction;
+        var end = new Point2D(
+            line.Segment.Start.X + (direction.X * Value.Millimeters),
+            line.Segment.Start.Y + (direction.Y * Value.Millimeters));
+
+        return new LineEntity(
+            new LineSegment2D(line.Segment.Start, end),
+            line.Id,
+            line.LayerName);
     }
 }
