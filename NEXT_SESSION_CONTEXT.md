@@ -1,5 +1,61 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 8.1 Generator pudelka - geometria
+
+- W tej sesji wykonano cala sekcje `8.1 Generator pudelka - geometria` i odhaczono ja w `TASKS.md`.
+- Nowe commity tej sesji:
+  - `98c54de 8.1.0 Utworz BoxGenerator`,
+  - `c76729b 8.1.1 Wygeneruj przednia scianke`,
+  - `4cf7dcf 8.1.2 Wygeneruj tylna scianke`,
+  - `3271670 8.1.3 Wygeneruj lewa scianke`,
+  - `e92d712 8.1.4 Wygeneruj prawa scianke`,
+  - `00ad9ae 8.1.5 Wygeneruj dno`,
+  - `53f959a 8.1.6 Wygeneruj pokrywe`,
+  - `fc86dbe 8.1.7 Dodaj finger jointy scianek`,
+  - `d4a2fa7 8.1.8 Rozloz elementy na plaszczyznie`,
+  - `6242ab2 8.1.9 Dodaj marginesy miedzy elementami`,
+  - `5382ab0 8.1.10 Dodaj warstwe cut dla konturow`,
+  - `d7ca6e8 8.1.11 Dodaj test liczby scianek`,
+  - `c716a12 8.1.12 Dodaj test przebudowy szerokosci`,
+  - `6882c67 8.1.13 Dodaj test przebudowy finger jointow`,
+  - `3d705ec 8.1 Odhacz geometrie generatora pudelka`.
+- Dodano `BoxGenerator` w `LaserCad.Core.BoxGenerators`:
+  - `GenerateSketch(BoxGeneratorOptions)` zwraca domenowy `Sketch`,
+  - tryb `Open` generuje 5 paneli: przod, tyl, lewa scianka, prawa scianka i dno,
+  - tryb `WithLid` dodaje szosty panel pokrywy,
+  - kazdy panel jest zamknieta `PolylineEntity` na warstwie `Cut`,
+  - kontury korzystaja z domenowego `FingerJointGenerator`,
+  - panele sa rozlozone w jednym rzedzie na plaszczyznie 2D ze stalym marginesem.
+- Dodano testy w `tests/LaserCad.Tests/Core/BoxGenerators/BoxGeneratorTests.cs`:
+  - tworzenie szkicu,
+  - obecnosci scianek i pokrywy,
+  - finger jointow na krawedziach,
+  - layoutu i marginesow,
+  - warstwy `Cut`,
+  - liczby scianek dla otwartego pudelka,
+  - przebudowy po zmianie `Width`,
+  - przebudowy finger jointow po zmianie `MaterialThickness`.
+- Po przegladzie planu:
+  - odhaczono cala sekcje `8.1.*`,
+  - odhaczono `MVP.0.8`, bo generator otwartego pudelka tworzy juz komplet paneli 2D,
+  - dopisano do `docs/ROADMAP.md` ograniczenia geometrii generatora pudelka MVP.
+- Wazne ograniczenia aktualnego MVP:
+  - sciany nie maja jeszcze jawnej semantyki montazowej krawedz-do-krawedzi,
+  - generator nie rozroznia jeszcze komplementarnych palcow i wciec dla sasiednich scianek,
+  - instancja generatora nie jest jeszcze zapisywana w dokumencie jako edytowalny feature,
+  - pelna kompensacja kerfu konturow zostaje na sekcje 9.x.
+- Widocznosc w aplikacji Unity:
+  - sekcja `8.1` dodaje logike domenowa generatora, ale panel `Generator pudelka` w Unity nadal nie przebudowuje dokumentu, bo task `3.5.3` jest nastepny do integracji UI z `BoxGenerator`,
+  - po uruchomieniu aktualnego builda ekran powinien wygladac jak po poprzedniej sesji: demo dokument, grid, snap, zaznaczanie i panel generatora pudelka,
+  - nowej geometrii pudelka nie bedzie jeszcze widac po kliknieciu `Zastosuj`; to jest najwazniejszy kandydat na nastepny task.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `404/404`,
+  - `dotnet build src\LaserCad.Core\LaserCad.Core.csproj -f netstandard2.1 --no-restore` przechodzi bez ostrzezen,
+  - `cmd /c build.bat` zakonczyl sie sukcesem i wygenerowal `C:\borys\CAD\bin\release\LaserCad\LaserCad.exe`.
+- Nastepny najlepszy krok:
+  - wykonac `3.5.3 Dodac przebudowe podgladu po zmianie parametrow pudelka`, podpinajac panel Unity do domenowego `BoxGenerator`,
+  - po tym bedzie mozna odhaczyc `MVP.0.13`, jesli zmiana parametrow w UI realnie przebuduje widoczny podglad pudelka.
+
 ## Aktualizacja po poprawkach zaznaczania 3.4.8-3.4.9
 
 - W tej sesji poprawiono dwa problemy UX zaznaczania w Unity:
