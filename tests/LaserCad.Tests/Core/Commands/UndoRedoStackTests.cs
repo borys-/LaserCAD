@@ -23,6 +23,24 @@ public sealed class UndoRedoStackTests
         AssertLineStartX(restored, original.Segment.Start.X);
     }
 
+    [Test]
+    public void Redo_AfterUndo_ShouldApplyCommandAgain()
+    {
+        var original = CreateLine();
+        var sketch = new Sketch(entities: new[] { original });
+        var document = new CadDocument(sketches: new[] { sketch });
+        var history = new UndoRedoStack(document);
+
+        history.Execute(new MoveCommand(sketch.Id, original.Id, 5.0, 0.0));
+        history.Undo();
+
+        var redone = history.Redo();
+
+        Assert.That(history.CanUndo, Is.True);
+        Assert.That(history.CanRedo, Is.False);
+        AssertLineStartX(redone, 6.0);
+    }
+
     private static LineEntity CreateLine()
     {
         return new LineEntity(new LineSegment2D(new Point2D(1.0, 1.0), new Point2D(3.0, 1.0)));
