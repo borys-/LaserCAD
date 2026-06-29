@@ -28,7 +28,7 @@ internal static class SketchConstraintHelpers
 
             replaced = true;
             return replacement;
-        });
+        }).ToArray();
 
         if (!replaced)
         {
