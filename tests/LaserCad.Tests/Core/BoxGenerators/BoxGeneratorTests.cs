@@ -144,6 +144,16 @@ public sealed class BoxGeneratorTests
         Assert.That(sketch.Entities.Select(entity => entity.LayerName), Is.All.EqualTo(DefaultLayers.Cut.Name));
     }
 
+    [Test]
+    public void GenerateSketch_OpenBox_ShouldCreateFivePanels()
+    {
+        var generator = new BoxGenerator();
+
+        Sketch sketch = generator.GenerateSketch(new BoxGeneratorOptions(boxType: BoxGeneratorType.Open));
+
+        Assert.That(sketch.Entities, Has.Count.EqualTo(5));
+    }
+
     private static void AssertPanelBounds(BoundingBox bounds, double expectedWidth, double expectedHeight)
     {
         Assert.That(bounds.MaxX - bounds.MinX, Is.EqualTo(expectedWidth).Within(0.000001));
