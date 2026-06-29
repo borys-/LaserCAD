@@ -169,6 +169,18 @@ public sealed class BoxGeneratorTests
         AssertPanelBounds(bottomPanel.Bounds, expectedWidth: 126.0, expectedHeight: 86.0);
     }
 
+    [Test]
+    public void GenerateSketch_WhenMaterialThicknessChanges_ShouldRebuildFingerJoints()
+    {
+        var generator = new BoxGenerator();
+        var options = new BoxGeneratorOptions(materialThickness: Length.FromMillimeters(5.0));
+
+        Sketch sketch = generator.GenerateSketch(options);
+
+        var frontPanel = (PolylineEntity)sketch.Entities[0];
+        AssertPanelBounds(frontPanel.Bounds, expectedWidth: 110.0, expectedHeight: 60.0);
+    }
+
     private static void AssertPanelBounds(BoundingBox bounds, double expectedWidth, double expectedHeight)
     {
         Assert.That(bounds.MaxX - bounds.MinX, Is.EqualTo(expectedWidth).Within(0.000001));
