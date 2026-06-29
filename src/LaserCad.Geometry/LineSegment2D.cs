@@ -31,6 +31,12 @@ public readonly record struct LineSegment2D
     public double Length => Start.DistanceTo(End);
 
     /// <summary>
+    /// Znormalizowany kierunek od poczatku do konca odcinka.
+    /// Nie uzywaj dla odcinka zerowej dlugosci, bo metoda zglosi blad.
+    /// </summary>
+    public Vector2D Direction => (End - Start).Normalize();
+
+    /// <summary>
     /// Zwraca punkt posredni dla parametru t z zakresu od 0 do 1.
     /// Dla t = 0 zwraca poczatek, dla t = 1 zwraca koniec.
     /// </summary>
