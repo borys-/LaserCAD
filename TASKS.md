@@ -274,22 +274,22 @@ Zalecenie pracy:
 
 ## 2.0 Encje szkicu
 
-- [ ] 2.0.0 Utworzyc bazowy interfejs `ISketchEntity`.
-- [ ] 2.0.1 Dodac identyfikator encji.
-- [ ] 2.0.2 Dodac identyfikator warstwy encji.
-- [ ] 2.0.3 Dodac bounding box encji.
-- [ ] 2.0.4 Dodac transformacje encji.
-- [ ] 2.0.5 Utworzyc `LineEntity`.
-- [ ] 2.0.6 Utworzyc `RectangleEntity`.
-- [ ] 2.0.7 Utworzyc `CircleEntity`.
-- [ ] 2.0.8 Utworzyc `ArcEntity`.
-- [ ] 2.0.9 Utworzyc `PolylineEntity`.
-- [ ] 2.0.10 Utworzyc `TextEntity` jako placeholder.
-- [ ] 2.0.11 Dodac test tworzenia kazdej encji.
+- [x] 2.0.0 Utworzyc bazowy interfejs `ISketchEntity`.
+- [x] 2.0.1 Dodac identyfikator encji.
+- [x] 2.0.2 Dodac identyfikator warstwy encji.
+- [x] 2.0.3 Dodac bounding box encji.
+- [x] 2.0.4 Dodac transformacje encji.
+- [x] 2.0.5 Utworzyc `LineEntity`.
+- [x] 2.0.6 Utworzyc `RectangleEntity`.
+- [x] 2.0.7 Utworzyc `CircleEntity`.
+- [x] 2.0.8 Utworzyc `ArcEntity`.
+- [x] 2.0.9 Utworzyc `PolylineEntity`.
+- [x] 2.0.10 Utworzyc `TextEntity` jako placeholder.
+- [x] 2.0.11 Dodac test tworzenia kazdej encji.
 
 ## 2.1 Operacje na szkicu
 
-- [ ] 2.1.0 Dodac metode dodawania encji do szkicu.
+- [x] 2.1.0 Dodac metode dodawania encji do szkicu.
 - [ ] 2.1.1 Dodac metode usuwania encji ze szkicu.
 - [ ] 2.1.2 Dodac metode kopiowania encji.
 - [ ] 2.1.3 Dodac przesuwanie encji.
@@ -308,6 +308,17 @@ Zalecenie pracy:
 - [ ] 2.2.3 Dodac aktualizacje okregu po zmianie parametru srednicy.
 - [ ] 2.2.4 Dodac test przebudowy szkicu po zmianie parametru.
 - [ ] 2.2.5 Opisac ograniczenia parametrycznego szkicu w MVP.
+
+## 2.3 Trwalosc szkicow
+
+- [ ] 2.3.0 Ustalic kontrakt JSON dla szkicow i encji.
+- [ ] 2.3.1 Dodac serializacje `LineEntity`.
+- [ ] 2.3.2 Dodac serializacje `RectangleEntity`.
+- [ ] 2.3.3 Dodac serializacje `CircleEntity`.
+- [ ] 2.3.4 Dodac serializacje `ArcEntity`.
+- [ ] 2.3.5 Dodac serializacje `PolylineEntity`.
+- [ ] 2.3.6 Dodac serializacje `TextEntity` placeholder.
+- [ ] 2.3.7 Dodac test round-trip dokumentu ze szkicem i encjami.
 
 ## 3.0 Integracja Unity - baza
 
@@ -647,7 +658,7 @@ Zalecenie pracy:
 
 - [ ] MVP.0.0 Zbudowac solution i projekty domenowe.
 - [x] MVP.0.1 Zaimplementowac `Length`, `Point2D`, `Vector2D`, `BoundingBox`, `Matrix3x3`.
-- [ ] MVP.0.2 Zaimplementowac podstawowe encje: line, rectangle, circle, polyline.
+- [x] MVP.0.2 Zaimplementowac podstawowe encje: line, rectangle, circle, polyline.
 - [ ] MVP.0.3 Zaimplementowac parametry: width, depth, height, material thickness, kerf, finger width, clearance.
 - [ ] MVP.0.4 Zaimplementowac prosty graf zaleznosci parametrow.
 - [ ] MVP.0.5 Zaimplementowac `CadDocument`, `Sketch`, `Layer`, `MaterialProfile`.

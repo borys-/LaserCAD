@@ -1,4 +1,5 @@
 using LaserCad.Core.Documents;
+using LaserCad.Geometry;
 
 namespace LaserCad.Tests.Core.Documents;
 
@@ -52,5 +53,11 @@ public sealed class SketchTests
 
     private sealed class TestEntity : Entity
     {
+        public override BoundingBox Bounds => new(0.0, 0.0, 1.0, 1.0);
+
+        public override ISketchEntity Transform(Matrix3x3 transform)
+        {
+            return new TestEntity();
+        }
     }
 }

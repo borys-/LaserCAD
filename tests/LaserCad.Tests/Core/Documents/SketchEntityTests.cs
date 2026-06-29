@@ -1,0 +1,106 @@
+using LaserCad.Core.Documents;
+using LaserCad.Geometry;
+
+namespace LaserCad.Tests.Core.Documents;
+
+public sealed class SketchEntityTests
+{
+    [Test]
+    public void Entity_ShouldImplementSketchEntityContract()
+    {
+        Assert.That(typeof(ISketchEntity).IsAssignableFrom(typeof(Entity)), Is.True);
+    }
+
+    [Test]
+    public void LineEntity_ShouldStoreGeometryLayerAndBounds()
+    {
+        var entity = new LineEntity(
+            new LineSegment2D(new Point2D(1.0, 2.0), new Point2D(4.0, 6.0)),
+            layerName: "Score");
+
+        Assert.That(entity.Id, Is.Not.EqualTo(Guid.Empty));
+        Assert.That(entity.LayerName, Is.EqualTo("Score"));
+        Assert.That(entity.Bounds, Is.EqualTo(new BoundingBox(1.0, 2.0, 4.0, 6.0)));
+    }
+
+    [Test]
+    public void RectangleEntity_ShouldCreateAxisAlignedRectangle()
+    {
+        var entity = new RectangleEntity(new Point2D(1.0, 2.0), 10.0, 5.0);
+
+        Assert.That(entity.Corners, Has.Count.EqualTo(4));
+        Assert.That(entity.Bounds, Is.EqualTo(new BoundingBox(1.0, 2.0, 11.0, 7.0)));
+    }
+
+    [Test]
+    public void CircleEntity_ShouldStoreCircle()
+    {
+        var entity = new CircleEntity(new Circle2D(new Point2D(10.0, 20.0), 3.0));
+
+        Assert.That(entity.Circle.Radius, Is.EqualTo(3.0));
+        Assert.That(entity.Bounds, Is.EqualTo(new BoundingBox(7.0, 17.0, 13.0, 23.0)));
+    }
+
+    [Test]
+    public void ArcEntity_ShouldStoreArc()
+    {
+        var entity = new ArcEntity(new Arc2D(new Point2D(0.0, 0.0), 10.0, 0.0, Math.PI / 2.0));
+
+        Assert.That(entity.Arc.Radius, Is.EqualTo(10.0));
+        Assert.That(entity.Bounds.MinX, Is.EqualTo(0.0).Within(GeometryTolerance.Default));
+        Assert.That(entity.Bounds.MinY, Is.EqualTo(0.0).Within(GeometryTolerance.Default));
+        Assert.That(entity.Bounds.MaxX, Is.EqualTo(10.0).Within(GeometryTolerance.Default));
+        Assert.That(entity.Bounds.MaxY, Is.EqualTo(10.0).Within(GeometryTolerance.Default));
+    }
+
+    [Test]
+    public void ArcEntity_Bounds_ShouldIncludeCardinalPointInsideSweep()
+    {
+        var entity = new ArcEntity(new Arc2D(new Point2D(0.0, 0.0), 10.0, Math.PI / 4.0, Math.PI * 3.0 / 4.0));
+
+        Assert.That(entity.Bounds.MinX, Is.EqualTo(-Math.Sqrt(50.0)).Within(GeometryTolerance.Default));
+        Assert.That(entity.Bounds.MaxY, Is.EqualTo(10.0).Within(GeometryTolerance.Default));
+        Assert.That(entity.Bounds.MaxX, Is.EqualTo(Math.Sqrt(50.0)).Within(GeometryTolerance.Default));
+    }
+
+    [Test]
+    public void PolylineEntity_ShouldStorePolyline()
+    {
+        var entity = new PolylineEntity(new Polyline2D(new[]
+        {
+            new Point2D(0.0, 0.0),
+            new Point2D(4.0, 0.0),
+            new Point2D(4.0, 3.0),
+        }));
+
+        Assert.That(entity.Polyline.Points, Has.Count.EqualTo(3));
+        Assert.That(entity.Bounds, Is.EqualTo(new BoundingBox(0.0, 0.0, 4.0, 3.0)));
+    }
+
+    [Test]
+    public void TextEntity_ShouldStorePlaceholderData()
+    {
+        var entity = new TextEntity("Label", new Point2D(2.0, 3.0), 5.0);
+
+        Assert.That(entity.Text, Is.EqualTo("Label"));
+        Assert.That(entity.LayerName, Is.EqualTo("Engrave"));
+        Assert.That(entity.Bounds, Is.EqualTo(new BoundingBox(2.0, 3.0, 2.0, 8.0)));
+    }
+
+    [Test]
+    public void Transform_ShouldKeepIdentityAndLayer()
+    {
+        var id = Guid.NewGuid();
+        var entity = new LineEntity(
+            new LineSegment2D(new Point2D(1.0, 2.0), new Point2D(3.0, 4.0)),
+            id,
+            "Cut");
+
+        var transformed = (LineEntity)entity.Transform(Matrix3x3.CreateTranslation(10.0, 20.0));
+
+        Assert.That(transformed.Id, Is.EqualTo(id));
+        Assert.That(transformed.LayerName, Is.EqualTo("Cut"));
+        Assert.That(transformed.Segment.Start, Is.EqualTo(new Point2D(11.0, 22.0)));
+        Assert.That(transformed.Segment.End, Is.EqualTo(new Point2D(13.0, 24.0)));
+    }
+}
