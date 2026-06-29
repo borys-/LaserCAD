@@ -10,13 +10,21 @@ public sealed class BoxGeneratorOptions
     /// <summary>
     /// Tworzy opcje generatora pudelka z domyslnymi wymiarami startowymi.
     /// </summary>
-    public BoxGeneratorOptions(Length? width = null)
+    public BoxGeneratorOptions(
+        Length? width = null,
+        Length? depth = null)
     {
         Width = width ?? Length.FromMillimeters(100.0);
+        Depth = depth ?? Length.FromMillimeters(80.0);
     }
 
     /// <summary>
     /// Szerokosc pudelka mierzona w milimetrach.
     /// </summary>
     public Length Width { get; }
+
+    /// <summary>
+    /// Glebokosc pudelka mierzona w milimetrach.
+    /// </summary>
+    public Length Depth { get; }
 }
