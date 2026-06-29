@@ -25,6 +25,18 @@
   - `dotnet build src\LaserCad.Core\LaserCad.Core.csproj -f netstandard2.1 --no-restore` przechodzi,
   - `cmd /c build.bat` zakonczyl sie sukcesem i wygenerowal `C:\borys\CAD\bin\release\LaserCad\LaserCad.exe`.
 
+### Doprecyzowanie po screenie uzytkownika
+
+- Uzytkownik pokazal screen, na ktorym panel mial `Selected: 6`, ale dwa obiekty wygladaly jak niezaznaczone.
+- Przyczyna byla wizualna: highlight mial podobna grubosc/kolor do geometrii albo mogl byc przykrywany przez rysowanie geometrii dokumentu.
+- Dodano commit `fa2c425 3.4.10 Popraw czytelnosc highlightu zaznaczenia`.
+- `SelectionHighlightRenderer`:
+  - ma `DefaultExecutionOrder(1000)`,
+  - rysuje zolty obrys zaznaczenia z czarnym halo,
+  - uzywa `ZTest Always`,
+  - scena ustawia `lineWidthPixels = 3` i `haloWidthPixels = 6`.
+- Do sprawdzenia: po zaznaczeniu wszystkiego wszystkie 6 encji powinno miec widoczny zolty/czarny obrys, w tym czerwony prostokat i niebieska L-ka.
+
 ## Aktualizacja po sekcji 3.5 GUI funkcji domenowych - start
 
 - W tej sesji rozpoczeto prace nad widocznym GUI dla dotychczasowych funkcjonalnosci domenowych.
