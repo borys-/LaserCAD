@@ -14,7 +14,10 @@ public sealed class Polygon2D
     /// </summary>
     public Polygon2D(IEnumerable<Point2D> vertices)
     {
-        ArgumentNullException.ThrowIfNull(vertices);
+        if (vertices is null)
+        {
+            throw new ArgumentNullException(nameof(vertices));
+        }
 
         this.vertices = vertices.ToArray();
 

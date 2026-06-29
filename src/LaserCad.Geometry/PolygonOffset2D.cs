@@ -24,7 +24,10 @@ public static class PolygonOffset2D
 
     private static Polygon2D Offset(Polygon2D polygon, double distanceMillimeters, bool outward)
     {
-        ArgumentNullException.ThrowIfNull(polygon);
+        if (polygon is null)
+        {
+            throw new ArgumentNullException(nameof(polygon));
+        }
 
         if (distanceMillimeters < 0.0)
         {

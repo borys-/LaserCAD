@@ -117,7 +117,10 @@ public sealed class CadDocument
     /// </summary>
     public CadDocument AddLayer(Layer layer)
     {
-        ArgumentNullException.ThrowIfNull(layer);
+        if (layer is null)
+        {
+            throw new ArgumentNullException(nameof(layer));
+        }
 
         return new CadDocument(Id, Name, FormatVersion, Parameters, Layers.Append(layer), Sketches, Generators, MaterialProfile);
     }
@@ -128,7 +131,10 @@ public sealed class CadDocument
     /// </summary>
     public CadDocument AddSketch(Sketch sketch)
     {
-        ArgumentNullException.ThrowIfNull(sketch);
+        if (sketch is null)
+        {
+            throw new ArgumentNullException(nameof(sketch));
+        }
 
         return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches.Append(sketch), Generators, MaterialProfile);
     }
@@ -139,7 +145,10 @@ public sealed class CadDocument
     /// </summary>
     public CadDocument AddGenerator(GeneratorInstance generator)
     {
-        ArgumentNullException.ThrowIfNull(generator);
+        if (generator is null)
+        {
+            throw new ArgumentNullException(nameof(generator));
+        }
 
         return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators.Append(generator), MaterialProfile);
     }
@@ -150,7 +159,10 @@ public sealed class CadDocument
     /// </summary>
     public CadDocument WithMaterialProfile(MaterialProfile materialProfile)
     {
-        ArgumentNullException.ThrowIfNull(materialProfile);
+        if (materialProfile is null)
+        {
+            throw new ArgumentNullException(nameof(materialProfile));
+        }
 
         return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, materialProfile);
     }

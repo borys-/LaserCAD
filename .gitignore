@@ -55,6 +55,11 @@ ipch/
 *.VC.db
 sysinfo.txt
 
+# Unity local domain plugin build outputs
+LaserCad.Unity/Assets/Plugins/LaserCad.Domain/*.dll
+LaserCad.Unity/Assets/Plugins/LaserCad.Domain/*.pdb
+LaserCad.Unity/Assets/Plugins/LaserCad.Domain/*.deps.json
+
 # Unity asset store tools
 AssetStoreTools*
 

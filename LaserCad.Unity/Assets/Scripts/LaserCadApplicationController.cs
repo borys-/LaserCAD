@@ -1,32 +1,36 @@
 using LaserCad.Core.Documents;
 using UnityEngine;
 
-namespace LaserCad.Unity;
-
-/// <summary>
-/// Glowny kontroler aplikacji Unity.
-/// </summary>
-public sealed class LaserCadApplicationController : MonoBehaviour
+namespace LaserCad.Unity
 {
-    [SerializeField]
-    private DocumentInfoView? documentInfoView;
-
     /// <summary>
-    /// Aktualnie zaladowany dokument CAD.
+    /// Glowny kontroler aplikacji Unity.
     /// </summary>
-    public CadDocument? CurrentDocument { get; private set; }
-
-    private void Awake()
+    public sealed class LaserCadApplicationController : MonoBehaviour
     {
-        Initialize();
-    }
+        [SerializeField]
+        private DocumentInfoView documentInfoView;
 
-    /// <summary>
-    /// Inicjalizuje stan aplikacji.
-    /// </summary>
-    public void Initialize()
-    {
-        CurrentDocument = new CadDocument();
-        documentInfoView?.Show(CurrentDocument);
+        /// <summary>
+        /// Aktualnie zaladowany dokument CAD.
+        /// </summary>
+        public CadDocument CurrentDocument { get; private set; }
+
+        private void Awake()
+        {
+            Initialize();
+        }
+
+        /// <summary>
+        /// Inicjalizuje stan aplikacji.
+        /// </summary>
+        public void Initialize()
+        {
+            CurrentDocument = new CadDocument();
+            if (documentInfoView != null)
+            {
+                documentInfoView.Show(CurrentDocument);
+            }
+        }
     }
 }

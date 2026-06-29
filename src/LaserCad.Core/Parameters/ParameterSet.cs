@@ -22,7 +22,10 @@ public sealed class ParameterSet
     /// </summary>
     public ParameterSet(IEnumerable<Parameter> parameters)
     {
-        ArgumentNullException.ThrowIfNull(parameters);
+        if (parameters is null)
+        {
+            throw new ArgumentNullException(nameof(parameters));
+        }
 
         _parameters = parameters.ToArray();
 
@@ -66,7 +69,10 @@ public sealed class ParameterSet
     /// </summary>
     public ParameterSet Add(Parameter parameter)
     {
-        ArgumentNullException.ThrowIfNull(parameter);
+        if (parameter is null)
+        {
+            throw new ArgumentNullException(nameof(parameter));
+        }
 
         return new ParameterSet(_parameters.Append(parameter));
     }

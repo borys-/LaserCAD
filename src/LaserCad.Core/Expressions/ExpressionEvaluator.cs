@@ -15,8 +15,14 @@ public sealed class ExpressionEvaluator
     /// </summary>
     public ExpressionEvaluationResult Evaluate(Expression expression, ParameterSet parameters)
     {
-        ArgumentNullException.ThrowIfNull(expression);
-        ArgumentNullException.ThrowIfNull(parameters);
+        if (expression is null)
+        {
+            throw new ArgumentNullException(nameof(expression));
+        }
+        if (parameters is null)
+        {
+            throw new ArgumentNullException(nameof(parameters));
+        }
 
         return expression switch
         {

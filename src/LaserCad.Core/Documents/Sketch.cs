@@ -56,7 +56,10 @@ public sealed class Sketch
     /// </summary>
     public Sketch AddEntity(Entity entity)
     {
-        ArgumentNullException.ThrowIfNull(entity);
+        if (entity is null)
+        {
+            throw new ArgumentNullException(nameof(entity));
+        }
 
         return new Sketch(Id, Name, Entities.Append(entity));
     }
@@ -137,7 +140,10 @@ public sealed class Sketch
     /// </summary>
     public Sketch RebuildFromParameters(ParameterSet parameters)
     {
-        ArgumentNullException.ThrowIfNull(parameters);
+        if (parameters is null)
+        {
+            throw new ArgumentNullException(nameof(parameters));
+        }
 
         return new Sketch(Id, Name, Entities.Select(entity => RebuildEntityFromParameters(entity, parameters)));
     }

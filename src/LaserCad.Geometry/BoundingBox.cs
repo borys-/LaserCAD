@@ -22,7 +22,10 @@ public readonly record struct BoundingBox(double MinX, double MinY, double MaxX,
     /// </summary>
     public static BoundingBox FromPoints(params Point2D[] points)
     {
-        ArgumentNullException.ThrowIfNull(points);
+        if (points is null)
+        {
+            throw new ArgumentNullException(nameof(points));
+        }
 
         if (points.Length == 0)
         {

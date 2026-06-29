@@ -47,7 +47,10 @@ public sealed class CircleEntity : Entity
     /// </summary>
     public CircleEntity BindDimension(EntityDimensionBinding binding)
     {
-        ArgumentNullException.ThrowIfNull(binding);
+        if (binding is null)
+        {
+            throw new ArgumentNullException(nameof(binding));
+        }
 
         return new CircleEntity(Circle, Id, LayerName, DimensionBindings.Append(binding));
     }
@@ -58,7 +61,10 @@ public sealed class CircleEntity : Entity
     /// </summary>
     public CircleEntity RebuildFromParameters(ParameterSet parameters)
     {
-        ArgumentNullException.ThrowIfNull(parameters);
+        if (parameters is null)
+        {
+            throw new ArgumentNullException(nameof(parameters));
+        }
 
         var radius = Circle.Radius;
 

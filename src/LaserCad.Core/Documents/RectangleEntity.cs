@@ -38,7 +38,10 @@ public sealed class RectangleEntity : Entity
         IEnumerable<EntityDimensionBinding>? dimensionBindings = null)
         : base(id, layerName, dimensionBindings)
     {
-        ArgumentNullException.ThrowIfNull(corners);
+        if (corners is null)
+        {
+            throw new ArgumentNullException(nameof(corners));
+        }
 
         this.corners = corners.ToArray();
 
@@ -75,7 +78,10 @@ public sealed class RectangleEntity : Entity
     /// </summary>
     public RectangleEntity BindDimension(EntityDimensionBinding binding)
     {
-        ArgumentNullException.ThrowIfNull(binding);
+        if (binding is null)
+        {
+            throw new ArgumentNullException(nameof(binding));
+        }
 
         return new RectangleEntity(corners, Id, LayerName, DimensionBindings.Append(binding));
     }
@@ -86,7 +92,10 @@ public sealed class RectangleEntity : Entity
     /// </summary>
     public RectangleEntity RebuildFromParameters(ParameterSet parameters)
     {
-        ArgumentNullException.ThrowIfNull(parameters);
+        if (parameters is null)
+        {
+            throw new ArgumentNullException(nameof(parameters));
+        }
 
         var bounds = Bounds;
         var width = bounds.MaxX - bounds.MinX;

@@ -1,5 +1,27 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net9.0;netstandard2.1</TargetFrameworks>
+  </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\LaserCad.Geometry\LaserCad.Geometry.csproj" />
+    <ProjectReference
+      Include="..\LaserCad.Geometry\LaserCad.Geometry.csproj"
+      SetTargetFramework="TargetFramework=netstandard2.1"
+      Condition="'$(TargetFramework)' == 'netstandard2.1'" />
+    <ProjectReference
+      Include="..\LaserCad.Geometry\LaserCad.Geometry.csproj"
+      Condition="'$(TargetFramework)' != 'netstandard2.1'" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <PackageReference Include="System.Text.Json" Version="9.0.6" />
+  </ItemGroup>
+
+  <Target Name="CopyUnityDomainAssemblies" AfterTargets="Build" Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <ItemGroup>
+      <UnityDomainAssembly Include="$(TargetDir)*.dll" />
+    </ItemGroup>
+    <MakeDir Directories="$(MSBuildProjectDirectory)\..\..\LaserCad.Unity\Assets\Plugins\LaserCad.Domain" />
+    <Copy SourceFiles="@(UnityDomainAssembly)" DestinationFolder="$(MSBuildProjectDirectory)\..\..\LaserCad.Unity\Assets\Plugins\LaserCad.Domain" />
+  </Target>
 </Project>

@@ -15,7 +15,10 @@ public sealed class Contour2D
     /// </summary>
     public Contour2D(IEnumerable<Point2D> points)
     {
-        ArgumentNullException.ThrowIfNull(points);
+        if (points is null)
+        {
+            throw new ArgumentNullException(nameof(points));
+        }
 
         this.points = points.ToArray();
 
@@ -30,7 +33,10 @@ public sealed class Contour2D
 
     private Contour2D(IEnumerable<Point2D> points, bool isClosed)
     {
-        ArgumentNullException.ThrowIfNull(points);
+        if (points is null)
+        {
+            throw new ArgumentNullException(nameof(points));
+        }
 
         this.points = points.ToArray();
 
@@ -63,7 +69,10 @@ public sealed class Contour2D
     /// </summary>
     public static Contour2D FromPolygon(Polygon2D polygon)
     {
-        ArgumentNullException.ThrowIfNull(polygon);
+        if (polygon is null)
+        {
+            throw new ArgumentNullException(nameof(polygon));
+        }
 
         return new Contour2D(polygon.Vertices, isClosed: true);
     }

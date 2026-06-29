@@ -29,7 +29,10 @@ public sealed class DocumentSerializer
     /// </summary>
     public string Serialize(CadDocument document)
     {
-        ArgumentNullException.ThrowIfNull(document);
+        if (document is null)
+        {
+            throw new ArgumentNullException(nameof(document));
+        }
         EnsureSupportedFormatVersion(document.FormatVersion);
 
         var dto = new DocumentDto

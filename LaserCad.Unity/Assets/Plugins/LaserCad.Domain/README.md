@@ -9,11 +9,10 @@ Wymagane biblioteki po zbudowaniu solution:
 
 Biblioteki powinny pochodzic z tego samego commita co projekt Unity. Unity jest adapterem UI i nie powinno kopiowac logiki z tych bibliotek.
 
-Przykladowa komenda budujaca domenowe DLL:
+Projekty `LaserCad.Core` i `LaserCad.Geometry` buduja dodatkowy target `netstandard2.1` dla Unity. Po buildzie `LaserCad.Core` kopiuje wymagane DLL do tego katalogu automatycznie.
+
+Komenda budujaca domenowe DLL dla Unity:
 
 ```powershell
-dotnet build ..\LaserCad.sln
+dotnet build ..\src\LaserCad.Core\LaserCad.Core.csproj -f netstandard2.1
 ```
-
-Po buildzie skopiuj DLL z katalogow `src/*/bin` do tego folderu, jezeli Unity nie widzi jeszcze referencji.
-

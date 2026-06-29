@@ -14,7 +14,10 @@ public sealed class Polyline2D
     /// </summary>
     public Polyline2D(IEnumerable<Point2D> points, bool isClosed = false)
     {
-        ArgumentNullException.ThrowIfNull(points);
+        if (points is null)
+        {
+            throw new ArgumentNullException(nameof(points));
+        }
 
         this.points = points.ToArray();
 

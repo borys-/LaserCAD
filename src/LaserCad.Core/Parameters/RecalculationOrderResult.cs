@@ -36,7 +36,10 @@ public sealed class RecalculationOrderResult
     /// </summary>
     public static RecalculationOrderResult Success(IReadOnlyList<ParameterId> order)
     {
-        ArgumentNullException.ThrowIfNull(order);
+        if (order is null)
+        {
+            throw new ArgumentNullException(nameof(order));
+        }
 
         return new RecalculationOrderResult(order, null);
     }

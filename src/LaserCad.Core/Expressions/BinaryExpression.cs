@@ -12,8 +12,14 @@ public sealed class BinaryExpression : Expression
     /// </summary>
     public BinaryExpression(Expression left, BinaryOperator operatorKind, Expression right)
     {
-        ArgumentNullException.ThrowIfNull(left);
-        ArgumentNullException.ThrowIfNull(right);
+        if (left is null)
+        {
+            throw new ArgumentNullException(nameof(left));
+        }
+        if (right is null)
+        {
+            throw new ArgumentNullException(nameof(right));
+        }
 
         Left = left;
         OperatorKind = operatorKind;
