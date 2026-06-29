@@ -139,4 +139,30 @@ public class SvgExporterTests
         Assert.That(svg, Does.Not.Contain("<line"));
         Assert.That(svg, Does.Contain("viewBox=\"0 0 0 0\""));
     }
+
+    [Test]
+    public void Export_WithAllSupportedEntityTypes_ShouldWriteEachSvgElement()
+    {
+        var sketch = new Sketch()
+            .AddEntity(new LineEntity(new LineSegment2D(new Point2D(0, 0), new Point2D(10, 0))))
+            .AddEntity(new RectangleEntity(new Point2D(20, 0), 10, 5))
+            .AddEntity(new CircleEntity(new Circle2D(new Point2D(45, 5), 5)))
+            .AddEntity(new ArcEntity(new Arc2D(new Point2D(60, 0), 10, 0, Math.PI / 2.0)))
+            .AddEntity(new PolylineEntity(new Polyline2D(new[]
+            {
+                new Point2D(80, 0),
+                new Point2D(90, 5),
+                new Point2D(100, 0),
+            })));
+        var document = new CadDocument(layers: Array.Empty<Layer>()).AddSketch(sketch);
+        var exporter = new SvgExporter();
+
+        string svg = exporter.Export(document);
+
+        Assert.That(svg, Does.Contain("<line x1=\"0\" y1=\"0\" x2=\"10\" y2=\"0\" stroke=\"#000000\" />"));
+        Assert.That(svg, Does.Contain("<path d=\"M 20 0 L 30 0 L 30 5 L 20 5 Z\" stroke=\"#000000\" />"));
+        Assert.That(svg, Does.Contain("<circle cx=\"45\" cy=\"5\" r=\"5\" stroke=\"#000000\" />"));
+        Assert.That(svg, Does.Contain("<path d=\"M 70 0 A 10 10 0 0 1 60 10\" stroke=\"#000000\" />"));
+        Assert.That(svg, Does.Contain("<path d=\"M 80 0 L 90 5 L 100 0\" stroke=\"#000000\" />"));
+    }
 }
