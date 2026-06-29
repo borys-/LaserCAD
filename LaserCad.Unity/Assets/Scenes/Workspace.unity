@@ -228,3 +228,6 @@ MonoBehaviour:
   minorLineColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   mediumLineColor: {r: 0.31, g: 0.31, b: 0.31, a: 1}
   majorLineColor: {r: 0.44, g: 0.44, b: 0.44, a: 1}
+  minorLineWidthPixels: 1
+  mediumLineWidthPixels: 1.5
+  majorLineWidthPixels: 2

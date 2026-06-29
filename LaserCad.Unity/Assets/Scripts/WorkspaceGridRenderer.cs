@@ -35,6 +35,15 @@ namespace LaserCad.Unity
         [SerializeField]
         private Color majorLineColor = new Color(0.44f, 0.44f, 0.44f, 1f);
 
+        [SerializeField]
+        private float minorLineWidthPixels = 1f;
+
+        [SerializeField]
+        private float mediumLineWidthPixels = 1.5f;
+
+        [SerializeField]
+        private float majorLineWidthPixels = 2f;
+
         private void Awake()
         {
             EnsureMaterial();
@@ -45,6 +54,9 @@ namespace LaserCad.Unity
             minorStepMillimeters = Mathf.Max(0.1f, minorStepMillimeters);
             mediumStepMillimeters = Mathf.Max(minorStepMillimeters, mediumStepMillimeters);
             majorStepMillimeters = Mathf.Max(mediumStepMillimeters, majorStepMillimeters);
+            minorLineWidthPixels = Mathf.Max(1f, minorLineWidthPixels);
+            mediumLineWidthPixels = Mathf.Max(minorLineWidthPixels, mediumLineWidthPixels);
+            majorLineWidthPixels = Mathf.Max(mediumLineWidthPixels, majorLineWidthPixels);
         }
 
         private void OnRenderObject()
@@ -66,19 +78,21 @@ namespace LaserCad.Unity
 
             GL.PushMatrix();
             GL.MultMatrix(Matrix4x4.identity);
-            GL.Begin(GL.LINES);
+            GL.Begin(GL.QUADS);
             GL.Color(minorLineColor);
 
-            DrawVerticalLines(bounds, minorStepMillimeters);
-            DrawHorizontalLines(bounds, minorStepMillimeters);
+            var worldUnitsPerPixel = GetWorldUnitsPerPixel();
+
+            DrawVerticalLines(bounds, minorStepMillimeters, minorLineWidthPixels * worldUnitsPerPixel);
+            DrawHorizontalLines(bounds, minorStepMillimeters, minorLineWidthPixels * worldUnitsPerPixel);
 
             GL.Color(mediumLineColor);
-            DrawVerticalLines(bounds, mediumStepMillimeters);
-            DrawHorizontalLines(bounds, mediumStepMillimeters);
+            DrawVerticalLines(bounds, mediumStepMillimeters, mediumLineWidthPixels * worldUnitsPerPixel);
+            DrawHorizontalLines(bounds, mediumStepMillimeters, mediumLineWidthPixels * worldUnitsPerPixel);
 
             GL.Color(majorLineColor);
-            DrawVerticalLines(bounds, majorStepMillimeters);
-            DrawHorizontalLines(bounds, majorStepMillimeters);
+            DrawVerticalLines(bounds, majorStepMillimeters, majorLineWidthPixels * worldUnitsPerPixel);
+            DrawHorizontalLines(bounds, majorStepMillimeters, majorLineWidthPixels * worldUnitsPerPixel);
 
             GL.End();
             GL.PopMatrix();
@@ -96,32 +110,47 @@ namespace LaserCad.Unity
                 Mathf.Max(min.y, max.y));
         }
 
-        private static void DrawVerticalLines(Bounds2D bounds, float step)
+        private float GetWorldUnitsPerPixel()
+        {
+            if (workspaceCamera.pixelHeight <= 0)
+            {
+                return 1f;
+            }
+
+            return workspaceCamera.orthographicSize * 2f / workspaceCamera.pixelHeight;
+        }
+
+        private static void DrawVerticalLines(Bounds2D bounds, float step, float width)
         {
             var start = Mathf.Floor(bounds.MinimumX / step) * step;
             var end = Mathf.Ceil(bounds.MaximumX / step) * step;
 
             for (var x = start; x <= end; x += step)
             {
-                DrawLine(new Vector3(x, bounds.MinimumY, 0f), new Vector3(x, bounds.MaximumY, 0f));
+                DrawLine(new Vector3(x, bounds.MinimumY, 0f), new Vector3(x, bounds.MaximumY, 0f), width);
             }
         }
 
-        private static void DrawHorizontalLines(Bounds2D bounds, float step)
+        private static void DrawHorizontalLines(Bounds2D bounds, float step, float width)
         {
             var start = Mathf.Floor(bounds.MinimumY / step) * step;
             var end = Mathf.Ceil(bounds.MaximumY / step) * step;
 
             for (var y = start; y <= end; y += step)
             {
-                DrawLine(new Vector3(bounds.MinimumX, y, 0f), new Vector3(bounds.MaximumX, y, 0f));
+                DrawLine(new Vector3(bounds.MinimumX, y, 0f), new Vector3(bounds.MaximumX, y, 0f), width);
             }
         }
 
-        private static void DrawLine(Vector3 start, Vector3 end)
+        private static void DrawLine(Vector3 start, Vector3 end, float width)
         {
-            GL.Vertex(start);
-            GL.Vertex(end);
+            var direction = (end - start).normalized;
+            var perpendicular = new Vector3(-direction.y, direction.x, 0f) * width * 0.5f;
+
+            GL.Vertex(start - perpendicular);
+            GL.Vertex(start + perpendicular);
+            GL.Vertex(end + perpendicular);
+            GL.Vertex(end - perpendicular);
         }
 
         private void EnsureMaterial()
