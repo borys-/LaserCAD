@@ -7,18 +7,31 @@ namespace LaserCad.Core.Commands;
 /// </summary>
 public sealed class UndoRedoStack
 {
+    public const int DefaultHistoryLimit = 100;
+
     private readonly List<ICommand> _undoStack = new();
     private readonly List<ICommand> _redoStack = new();
 
-    public UndoRedoStack(CadDocument document)
+    public UndoRedoStack(CadDocument document, int historyLimit = DefaultHistoryLimit)
     {
+        if (historyLimit <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(historyLimit), "History limit must be positive.");
+        }
+
         CurrentDocument = document ?? throw new ArgumentNullException(nameof(document));
+        HistoryLimit = historyLimit;
     }
 
     /// <summary>
     /// Aktualna wersja dokumentu po wykonaniu historii komend.
     /// </summary>
     public CadDocument CurrentDocument { get; private set; }
+
+    /// <summary>
+    /// Maksymalna liczba komend przechowywanych w historii undo.
+    /// </summary>
+    public int HistoryLimit { get; }
 
     /// <summary>
     /// Liczba komend dostepnych do cofniecia.
@@ -52,6 +65,7 @@ public sealed class UndoRedoStack
 
         CurrentDocument = command.Execute(CurrentDocument);
         _undoStack.Add(command);
+        TrimUndoHistory();
         _redoStack.Clear();
         return CurrentDocument;
     }
@@ -88,5 +102,13 @@ public sealed class UndoRedoStack
         CurrentDocument = command.Execute(CurrentDocument);
         _undoStack.Add(command);
         return CurrentDocument;
+    }
+
+    private void TrimUndoHistory()
+    {
+        while (_undoStack.Count > HistoryLimit)
+        {
+            _undoStack.RemoveAt(0);
+        }
     }
 }
