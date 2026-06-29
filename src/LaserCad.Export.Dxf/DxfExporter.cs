@@ -27,10 +27,33 @@ public sealed class DxfExporter
         writer.WriteSection("TABLES");
         writer.WriteEndSection();
         writer.WriteSection("ENTITIES");
+        foreach (Entity entity in document.Sketches.SelectMany(sketch => sketch.Entities))
+        {
+            WriteEntity(writer, entity);
+        }
+
         writer.WriteEndSection();
         writer.WritePair(0, "EOF");
 
         return writer.ToString();
+    }
+
+    private static void WriteEntity(DxfWriter writer, Entity entity)
+    {
+        if (entity is LineEntity line)
+        {
+            WriteLine(writer, line);
+        }
+    }
+
+    private static void WriteLine(DxfWriter writer, LineEntity entity)
+    {
+        writer.WritePair(0, "LINE");
+        writer.WritePair(8, entity.LayerName);
+        writer.WritePair(10, entity.Segment.Start.X);
+        writer.WritePair(20, entity.Segment.Start.Y);
+        writer.WritePair(11, entity.Segment.End.X);
+        writer.WritePair(21, entity.Segment.End.Y);
     }
 
     private sealed class DxfWriter
@@ -54,6 +77,11 @@ public sealed class DxfExporter
             _builder.AppendLine();
             _builder.Append(value);
             _builder.AppendLine();
+        }
+
+        public void WritePair(int groupCode, double value)
+        {
+            WritePair(groupCode, value.ToString("0.######", CultureInfo.InvariantCulture));
         }
 
         public override string ToString()
