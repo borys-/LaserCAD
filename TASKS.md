@@ -211,18 +211,18 @@ Zalecenie pracy:
 
 ## 1.1 Przeciecia
 
-- [ ] 1.1.0 Utworzyc typ wyniku przeciecia.
-- [ ] 1.1.1 Obsluzyc brak przeciecia.
-- [ ] 1.1.2 Obsluzyc jedno przeciecie.
-- [ ] 1.1.3 Obsluzyc odcinki rownolegle.
-- [ ] 1.1.4 Obsluzyc odcinki wspolliniowe.
-- [ ] 1.1.5 Dodac przeciecie linia-linia.
-- [ ] 1.1.6 Dodac przeciecie odcinek-odcinek.
-- [ ] 1.1.7 Dodac przeciecie linia-odcinek.
-- [ ] 1.1.8 Dodac test przeciecia krzyzowego.
-- [ ] 1.1.9 Dodac test braku przeciecia.
-- [ ] 1.1.10 Dodac test przeciecia na koncu odcinka.
-- [ ] 1.1.11 Dodac test odcinkow wspolliniowych.
+- [x] 1.1.0 Utworzyc typ wyniku przeciecia.
+- [x] 1.1.1 Obsluzyc brak przeciecia.
+- [x] 1.1.2 Obsluzyc jedno przeciecie.
+- [x] 1.1.3 Obsluzyc odcinki rownolegle.
+- [x] 1.1.4 Obsluzyc odcinki wspolliniowe.
+- [x] 1.1.5 Dodac przeciecie linia-linia.
+- [x] 1.1.6 Dodac przeciecie odcinek-odcinek.
+- [x] 1.1.7 Dodac przeciecie linia-odcinek.
+- [x] 1.1.8 Dodac test przeciecia krzyzowego.
+- [x] 1.1.9 Dodac test braku przeciecia.
+- [x] 1.1.10 Dodac test przeciecia na koncu odcinka.
+- [x] 1.1.11 Dodac test odcinkow wspolliniowych.
 
 ## 1.2 Okregi i luki
 
@@ -643,7 +643,7 @@ Zalecenie pracy:
 ## MVP.0 Minimalna sciezka do pierwszej uzywalnej wersji
 
 - [ ] MVP.0.0 Zbudowac solution i projekty domenowe.
-- [ ] MVP.0.1 Zaimplementowac `Length`, `Point2D`, `Vector2D`, `BoundingBox`, `Matrix3x3`.
+- [x] MVP.0.1 Zaimplementowac `Length`, `Point2D`, `Vector2D`, `BoundingBox`, `Matrix3x3`.
 - [ ] MVP.0.2 Zaimplementowac podstawowe encje: line, rectangle, circle, polyline.
 - [ ] MVP.0.3 Zaimplementowac parametry: width, depth, height, material thickness, kerf, finger width, clearance.
 - [ ] MVP.0.4 Zaimplementowac prosty graf zaleznosci parametrow.
