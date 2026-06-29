@@ -188,4 +188,45 @@ public class DxfExporterTests
         Assert.That(dxf, Does.Not.Contain("10\r\n0\r\n20\r\n0\r\n11\r\n10\r\n21\r\n0\r\n"));
         Assert.That(dxf, Does.Contain("10\r\n100\r\n20\r\n100\r\n11\r\n120\r\n21\r\n120\r\n"));
     }
+
+    [Test]
+    public void Export_WithBasicProductionDocument_ShouldWriteCompleteDxfFile()
+    {
+        var layers = new[]
+        {
+            new Layer("Cut", LayerColor.FromHex("#FF0000"), LayerRole.Cut),
+            new Layer("Score", LayerColor.FromHex("#00AA00"), LayerRole.Score),
+        };
+        var sketch = new Sketch()
+            .AddEntity(new LineEntity(
+                new LineSegment2D(new Point2D(0, 0), new Point2D(10, 0)),
+                layerName: "Cut"))
+            .AddEntity(new CircleEntity(
+                new Circle2D(new Point2D(20, 10), 5),
+                layerName: "Cut"))
+            .AddEntity(new ArcEntity(
+                new Arc2D(new Point2D(40, 10), 5, 0, Math.PI),
+                layerName: "Score"))
+            .AddEntity(new PolylineEntity(
+                new Polyline2D(new[]
+                {
+                    new Point2D(60, 0),
+                    new Point2D(70, 10),
+                    new Point2D(80, 0),
+                }, isClosed: true),
+                layerName: "Cut"));
+        var document = new CadDocument(layers: layers).AddSketch(sketch);
+        var exporter = new DxfExporter();
+
+        string dxf = exporter.Export(document);
+
+        Assert.That(dxf, Does.StartWith("0\r\nSECTION\r\n2\r\nHEADER\r\n"));
+        Assert.That(dxf, Does.Contain("0\r\nTABLE\r\n2\r\nLAYER\r\n70\r\n2\r\n"));
+        Assert.That(dxf, Does.Contain("0\r\nSECTION\r\n2\r\nENTITIES\r\n"));
+        Assert.That(dxf, Does.Contain("0\r\nLINE\r\n8\r\nCut\r\n10\r\n0\r\n20\r\n0\r\n11\r\n10\r\n21\r\n0\r\n"));
+        Assert.That(dxf, Does.Contain("0\r\nCIRCLE\r\n8\r\nCut\r\n10\r\n20\r\n20\r\n10\r\n40\r\n5\r\n"));
+        Assert.That(dxf, Does.Contain("0\r\nARC\r\n8\r\nScore\r\n10\r\n40\r\n20\r\n10\r\n40\r\n5\r\n50\r\n0\r\n51\r\n180\r\n"));
+        Assert.That(dxf, Does.Contain("0\r\nLWPOLYLINE\r\n8\r\nCut\r\n90\r\n3\r\n70\r\n1\r\n"));
+        Assert.That(dxf, Does.EndWith("0\r\nEOF\r\n"));
+    }
 }
