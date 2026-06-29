@@ -10,13 +10,21 @@ public sealed class FingerJointOptions
     /// <summary>
     /// Tworzy opcje polaczenia palcowego z wartosciami domyslnymi bez kompensacji.
     /// </summary>
-    public FingerJointOptions(Length? fingerWidth = null)
+    public FingerJointOptions(
+        Length? fingerWidth = null,
+        Length? minimumFingerWidth = null)
     {
         FingerWidth = fingerWidth ?? Length.FromMillimeters(0.0);
+        MinimumFingerWidth = minimumFingerWidth ?? Length.FromMillimeters(0.0);
     }
 
     /// <summary>
     /// Docelowa szerokosc pojedynczego palca.
     /// </summary>
     public Length FingerWidth { get; }
+
+    /// <summary>
+    /// Minimalna dopuszczalna szerokosc palca przy automatycznym doborze podzialu.
+    /// </summary>
+    public Length MinimumFingerWidth { get; }
 }
