@@ -223,4 +223,6 @@ MonoBehaviour:
   lineMaterial: {fileID: 0}
   isVisible: 1
   minorStepMillimeters: 1
-  lineColor: {r: 0.24, g: 0.24, b: 0.24, a: 1}
+  mediumStepMillimeters: 5
+  minorLineColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  mediumLineColor: {r: 0.31, g: 0.31, b: 0.31, a: 1}

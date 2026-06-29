@@ -21,7 +21,13 @@ namespace LaserCad.Unity
         private float minorStepMillimeters = 1f;
 
         [SerializeField]
-        private Color lineColor = new Color(0.24f, 0.24f, 0.24f, 1f);
+        private float mediumStepMillimeters = 5f;
+
+        [SerializeField]
+        private Color minorLineColor = new Color(0.20f, 0.20f, 0.20f, 1f);
+
+        [SerializeField]
+        private Color mediumLineColor = new Color(0.31f, 0.31f, 0.31f, 1f);
 
         private void Awake()
         {
@@ -31,6 +37,7 @@ namespace LaserCad.Unity
         private void OnValidate()
         {
             minorStepMillimeters = Mathf.Max(0.1f, minorStepMillimeters);
+            mediumStepMillimeters = Mathf.Max(minorStepMillimeters, mediumStepMillimeters);
         }
 
         private void OnRenderObject()
@@ -41,10 +48,10 @@ namespace LaserCad.Unity
             }
 
             EnsureMaterial();
-            DrawMinorGrid();
+            DrawGrid();
         }
 
-        private void DrawMinorGrid()
+        private void DrawGrid()
         {
             var bounds = GetVisibleBounds();
 
@@ -53,10 +60,14 @@ namespace LaserCad.Unity
             GL.PushMatrix();
             GL.MultMatrix(Matrix4x4.identity);
             GL.Begin(GL.LINES);
-            GL.Color(lineColor);
+            GL.Color(minorLineColor);
 
             DrawVerticalLines(bounds, minorStepMillimeters);
             DrawHorizontalLines(bounds, minorStepMillimeters);
+
+            GL.Color(mediumLineColor);
+            DrawVerticalLines(bounds, mediumStepMillimeters);
+            DrawHorizontalLines(bounds, mediumStepMillimeters);
 
             GL.End();
             GL.PopMatrix();
