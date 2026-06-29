@@ -20,7 +20,12 @@ namespace LaserCad.Unity
         [SerializeField]
         private float clickToleranceMillimeters = 2f;
 
+        [SerializeField]
+        private float dragThresholdPixels = 4f;
+
         private readonly HashSet<Guid> selectedEntityIds = new HashSet<Guid>();
+        private Vector2 mouseDownScreenPosition;
+        private bool isPointerDown;
 
         /// <summary>
         /// Identyfikatory aktualnie zaznaczonych encji.
@@ -42,7 +47,14 @@ namespace LaserCad.Unity
         {
             if (Input.GetMouseButtonDown(0))
             {
-                SelectAtMousePosition();
+                isPointerDown = true;
+                mouseDownScreenPosition = Input.mousePosition;
+            }
+
+            if (isPointerDown && Input.GetMouseButtonUp(0))
+            {
+                FinishPointerSelection();
+                isPointerDown = false;
             }
         }
 
@@ -91,6 +103,18 @@ namespace LaserCad.Unity
             return entity != null && selectedEntityIds.Contains(entity.Id);
         }
 
+        private void FinishPointerSelection()
+        {
+            var currentScreenPosition = (Vector2)Input.mousePosition;
+            if (Vector2.Distance(mouseDownScreenPosition, currentScreenPosition) < dragThresholdPixels)
+            {
+                SelectAtMousePosition();
+                return;
+            }
+
+            SelectByRectangle(mouseDownScreenPosition, currentScreenPosition);
+        }
+
         private void SelectAtMousePosition()
         {
             var entity = FindEntityAtMousePosition();
@@ -113,6 +137,35 @@ namespace LaserCad.Unity
             if (!isMultiSelect)
             {
                 Clear();
+            }
+        }
+
+        private void SelectByRectangle(Vector2 startScreenPosition, Vector2 endScreenPosition)
+        {
+            if (workspaceCamera == null)
+            {
+                return;
+            }
+
+            var startWorld = workspaceCamera.ScreenToWorldPoint(startScreenPosition);
+            var endWorld = workspaceCamera.ScreenToWorldPoint(endScreenPosition);
+            var minX = Math.Min(startWorld.x, endWorld.x);
+            var maxX = Math.Max(startWorld.x, endWorld.x);
+            var minY = Math.Min(startWorld.y, endWorld.y);
+            var maxY = Math.Max(startWorld.y, endWorld.y);
+            var isMultiSelect = IsMultiSelectModifierPressed();
+
+            if (!isMultiSelect)
+            {
+                Clear();
+            }
+
+            foreach (var entity in GetEntities())
+            {
+                if (IntersectsBounds(entity.Bounds, minX, maxX, minY, maxY))
+                {
+                    selectedEntityIds.Add(entity.Id);
+                }
             }
         }
 
@@ -171,6 +224,14 @@ namespace LaserCad.Unity
                 position.y - (float)bounds.MaxY);
 
             return Mathf.Sqrt(dx * dx + dy * dy);
+        }
+
+        private static bool IntersectsBounds(BoundingBox bounds, float minX, float maxX, float minY, float maxY)
+        {
+            return bounds.MaxX >= minX
+                && bounds.MinX <= maxX
+                && bounds.MaxY >= minY
+                && bounds.MinY <= maxY;
         }
 
         private static bool IsMultiSelectModifierPressed()
