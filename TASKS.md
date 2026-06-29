@@ -244,18 +244,20 @@ Zalecenie pracy:
 
 ## 1.3 Polilinie i polygony
 
-- [ ] 1.3.0 Utworzyc `Polyline2D`.
-- [ ] 1.3.1 Dodac liste punktow polilinii.
-- [ ] 1.3.2 Dodac informacje, czy polilinia jest zamknieta.
-- [ ] 1.3.3 Dodac dlugosc polilinii.
-- [ ] 1.3.4 Dodac bounding box polilinii.
-- [ ] 1.3.5 Dodac transformacje polilinii.
-- [ ] 1.3.6 Utworzyc `Polygon2D`.
-- [ ] 1.3.7 Dodac pole powierzchni polygonu.
-- [ ] 1.3.8 Dodac kierunek polygonu: clockwise/counter-clockwise.
-- [ ] 1.3.9 Dodac test zamknietej polilinii.
-- [ ] 1.3.10 Dodac test pola prostokata.
-- [ ] 1.3.11 Dodac test kierunku polygonu.
+- [x] 1.3.0 Utworzyc `Polyline2D`.
+- [x] 1.3.1 Dodac liste punktow polilinii.
+- [x] 1.3.2 Dodac informacje, czy polilinia jest zamknieta.
+- [x] 1.3.3 Dodac dlugosc polilinii.
+- [x] 1.3.4 Dodac bounding box polilinii.
+- [x] 1.3.5 Dodac transformacje polilinii.
+- [x] 1.3.6 Utworzyc `Polygon2D`.
+- [x] 1.3.7 Dodac pole powierzchni polygonu.
+- [x] 1.3.8 Dodac kierunek polygonu: clockwise/counter-clockwise.
+- [x] 1.3.9 Dodac test zamknietej polilinii.
+- [x] 1.3.10 Dodac test pola prostokata.
+- [x] 1.3.11 Dodac test kierunku polygonu.
+- [x] 1.3.12 Dodac bounding box polygonu.
+- [x] 1.3.13 Dodac transformacje polygonu.
 
 ## 1.4 Offsety i kontury
 
