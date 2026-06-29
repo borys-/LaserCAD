@@ -14,7 +14,8 @@
   - `c953e3f 7.0.7 Dodaj kerf i clearance finger joint`,
   - `e75d9c0 7.0.8 Dodaj walidacje opcji finger joint`,
   - `df94c88 7.0.9 Dodaj test walidacji opcji finger joint`,
-  - commit dokumentacyjny po przegladzie planu zostal dodany po tych taskach.
+  - `f3accef 7.0 Odhacz model danych finger joint`,
+  - `8303298 Dopisz kontekst po sekcji 7.0`.
 - Dodano namespace `LaserCad.Core.FingerJoints`.
 - Dodano `FingerJointFitMode`: `Tight`, `Neutral`, `Loose`.
 - Dodano `FingerJointOptions`:
@@ -41,6 +42,13 @@
 - Po przegladzie planu nie odhaczono zadnego nowego taska MVP:
   - `MVP.0.7` nadal wymaga generatora finger joint dla prostych krawedzi,
   - sekcja `7.0` dodaje tylko model danych opcji, bez algorytmu i bez geometrii wynikowej.
+- `dotnet test LaserCad.sln --no-restore` przechodzi: `376/376` testow zielone.
+- Odwiezono DLL domenowe dla Unity komenda:
+  `dotnet build src\LaserCad.Core\LaserCad.Core.csproj -f netstandard2.1`.
+- Unity build zostal uruchomiony przez Unity `6000.0.0f1` i zakonczyl sie sukcesem:
+  - aplikacja: `C:\borys\CAD\bin\release\LaserCad\LaserCad.exe`,
+  - log: `C:\borys\CAD\bin\release\LaserCad\unity-build.log`,
+  - log zawiera `Build Finished, Result: Success.`.
 - Nastepna niewykonana sekcja wedlug `TASKS.md`: `7.1 Finger joint - algorytm`.
 - Do sprawdzenia w aplikacji Unity po buildzie: sekcja `7.0` dodaje logike domenowa modelu opcji finger joint, ale nie dodaje jeszcze UI ani widocznej geometrii. Po uruchomieniu aplikacji widoczny ekran powinien pozostac jak po poprzednich sekcjach: scena robocza z kamera, gridem, snap markerem, zaznaczaniem i panelem informacji/wlasciwosci. Weryfikacja `7.0` jest aktualnie przez testy/API `LaserCad.Core.FingerJoints`.
 
