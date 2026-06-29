@@ -18,6 +18,9 @@ namespace LaserCad.Unity
         private bool isVisible = true;
 
         [SerializeField]
+        private KeyCode toggleGridKey = KeyCode.G;
+
+        [SerializeField]
         private float minorStepMillimeters = 1f;
 
         [SerializeField]
@@ -57,6 +60,22 @@ namespace LaserCad.Unity
             minorLineWidthPixels = Mathf.Max(1f, minorLineWidthPixels);
             mediumLineWidthPixels = Mathf.Max(minorLineWidthPixels, mediumLineWidthPixels);
             majorLineWidthPixels = Mathf.Max(mediumLineWidthPixels, majorLineWidthPixels);
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(toggleGridKey))
+            {
+                SetVisible(!isVisible);
+            }
+        }
+
+        /// <summary>
+        /// Ustawia widocznosc siatki obszaru roboczego.
+        /// </summary>
+        public void SetVisible(bool visible)
+        {
+            isVisible = visible;
         }
 
         private void OnRenderObject()

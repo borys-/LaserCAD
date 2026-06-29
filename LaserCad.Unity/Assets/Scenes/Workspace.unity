@@ -222,6 +222,7 @@ MonoBehaviour:
   workspaceCamera: {fileID: 1002}
   lineMaterial: {fileID: 0}
   isVisible: 1
+  toggleGridKey: 103
   minorStepMillimeters: 1
   mediumStepMillimeters: 5
   majorStepMillimeters: 10
