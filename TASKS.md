@@ -188,7 +188,7 @@ Zalecenie pracy:
 - [x] 0.10.3 Dodac deserializacje pustego dokumentu.
 - [x] 0.10.4 Dodac serializacje parametrow.
 - [x] 0.10.5 Dodac serializacje warstw.
-- [ ] 0.10.6 Dodac serializacje profilu materialu.
+- [x] 0.10.6 Dodac serializacje profilu materialu.
 - [ ] 0.10.7 Dodac pole wersji formatu.
 - [ ] 0.10.8 Dodac blad dla nieobslugiwanej wersji.
 - [ ] 0.10.9 Dodac test round-trip pustego dokumentu.

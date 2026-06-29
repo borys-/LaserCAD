@@ -35,7 +35,8 @@ public sealed class DocumentSerializer
             Id = document.Id,
             Name = document.Name,
             Parameters = document.Parameters.Parameters.Select(ToDto).ToArray(),
-            Layers = document.Layers.Select(ToDto).ToArray()
+            Layers = document.Layers.Select(ToDto).ToArray(),
+            MaterialProfile = document.MaterialProfile is null ? null : ToDto(document.MaterialProfile)
         };
 
         return JsonSerializer.Serialize(dto, JsonOptions);
@@ -56,8 +57,31 @@ public sealed class DocumentSerializer
 
         var parameters = new ParameterSet((dto.Parameters ?? Array.Empty<ParameterDto>()).Select(ToDomain));
         var layers = dto.Layers?.Select(ToDomain).ToArray();
+        var materialProfile = dto.MaterialProfile is null ? null : ToDomain(dto.MaterialProfile);
 
-        return new CadDocument(dto.Id, dto.Name, parameters: parameters, layers: layers);
+        return new CadDocument(dto.Id, dto.Name, parameters: parameters, layers: layers, materialProfile: materialProfile);
+    }
+
+    private static MaterialProfileDto ToDto(MaterialProfile materialProfile)
+    {
+        return new MaterialProfileDto
+        {
+            Name = materialProfile.Name,
+            ThicknessMillimeters = materialProfile.Thickness.Millimeters,
+            DefaultKerfMillimeters = materialProfile.DefaultKerf.Millimeters,
+            DefaultClearanceMillimeters = materialProfile.DefaultClearance.Millimeters,
+            MinimumFingerWidthMillimeters = materialProfile.MinimumFingerWidth.Millimeters
+        };
+    }
+
+    private static MaterialProfile ToDomain(MaterialProfileDto dto)
+    {
+        return new MaterialProfile(
+            dto.Name,
+            Length.FromMillimeters(dto.ThicknessMillimeters),
+            Length.FromMillimeters(dto.DefaultKerfMillimeters),
+            Length.FromMillimeters(dto.DefaultClearanceMillimeters),
+            Length.FromMillimeters(dto.MinimumFingerWidthMillimeters));
     }
 
     private static LayerDto ToDto(Layer layer)
@@ -156,6 +180,8 @@ public sealed class DocumentSerializer
         public ParameterDto[]? Parameters { get; set; }
 
         public LayerDto[]? Layers { get; set; }
+
+        public MaterialProfileDto? MaterialProfile { get; set; }
     }
 
     private sealed class ParameterDto
@@ -182,5 +208,18 @@ public sealed class DocumentSerializer
         public string Color { get; set; } = string.Empty;
 
         public string Role { get; set; } = string.Empty;
+    }
+
+    private sealed class MaterialProfileDto
+    {
+        public string Name { get; set; } = string.Empty;
+
+        public double ThicknessMillimeters { get; set; }
+
+        public double DefaultKerfMillimeters { get; set; }
+
+        public double DefaultClearanceMillimeters { get; set; }
+
+        public double MinimumFingerWidthMillimeters { get; set; }
     }
 }

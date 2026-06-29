@@ -184,4 +184,56 @@ public sealed class DocumentSerializerTests
 
         Assert.That(document.Layers, Is.Empty);
     }
+
+    [Test]
+    public void Serialize_WithMaterialProfile_ShouldWriteMaterialProfileValues()
+    {
+        var document = new CadDocument(layers: Array.Empty<Layer>())
+            .WithMaterialProfile(new MaterialProfile(
+                "Plywood 3 mm",
+                Length.FromMillimeters(3.0),
+                Length.FromMillimeters(0.15),
+                Length.FromMillimeters(0.1),
+                Length.FromMillimeters(3.0)));
+        var serializer = new DocumentSerializer();
+
+        var json = serializer.Serialize(document);
+        using var parsedJson = JsonDocument.Parse(json);
+        var materialProfile = parsedJson.RootElement.GetProperty("materialProfile");
+
+        Assert.That(materialProfile.GetProperty("name").GetString(), Is.EqualTo("Plywood 3 mm"));
+        Assert.That(materialProfile.GetProperty("thicknessMillimeters").GetDouble(), Is.EqualTo(3.0));
+        Assert.That(materialProfile.GetProperty("defaultKerfMillimeters").GetDouble(), Is.EqualTo(0.15));
+        Assert.That(materialProfile.GetProperty("defaultClearanceMillimeters").GetDouble(), Is.EqualTo(0.1));
+        Assert.That(materialProfile.GetProperty("minimumFingerWidthMillimeters").GetDouble(), Is.EqualTo(3.0));
+    }
+
+    [Test]
+    public void Deserialize_WithMaterialProfile_ShouldReadMaterialProfileValues()
+    {
+        var id = Guid.NewGuid();
+        var json = $$"""
+        {
+          "id": "{{id}}",
+          "name": "Box",
+          "materialProfile": {
+            "name": "Plywood 3 mm",
+            "thicknessMillimeters": 3,
+            "defaultKerfMillimeters": 0.15,
+            "defaultClearanceMillimeters": 0.1,
+            "minimumFingerWidthMillimeters": 3
+          }
+        }
+        """;
+        var serializer = new DocumentSerializer();
+
+        var document = serializer.Deserialize(json);
+
+        Assert.That(document.MaterialProfile, Is.Not.Null);
+        Assert.That(document.MaterialProfile!.Name, Is.EqualTo("Plywood 3 mm"));
+        Assert.That(document.MaterialProfile.Thickness, Is.EqualTo(Length.FromMillimeters(3.0)));
+        Assert.That(document.MaterialProfile.DefaultKerf, Is.EqualTo(Length.FromMillimeters(0.15)));
+        Assert.That(document.MaterialProfile.DefaultClearance, Is.EqualTo(Length.FromMillimeters(0.1)));
+        Assert.That(document.MaterialProfile.MinimumFingerWidth, Is.EqualTo(Length.FromMillimeters(3.0)));
+    }
 }
