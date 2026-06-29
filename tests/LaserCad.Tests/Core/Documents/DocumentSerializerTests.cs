@@ -274,4 +274,26 @@ public sealed class DocumentSerializerTests
 
         Assert.That(exception!.Message, Does.Contain("999"));
     }
+
+    [Test]
+    public void RoundTrip_WithEmptyDocument_ShouldPreserveDocument()
+    {
+        var id = Guid.NewGuid();
+        var document = new CadDocument(id, "Box");
+        var serializer = new DocumentSerializer();
+
+        var json = serializer.Serialize(document);
+        var roundTrippedDocument = serializer.Deserialize(json);
+
+        Assert.That(roundTrippedDocument.Id, Is.EqualTo(id));
+        Assert.That(roundTrippedDocument.Name, Is.EqualTo("Box"));
+        Assert.That(roundTrippedDocument.FormatVersion, Is.EqualTo(DocumentSerializer.SupportedFormatVersion));
+        Assert.That(roundTrippedDocument.Parameters.Parameters, Is.Empty);
+        Assert.That(roundTrippedDocument.Layers.Select(layer => layer.Name), Is.EqualTo(document.Layers.Select(layer => layer.Name)));
+        Assert.That(roundTrippedDocument.Layers.Select(layer => layer.Color), Is.EqualTo(document.Layers.Select(layer => layer.Color)));
+        Assert.That(roundTrippedDocument.Layers.Select(layer => layer.Role), Is.EqualTo(document.Layers.Select(layer => layer.Role)));
+        Assert.That(roundTrippedDocument.Sketches, Is.Empty);
+        Assert.That(roundTrippedDocument.Generators, Is.Empty);
+        Assert.That(roundTrippedDocument.MaterialProfile, Is.Null);
+    }
 }
