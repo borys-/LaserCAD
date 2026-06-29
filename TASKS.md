@@ -327,7 +327,7 @@ Zalecenie pracy:
 - [x] 3.0.1 Podlaczyc biblioteki domenowe do Unity.
 - [x] 3.0.2 Utworzyc scene robocza 2D.
 - [x] 3.0.3 Utworzyc glowny kontroler aplikacji.
-- [ ] 3.0.4 Zaladowac pusty `CadDocument` w Unity.
+- [x] 3.0.4 Zaladowac pusty `CadDocument` w Unity.
 - [ ] 3.0.5 Wyswietlic podstawowe informacje o dokumencie w UI.
 - [ ] 3.0.6 Zweryfikowac, ze Unity nie zawiera logiki geometrycznej duplikujacej Core.
 

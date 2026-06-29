@@ -23,6 +23,6 @@ public sealed class LaserCadApplicationController : MonoBehaviour
     /// </summary>
     public void Initialize()
     {
-        CurrentDocument = null;
+        CurrentDocument = new CadDocument();
     }
 }
