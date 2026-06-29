@@ -16,7 +16,9 @@ public sealed class FingerJointOptions
         Length? maximumFingerWidth = null,
         bool startWithFinger = true,
         bool endWithFinger = true,
-        FingerJointFitMode fitMode = FingerJointFitMode.Neutral)
+        FingerJointFitMode fitMode = FingerJointFitMode.Neutral,
+        Length? kerf = null,
+        Length? clearance = null)
     {
         FingerWidth = fingerWidth ?? Length.FromMillimeters(0.0);
         MinimumFingerWidth = minimumFingerWidth ?? Length.FromMillimeters(0.0);
@@ -24,6 +26,8 @@ public sealed class FingerJointOptions
         StartWithFinger = startWithFinger;
         EndWithFinger = endWithFinger;
         FitMode = fitMode;
+        Kerf = kerf ?? Length.FromMillimeters(0.0);
+        Clearance = clearance ?? Length.FromMillimeters(0.0);
     }
 
     /// <summary>
@@ -55,4 +59,14 @@ public sealed class FingerJointOptions
     /// Tryb dopasowania polaczenia palcowego.
     /// </summary>
     public FingerJointFitMode FitMode { get; }
+
+    /// <summary>
+    /// Szerokosc szczeliny ciecia lasera uwzgledniana przez generator.
+    /// </summary>
+    public Length Kerf { get; }
+
+    /// <summary>
+    /// Dodatkowy luz montazowy dla polaczenia.
+    /// </summary>
+    public Length Clearance { get; }
 }
