@@ -97,7 +97,10 @@ namespace LaserCad.Unity
             if (entity != null)
             {
                 SelectOnly(entity);
+                return;
             }
+
+            Clear();
         }
 
         private ISketchEntity FindEntityAtMousePosition()
