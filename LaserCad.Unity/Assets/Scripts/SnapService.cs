@@ -19,6 +19,24 @@ namespace LaserCad.Unity
         private float snapRadiusMillimeters = 2.5f;
 
         /// <summary>
+        /// Okresla, czy snap do siatki jest aktywny.
+        /// </summary>
+        public bool SnapToGridEnabled
+        {
+            get { return snapToGrid; }
+            set { snapToGrid = value; }
+        }
+
+        /// <summary>
+        /// Krok snapowania do siatki w milimetrach.
+        /// </summary>
+        public float GridStepMillimeters
+        {
+            get { return gridStepMillimeters; }
+            set { gridStepMillimeters = Mathf.Max(0.001f, value); }
+        }
+
+        /// <summary>
         /// Przyciaga pozycje do najlepszego kandydata snapowania.
         /// </summary>
         public SnapResult Snap(Vector2 worldPosition, IEnumerable<ISketchEntity> entities)
