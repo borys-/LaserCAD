@@ -390,8 +390,11 @@ MonoBehaviour:
   applicationController: {fileID: 2002}
   selectionService: {fileID: 5002}
   highlightMaterial: {fileID: 0}
-  highlightColor: {r: 0.2, g: 0.65, b: 1, a: 1}
-  lineWidthPixels: 2
+  highlightColor: {r: 1, g: 0.82, b: 0.12, a: 1}
+  highlightHaloColor: {r: 0, g: 0, b: 0, a: 0.9}
+  selectionRectangleColor: {r: 1, g: 0.82, b: 0.12, a: 0.85}
+  lineWidthPixels: 3
+  haloWidthPixels: 6
 --- !u!114 &5004
 MonoBehaviour:
   m_ObjectHideFlags: 0

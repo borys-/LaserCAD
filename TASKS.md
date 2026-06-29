@@ -375,6 +375,7 @@ Zalecenie pracy:
 - [x] 3.4.7 Podpiac zaznaczanie do sceny roboczej.
 - [x] 3.4.8 Pokazac prostokat zaznaczania podczas przeciagania.
 - [x] 3.4.9 Poprawic hit-test klikniecia dla linii, prostokatow i polilinii.
+- [x] 3.4.10 Poprawic czytelnosc highlightu zaznaczenia na kolorowej geometrii.
 
 ## 3.5 GUI funkcji domenowych
 
