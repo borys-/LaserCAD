@@ -80,6 +80,28 @@ public readonly record struct Arc2D
         return PointAtAngle(angle);
     }
 
+    /// <summary>
+    /// Zwraca luk po zastosowaniu transformacji afinicznej zachowujacej ksztalt okregu.
+    /// Transformacja moze przesuwac, obracac, odbijac i skalowac jednolicie.
+    /// </summary>
+    public Arc2D Transform(Matrix3x3 transform)
+    {
+        Point2D transformedCenter = transform.Transform(Center);
+        double transformedRadius = Circle2D.GetTransformedRadius(transform, Radius);
+        Point2D transformedStart = transform.Transform(PointAt(0.0));
+        Point2D transformedEnd = transform.Transform(PointAt(1.0));
+        ArcDirection transformedDirection = IsOrientationReversed(transform)
+            ? Reverse(Direction)
+            : Direction;
+
+        return new Arc2D(
+            transformedCenter,
+            transformedRadius,
+            AngleFromCenter(transformedCenter, transformedStart),
+            AngleFromCenter(transformedCenter, transformedEnd),
+            transformedDirection);
+    }
+
     private double SweepAngleRadians
     {
         get
@@ -109,5 +131,24 @@ public readonly record struct Arc2D
         return new Point2D(
             Center.X + (Math.Cos(angleRadians) * Radius),
             Center.Y + (Math.Sin(angleRadians) * Radius));
+    }
+
+    private static double AngleFromCenter(Point2D center, Point2D point)
+    {
+        return Math.Atan2(point.Y - center.Y, point.X - center.X);
+    }
+
+    private static bool IsOrientationReversed(Matrix3x3 transform)
+    {
+        double determinant = (transform.M11 * transform.M22) - (transform.M12 * transform.M21);
+
+        return determinant < 0.0;
+    }
+
+    private static ArcDirection Reverse(ArcDirection direction)
+    {
+        return direction == ArcDirection.Counterclockwise
+            ? ArcDirection.Clockwise
+            : ArcDirection.Counterclockwise;
     }
 }
