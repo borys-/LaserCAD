@@ -10,9 +10,9 @@ public sealed class FingerJointOptions
     /// <summary>
     /// Tworzy opcje polaczenia palcowego z wartosciami domyslnymi bez kompensacji.
     /// </summary>
-    public FingerJointOptions()
+    public FingerJointOptions(Length? fingerWidth = null)
     {
-        FingerWidth = Length.FromMillimeters(0.0);
+        FingerWidth = fingerWidth ?? Length.FromMillimeters(0.0);
     }
 
     /// <summary>
