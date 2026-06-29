@@ -61,6 +61,25 @@ public readonly record struct Arc2D
     /// </summary>
     public double Length => Radius * SweepAngleRadians;
 
+    /// <summary>
+    /// Zwraca punkt na luku dla parametru t z zakresu od 0 do 1.
+    /// Dla t = 0 zwraca poczatek luku, dla t = 1 zwraca koniec luku.
+    /// </summary>
+    public Point2D PointAt(double t)
+    {
+        if (t < 0.0 || t > 1.0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(t), "Parameter t must be between 0 and 1.");
+        }
+
+        double signedSweep = Direction == ArcDirection.Counterclockwise
+            ? SweepAngleRadians
+            : -SweepAngleRadians;
+        double angle = StartAngleRadians + (signedSweep * t);
+
+        return PointAtAngle(angle);
+    }
+
     private double SweepAngleRadians
     {
         get
@@ -83,5 +102,12 @@ public readonly record struct Arc2D
         }
 
         return result;
+    }
+
+    private Point2D PointAtAngle(double angleRadians)
+    {
+        return new Point2D(
+            Center.X + (Math.Cos(angleRadians) * Radius),
+            Center.Y + (Math.Sin(angleRadians) * Radius));
     }
 }
