@@ -15,13 +15,15 @@ public sealed class BoxGeneratorOptions
         Length? depth = null,
         Length? height = null,
         Length? materialThickness = null,
-        Length? kerf = null)
+        Length? kerf = null,
+        Length? fingerWidth = null)
     {
         Width = width ?? Length.FromMillimeters(100.0);
         Depth = depth ?? Length.FromMillimeters(80.0);
         Height = height ?? Length.FromMillimeters(50.0);
         MaterialThickness = materialThickness ?? Length.FromMillimeters(3.0);
         Kerf = kerf ?? Length.FromMillimeters(0.0);
+        FingerWidth = fingerWidth ?? Length.FromMillimeters(10.0);
     }
 
     /// <summary>
@@ -48,4 +50,9 @@ public sealed class BoxGeneratorOptions
     /// Szerokosc szczeliny ciecia lasera uwzgledniana przy generowaniu pudelka.
     /// </summary>
     public Length Kerf { get; }
+
+    /// <summary>
+    /// Docelowa szerokosc palca dla polaczen palcowych scianek.
+    /// </summary>
+    public Length FingerWidth { get; }
 }
