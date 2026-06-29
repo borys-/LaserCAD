@@ -56,5 +56,10 @@ public sealed class EntityTests
         {
             return new TestEntity(Id, LayerName);
         }
+
+        public override Entity Copy(Guid? id = null)
+        {
+            return new TestEntity(id, LayerName);
+        }
     }
 }

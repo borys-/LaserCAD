@@ -29,4 +29,10 @@ public sealed class CircleEntity : Entity
     {
         return new CircleEntity(Circle.Transform(transform), Id, LayerName);
     }
+
+    /// <inheritdoc />
+    public override Entity Copy(Guid? id = null)
+    {
+        return new CircleEntity(Circle, id, LayerName);
+    }
 }

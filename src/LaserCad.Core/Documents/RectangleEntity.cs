@@ -52,6 +52,12 @@ public sealed class RectangleEntity : Entity
         return new RectangleEntity(corners.Select(transform.Transform), Id, LayerName);
     }
 
+    /// <inheritdoc />
+    public override Entity Copy(Guid? id = null)
+    {
+        return new RectangleEntity(corners, id, LayerName);
+    }
+
     private static Point2D[] CreateCorners(Point2D origin, double width, double height)
     {
         if (width <= 0.0)

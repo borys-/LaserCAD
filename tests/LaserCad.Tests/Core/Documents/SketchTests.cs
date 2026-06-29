@@ -51,6 +51,68 @@ public sealed class SketchTests
         Assert.That(sketch.Entities, Is.Empty);
     }
 
+    [Test]
+    public void RemoveEntity_ShouldReturnSketchWithoutEntity()
+    {
+        var removedEntity = new TestEntity();
+        var keptEntity = new TestEntity();
+        var sketch = new Sketch(entities: new[] { removedEntity, keptEntity });
+
+        var updatedSketch = sketch.RemoveEntity(removedEntity.Id);
+
+        Assert.That(updatedSketch.Entities, Is.EqualTo(new[] { keptEntity }));
+        Assert.That(sketch.Entities, Is.EqualTo(new[] { removedEntity, keptEntity }));
+    }
+
+    [Test]
+    public void CopyEntity_ShouldAppendCopyWithNewId()
+    {
+        var copiedId = Guid.NewGuid();
+        var entity = new LineEntity(new LineSegment2D(new Point2D(1.0, 2.0), new Point2D(3.0, 4.0)));
+        var sketch = new Sketch(entities: new[] { entity });
+
+        var updatedSketch = sketch.CopyEntity(entity.Id, copiedId);
+
+        Assert.That(updatedSketch.Entities, Has.Count.EqualTo(2));
+        var copy = (LineEntity)updatedSketch.Entities[1];
+        Assert.That(copy.Id, Is.EqualTo(copiedId));
+        Assert.That(copy.LayerName, Is.EqualTo(entity.LayerName));
+        Assert.That(copy.Segment, Is.EqualTo(entity.Segment));
+    }
+
+    [Test]
+    public void MoveEntity_ShouldTransformOnlySelectedEntity()
+    {
+        var movedEntity = new LineEntity(new LineSegment2D(new Point2D(1.0, 2.0), new Point2D(3.0, 4.0)));
+        var keptEntity = new LineEntity(new LineSegment2D(new Point2D(10.0, 20.0), new Point2D(30.0, 40.0)));
+        var sketch = new Sketch(entities: new[] { movedEntity, keptEntity });
+
+        var updatedSketch = sketch.MoveEntity(movedEntity.Id, 5.0, 6.0);
+
+        var moved = (LineEntity)updatedSketch.Entities[0];
+        Assert.That(moved.Id, Is.EqualTo(movedEntity.Id));
+        Assert.That(moved.Segment.Start, Is.EqualTo(new Point2D(6.0, 8.0)));
+        Assert.That(moved.Segment.End, Is.EqualTo(new Point2D(8.0, 10.0)));
+        Assert.That(updatedSketch.Entities[1], Is.SameAs(keptEntity));
+    }
+
+    [Test]
+    public void RotateScaleAndMirrorEntity_ShouldUseGeometryTransforms()
+    {
+        var line = new LineEntity(new LineSegment2D(new Point2D(2.0, 0.0), new Point2D(4.0, 0.0)));
+        var sketch = new Sketch(entities: new[] { line });
+
+        var rotated = (LineEntity)sketch.RotateEntity(line.Id, Math.PI / 2.0).Entities[0];
+        var scaled = (LineEntity)sketch.ScaleEntity(line.Id, 2.0, 3.0).Entities[0];
+        var mirrored = (LineEntity)sketch.MirrorEntity(line.Id, SketchMirrorAxis.Y).Entities[0];
+
+        Assert.That(rotated.Segment.Start.X, Is.EqualTo(0.0).Within(GeometryTolerance.Default));
+        Assert.That(rotated.Segment.Start.Y, Is.EqualTo(2.0).Within(GeometryTolerance.Default));
+        Assert.That(scaled.Segment.End, Is.EqualTo(new Point2D(8.0, 0.0)));
+        Assert.That(mirrored.Segment.Start, Is.EqualTo(new Point2D(-2.0, 0.0)));
+        Assert.That(mirrored.Segment.End, Is.EqualTo(new Point2D(-4.0, 0.0)));
+    }
+
     private sealed class TestEntity : Entity
     {
         public override BoundingBox Bounds => new(0.0, 0.0, 1.0, 1.0);
@@ -58,6 +120,16 @@ public sealed class SketchTests
         public override ISketchEntity Transform(Matrix3x3 transform)
         {
             return new TestEntity();
+        }
+
+        public override Entity Copy(Guid? id = null)
+        {
+            return new TestEntity(id);
+        }
+
+        public TestEntity(Guid? id = null)
+            : base(id)
+        {
         }
     }
 }

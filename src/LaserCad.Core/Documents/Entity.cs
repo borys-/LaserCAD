@@ -48,4 +48,10 @@ public abstract class Entity : ISketchEntity
     /// Zwraca nowa encje po zastosowaniu transformacji afinicznej.
     /// </summary>
     public abstract ISketchEntity Transform(Matrix3x3 transform);
+
+    /// <summary>
+    /// Zwraca kopie encji z nowym identyfikatorem.
+    /// Uzywaj przy operacjach duplikowania w szkicu.
+    /// </summary>
+    public abstract Entity Copy(Guid? id = null);
 }

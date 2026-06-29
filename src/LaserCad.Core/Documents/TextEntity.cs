@@ -55,4 +55,10 @@ public sealed class TextEntity : Entity
 
         return new TextEntity(Text, transformedPosition, transformedHeight, Id, LayerName);
     }
+
+    /// <inheritdoc />
+    public override Entity Copy(Guid? id = null)
+    {
+        return new TextEntity(Text, Position, Height, id, LayerName);
+    }
 }

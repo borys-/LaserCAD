@@ -290,15 +290,15 @@ Zalecenie pracy:
 ## 2.1 Operacje na szkicu
 
 - [x] 2.1.0 Dodac metode dodawania encji do szkicu.
-- [ ] 2.1.1 Dodac metode usuwania encji ze szkicu.
-- [ ] 2.1.2 Dodac metode kopiowania encji.
-- [ ] 2.1.3 Dodac przesuwanie encji.
-- [ ] 2.1.4 Dodac obracanie encji.
-- [ ] 2.1.5 Dodac skalowanie encji.
-- [ ] 2.1.6 Dodac odbicie encji.
-- [ ] 2.1.7 Dodac test dodania i usuniecia encji.
-- [ ] 2.1.8 Dodac test kopiowania encji.
-- [ ] 2.1.9 Dodac test transformacji encji.
+- [x] 2.1.1 Dodac metode usuwania encji ze szkicu.
+- [x] 2.1.2 Dodac metode kopiowania encji.
+- [x] 2.1.3 Dodac przesuwanie encji.
+- [x] 2.1.4 Dodac obracanie encji.
+- [x] 2.1.5 Dodac skalowanie encji.
+- [x] 2.1.6 Dodac odbicie encji.
+- [x] 2.1.7 Dodac test dodania i usuniecia encji.
+- [x] 2.1.8 Dodac test kopiowania encji.
+- [x] 2.1.9 Dodac test transformacji encji.
 
 ## 2.2 Relacje szkicu z parametrami
 
@@ -656,12 +656,12 @@ Zalecenie pracy:
 
 ## MVP.0 Minimalna sciezka do pierwszej uzywalnej wersji
 
-- [ ] MVP.0.0 Zbudowac solution i projekty domenowe.
+- [x] MVP.0.0 Zbudowac solution i projekty domenowe.
 - [x] MVP.0.1 Zaimplementowac `Length`, `Point2D`, `Vector2D`, `BoundingBox`, `Matrix3x3`.
 - [x] MVP.0.2 Zaimplementowac podstawowe encje: line, rectangle, circle, polyline.
 - [ ] MVP.0.3 Zaimplementowac parametry: width, depth, height, material thickness, kerf, finger width, clearance.
-- [ ] MVP.0.4 Zaimplementowac prosty graf zaleznosci parametrow.
-- [ ] MVP.0.5 Zaimplementowac `CadDocument`, `Sketch`, `Layer`, `MaterialProfile`.
+- [x] MVP.0.4 Zaimplementowac prosty graf zaleznosci parametrow.
+- [x] MVP.0.5 Zaimplementowac `CadDocument`, `Sketch`, `Layer`, `MaterialProfile`.
 - [x] MVP.0.6 Zaimplementowac zapis i odczyt JSON.
 - [ ] MVP.0.7 Zaimplementowac generator finger joint dla prostych krawedzi.
 - [ ] MVP.0.8 Zaimplementowac generator otwartego pudelka.

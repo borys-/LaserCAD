@@ -30,4 +30,10 @@ public sealed class LineEntity : Entity
     {
         return new LineEntity(Segment.Transform(transform), Id, LayerName);
     }
+
+    /// <inheritdoc />
+    public override Entity Copy(Guid? id = null)
+    {
+        return new LineEntity(Segment, id, LayerName);
+    }
 }

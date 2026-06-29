@@ -29,4 +29,10 @@ public sealed class PolylineEntity : Entity
     {
         return new PolylineEntity(Polyline.Transform(transform), Id, LayerName);
     }
+
+    /// <inheritdoc />
+    public override Entity Copy(Guid? id = null)
+    {
+        return new PolylineEntity(Polyline, id, LayerName);
+    }
 }

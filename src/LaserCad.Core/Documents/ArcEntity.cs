@@ -32,6 +32,12 @@ public sealed class ArcEntity : Entity
         return new ArcEntity(Arc.Transform(transform), Id, LayerName);
     }
 
+    /// <inheritdoc />
+    public override Entity Copy(Guid? id = null)
+    {
+        return new ArcEntity(Arc, id, LayerName);
+    }
+
     private IEnumerable<Point2D> GetBoundsPoints()
     {
         yield return Arc.PointAt(0.0);
