@@ -100,7 +100,12 @@ namespace LaserCad.Unity
 
             foreach (var entity in entities)
             {
-                if (entity is RectangleEntity rectangle)
+                if (entity is LineEntity line)
+                {
+                    yield return new SnapCandidate(ToVector2(line.Segment.Start), SnapPriority.LineEnd);
+                    yield return new SnapCandidate(ToVector2(line.Segment.End), SnapPriority.LineEnd);
+                }
+                else if (entity is RectangleEntity rectangle)
                 {
                     foreach (var corner in rectangle.Corners)
                     {
