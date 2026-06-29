@@ -23,15 +23,22 @@ public sealed class DxfExporter
         }
 
         options ??= new DxfExportOptions();
+        var layersByName = document.Layers.ToDictionary(layer => layer.Name, StringComparer.Ordinal);
 
         var writer = new DxfWriter();
         writer.WriteSection("HEADER");
         writer.WriteEndSection();
         writer.WriteSection("TABLES");
+        WriteLayerTable(writer, document.Layers, options);
         writer.WriteEndSection();
         writer.WriteSection("ENTITIES");
         foreach (Entity entity in document.Sketches.SelectMany(sketch => sketch.Entities))
         {
+            if (!ShouldExportEntity(entity, options, layersByName))
+            {
+                continue;
+            }
+
             WriteEntity(writer, entity);
         }
 
@@ -39,6 +46,63 @@ public sealed class DxfExporter
         writer.WritePair(0, "EOF");
 
         return writer.ToString();
+    }
+
+    private static void WriteLayerTable(DxfWriter writer, IReadOnlyList<Layer> layers, DxfExportOptions options)
+    {
+        Layer[] exportedLayers = layers
+            .Where(layer => layer.Role != LayerRole.Ignore)
+            .Where(layer => ShouldExportLayer(layer.Name, options))
+            .ToArray();
+
+        writer.WritePair(0, "TABLE");
+        writer.WritePair(2, "LAYER");
+        writer.WritePair(70, exportedLayers.Length.ToString(CultureInfo.InvariantCulture));
+
+        foreach (Layer layer in exportedLayers)
+        {
+            writer.WritePair(0, "LAYER");
+            writer.WritePair(2, layer.Name);
+            writer.WritePair(70, "0");
+            writer.WritePair(62, GetDxfColorIndex(layer.Color).ToString(CultureInfo.InvariantCulture));
+            writer.WritePair(6, "CONTINUOUS");
+        }
+
+        writer.WritePair(0, "ENDTAB");
+    }
+
+    private static bool ShouldExportEntity(
+        Entity entity,
+        DxfExportOptions options,
+        IReadOnlyDictionary<string, Layer> layersByName)
+    {
+        if (layersByName.TryGetValue(entity.LayerName, out var layer) && layer.Role == LayerRole.Ignore)
+        {
+            return false;
+        }
+
+        return ShouldExportLayer(entity.LayerName, options);
+    }
+
+    private static bool ShouldExportLayer(string layerName, DxfExportOptions options)
+    {
+        return options.ExportedLayerNames is null
+            || options.ExportedLayerNames.Any(exportedLayerName => string.Equals(exportedLayerName, layerName, StringComparison.Ordinal));
+    }
+
+    private static int GetDxfColorIndex(LayerColor color)
+    {
+        return color.Hex switch
+        {
+            "#FF0000" => 1,
+            "#FFFF00" => 2,
+            "#00FF00" or "#00AA00" => 3,
+            "#00FFFF" => 4,
+            "#0000FF" => 5,
+            "#FF00FF" => 6,
+            "#808080" => 8,
+            _ => 7,
+        };
     }
 
     private static void WriteEntity(DxfWriter writer, Entity entity)
