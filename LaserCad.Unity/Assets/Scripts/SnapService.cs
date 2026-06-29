@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using LaserCad.Core.Documents;
+using LaserCad.Geometry;
 using UnityEngine;
 
 namespace LaserCad.Unity
@@ -53,6 +54,11 @@ namespace LaserCad.Unity
                     ref bestDistance);
             }
 
+            foreach (var candidate in GetEntityPointCandidates(entities))
+            {
+                TrySelectCandidate(candidate, worldPosition, ref best, ref bestDistance);
+            }
+
             return best;
         }
 
@@ -83,6 +89,46 @@ namespace LaserCad.Unity
 
             best = new SnapResult(candidate.Position, true, candidate.Priority);
             bestDistance = distance;
+        }
+
+        private static IEnumerable<SnapCandidate> GetEntityPointCandidates(IEnumerable<ISketchEntity> entities)
+        {
+            if (entities == null)
+            {
+                yield break;
+            }
+
+            foreach (var entity in entities)
+            {
+                if (entity is RectangleEntity rectangle)
+                {
+                    foreach (var corner in rectangle.Corners)
+                    {
+                        yield return new SnapCandidate(ToVector2(corner), SnapPriority.EntityPoint);
+                    }
+                }
+                else if (entity is PolylineEntity polyline)
+                {
+                    foreach (var point in polyline.Polyline.Points)
+                    {
+                        yield return new SnapCandidate(ToVector2(point), SnapPriority.EntityPoint);
+                    }
+                }
+                else if (entity is TextEntity text)
+                {
+                    yield return new SnapCandidate(ToVector2(text.Position), SnapPriority.EntityPoint);
+                }
+                else if (entity is ArcEntity arc)
+                {
+                    yield return new SnapCandidate(ToVector2(arc.Arc.PointAt(0.0)), SnapPriority.EntityPoint);
+                    yield return new SnapCandidate(ToVector2(arc.Arc.PointAt(1.0)), SnapPriority.EntityPoint);
+                }
+            }
+        }
+
+        private static Vector2 ToVector2(Point2D point)
+        {
+            return new Vector2((float)point.X, (float)point.Y);
         }
     }
 }
