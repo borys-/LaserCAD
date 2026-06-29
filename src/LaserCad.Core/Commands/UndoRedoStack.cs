@@ -52,6 +52,7 @@ public sealed class UndoRedoStack
 
         CurrentDocument = command.Execute(CurrentDocument);
         _undoStack.Add(command);
+        _redoStack.Clear();
         return CurrentDocument;
     }
 
