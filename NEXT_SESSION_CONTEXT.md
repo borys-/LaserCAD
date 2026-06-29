@@ -40,6 +40,12 @@
   - nie ma rozkladania elementow 2D,
   - nie ma jeszcze widocznej geometrii finger joint w aplikacji Unity.
 - `dotnet test LaserCad.sln --no-restore` przechodzi: `384/384` testow zielone.
+- Odwiezono DLL domenowe dla Unity komenda:
+  `dotnet build src\LaserCad.Core\LaserCad.Core.csproj -f netstandard2.1`.
+- Unity build aplikacji zostal sprobowany przez Unity `6000.0.0f1`, ale nie wygenerowal nowego builda, bo inna instancja Unity ma otwarty projekt `C:\borys\CAD\LaserCad.Unity`.
+  - log: `C:\borys\CAD\bin\release\LaserCad\unity-build.log`,
+  - log zawiera `It looks like another Unity instance is running with this project open.`,
+  - przed kolejnym buildem zamknac otwarty edytor Unity albo uruchomic build po zwolnieniu locka projektu.
 - Do sprawdzenia w aplikacji Unity po buildzie: sekcja `7.1` dodaje logike domenowa generatora profilu finger joint, ale nie dodaje UI ani renderowania tej geometrii. Po uruchomieniu aplikacji widoczny ekran powinien pozostac jak po poprzednich sekcjach: scena robocza z kamera, gridem, snap markerem, zaznaczaniem i panelem informacji/wlasciwosci.
 - Nastepna niewykonana sekcja wedlug `TASKS.md`: `8.0 Generator pudelka`.
 
