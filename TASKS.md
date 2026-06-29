@@ -410,17 +410,17 @@ Zalecenie pracy:
 
 ## 5.0 Komendy edycyjne
 
-- [ ] 5.0.0 Utworzyc interfejs `ICommand`.
-- [ ] 5.0.1 Dodac metode wykonania komendy.
-- [ ] 5.0.2 Dodac metode cofniecia komendy.
-- [ ] 5.0.3 Utworzyc `MoveCommand`.
-- [ ] 5.0.4 Utworzyc `RotateCommand`.
-- [ ] 5.0.5 Utworzyc `ScaleCommand`.
-- [ ] 5.0.6 Utworzyc `MirrorCommand`.
-- [ ] 5.0.7 Utworzyc `DeleteCommand`.
-- [ ] 5.0.8 Utworzyc `AddEntityCommand`.
-- [ ] 5.0.9 Dodac test wykonania kazdej komendy.
-- [ ] 5.0.10 Dodac test cofniecia kazdej komendy.
+- [x] 5.0.0 Utworzyc interfejs `ICommand`.
+- [x] 5.0.1 Dodac metode wykonania komendy.
+- [x] 5.0.2 Dodac metode cofniecia komendy.
+- [x] 5.0.3 Utworzyc `MoveCommand`.
+- [x] 5.0.4 Utworzyc `RotateCommand`.
+- [x] 5.0.5 Utworzyc `ScaleCommand`.
+- [x] 5.0.6 Utworzyc `MirrorCommand`.
+- [x] 5.0.7 Utworzyc `DeleteCommand`.
+- [x] 5.0.8 Utworzyc `AddEntityCommand`.
+- [x] 5.0.9 Dodac test wykonania kazdej komendy.
+- [x] 5.0.10 Dodac test cofniecia kazdej komendy.
 
 ## 5.1 Undo i redo
 
