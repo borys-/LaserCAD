@@ -6,6 +6,8 @@ namespace LaserCad.Geometry;
 /// </summary>
 public readonly record struct Arc2D
 {
+    private const double FullTurnRadians = Math.PI * 2.0;
+
     /// <summary>
     /// Tworzy luk o podanym srodku, promieniu oraz katach w radianach.
     /// Domyslny kierunek luku jest przeciwny do ruchu wskazowek zegara.
@@ -53,4 +55,33 @@ public readonly record struct Arc2D
     /// Kierunek przejscia po luku od kata poczatkowego do koncowego.
     /// </summary>
     public ArcDirection Direction { get; }
+
+    /// <summary>
+    /// Dlugosc luku w milimetrach domenowych.
+    /// </summary>
+    public double Length => Radius * SweepAngleRadians;
+
+    private double SweepAngleRadians
+    {
+        get
+        {
+            double delta = Direction == ArcDirection.Counterclockwise
+                ? EndAngleRadians - StartAngleRadians
+                : StartAngleRadians - EndAngleRadians;
+
+            return NormalizePositiveAngle(delta);
+        }
+    }
+
+    private static double NormalizePositiveAngle(double angleRadians)
+    {
+        double result = angleRadians % FullTurnRadians;
+
+        if (result < 0.0)
+        {
+            result += FullTurnRadians;
+        }
+
+        return result;
+    }
 }
