@@ -333,7 +333,7 @@ Zalecenie pracy:
 
 ## 3.1 Kamera
 
-- [ ] 3.1.0 Dodac kamere ortograficzna.
+- [x] 3.1.0 Dodac kamere ortograficzna.
 - [ ] 3.1.1 Dodac zoom kolkiem myszy.
 - [ ] 3.1.2 Dodac pan srodkowym przyciskiem lub prawym przyciskiem myszy.
 - [ ] 3.1.3 Dodac reset widoku.
