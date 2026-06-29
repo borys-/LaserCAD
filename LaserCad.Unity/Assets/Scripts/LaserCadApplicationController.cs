@@ -8,6 +8,9 @@ namespace LaserCad.Unity;
 /// </summary>
 public sealed class LaserCadApplicationController : MonoBehaviour
 {
+    [SerializeField]
+    private DocumentInfoView? documentInfoView;
+
     /// <summary>
     /// Aktualnie zaladowany dokument CAD.
     /// </summary>
@@ -24,5 +27,6 @@ public sealed class LaserCadApplicationController : MonoBehaviour
     public void Initialize()
     {
         CurrentDocument = new CadDocument();
+        documentInfoView?.Show(CurrentDocument);
     }
 }
