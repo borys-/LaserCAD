@@ -1,3 +1,5 @@
+using LaserCad.Core.Documents;
+
 namespace LaserCad.Core.FeatureTree;
 
 /// <summary>
@@ -47,6 +49,31 @@ public sealed class FeatureTree
     public FeatureTree Disable(Guid itemId)
     {
         return SetEnabled(itemId, false);
+    }
+
+    /// <summary>
+    /// Przebudowuje dokument przez wykonanie aktywnych wpisow drzewa historii w kolejnosci.
+    /// </summary>
+    public CadDocument Rebuild(CadDocument baseDocument)
+    {
+        if (baseDocument is null)
+        {
+            throw new ArgumentNullException(nameof(baseDocument));
+        }
+
+        var rebuilt = baseDocument;
+
+        foreach (var item in Items)
+        {
+            if (!item.IsEnabled)
+            {
+                continue;
+            }
+
+            rebuilt = item.Apply(rebuilt);
+        }
+
+        return rebuilt;
     }
 
     private FeatureTree SetEnabled(Guid itemId, bool isEnabled)
