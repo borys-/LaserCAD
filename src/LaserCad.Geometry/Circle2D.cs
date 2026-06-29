@@ -29,4 +29,9 @@ public readonly record struct Circle2D
     /// Promien okregu w milimetrach domenowych.
     /// </summary>
     public double Radius { get; }
+
+    /// <summary>
+    /// Obwod okregu w milimetrach domenowych.
+    /// </summary>
+    public double Circumference => 2.0 * Math.PI * Radius;
 }
