@@ -194,6 +194,7 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier:
   documentInfoView: {fileID: 0}
+  loadDemoDocument: 1
 --- !u!1 &3000
 GameObject:
   m_ObjectHideFlags: 0
