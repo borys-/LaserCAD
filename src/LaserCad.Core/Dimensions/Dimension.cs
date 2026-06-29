@@ -125,6 +125,11 @@ public sealed class Dimension
             return ApplyRectangleHeight(heightRectangle);
         }
 
+        if (Kind == DimensionKind.Diameter && entity is CircleEntity circle)
+        {
+            return ApplyCircleDiameter(circle);
+        }
+
         throw new InvalidOperationException($"Dimension kind '{Kind}' is not supported for entity '{entity.GetType().Name}'.");
     }
 
@@ -167,5 +172,14 @@ public sealed class Dimension
             rectangle.Id,
             rectangle.LayerName,
             rectangle.DimensionBindings);
+    }
+
+    private CircleEntity ApplyCircleDiameter(CircleEntity circle)
+    {
+        return new CircleEntity(
+            new Circle2D(circle.Circle.Center, Value.Millimeters / 2.0),
+            circle.Id,
+            circle.LayerName,
+            circle.DimensionBindings);
     }
 }
