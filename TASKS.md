@@ -459,14 +459,14 @@ Zalecenie pracy:
 
 ## 6.1 Dimensions
 
-- [ ] 6.1.0 Utworzyc `Dimension`.
-- [ ] 6.1.1 Dodac wymiar dlugosci odcinka.
-- [ ] 6.1.2 Dodac wymiar szerokosci prostokata.
-- [ ] 6.1.3 Dodac wymiar wysokosci prostokata.
-- [ ] 6.1.4 Dodac wymiar srednicy okregu.
-- [ ] 6.1.5 Dodac wymiar promienia okregu.
-- [ ] 6.1.6 Powiazac wymiar z parametrem.
-- [ ] 6.1.7 Dodac test zmiany wymiaru przez parametr.
+- [x] 6.1.0 Utworzyc `Dimension`.
+- [x] 6.1.1 Dodac wymiar dlugosci odcinka.
+- [x] 6.1.2 Dodac wymiar szerokosci prostokata.
+- [x] 6.1.3 Dodac wymiar wysokosci prostokata.
+- [x] 6.1.4 Dodac wymiar srednicy okregu.
+- [x] 6.1.5 Dodac wymiar promienia okregu.
+- [x] 6.1.6 Powiazac wymiar z parametrem.
+- [x] 6.1.7 Dodac test zmiany wymiaru przez parametr.
 
 ## 7.0 Finger joint - model danych
 

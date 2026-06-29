@@ -160,7 +160,9 @@ Parametryczny szkic w MVP przechowuje proste powiazania wymiaru encji z parametr
 
 Przebudowa szkicu jest niemutujaca i zachowuje identyfikatory encji oraz powiazania wymiarow. Prostokat jest przebudowywany jako prostokat osiowy opisany przez bounding box, wiec MVP nie jest jeszcze solverem constraintow i nie zachowuje dowolnych obrotow ani relacji geometrycznych po przebudowie parametrycznej.
 
-Pelne wymiary szkicu, constraints, solver zaleznosci geometrycznych, promien okregu jako osobny wymiar oraz parametryzacja linii, luk, polilinii i tekstu pozostaja zakresem pozniejszych faz.
+Osobny model wymiarow szkicu jest dostepny dla dlugosci odcinka, szerokosci i wysokosci prostokata oraz srednicy i promienia okregu. Wymiary moga byc sterowane parametrami typu `Length` i przebudowywac wskazana encje.
+
+Ograniczenia MVP nadal sa istotne: wymiary sa stosowane sekwencyjnie na pojedynczej encji, nie tworza jeszcze pelnego solvera zaleznosci geometrycznych i nie obsluguja luk, polilinii ani tekstu.
 
 ## Faza 3 - Unity
 
