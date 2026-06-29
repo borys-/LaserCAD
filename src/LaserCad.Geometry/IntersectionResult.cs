@@ -51,4 +51,17 @@ public readonly record struct IntersectionResult
     /// Okresla, czy wynik oznacza pojedynczy punkt przeciecia.
     /// </summary>
     public bool IsPoint => Kind == IntersectionKind.Point;
+
+    /// <summary>
+    /// Zwraca wynik oznaczajacy rownolegle, niewspolliniowe obiekty.
+    /// </summary>
+    public static IntersectionResult Parallel()
+    {
+        return new IntersectionResult(IntersectionKind.Parallel);
+    }
+
+    /// <summary>
+    /// Okresla, czy wynik oznacza rownolegle, niewspolliniowe obiekty.
+    /// </summary>
+    public bool IsParallel => Kind == IntersectionKind.Parallel;
 }
