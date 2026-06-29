@@ -51,7 +51,7 @@ public class SvgExporterTests
 
         string svg = exporter.Export(document);
 
-        Assert.That(svg, Does.Contain("<line x1=\"1\" y1=\"2\" x2=\"3\" y2=\"4\" />"));
+        Assert.That(svg, Does.Contain("<line x1=\"1\" y1=\"2\" x2=\"3\" y2=\"4\" stroke=\"#000000\" />"));
     }
 
     [Test]
@@ -63,7 +63,7 @@ public class SvgExporterTests
 
         string svg = exporter.Export(document);
 
-        Assert.That(svg, Does.Contain("<path d=\"M 1 2 L 4 2 L 4 6 L 1 6 Z\" />"));
+        Assert.That(svg, Does.Contain("<path d=\"M 1 2 L 4 2 L 4 6 L 1 6 Z\" stroke=\"#000000\" />"));
     }
 
     [Test]
@@ -75,7 +75,7 @@ public class SvgExporterTests
 
         string svg = exporter.Export(document);
 
-        Assert.That(svg, Does.Contain("<circle cx=\"2\" cy=\"3\" r=\"4\" />"));
+        Assert.That(svg, Does.Contain("<circle cx=\"2\" cy=\"3\" r=\"4\" stroke=\"#000000\" />"));
     }
 
     [Test]
@@ -91,7 +91,7 @@ public class SvgExporterTests
 
         string svg = exporter.Export(document);
 
-        Assert.That(svg, Does.Contain("<path d=\"M 10 0 A 10 10 0 0 1 0 10\" />"));
+        Assert.That(svg, Does.Contain("<path d=\"M 10 0 A 10 10 0 0 1 0 10\" stroke=\"#000000\" />"));
     }
 
     [Test]
@@ -108,6 +108,20 @@ public class SvgExporterTests
 
         string svg = exporter.Export(document);
 
-        Assert.That(svg, Does.Contain("<path d=\"M 1 2 L 3 4 L 5 6\" />"));
+        Assert.That(svg, Does.Contain("<path d=\"M 1 2 L 3 4 L 5 6\" stroke=\"#000000\" />"));
+    }
+
+    [Test]
+    public void Export_WithLayerColor_ShouldWriteElementStroke()
+    {
+        var document = new CadDocument(layers: new[] { new Layer("Cut", LayerColor.FromHex("#AA1100")) })
+            .AddSketch(new Sketch().AddEntity(new LineEntity(
+                new LineSegment2D(new Point2D(1, 2), new Point2D(3, 4)),
+                layerName: "Cut")));
+        var exporter = new SvgExporter();
+
+        string svg = exporter.Export(document);
+
+        Assert.That(svg, Does.Contain("<line x1=\"1\" y1=\"2\" x2=\"3\" y2=\"4\" stroke=\"#AA1100\" />"));
     }
 }

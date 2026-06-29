@@ -37,9 +37,16 @@ public sealed class SvgExporter
             new XAttribute("stroke", "#000000"),
             new XAttribute("stroke-width", FormatNumber(options.StrokeWidthMillimeters)));
 
+        var layersByName = document.Layers.ToDictionary(layer => layer.Name, StringComparer.Ordinal);
+
         foreach (Entity entity in document.Sketches.SelectMany(sketch => sketch.Entities))
         {
-            var element = CreateElement(entity);
+            if (!ShouldExportEntity(entity, options))
+            {
+                continue;
+            }
+
+            var element = CreateElement(entity, layersByName);
 
             if (element is not null)
             {
@@ -50,9 +57,9 @@ public sealed class SvgExporter
         return new XDocument(new XDeclaration("1.0", "utf-8", null), svg).ToString(SaveOptions.DisableFormatting);
     }
 
-    private static XElement? CreateElement(Entity entity)
+    private static XElement? CreateElement(Entity entity, IReadOnlyDictionary<string, Layer> layersByName)
     {
-        return entity switch
+        var element = entity switch
         {
             LineEntity line => CreateLineElement(line),
             RectangleEntity rectangle => CreateRectangleElement(rectangle),
@@ -61,6 +68,22 @@ public sealed class SvgExporter
             PolylineEntity polyline => CreatePolylineElement(polyline),
             _ => null,
         };
+
+        element?.SetAttributeValue("stroke", GetLayerColor(entity, layersByName));
+        return element;
+    }
+
+    private static bool ShouldExportEntity(Entity entity, SvgExportOptions options)
+    {
+        return options.ExportedLayerNames is null
+            || options.ExportedLayerNames.Any(layerName => string.Equals(layerName, entity.LayerName, StringComparison.Ordinal));
+    }
+
+    private static string GetLayerColor(Entity entity, IReadOnlyDictionary<string, Layer> layersByName)
+    {
+        return layersByName.TryGetValue(entity.LayerName, out var layer)
+            ? layer.Color.Hex
+            : LayerColor.Black.Hex;
     }
 
     private static XElement CreateLineElement(LineEntity entity)
