@@ -140,6 +140,24 @@ public sealed class SketchEntityTests
     }
 
     [Test]
+    public void CircleEntity_RebuildFromParameters_ShouldUpdateDiameter()
+    {
+        var circle = new CircleEntity(new Circle2D(new Point2D(10.0, 20.0), 3.0))
+            .BindDimension(new EntityDimensionBinding(EntityDimensionKind.Diameter, new ParameterId("Diameter")));
+        var parameters = new ParameterSet(new[]
+        {
+            new Parameter(new ParameterId("Diameter"), "Diameter", ParameterType.Length, Length.FromMillimeters(20.0)),
+        });
+
+        var rebuilt = circle.RebuildFromParameters(parameters);
+
+        Assert.That(rebuilt.Circle.Center, Is.EqualTo(new Point2D(10.0, 20.0)));
+        Assert.That(rebuilt.Circle.Radius, Is.EqualTo(10.0));
+        Assert.That(rebuilt.Id, Is.EqualTo(circle.Id));
+        Assert.That(rebuilt.DimensionBindings, Has.Count.EqualTo(1));
+    }
+
+    [Test]
     public void Transform_ShouldKeepIdentityAndLayer()
     {
         var id = Guid.NewGuid();
