@@ -226,21 +226,21 @@ Zalecenie pracy:
 
 ## 1.2 Okregi i luki
 
-- [ ] 1.2.0 Utworzyc `Circle2D`.
-- [ ] 1.2.1 Dodac srodek okregu.
-- [ ] 1.2.2 Dodac promien okregu.
-- [ ] 1.2.3 Dodac obwod okregu.
-- [ ] 1.2.4 Dodac bounding box okregu.
-- [ ] 1.2.5 Utworzyc `Arc2D`.
-- [ ] 1.2.6 Dodac srodek luku.
-- [ ] 1.2.7 Dodac promien luku.
-- [ ] 1.2.8 Dodac kat poczatkowy i koncowy.
-- [ ] 1.2.9 Dodac kierunek luku.
-- [ ] 1.2.10 Dodac dlugosc luku.
-- [ ] 1.2.11 Dodac punkt na luku dla parametru `t`.
-- [ ] 1.2.12 Dodac transformacje okregu i luku.
-- [ ] 1.2.13 Dodac testy okregu.
-- [ ] 1.2.14 Dodac testy luku.
+- [x] 1.2.0 Utworzyc `Circle2D`.
+- [x] 1.2.1 Dodac srodek okregu.
+- [x] 1.2.2 Dodac promien okregu.
+- [x] 1.2.3 Dodac obwod okregu.
+- [x] 1.2.4 Dodac bounding box okregu.
+- [x] 1.2.5 Utworzyc `Arc2D`.
+- [x] 1.2.6 Dodac srodek luku.
+- [x] 1.2.7 Dodac promien luku.
+- [x] 1.2.8 Dodac kat poczatkowy i koncowy.
+- [x] 1.2.9 Dodac kierunek luku.
+- [x] 1.2.10 Dodac dlugosc luku.
+- [x] 1.2.11 Dodac punkt na luku dla parametru `t`.
+- [x] 1.2.12 Dodac transformacje okregu i luku.
+- [x] 1.2.13 Dodac testy okregu.
+- [x] 1.2.14 Dodac testy luku.
 
 ## 1.3 Polilinie i polygony
 
