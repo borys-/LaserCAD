@@ -32,6 +32,7 @@ public sealed class DocumentSerializer
 
         var dto = new DocumentDto
         {
+            FormatVersion = document.FormatVersion,
             Id = document.Id,
             Name = document.Name,
             Parameters = document.Parameters.Parameters.Select(ToDto).ToArray(),
@@ -58,8 +59,9 @@ public sealed class DocumentSerializer
         var parameters = new ParameterSet((dto.Parameters ?? Array.Empty<ParameterDto>()).Select(ToDomain));
         var layers = dto.Layers?.Select(ToDomain).ToArray();
         var materialProfile = dto.MaterialProfile is null ? null : ToDomain(dto.MaterialProfile);
+        var formatVersion = dto.FormatVersion == 0 ? SupportedFormatVersion : dto.FormatVersion;
 
-        return new CadDocument(dto.Id, dto.Name, parameters: parameters, layers: layers, materialProfile: materialProfile);
+        return new CadDocument(dto.Id, dto.Name, formatVersion, parameters, layers, materialProfile: materialProfile);
     }
 
     private static MaterialProfileDto ToDto(MaterialProfile materialProfile)
@@ -173,6 +175,8 @@ public sealed class DocumentSerializer
 
     private sealed class DocumentDto
     {
+        public int FormatVersion { get; set; }
+
         public Guid Id { get; set; }
 
         public string Name { get; set; } = string.Empty;

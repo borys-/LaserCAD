@@ -11,12 +11,13 @@ public sealed class DocumentSerializerTests
     public void Serialize_WithEmptyDocument_ShouldWriteDocumentMetadata()
     {
         var id = Guid.NewGuid();
-        var document = new CadDocument(id, "Box");
+        var document = new CadDocument(id, "Box", formatVersion: 1);
         var serializer = new DocumentSerializer();
 
         var json = serializer.Serialize(document);
         using var parsedJson = JsonDocument.Parse(json);
 
+        Assert.That(parsedJson.RootElement.GetProperty("formatVersion").GetInt32(), Is.EqualTo(1));
         Assert.That(parsedJson.RootElement.GetProperty("id").GetGuid(), Is.EqualTo(id));
         Assert.That(parsedJson.RootElement.GetProperty("name").GetString(), Is.EqualTo("Box"));
     }
@@ -37,6 +38,7 @@ public sealed class DocumentSerializerTests
 
         Assert.That(document.Id, Is.EqualTo(id));
         Assert.That(document.Name, Is.EqualTo("Box"));
+        Assert.That(document.FormatVersion, Is.EqualTo(DocumentSerializer.SupportedFormatVersion));
         Assert.That(document.Parameters.Parameters, Is.Empty);
         Assert.That(document.Layers, Is.EqualTo(DefaultLayers.All));
         Assert.That(document.Sketches, Is.Empty);
@@ -235,5 +237,23 @@ public sealed class DocumentSerializerTests
         Assert.That(document.MaterialProfile.DefaultKerf, Is.EqualTo(Length.FromMillimeters(0.15)));
         Assert.That(document.MaterialProfile.DefaultClearance, Is.EqualTo(Length.FromMillimeters(0.1)));
         Assert.That(document.MaterialProfile.MinimumFingerWidth, Is.EqualTo(Length.FromMillimeters(3.0)));
+    }
+
+    [Test]
+    public void Deserialize_WithFormatVersion_ShouldReadFormatVersion()
+    {
+        var id = Guid.NewGuid();
+        var json = $$"""
+        {
+          "formatVersion": 1,
+          "id": "{{id}}",
+          "name": "Box"
+        }
+        """;
+        var serializer = new DocumentSerializer();
+
+        var document = serializer.Deserialize(json);
+
+        Assert.That(document.FormatVersion, Is.EqualTo(1));
     }
 }
