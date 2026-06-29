@@ -22,4 +22,19 @@ public sealed class Intersections2DTests
             Assert.That(result.Point, Is.EqualTo(new Point2D(4.0, 5.0)));
         });
     }
+
+    [Test]
+    public void IntersectSegments_DisjointSegments_ShouldReturnNoIntersection()
+    {
+        LineSegment2D left = new LineSegment2D(
+            new Point2D(0.0, 0.0),
+            new Point2D(2.0, 0.0));
+        LineSegment2D right = new LineSegment2D(
+            new Point2D(3.0, 1.0),
+            new Point2D(3.0, 4.0));
+
+        IntersectionResult result = Intersections2D.Intersect(left, right);
+
+        Assert.That(result.IsNone, Is.True);
+    }
 }
