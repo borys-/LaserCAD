@@ -196,18 +196,18 @@ Zalecenie pracy:
 
 ## 1.0 Linie i odcinki
 
-- [ ] 1.0.0 Utworzyc `Line2D` jako linie nieskonczona albo kontrakt pomocniczy.
-- [ ] 1.0.1 Utworzyc `LineSegment2D`.
-- [ ] 1.0.2 Dodac punkt poczatkowy odcinka.
-- [ ] 1.0.3 Dodac punkt koncowy odcinka.
-- [ ] 1.0.4 Dodac dlugosc odcinka.
-- [ ] 1.0.5 Dodac punkt posredni dla parametru `t` od 0 do 1.
-- [ ] 1.0.6 Dodac kierunek odcinka.
-- [ ] 1.0.7 Dodac bounding box odcinka.
-- [ ] 1.0.8 Dodac transformacje odcinka.
-- [ ] 1.0.9 Dodac test dlugosci.
-- [ ] 1.0.10 Dodac test punktu posredniego.
-- [ ] 1.0.11 Dodac test transformacji odcinka.
+- [x] 1.0.0 Utworzyc `Line2D` jako linie nieskonczona albo kontrakt pomocniczy.
+- [x] 1.0.1 Utworzyc `LineSegment2D`.
+- [x] 1.0.2 Dodac punkt poczatkowy odcinka.
+- [x] 1.0.3 Dodac punkt koncowy odcinka.
+- [x] 1.0.4 Dodac dlugosc odcinka.
+- [x] 1.0.5 Dodac punkt posredni dla parametru `t` od 0 do 1.
+- [x] 1.0.6 Dodac kierunek odcinka.
+- [x] 1.0.7 Dodac bounding box odcinka.
+- [x] 1.0.8 Dodac transformacje odcinka.
+- [x] 1.0.9 Dodac test dlugosci.
+- [x] 1.0.10 Dodac test punktu posredniego.
+- [x] 1.0.11 Dodac test transformacji odcinka.
 
 ## 1.1 Przeciecia
 
