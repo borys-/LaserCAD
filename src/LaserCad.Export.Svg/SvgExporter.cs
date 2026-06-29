@@ -1,4 +1,5 @@
 using LaserCad.Core.Documents;
+using LaserCad.Geometry;
 using System.Globalization;
 using System.Xml.Linq;
 
@@ -23,16 +24,41 @@ public sealed class SvgExporter
 
         options ??= new SvgExportOptions();
 
+        BoundingBox bounds = CalculateBounds(document);
+
         var svg = new XElement(
             SvgNamespace + "svg",
             new XAttribute("xmlns", SvgNamespace.NamespaceName),
-            new XAttribute("width", FormatMillimeters(0)),
-            new XAttribute("height", FormatMillimeters(0)),
+            new XAttribute("width", FormatMillimeters(bounds.Width)),
+            new XAttribute("height", FormatMillimeters(bounds.Height)),
+            new XAttribute("viewBox", FormatViewBox(bounds)),
             new XAttribute("fill", "none"),
             new XAttribute("stroke", "#000000"),
             new XAttribute("stroke-width", FormatNumber(options.StrokeWidthMillimeters)));
 
         return new XDocument(new XDeclaration("1.0", "utf-8", null), svg).ToString(SaveOptions.DisableFormatting);
+    }
+
+    private static BoundingBox CalculateBounds(CadDocument document)
+    {
+        BoundingBox? bounds = null;
+
+        foreach (Entity entity in document.Sketches.SelectMany(sketch => sketch.Entities))
+        {
+            bounds = bounds.HasValue ? bounds.Value.Union(entity.Bounds) : entity.Bounds;
+        }
+
+        return bounds ?? new BoundingBox(0, 0, 0, 0);
+    }
+
+    private static string FormatViewBox(BoundingBox bounds)
+    {
+        return string.Join(
+            " ",
+            FormatNumber(bounds.MinX),
+            FormatNumber(bounds.MinY),
+            FormatNumber(bounds.Width),
+            FormatNumber(bounds.Height));
     }
 
     private static string FormatMillimeters(double value)
