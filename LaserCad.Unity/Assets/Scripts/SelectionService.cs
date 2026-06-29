@@ -94,13 +94,26 @@ namespace LaserCad.Unity
         private void SelectAtMousePosition()
         {
             var entity = FindEntityAtMousePosition();
+            var isMultiSelect = IsMultiSelectModifierPressed();
+
             if (entity != null)
             {
-                SelectOnly(entity);
+                if (isMultiSelect)
+                {
+                    Toggle(entity);
+                }
+                else
+                {
+                    SelectOnly(entity);
+                }
+
                 return;
             }
 
-            Clear();
+            if (!isMultiSelect)
+            {
+                Clear();
+            }
         }
 
         private ISketchEntity FindEntityAtMousePosition()
@@ -158,6 +171,14 @@ namespace LaserCad.Unity
                 position.y - (float)bounds.MaxY);
 
             return Mathf.Sqrt(dx * dx + dy * dy);
+        }
+
+        private static bool IsMultiSelectModifierPressed()
+        {
+            return Input.GetKey(KeyCode.LeftControl)
+                || Input.GetKey(KeyCode.RightControl)
+                || Input.GetKey(KeyCode.LeftShift)
+                || Input.GetKey(KeyCode.RightShift);
         }
     }
 }
