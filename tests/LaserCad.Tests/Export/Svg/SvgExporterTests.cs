@@ -21,10 +21,9 @@ public class SvgExporterTests
 
         string svg = exporter.Export(new CadDocument());
 
-        Assert.That(svg, Does.StartWith("<svg"));
-        Assert.That(svg, Does.Contain("xmlns=\"http://www.w3.org/2000/svg\""));
-        Assert.That(svg, Does.Contain("width=\"0mm\""));
-        Assert.That(svg, Does.Contain("height=\"0mm\""));
+        const string expectedSvg = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"0mm\" height=\"0mm\" viewBox=\"0 0 0 0\" fill=\"none\" stroke=\"#000000\" stroke-width=\"0.1\" />";
+
+        Assert.That(svg, Is.EqualTo(expectedSvg));
     }
 
     [Test]
