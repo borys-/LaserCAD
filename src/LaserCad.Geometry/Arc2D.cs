@@ -6,4 +6,16 @@ namespace LaserCad.Geometry;
 /// </summary>
 public readonly record struct Arc2D
 {
+    /// <summary>
+    /// Tworzy luk o podanym srodku.
+    /// </summary>
+    public Arc2D(Point2D center)
+    {
+        Center = center;
+    }
+
+    /// <summary>
+    /// Srodek okregu, na ktorym lezy luk.
+    /// </summary>
+    public Point2D Center { get; }
 }
