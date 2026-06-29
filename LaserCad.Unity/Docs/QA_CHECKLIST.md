@@ -27,3 +27,14 @@
 - Potwierdzic snap do srodka okregu oraz srodka prostokata.
 - Potwierdzic snap do koncow linii.
 - Przy nalozonych kandydatach potwierdzic priorytet: koniec linii, srodek encji, punkt encji, siatka.
+
+## Zaznaczanie
+
+- Uruchomic scene `Assets/Scenes/Workspace.unity`.
+- Potwierdzic, ze panel `Selection` jest widoczny w lewym gornym obszarze widoku.
+- Na dokumencie z encjami kliknac encje i potwierdzic, ze licznik `Selected` zmienia sie na `1`.
+- Kliknac puste miejsce i potwierdzic, ze zaznaczenie zostaje wyczyszczone.
+- Przytrzymac `Ctrl` albo `Shift` i kliknac kilka encji, zeby potwierdzic multi-select.
+- Przeciagnac lewym przyciskiem myszy prostokat przez encje i potwierdzic, ze encje w obszarze sa zaznaczone.
+- Potwierdzic, ze zaznaczone encje maja niebieski obrys bounding boxa.
+- Potwierdzic, ze panel pokazuje typ, warstwe i bounding box pierwszej zaznaczonej encji.

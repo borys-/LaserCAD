@@ -372,6 +372,7 @@ Zalecenie pracy:
 - [ ] 3.4.4 Dodac zaznaczanie prostokatem.
 - [ ] 3.4.5 Dodac highlight zaznaczonych encji.
 - [ ] 3.4.6 Dodac panel wlasciwosci zaznaczenia.
+- [x] 3.4.7 Podpiac zaznaczanie do sceny roboczej.
 
 ## 4.0 Eksport SVG - fundament
 
