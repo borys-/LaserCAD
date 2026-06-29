@@ -22,4 +22,18 @@ public sealed class DimensionApplyTests
         Assert.That(updatedLine.Segment.Length, Is.EqualTo(10.0).Within(GeometryTolerance.Default));
         Assert.That(sketch.Entities[0], Is.SameAs(line));
     }
+
+    [Test]
+    public void Apply_WithRectangleWidth_ShouldResizeRectangleWidth()
+    {
+        var rectangle = new RectangleEntity(new Point2D(2.0, 3.0), 10.0, 5.0);
+        var sketch = new Sketch(entities: new[] { rectangle });
+        var dimension = new Dimension(rectangle.Id, DimensionKind.Width, Length.FromMillimeters(20.0));
+
+        var updatedSketch = dimension.Apply(sketch);
+
+        var updatedRectangle = (RectangleEntity)updatedSketch.Entities[0];
+        Assert.That(updatedRectangle.Id, Is.EqualTo(rectangle.Id));
+        Assert.That(updatedRectangle.Bounds, Is.EqualTo(new BoundingBox(2.0, 3.0, 22.0, 8.0)));
+    }
 }

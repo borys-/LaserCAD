@@ -115,6 +115,11 @@ public sealed class Dimension
             return ApplyLength(line);
         }
 
+        if (Kind == DimensionKind.Width && entity is RectangleEntity rectangle)
+        {
+            return ApplyRectangleWidth(rectangle);
+        }
+
         throw new InvalidOperationException($"Dimension kind '{Kind}' is not supported for entity '{entity.GetType().Name}'.");
     }
 
@@ -129,5 +134,19 @@ public sealed class Dimension
             new LineSegment2D(line.Segment.Start, end),
             line.Id,
             line.LayerName);
+    }
+
+    private RectangleEntity ApplyRectangleWidth(RectangleEntity rectangle)
+    {
+        var bounds = rectangle.Bounds;
+        var height = bounds.MaxY - bounds.MinY;
+
+        return new RectangleEntity(
+            new Point2D(bounds.MinX, bounds.MinY),
+            Value.Millimeters,
+            height,
+            rectangle.Id,
+            rectangle.LayerName,
+            rectangle.DimensionBindings);
     }
 }
