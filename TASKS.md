@@ -186,7 +186,7 @@ Zalecenie pracy:
 - [x] 0.10.1 Utworzyc `DocumentSerializer`.
 - [x] 0.10.2 Dodac serializacje pustego dokumentu.
 - [x] 0.10.3 Dodac deserializacje pustego dokumentu.
-- [ ] 0.10.4 Dodac serializacje parametrow.
+- [x] 0.10.4 Dodac serializacje parametrow.
 - [ ] 0.10.5 Dodac serializacje warstw.
 - [ ] 0.10.6 Dodac serializacje profilu materialu.
 - [ ] 0.10.7 Dodac pole wersji formatu.
