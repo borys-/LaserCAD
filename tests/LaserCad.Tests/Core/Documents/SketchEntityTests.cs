@@ -1,6 +1,7 @@
 using LaserCad.Core.Documents;
 using LaserCad.Core.Parameters;
 using LaserCad.Geometry;
+using LaserCad.Geometry.Units;
 
 namespace LaserCad.Tests.Core.Documents;
 
@@ -102,6 +103,23 @@ public sealed class SketchEntityTests
         Assert.That(boundRectangle.DimensionBindings[0].Dimension, Is.EqualTo(EntityDimensionKind.Width));
         Assert.That(boundRectangle.DimensionBindings[0].ParameterId, Is.EqualTo(new ParameterId("Width")));
         Assert.That(boundCircle.DimensionBindings[0].Dimension, Is.EqualTo(EntityDimensionKind.Diameter));
+    }
+
+    [Test]
+    public void RectangleEntity_RebuildFromParameters_ShouldUpdateWidth()
+    {
+        var rectangle = new RectangleEntity(new Point2D(2.0, 3.0), 10.0, 5.0)
+            .BindDimension(new EntityDimensionBinding(EntityDimensionKind.Width, new ParameterId("Width")));
+        var parameters = new ParameterSet(new[]
+        {
+            new Parameter(new ParameterId("Width"), "Width", ParameterType.Length, Length.FromMillimeters(25.0)),
+        });
+
+        var rebuilt = rectangle.RebuildFromParameters(parameters);
+
+        Assert.That(rebuilt.Bounds, Is.EqualTo(new BoundingBox(2.0, 3.0, 27.0, 8.0)));
+        Assert.That(rebuilt.Id, Is.EqualTo(rectangle.Id));
+        Assert.That(rebuilt.DimensionBindings, Has.Count.EqualTo(1));
     }
 
     [Test]

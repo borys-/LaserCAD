@@ -1,4 +1,6 @@
 using LaserCad.Geometry;
+using LaserCad.Geometry.Units;
+using LaserCad.Core.Parameters;
 
 namespace LaserCad.Core.Documents;
 
@@ -78,6 +80,35 @@ public sealed class RectangleEntity : Entity
         return new RectangleEntity(corners, Id, LayerName, DimensionBindings.Append(binding));
     }
 
+    /// <summary>
+    /// Zwraca prostokat przebudowany na podstawie powiazanych parametrow.
+    /// MVP obsluguje prostokaty osiowe opisane przez bounding box.
+    /// </summary>
+    public RectangleEntity RebuildFromParameters(ParameterSet parameters)
+    {
+        ArgumentNullException.ThrowIfNull(parameters);
+
+        var bounds = Bounds;
+        var width = bounds.MaxX - bounds.MinX;
+        var height = bounds.MaxY - bounds.MinY;
+
+        foreach (var binding in DimensionBindings)
+        {
+            if (binding.Dimension == EntityDimensionKind.Width)
+            {
+                width = GetLengthParameter(parameters, binding).Millimeters;
+            }
+        }
+
+        return new RectangleEntity(
+            new Point2D(bounds.MinX, bounds.MinY),
+            width,
+            height,
+            Id,
+            LayerName,
+            DimensionBindings);
+    }
+
     private static Point2D[] CreateCorners(Point2D origin, double width, double height)
     {
         if (width <= 0.0)
@@ -97,5 +128,18 @@ public sealed class RectangleEntity : Entity
             new Point2D(origin.X + width, origin.Y + height),
             new Point2D(origin.X, origin.Y + height),
         };
+    }
+
+    private static Length GetLengthParameter(ParameterSet parameters, EntityDimensionBinding binding)
+    {
+        var parameter = parameters.FindById(binding.ParameterId)
+            ?? throw new ArgumentException($"Parameter '{binding.ParameterId}' was not found.", nameof(parameters));
+
+        if (parameter.Type != ParameterType.Length || parameter.Value is not Length length)
+        {
+            throw new InvalidOperationException($"Parameter '{binding.ParameterId}' must be a Length parameter.");
+        }
+
+        return length;
     }
 }
