@@ -1,5 +1,51 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 3.5 GUI funkcji domenowych - start
+
+- W tej sesji rozpoczeto prace nad widocznym GUI dla dotychczasowych funkcjonalnosci domenowych.
+- Nowe commity tej sesji:
+  - `6835393 3.5 Dodaj plan GUI funkcji domenowych`,
+  - `1fdfb9a 3.5.0 Dodaj renderer geometrii dokumentu`,
+  - `d826880 3.5.1 Dodaj dokument demonstracyjny`,
+  - `3b70db6 3.5.2 Dodaj panel parametrow pudelka`.
+- Do `TASKS.md` dodano sekcje `3.5 GUI funkcji domenowych`.
+- Odhaczono:
+  - `3.5.0` renderer geometrii dokumentu 2D w Unity,
+  - `3.5.1` startowy dokument demonstracyjny,
+  - `3.5.2` panel parametrow generatora pudelka.
+- Dodano `DocumentGeometryRenderer` w `LaserCad.Unity/Assets/Scripts`:
+  - czyta `CadDocument` z `LaserCadApplicationController`,
+  - rysuje `LineEntity`, `RectangleEntity`, `CircleEntity`, `ArcEntity`, `PolylineEntity` oraz prosty placeholder `TextEntity`,
+  - uzywa kolorow warstw dokumentu (`Cut`, `Engrave`, `Score` itd.),
+  - jest podpiety w scenie jako obiekt `Document Geometry`.
+- `LaserCadApplicationController` ma teraz:
+  - `CurrentBoxOptions`,
+  - `SetBoxOptions(BoxGeneratorOptions)`,
+  - flage `loadDemoDocument`,
+  - startowy dokument `Demo dokument` z prostokatem, linia, okregiem, lukiem, zamknieta polilinia i placeholderem tekstu.
+- Dodano `BoxGeneratorPanel`:
+  - widoczny panel IMGUI `Generator pudelka`,
+  - pola: szerokosc, glebokosc, wysokosc, grubosc materialu, kerf, szerokosc palca, clearance,
+  - wybor typu: zamkniete, otwarte, z pokrywa,
+  - przycisk `Zastosuj`,
+  - walidacja idzie przez domenowy `BoxGeneratorOptions`.
+- Po przegladzie planu dopisano przy `3.5.3`, ze przebudowa podgladu pudelka powinna bazowac na domenowym `BoxGenerator` z sekcji `8.1`. Nie nalezy generowac geometrii pudelka w Unity, zeby nie zlamac granicy UI/domena.
+- Nastepny najlepszy krok:
+  - albo wrocic do `8.1 Generator pudelka - geometria` i zrobic domenowy generator,
+  - albo kontynuowac GUI dla funkcji juz gotowych domenowo, np. panele eksportu SVG/DXF, materialow/warstw, undo/redo i informacje constraints/dimensions.
+- Testy:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `390/390` testow zielone.
+  - `dotnet build src\LaserCad.Core\LaserCad.Core.csproj -f netstandard2.1 --no-restore` przechodzi bez ostrzezen.
+- Pelny build aplikacji uruchomiono przez `cmd /c build.bat` i zakonczyl sie sukcesem:
+  - aplikacja: `C:\borys\CAD\bin\release\LaserCad\LaserCad.exe`,
+  - log: `C:\borys\CAD\bin\release\unity-build.log`,
+  - log zawiera `Build Finished, Result: Success.`.
+- Widoczne po odpaleniu aplikacji:
+  - scena nie jest juz pusta: widoczny jest demo dokument z kolorowa geometria 2D,
+  - nadal dziala grid, kamera, snap marker i zaznaczanie,
+  - panel `Generator pudelka` jest po lewej stronie pod panelem zaznaczenia,
+  - po zmianie wartosci i kliknieciu `Zastosuj` panel pokazuje status walidacji opcji; geometria pudelka jeszcze sie nie przebudowuje, bo brakuje `BoxGenerator` z `8.1`.
+
 ## Aktualizacja po sekcji 8.0 Generator pudelka
 
 - W tej sesji wykonano cala sekcje `8.0 Generator pudelka` i odhaczono ja w `TASKS.md`.
