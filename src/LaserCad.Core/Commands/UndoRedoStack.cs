@@ -8,6 +8,7 @@ namespace LaserCad.Core.Commands;
 public sealed class UndoRedoStack
 {
     private readonly List<ICommand> _undoStack = new();
+    private readonly List<ICommand> _redoStack = new();
 
     public UndoRedoStack(CadDocument document)
     {
@@ -28,6 +29,16 @@ public sealed class UndoRedoStack
     /// Informuje, czy historia zawiera komende do cofniecia.
     /// </summary>
     public bool CanUndo => UndoCount > 0;
+
+    /// <summary>
+    /// Liczba komend dostepnych do ponowienia.
+    /// </summary>
+    public int RedoCount => _redoStack.Count;
+
+    /// <summary>
+    /// Informuje, czy historia zawiera komende do ponowienia.
+    /// </summary>
+    public bool CanRedo => RedoCount > 0;
 
     /// <summary>
     /// Wykonuje komende, aktualizuje dokument i dodaje komende do historii undo.
@@ -57,6 +68,24 @@ public sealed class UndoRedoStack
         var command = _undoStack[^1];
         _undoStack.RemoveAt(_undoStack.Count - 1);
         CurrentDocument = command.Undo(CurrentDocument);
+        _redoStack.Add(command);
+        return CurrentDocument;
+    }
+
+    /// <summary>
+    /// Ponawia ostatnio cofnieta komende i zwraca nowa wersje dokumentu.
+    /// </summary>
+    public CadDocument Redo()
+    {
+        if (!CanRedo)
+        {
+            throw new InvalidOperationException("Redo history is empty.");
+        }
+
+        var command = _redoStack[^1];
+        _redoStack.RemoveAt(_redoStack.Count - 1);
+        CurrentDocument = command.Execute(CurrentDocument);
+        _undoStack.Add(command);
         return CurrentDocument;
     }
 }
