@@ -336,7 +336,7 @@ Zalecenie pracy:
 - [x] 3.1.0 Dodac kamere ortograficzna.
 - [x] 3.1.1 Dodac zoom kolkiem myszy.
 - [x] 3.1.2 Dodac pan srodkowym przyciskiem lub prawym przyciskiem myszy.
-- [ ] 3.1.3 Dodac reset widoku.
+- [x] 3.1.3 Dodac reset widoku.
 - [ ] 3.1.4 Dodac ograniczenia minimalnego i maksymalnego zoomu.
 - [ ] 3.1.5 Dodac test manualny kamery do checklisty QA.
 

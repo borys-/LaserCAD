@@ -17,11 +17,16 @@ public sealed class WorkspaceCameraController : MonoBehaviour
     [SerializeField]
     private float zoomSensitivity = 12f;
 
+    [SerializeField]
+    private KeyCode resetViewKey = KeyCode.Home;
+
+    private Vector3 initialPosition;
     private Vector3 lastPanMousePosition;
 
     private void Awake()
     {
         workspaceCamera ??= GetComponent<Camera>();
+        initialPosition = transform.position;
         ConfigureOrthographicCamera();
     }
 
@@ -29,6 +34,21 @@ public sealed class WorkspaceCameraController : MonoBehaviour
     {
         HandleZoom();
         HandlePan();
+        HandleResetView();
+    }
+
+    /// <summary>
+    /// Przywraca poczatkowe polozenie i skale widoku roboczego.
+    /// </summary>
+    public void ResetView()
+    {
+        if (workspaceCamera is null)
+        {
+            return;
+        }
+
+        transform.position = initialPosition;
+        workspaceCamera.orthographicSize = initialOrthographicSize;
     }
 
     private void ConfigureOrthographicCamera()
@@ -81,5 +101,13 @@ public sealed class WorkspaceCameraController : MonoBehaviour
 
         transform.position += new Vector3(worldDelta.x, worldDelta.y, 0f);
         lastPanMousePosition = Input.mousePosition;
+    }
+
+    private void HandleResetView()
+    {
+        if (Input.GetKeyDown(resetViewKey))
+        {
+            ResetView();
+        }
     }
 }
