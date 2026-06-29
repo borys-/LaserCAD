@@ -1,5 +1,66 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 8.0 Generator pudelka
+
+- W tej sesji wykonano cala sekcje `8.0 Generator pudelka` i odhaczono ja w `TASKS.md`.
+- Nowe commity tej sesji:
+  - `3b517e4 8.0.0 Utworz BoxGeneratorOptions`,
+  - `cc9d36f 8.0.1 Dodaj szerokosc pudelka`,
+  - `3b95340 8.0.2 Dodaj glebokosc pudelka`,
+  - `36726f8 8.0.3 Dodaj wysokosc pudelka`,
+  - `68938d6 8.0.4 Dodaj grubosc materialu pudelka`,
+  - `dc57048 8.0.5 Dodaj kerf pudelka`,
+  - `d691db0 8.0.6 Dodaj szerokosc palca pudelka`,
+  - `625328d 8.0.7 Dodaj clearance pudelka`,
+  - `7ae9139 8.0.8 Dodaj typ pudelka`,
+  - `2fdeae7 8.0.9 Dodaj walidacje opcji pudelka`,
+  - `af0f66c 8.0.10 Dodaj test walidacji zbyt malego pudelka`,
+  - `b57805e 8.0 Odhacz model opcji pudelka`.
+- Dodano namespace `LaserCad.Core.BoxGenerators`.
+- Dodano `BoxGeneratorType`: `Closed`, `Open`, `WithLid`.
+- Dodano `BoxGeneratorOptions`:
+  - `Width`,
+  - `Depth`,
+  - `Height`,
+  - `MaterialThickness`,
+  - `Kerf`,
+  - `FingerWidth`,
+  - `Clearance`,
+  - `BoxType`.
+- Domyslne opcje:
+  - szerokosc 100 mm,
+  - glebokosc 80 mm,
+  - wysokosc 50 mm,
+  - grubosc materialu 3 mm,
+  - kerf 0 mm,
+  - szerokosc palca 10 mm,
+  - clearance 0 mm,
+  - typ pudelka `Open`.
+- Walidacja:
+  - szerokosc, glebokosc, wysokosc, grubosc materialu i szerokosc palca musza byc dodatnie,
+  - kerf i clearance nie moga byc ujemne,
+  - szerokosc i glebokosc musza byc wieksze niz dwukrotnosc grubosci materialu,
+  - wysokosc musi byc wieksza niz grubosc materialu.
+- Dodano testy w `tests/LaserCad.Tests/Core/BoxGenerators/BoxGeneratorOptionsTests.cs`:
+  - wartosci domyslne,
+  - przechowywanie jawnych opcji,
+  - zerowa szerokosc,
+  - ujemny kerf,
+  - ujemny clearance,
+  - zbyt male pudelko wzgledem grubosci materialu.
+- Po przegladzie planu odhaczono `MVP.0.3`, bo parametry produkcyjne width/depth/height/material thickness/kerf/finger width/clearance sa juz zaimplementowane w modelu opcji generatora pudelka.
+- Nie odhaczono `MVP.0.8`, bo nie ma jeszcze generatora geometrii otwartego pudelka.
+- `docs/ROADMAP.md` ma nowa sekcje `Ograniczenia modelu generatora pudelka MVP`.
+- `dotnet test LaserCad.sln --no-restore` przechodzi: `390/390` testow zielone.
+- Odwiezono DLL domenowe dla Unity komenda:
+  `dotnet build src\LaserCad.Core\LaserCad.Core.csproj -f netstandard2.1`.
+- Unity build aplikacji zostal uruchomiony przez Unity `6000.0.0f1` i zakonczyl sie sukcesem:
+  - aplikacja: `C:\borys\CAD\bin\release\LaserCad\LaserCad.exe`,
+  - log: `C:\borys\CAD\bin\release\LaserCad\unity-build.log`,
+  - log zawiera `Build Finished, Result: Success.`.
+- Do sprawdzenia w aplikacji Unity po buildzie: sekcja `8.0` dodaje tylko logike domenowa modelu opcji generatora pudelka, bez UI i bez widocznej geometrii pudelka. Po uruchomieniu aplikacji widoczny ekran powinien pozostac jak po poprzednich sekcjach: scena robocza z kamera, gridem, snap markerem, zaznaczaniem i panelem informacji/wlasciwosci.
+- Nastepna niewykonana sekcja wedlug `TASKS.md`: `8.1 Generator pudelka - geometria`.
+
 ## Aktualizacja po sekcji 7.1 Finger joint - algorytm
 
 - W tej sesji wykonano cala sekcje `7.1 Finger joint - algorytm` i odhaczono ja w `TASKS.md`.
