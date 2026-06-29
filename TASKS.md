@@ -340,6 +340,7 @@ Zalecenie pracy:
 - [x] 3.1.4 Dodac ograniczenia minimalnego i maksymalnego zoomu.
 - [x] 3.1.5 Dodac test manualny kamery do checklisty QA.
 - [x] 3.1.6 Podpiac kontroler kamery do sceny roboczej.
+- [x] 3.1.7 Pokazac projekt Unity w solution jako folder projektu.
 
 ## 3.2 Grid
 

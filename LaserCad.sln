@@ -5,6 +5,18 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LaserCad.Unity", "LaserCad.Unity", "{9FBD11F8-ED32-4EBE-9E15-A8B77F6C7A26}"
+	ProjectSection(SolutionItems) = preProject
+		LaserCad.Unity\README.md = LaserCad.Unity\README.md
+		LaserCad.Unity\Assets\Scenes\Workspace.unity = LaserCad.Unity\Assets\Scenes\Workspace.unity
+		LaserCad.Unity\Assets\Scripts\LaserCad.Unity.asmdef = LaserCad.Unity\Assets\Scripts\LaserCad.Unity.asmdef
+		LaserCad.Unity\Assets\Scripts\LaserCadApplicationController.cs = LaserCad.Unity\Assets\Scripts\LaserCadApplicationController.cs
+		LaserCad.Unity\Assets\Scripts\DocumentInfoView.cs = LaserCad.Unity\Assets\Scripts\DocumentInfoView.cs
+		LaserCad.Unity\Assets\Scripts\WorkspaceCameraController.cs = LaserCad.Unity\Assets\Scripts\WorkspaceCameraController.cs
+		LaserCad.Unity\Docs\DOMAIN_BOUNDARY.md = LaserCad.Unity\Docs\DOMAIN_BOUNDARY.md
+		LaserCad.Unity\Docs\QA_CHECKLIST.md = LaserCad.Unity\Docs\QA_CHECKLIST.md
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaserCad.Core", "src\LaserCad.Core\LaserCad.Core.csproj", "{FB245A65-03FE-457D-9649-44FD03C028D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaserCad.Geometry", "src\LaserCad.Geometry\LaserCad.Geometry.csproj", "{E492697C-AF9A-4B1F-92BA-438A6F2A75A5}"
