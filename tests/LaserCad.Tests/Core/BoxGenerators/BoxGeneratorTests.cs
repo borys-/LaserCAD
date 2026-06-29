@@ -1,6 +1,7 @@
 using LaserCad.Core.BoxGenerators;
 using LaserCad.Core.Documents;
 using LaserCad.Geometry;
+using LaserCad.Geometry.Units;
 
 namespace LaserCad.Tests.Core.BoxGenerators;
 
@@ -152,6 +153,20 @@ public sealed class BoxGeneratorTests
         Sketch sketch = generator.GenerateSketch(new BoxGeneratorOptions(boxType: BoxGeneratorType.Open));
 
         Assert.That(sketch.Entities, Has.Count.EqualTo(5));
+    }
+
+    [Test]
+    public void GenerateSketch_WhenWidthChanges_ShouldRebuildGeometry()
+    {
+        var generator = new BoxGenerator();
+        var options = new BoxGeneratorOptions(width: Length.FromMillimeters(120.0));
+
+        Sketch sketch = generator.GenerateSketch(options);
+
+        var frontPanel = (PolylineEntity)sketch.Entities[0];
+        var bottomPanel = (PolylineEntity)sketch.Entities[4];
+        AssertPanelBounds(frontPanel.Bounds, expectedWidth: 126.0, expectedHeight: 56.0);
+        AssertPanelBounds(bottomPanel.Bounds, expectedWidth: 126.0, expectedHeight: 86.0);
     }
 
     private static void AssertPanelBounds(BoundingBox bounds, double expectedWidth, double expectedHeight)
