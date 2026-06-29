@@ -7,15 +7,26 @@ namespace LaserCad.Geometry;
 public readonly record struct Arc2D
 {
     /// <summary>
-    /// Tworzy luk o podanym srodku.
+    /// Tworzy luk o podanym srodku i promieniu.
     /// </summary>
-    public Arc2D(Point2D center)
+    public Arc2D(Point2D center, double radius)
     {
+        if (radius <= 0.0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(radius), "Radius must be positive.");
+        }
+
         Center = center;
+        Radius = radius;
     }
 
     /// <summary>
     /// Srodek okregu, na ktorym lezy luk.
     /// </summary>
     public Point2D Center { get; }
+
+    /// <summary>
+    /// Promien luku w milimetrach domenowych.
+    /// </summary>
+    public double Radius { get; }
 }
