@@ -1,4 +1,5 @@
 using LaserCad.Core.Documents;
+using LaserCad.Core.Parameters;
 using LaserCad.Geometry;
 
 namespace LaserCad.Tests.Core.Documents;
@@ -85,6 +86,22 @@ public sealed class SketchEntityTests
         Assert.That(entity.Text, Is.EqualTo("Label"));
         Assert.That(entity.LayerName, Is.EqualTo("Engrave"));
         Assert.That(entity.Bounds, Is.EqualTo(new BoundingBox(2.0, 3.0, 2.0, 8.0)));
+    }
+
+    [Test]
+    public void BindDimension_ShouldAssignEntityDimensionToParameter()
+    {
+        var binding = new EntityDimensionBinding(EntityDimensionKind.Width, new ParameterId("Width"));
+        var rectangle = new RectangleEntity(new Point2D(0.0, 0.0), 10.0, 5.0);
+        var circle = new CircleEntity(new Circle2D(new Point2D(0.0, 0.0), 5.0));
+
+        var boundRectangle = rectangle.BindDimension(binding);
+        var boundCircle = circle.BindDimension(new EntityDimensionBinding(EntityDimensionKind.Diameter, new ParameterId("Diameter")));
+
+        Assert.That(boundRectangle.DimensionBindings, Has.Count.EqualTo(1));
+        Assert.That(boundRectangle.DimensionBindings[0].Dimension, Is.EqualTo(EntityDimensionKind.Width));
+        Assert.That(boundRectangle.DimensionBindings[0].ParameterId, Is.EqualTo(new ParameterId("Width")));
+        Assert.That(boundCircle.DimensionBindings[0].Dimension, Is.EqualTo(EntityDimensionKind.Diameter));
     }
 
     [Test]

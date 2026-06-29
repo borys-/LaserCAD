@@ -14,8 +14,14 @@ public sealed class RectangleEntity : Entity
     /// <summary>
     /// Tworzy prostokat osiowy z lewego dolnego rogu, szerokosci i wysokosci.
     /// </summary>
-    public RectangleEntity(Point2D origin, double width, double height, Guid? id = null, string layerName = "Cut")
-        : this(CreateCorners(origin, width, height), id, layerName)
+    public RectangleEntity(
+        Point2D origin,
+        double width,
+        double height,
+        Guid? id = null,
+        string layerName = "Cut",
+        IEnumerable<EntityDimensionBinding>? dimensionBindings = null)
+        : this(CreateCorners(origin, width, height), id, layerName, dimensionBindings)
     {
     }
 
@@ -23,8 +29,12 @@ public sealed class RectangleEntity : Entity
     /// Tworzy prostokat z czterech naroznikow.
     /// Kolejnosc punktow powinna odpowiadac przejsciu po obwodzie.
     /// </summary>
-    public RectangleEntity(IEnumerable<Point2D> corners, Guid? id = null, string layerName = "Cut")
-        : base(id, layerName)
+    public RectangleEntity(
+        IEnumerable<Point2D> corners,
+        Guid? id = null,
+        string layerName = "Cut",
+        IEnumerable<EntityDimensionBinding>? dimensionBindings = null)
+        : base(id, layerName, dimensionBindings)
     {
         ArgumentNullException.ThrowIfNull(corners);
 
@@ -49,13 +59,23 @@ public sealed class RectangleEntity : Entity
     /// <inheritdoc />
     public override ISketchEntity Transform(Matrix3x3 transform)
     {
-        return new RectangleEntity(corners.Select(transform.Transform), Id, LayerName);
+        return new RectangleEntity(corners.Select(transform.Transform), Id, LayerName, DimensionBindings);
     }
 
     /// <inheritdoc />
     public override Entity Copy(Guid? id = null)
     {
-        return new RectangleEntity(corners, id, LayerName);
+        return new RectangleEntity(corners, id, LayerName, DimensionBindings);
+    }
+
+    /// <summary>
+    /// Zwraca prostokat z dopisanym powiazaniem wymiaru z parametrem.
+    /// </summary>
+    public RectangleEntity BindDimension(EntityDimensionBinding binding)
+    {
+        ArgumentNullException.ThrowIfNull(binding);
+
+        return new RectangleEntity(corners, Id, LayerName, DimensionBindings.Append(binding));
     }
 
     private static Point2D[] CreateCorners(Point2D origin, double width, double height)

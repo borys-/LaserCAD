@@ -10,8 +10,12 @@ public sealed class CircleEntity : Entity
     /// <summary>
     /// Tworzy encje okregu na podstawie geometrii 2D.
     /// </summary>
-    public CircleEntity(Circle2D circle, Guid? id = null, string layerName = "Cut")
-        : base(id, layerName)
+    public CircleEntity(
+        Circle2D circle,
+        Guid? id = null,
+        string layerName = "Cut",
+        IEnumerable<EntityDimensionBinding>? dimensionBindings = null)
+        : base(id, layerName, dimensionBindings)
     {
         Circle = circle;
     }
@@ -27,12 +31,22 @@ public sealed class CircleEntity : Entity
     /// <inheritdoc />
     public override ISketchEntity Transform(Matrix3x3 transform)
     {
-        return new CircleEntity(Circle.Transform(transform), Id, LayerName);
+        return new CircleEntity(Circle.Transform(transform), Id, LayerName, DimensionBindings);
     }
 
     /// <inheritdoc />
     public override Entity Copy(Guid? id = null)
     {
-        return new CircleEntity(Circle, id, LayerName);
+        return new CircleEntity(Circle, id, LayerName, DimensionBindings);
+    }
+
+    /// <summary>
+    /// Zwraca okrag z dopisanym powiazaniem wymiaru z parametrem.
+    /// </summary>
+    public CircleEntity BindDimension(EntityDimensionBinding binding)
+    {
+        ArgumentNullException.ThrowIfNull(binding);
+
+        return new CircleEntity(Circle, Id, LayerName, DimensionBindings.Append(binding));
     }
 }

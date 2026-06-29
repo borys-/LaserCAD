@@ -8,11 +8,16 @@ namespace LaserCad.Core.Documents;
 /// </summary>
 public abstract class Entity : ISketchEntity
 {
+    private readonly EntityDimensionBinding[] dimensionBindings;
+
     /// <summary>
     /// Tworzy encje z opcjonalnym identyfikatorem.
     /// Konstruktor klas pochodnych powinien przekazac id przy odczycie dokumentu albo zostawic null dla nowej encji.
     /// </summary>
-    protected Entity(Guid? id = null, string layerName = "Cut")
+    protected Entity(
+        Guid? id = null,
+        string layerName = "Cut",
+        IEnumerable<EntityDimensionBinding>? dimensionBindings = null)
     {
         if (string.IsNullOrWhiteSpace(layerName))
         {
@@ -21,10 +26,16 @@ public abstract class Entity : ISketchEntity
 
         Id = id ?? Guid.NewGuid();
         LayerName = layerName;
+        this.dimensionBindings = dimensionBindings?.ToArray() ?? Array.Empty<EntityDimensionBinding>();
 
         if (Id == Guid.Empty)
         {
             throw new ArgumentException("Entity id cannot be empty.", nameof(id));
+        }
+
+        if (this.dimensionBindings.Any(binding => binding is null))
+        {
+            throw new ArgumentException("Entity dimension bindings cannot contain null values.", nameof(dimensionBindings));
         }
     }
 
@@ -38,6 +49,11 @@ public abstract class Entity : ISketchEntity
     /// W MVP nazwa warstwy pelni role identyfikatora warstwy.
     /// </summary>
     public string LayerName { get; }
+
+    /// <summary>
+    /// Powiazania wymiarow encji z parametrami dokumentu.
+    /// </summary>
+    public IReadOnlyList<EntityDimensionBinding> DimensionBindings => dimensionBindings;
 
     /// <summary>
     /// Bounding box encji w milimetrach domenowych.
