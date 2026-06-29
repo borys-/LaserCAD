@@ -276,6 +276,17 @@ public sealed class DocumentSerializerTests
     }
 
     [Test]
+    public void Serialize_WithUnsupportedFormatVersion_ShouldThrow()
+    {
+        var document = new CadDocument(formatVersion: 999);
+        var serializer = new DocumentSerializer();
+
+        var exception = Assert.Throws<NotSupportedException>(() => _ = serializer.Serialize(document));
+
+        Assert.That(exception!.Message, Does.Contain("999"));
+    }
+
+    [Test]
     public void RoundTrip_WithEmptyDocument_ShouldPreserveDocument()
     {
         var id = Guid.NewGuid();

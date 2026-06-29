@@ -648,7 +648,7 @@ Zalecenie pracy:
 - [ ] MVP.0.3 Zaimplementowac parametry: width, depth, height, material thickness, kerf, finger width, clearance.
 - [ ] MVP.0.4 Zaimplementowac prosty graf zaleznosci parametrow.
 - [ ] MVP.0.5 Zaimplementowac `CadDocument`, `Sketch`, `Layer`, `MaterialProfile`.
-- [ ] MVP.0.6 Zaimplementowac zapis i odczyt JSON.
+- [x] MVP.0.6 Zaimplementowac zapis i odczyt JSON.
 - [ ] MVP.0.7 Zaimplementowac generator finger joint dla prostych krawedzi.
 - [ ] MVP.0.8 Zaimplementowac generator otwartego pudelka.
 - [ ] MVP.0.9 Zaimplementowac kompensacje kerfu dla prostych konturow.
