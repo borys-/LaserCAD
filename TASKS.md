@@ -498,17 +498,17 @@ Zalecenie pracy:
 
 ## 8.0 Generator pudelka
 
-- [ ] 8.0.0 Utworzyc `BoxGeneratorOptions`.
-- [ ] 8.0.1 Dodac `Width`.
-- [ ] 8.0.2 Dodac `Depth`.
-- [ ] 8.0.3 Dodac `Height`.
-- [ ] 8.0.4 Dodac `MaterialThickness`.
-- [ ] 8.0.5 Dodac `Kerf`.
-- [ ] 8.0.6 Dodac `FingerWidth`.
-- [ ] 8.0.7 Dodac `Clearance`.
-- [ ] 8.0.8 Dodac typ pudelka: zamkniete, otwarte, z pokrywa.
-- [ ] 8.0.9 Dodac walidacje wymiarow.
-- [ ] 8.0.10 Dodac test walidacji zbyt malego pudelka.
+- [x] 8.0.0 Utworzyc `BoxGeneratorOptions`.
+- [x] 8.0.1 Dodac `Width`.
+- [x] 8.0.2 Dodac `Depth`.
+- [x] 8.0.3 Dodac `Height`.
+- [x] 8.0.4 Dodac `MaterialThickness`.
+- [x] 8.0.5 Dodac `Kerf`.
+- [x] 8.0.6 Dodac `FingerWidth`.
+- [x] 8.0.7 Dodac `Clearance`.
+- [x] 8.0.8 Dodac typ pudelka: zamkniete, otwarte, z pokrywa.
+- [x] 8.0.9 Dodac walidacje wymiarow.
+- [x] 8.0.10 Dodac test walidacji zbyt malego pudelka.
 
 ## 8.1 Generator pudelka - geometria
 
@@ -665,7 +665,7 @@ Zalecenie pracy:
 - [x] MVP.0.0 Zbudowac solution i projekty domenowe.
 - [x] MVP.0.1 Zaimplementowac `Length`, `Point2D`, `Vector2D`, `BoundingBox`, `Matrix3x3`.
 - [x] MVP.0.2 Zaimplementowac podstawowe encje: line, rectangle, circle, polyline.
-- [ ] MVP.0.3 Zaimplementowac parametry: width, depth, height, material thickness, kerf, finger width, clearance.
+- [x] MVP.0.3 Zaimplementowac parametry: width, depth, height, material thickness, kerf, finger width, clearance.
 - [x] MVP.0.4 Zaimplementowac prosty graf zaleznosci parametrow.
 - [x] MVP.0.5 Zaimplementowac `CadDocument`, `Sketch`, `Layer`, `MaterialProfile`.
 - [x] MVP.0.6 Zaimplementowac zapis i odczyt JSON.

@@ -305,6 +305,12 @@ To nie jest jeszcze generator pelnych scianek pudelka: nie laczy naroznikow wiel
 - Stojaki i podstawki.
 - Kazdy generator powinien byc instancja parametryczna, ktora mozna edytowac po utworzeniu.
 
+### Ograniczenia modelu generatora pudelka MVP
+
+Sekcja 8.0 definiuje model opcji generatora pudelka: szerokosc, glebokosc, wysokosc, grubosc materialu, kerf, szerokosc palca, clearance oraz wariant pudelka. Walidacja sprawdza dodatnie wymiary, nieujemne parametry produkcyjne i minimalny rozmiar pudelka wzgledem grubosci materialu.
+
+To nie jest jeszcze generator geometrii scianek. Tworzenie scian, dodawanie finger jointow, rozklad elementow na plaszczyznie 2D i warstwy produkcyjne pozostaja zakresem sekcji 8.1.
+
 ## Faza 9 - Kerf
 
 - Kompensacja:
