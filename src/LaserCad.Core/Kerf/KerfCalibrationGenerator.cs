@@ -25,6 +25,18 @@ public sealed class KerfCalibrationGenerator
         var sketch = new Sketch(name: "Probnik kerfu")
             .AddEntity(new RectangleEntity(new Point2D(0.0, 0.0), totalWidth, totalHeight, layerName: DefaultLayers.Cut.Name));
 
+        var slotY = options.Margin.Millimeters;
+        for (var i = 0; i < options.SlotCount; i++)
+        {
+            var slotX = options.Margin.Millimeters + (i * (options.SlotWidth.Millimeters + options.Spacing.Millimeters));
+            sketch = sketch.AddEntity(
+                new RectangleEntity(
+                    new Point2D(slotX, slotY),
+                    options.SlotWidth.Millimeters,
+                    options.SlotHeight.Millimeters,
+                    layerName: DefaultLayers.Cut.Name));
+        }
+
         return sketch;
     }
 }
