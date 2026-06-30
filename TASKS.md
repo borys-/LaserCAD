@@ -391,6 +391,32 @@ Zalecenie pracy:
 - [x] 3.5.8 Dodac panel informacji o constraints i dimensions MVP.
 - [x] 3.5.9 Dodac manualna checkliste GUI funkcji domenowych.
 
+## 3.6 Windows shell + Unity viewport
+
+- [ ] 3.6.0 Podjac decyzje architektoniczna: glowna aplikacja Windows, Unity jako osobny proces viewportu.
+- [ ] 3.6.1 Wybrac technologie desktop shell MVP: WPF.
+- [ ] 3.6.2 Utworzyc projekt `LaserCad.Desktop`.
+- [ ] 3.6.3 Dodac `LaserCad.Desktop` do solution.
+- [ ] 3.6.4 Utworzyc glowne okno Windows z menu `File`, `Edit`, `View`, `Export`, `Help`.
+- [ ] 3.6.5 Dodac bazowy toolbar z akcjami: nowy, otworz, zapisz, eksport SVG, eksport DXF.
+- [ ] 3.6.6 Dodac dockowane panele shell: parametry pudelka, material/warstwy, historia, properties.
+- [ ] 3.6.7 Przeniesc kontrolki generatora pudelka z IMGUI Unity do desktop shell.
+- [ ] 3.6.8 Przeniesc eksport SVG/DXF z IMGUI Unity do desktop shell.
+- [ ] 3.6.9 Przeniesc wybor profilu materialu i liste warstw z IMGUI Unity do desktop shell.
+- [ ] 3.6.10 Zdefiniowac kontrakt IPC `LaserCad.ViewportContract` dla komunikacji shell -> viewport.
+- [ ] 3.6.11 Dodac komunikat IPC wyslania aktualnego dokumentu do viewportu.
+- [ ] 3.6.12 Dodac komunikat IPC zmiany widoku: reset, zoom to fit, grid on/off.
+- [ ] 3.6.13 Dodac komunikat IPC zaznaczenia encji z viewportu do shell.
+- [ ] 3.6.14 Utworzyc tryb Unity viewport process uruchamiany z argumentem `--viewport`.
+- [ ] 3.6.15 Uruchamiac proces Unity viewport z desktop shell.
+- [ ] 3.6.16 Obslugiwac zamkniecie i restart procesu Unity viewport z desktop shell.
+- [ ] 3.6.17 Wysylac przebudowany dokument pudelka z desktop shell do Unity viewport.
+- [ ] 3.6.18 Usunac albo zdegradowac panele IMGUI Unity do trybu debug viewportu.
+- [ ] 3.6.19 Dodac build desktop shell do `build.bat`.
+- [ ] 3.6.20 Dodac pakowanie Unity playera obok aplikacji desktop shell.
+- [ ] 3.6.21 Dodac manualna checkliste QA dla desktop shell + Unity viewport.
+- [ ] 3.6.22 Udokumentowac lifecycle procesu viewportu i granice odpowiedzialnosci shell/viewport.
+
 ## 4.0 Eksport SVG - fundament
 
 - [x] 4.0.0 Utworzyc `SvgExportOptions`.

@@ -58,9 +58,25 @@ Moze korzystac z `LaserCad.Core`, ale nie powinien modyfikowac dokumentu. Ekspor
 
 ### LaserCad.Unity
 
-Docelowo odpowiada za interfejs uzytkownika, kamere, siatke, snap, zaznaczanie i interakcje.
+Docelowo odpowiada za viewport roboczy: renderowanie, kamere, siatke, snap, zaznaczanie i interakcje w obszarze rysunku.
 
 Unity moze korzystac z bibliotek domenowych, ale biblioteki domenowe nie moga zalezec od Unity.
+
+### LaserCad.Desktop
+
+Docelowo odpowiada za glowna aplikacje Windows:
+
+- glowne okno,
+- menu,
+- toolbar,
+- panele parametrow,
+- panele materialow i warstw,
+- historia i properties,
+- okna dialogowe,
+- zapis i odczyt plikow,
+- eksport i workflow aplikacji.
+
+`LaserCad.Desktop` jest nadrzednym shellem aplikacji. Uruchamia Unity jako osobny proces viewportu i komunikuje sie z nim przez jawny kontrakt IPC. Shell przechowuje intencje uzytkownika i stan workflow, a Unity renderuje aktualny dokument i odsyla zdarzenia viewportu, np. zaznaczenie encji.
 
 ### LaserCad.Tests
 
@@ -133,7 +149,7 @@ Nie moga zawierac:
 
 ### Granica Unity
 
-`LaserCad.Unity` jest adapterem UI.
+`LaserCad.Unity` jest adapterem viewportu.
 
 Moze zawierac:
 
@@ -142,9 +158,33 @@ Moze zawierac:
 - kamere,
 - grid,
 - snap wizualny,
-- panele narzedzi i parametrow.
+- highlight zaznaczenia,
+- diagnostyczne panele debugowe viewportu.
 
 Nie moze duplikowac logiki domenowej, ktora nalezy do `LaserCad.Core` albo `LaserCad.Geometry`.
+
+Nie powinno zawierac docelowych menu, okien dialogowych, workflow zapisu/odczytu ani glownych paneli parametrow aplikacji. Te elementy naleza do `LaserCad.Desktop`.
+
+### Granica desktop shell
+
+`LaserCad.Desktop` jest adapterem aplikacji Windows.
+
+Moze zawierac:
+
+- natywne UI Windows,
+- menu i paski narzedzi,
+- dockowane panele,
+- dialogi plikow,
+- uruchamianie procesu Unity viewport,
+- komunikacje IPC z viewportem,
+- mapowanie intencji UI na domenowe komendy i generatory.
+
+Nie moze zawierac:
+
+- logiki geometrycznej,
+- generatorow domenowych,
+- szczegolow renderowania Unity,
+- duplikacji walidacji domenowej z `LaserCad.Core`.
 
 ### Granica testow
 
@@ -160,6 +200,12 @@ Dozwolony kierunek zaleznosci:
 LaserCad.Unity
     -> LaserCad.Core
     -> LaserCad.Geometry
+
+LaserCad.Desktop
+    -> LaserCad.Core
+    -> LaserCad.Geometry
+    -> LaserCad.Export.Svg
+    -> LaserCad.Export.Dxf
 
 LaserCad.Export.Svg
     -> LaserCad.Core
@@ -178,7 +224,9 @@ Niedozwolone:
 - `LaserCad.Geometry` nie zalezy od `LaserCad.Core`,
 - `LaserCad.Core` nie zalezy od exporterow,
 - biblioteki domenowe nie zaleza od Unity,
-- eksportery nie zaleza od Unity.
+- eksportery nie zaleza od Unity,
+- `LaserCad.Core` i `LaserCad.Geometry` nie zaleza od `LaserCad.Desktop`,
+- Unity viewport nie powinien znac szczegolow UI desktop shell poza kontraktem IPC.
 
 ## Zasada warstw
 
@@ -196,6 +244,12 @@ UI jest adapterem prezentacji. Wyswietla stan dokumentu, zbiera intencje uzytkow
 Obliczenia naleza do domeny. Przeliczanie parametrow, przebudowa geometrii, walidacja wymiarow, logika generatorow, kompensacja kerfu i przygotowanie danych do eksportu powinny byc implementowane w `LaserCad.Core` albo `LaserCad.Geometry`, a nie w Unity ani w kodzie widoku.
 
 Dzieki temu ten sam model moze byc testowany jednostkowo, uzywany przez rozne interfejsy i eksportowany bez zaleznosci od konkretnego UI.
+
+## Desktop shell i Unity viewport
+
+Docelowy kierunek UI to aplikacja Windows jako glowny shell oraz Unity jako osobny proces viewportu. Shell odpowiada za typowe elementy aplikacji desktopowej: menu, toolbar, panele, dialogi, zapis, odczyt i eksport. Unity odpowiada za interaktywny obszar roboczy 2D/3D.
+
+Komunikacja shell <-> viewport powinna isc przez jawny kontrakt IPC, np. named pipes, localhost WebSocket albo inny wymienialny adapter. Kontrakt powinien przesylac intencje i stan dokumentu, a nie typy UI. Pierwszy krok MVP moze uzyc prostego protokolu JSON.
 
 ## Parametrycznosc
 

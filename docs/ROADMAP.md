@@ -166,6 +166,8 @@ Ograniczenia MVP nadal sa istotne: wymiary sa stosowane sekwencyjnie na pojedync
 
 ## Faza 3 - Unity
 
+Docelowo Unity pelni role viewportu uruchamianego jako osobny proces przez aplikacje Windows. Glowne menu, toolbar, panele parametrow, dialogi plikow i workflow aplikacji naleza do desktop shell, a Unity odpowiada za renderowanie i interakcje w obszarze roboczym.
+
 - Kamera:
   - zoom,
   - pan,
@@ -185,6 +187,15 @@ Ograniczenia MVP nadal sa istotne: wymiary sa stosowane sekwencyjnie na pojedync
   - prostokat,
   - multi-select.
 - Panel parametrow dokumentu i zaznaczonych obiektow.
+
+### Desktop shell + Unity viewport
+
+- Aplikacja Windows jako glowny shell.
+- Unity player jako osobny proces viewportu.
+- Jawny kontrakt IPC miedzy shellem i viewportem.
+- Shell odpowiada za menu, toolbar, panele, dialogi, zapis/odczyt i eksport.
+- Viewport odpowiada za kamere, grid, snap, zaznaczanie, highlight i docelowy podglad 3D.
+- Panele IMGUI w Unity sa traktowane jako etap przejsciowy albo debug viewportu, nie jako docelowy interfejs aplikacji.
 
 ## Faza 4 - Eksport
 
@@ -458,6 +469,7 @@ Pierwsza wersja powinna byc mala, ale kompletna produkcyjnie. Proponowany zakres
 - Box generator z finger joints.
 - Kerf compensation.
 - Unity viewport 2D.
+- Windows desktop shell.
 - Zapis i odczyt projektu.
 - Testy jednostkowe.
 
