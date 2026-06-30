@@ -1,4 +1,5 @@
 using System.Windows;
+using LaserCad.Core.Documents;
 using LaserCad.Core.BoxGenerators;
 using LaserCad.Geometry.Units;
 using Microsoft.Win32;
@@ -16,6 +17,8 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         DataContext = viewModel;
+        MaterialProfileComboBox.ItemsSource = viewModel.MaterialProfiles;
+        MaterialProfileComboBox.SelectedItem = viewModel.SelectedMaterialProfile;
         RefreshDocumentSummary();
     }
 
@@ -51,6 +54,17 @@ public partial class MainWindow : Window
         ExportFile("DXF files (*.dxf)|*.dxf", "laser-cad-box.dxf", viewModel.ExportDxf);
     }
 
+    private void MaterialProfileComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        if (MaterialProfileComboBox.SelectedItem is not MaterialProfile materialProfile)
+        {
+            return;
+        }
+
+        viewModel.SetMaterialProfile(materialProfile);
+        RefreshDocumentSummary();
+    }
+
     private void ExportFile(string filter, string fileName, Func<string, string> export)
     {
         var dialog = new SaveFileDialog
@@ -83,5 +97,6 @@ public partial class MainWindow : Window
         DocumentNameTextBlock.Text = "Dokument: " + viewModel.CurrentDocument.Name;
         SketchCountTextBlock.Text = "Szkice: " + viewModel.CurrentDocument.Sketches.Count;
         StatusTextBlock.Text = viewModel.StatusText;
+        LayersItemsControl.ItemsSource = viewModel.CurrentDocument.Layers;
     }
 }

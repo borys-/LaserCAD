@@ -75,8 +75,21 @@
 
                     <GroupBox Header="Material i warstwy">
                         <StackPanel Margin="10">
-                            <ComboBox x:Name="MaterialProfileComboBox" DisplayMemberPath="Name" Margin="0,0,0,8" />
-                            <ItemsControl x:Name="LayersItemsControl" />
+                            <ComboBox x:Name="MaterialProfileComboBox"
+                                      DisplayMemberPath="Name"
+                                      SelectionChanged="MaterialProfileComboBox_SelectionChanged"
+                                      Margin="0,0,0,8" />
+                            <ItemsControl x:Name="LayersItemsControl">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="0,2">
+                                            <TextBlock Text="{Binding Name}" Width="90" />
+                                            <TextBlock Text="{Binding Role}" Width="70" Foreground="#5D6875" />
+                                            <TextBlock Text="{Binding Color.Hex}" Foreground="#5D6875" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
