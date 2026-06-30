@@ -1,5 +1,28 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net9.0;netstandard2.1</TargetFrameworks>
+    <CopyLocalLockFileAssemblies Condition="'$(TargetFramework)' == 'netstandard2.1'">true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\LaserCad.Core\LaserCad.Core.csproj" />
+    <ProjectReference
+      Include="..\LaserCad.Core\LaserCad.Core.csproj"
+      SetTargetFramework="TargetFramework=netstandard2.1"
+      Condition="'$(TargetFramework)' == 'netstandard2.1'" />
+    <ProjectReference
+      Include="..\LaserCad.Core\LaserCad.Core.csproj"
+      Condition="'$(TargetFramework)' != 'netstandard2.1'" />
+    <ProjectReference
+      Include="..\LaserCad.Geometry\LaserCad.Geometry.csproj"
+      SetTargetFramework="TargetFramework=netstandard2.1"
+      Condition="'$(TargetFramework)' == 'netstandard2.1'" />
   </ItemGroup>
+
+  <Target Name="CopyUnityDxfAssemblies" AfterTargets="Build" Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <ItemGroup>
+      <UnityDxfAssembly Include="$(TargetDir)*.dll" />
+    </ItemGroup>
+    <MakeDir Directories="$(MSBuildProjectDirectory)\..\..\LaserCad.Unity\Assets\Plugins\LaserCad.Domain" />
+    <Copy SourceFiles="@(UnityDxfAssembly)" DestinationFolder="$(MSBuildProjectDirectory)\..\..\LaserCad.Unity\Assets\Plugins\LaserCad.Domain" />
+  </Target>
 </Project>

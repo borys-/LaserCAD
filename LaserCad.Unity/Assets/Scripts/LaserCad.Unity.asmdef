@@ -4,7 +4,8 @@
   "references": [
     "LaserCad.Core",
     "LaserCad.Geometry",
-    "LaserCad.Export.Svg"
+    "LaserCad.Export.Svg",
+    "LaserCad.Export.Dxf"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
