@@ -395,7 +395,7 @@ Zalecenie pracy:
 
 - [x] 3.6.0 Podjac decyzje architektoniczna: glowna aplikacja Windows, Unity jako osobny proces viewportu.
 - [x] 3.6.1 Wybrac technologie desktop shell MVP: WPF.
-- [ ] 3.6.2 Utworzyc projekt `LaserCad.Desktop`.
+- [x] 3.6.2 Utworzyc projekt `LaserCad.Desktop`.
 - [ ] 3.6.3 Dodac `LaserCad.Desktop` do solution.
 - [ ] 3.6.4 Utworzyc glowne okno Windows z menu `File`, `Edit`, `View`, `Export`, `Help`.
 - [ ] 3.6.5 Dodac bazowy toolbar z akcjami: nowy, otworz, zapisz, eksport SVG, eksport DXF.
