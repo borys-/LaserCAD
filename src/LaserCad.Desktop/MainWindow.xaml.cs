@@ -66,6 +66,7 @@ public partial class MainWindow : Window
         }
 
         viewModel.SetMaterialProfile(materialProfile);
+        viewportIpcClient.SendDocument(viewModel.CurrentDocument);
         RefreshDocumentSummary();
     }
 
