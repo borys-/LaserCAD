@@ -26,11 +26,17 @@ namespace LaserCad.Unity
         [SerializeField]
         private WorkspaceGridRenderer gridRenderer;
 
+        [SerializeField]
+        private Camera workspaceCamera;
+
         private readonly DocumentSerializer documentSerializer = new DocumentSerializer();
         private readonly HashSet<Guid> lastSentSelection = new HashSet<Guid>();
         private string outboxPath;
         private string inboxPath;
         private long outboxPosition;
+        private ViewportDrawingTool activeDrawingTool = ViewportDrawingTool.None;
+        private bool hasDrawingStartPoint;
+        private ViewportPoint drawingStartPoint;
 
         private void Awake()
         {
@@ -57,6 +63,7 @@ namespace LaserCad.Unity
             }
 
             ReadPendingOutboxMessages();
+            HandleDrawingInput();
             SendSelectionIfChanged();
         }
 
@@ -111,12 +118,57 @@ namespace LaserCad.Unity
                 if (envelope.Kind == ViewportMessageKind.ViewCommand)
                 {
                     HandleViewCommand(envelope.Payload.Deserialize<ViewportViewCommandMessage>());
+                    return;
+                }
+
+                if (envelope.Kind == ViewportMessageKind.DrawingToolChanged)
+                {
+                    HandleDrawingToolChanged(envelope.Payload.Deserialize<ViewportDrawingToolChangedMessage>());
                 }
             }
             catch (Exception exception)
             {
                 Debug.LogWarning("Nie udalo sie obsluzyc komunikatu IPC viewportu: " + exception.Message);
             }
+        }
+
+        private void HandleDrawingToolChanged(ViewportDrawingToolChangedMessage message)
+        {
+            if (message == null)
+            {
+                return;
+            }
+
+            activeDrawingTool = message.Tool;
+            hasDrawingStartPoint = false;
+        }
+
+        private void HandleDrawingInput()
+        {
+            if (activeDrawingTool == ViewportDrawingTool.None || workspaceCamera == null)
+            {
+                return;
+            }
+
+            if (!Input.GetMouseButtonDown(0))
+            {
+                return;
+            }
+
+            var world = workspaceCamera.ScreenToWorldPoint(Input.mousePosition);
+            var point = new ViewportPoint(world.x, world.y);
+
+            if (!hasDrawingStartPoint)
+            {
+                drawingStartPoint = point;
+                hasDrawingStartPoint = true;
+                return;
+            }
+
+            AppendInboxMessage(
+                ViewportMessageKind.ShapeDrawn,
+                new ViewportShapeDrawnMessage(activeDrawingTool, drawingStartPoint, point));
+            hasDrawingStartPoint = false;
         }
 
         private void HandleDocumentSnapshot(ViewportDocumentSnapshot snapshot)

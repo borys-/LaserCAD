@@ -67,19 +67,52 @@ public sealed class DesktopShellViewModel
 
     public void AddRectangle()
     {
-        Execute(new AddEntityCommand(GetEditableSketchId(), new RectangleEntity(new Point2D(0.0, 0.0), 40.0, 30.0, layerName: "Cut")));
+        AddRectangle(new Point2D(0.0, 0.0), new Point2D(40.0, 30.0));
+    }
+
+    public void AddRectangle(Point2D start, Point2D end)
+    {
+        var minX = Math.Min(start.X, end.X);
+        var minY = Math.Min(start.Y, end.Y);
+        var width = Math.Abs(end.X - start.X);
+        var height = Math.Abs(end.Y - start.Y);
+
+        if (width <= 0.0 || height <= 0.0)
+        {
+            StatusText = "Prostokat wymaga dwoch roznych punktow";
+            return;
+        }
+
+        Execute(new AddEntityCommand(GetEditableSketchId(), new RectangleEntity(new Point2D(minX, minY), width, height, layerName: "Cut")));
         StatusText = "Dodano prostokat";
     }
 
     public void AddLine()
     {
-        Execute(new AddEntityCommand(GetEditableSketchId(), new LineEntity(new LineSegment2D(new Point2D(0.0, 0.0), new Point2D(60.0, 0.0)), layerName: "Cut")));
+        AddLine(new Point2D(0.0, 0.0), new Point2D(60.0, 0.0));
+    }
+
+    public void AddLine(Point2D start, Point2D end)
+    {
+        Execute(new AddEntityCommand(GetEditableSketchId(), new LineEntity(new LineSegment2D(start, end), layerName: "Cut")));
         StatusText = "Dodano linie";
     }
 
     public void AddCircle()
     {
-        Execute(new AddEntityCommand(GetEditableSketchId(), new CircleEntity(new Circle2D(new Point2D(20.0, 20.0), 15.0), layerName: "Engrave")));
+        AddCircle(new Point2D(20.0, 20.0), new Point2D(35.0, 20.0));
+    }
+
+    public void AddCircle(Point2D center, Point2D radiusPoint)
+    {
+        var radius = center.DistanceTo(radiusPoint);
+        if (radius <= 0.0)
+        {
+            StatusText = "Okrag wymaga promienia wiekszego od zera";
+            return;
+        }
+
+        Execute(new AddEntityCommand(GetEditableSketchId(), new CircleEntity(new Circle2D(center, radius), layerName: "Engrave")));
         StatusText = "Dodano okrag";
     }
 

@@ -3,7 +3,7 @@
 ## Aktualizacja po edycji ksztaltow w desktop shell
 
 - Dodano sekcje `3.7 Edycja ksztaltow w desktop shell` w `TASKS.md`.
-- Wykonano `3.7.0`-`3.7.8`.
+- Wykonano `3.7.0`-`3.7.9`.
 - Desktop shell ma teraz w toolbarze przyciski `Rect`, `Line`, `Circle`, `Delete`.
 - Dodano panel `Transformacje` po lewej stronie:
   - przesuniecie zaznaczenia o X/Y,
@@ -17,9 +17,19 @@
   - `ScaleCommand`,
   - `CommandGroup` dla operacji na wielu zaznaczonych encjach.
 - Operacje edycji odczytuja ostatnie zaznaczenie z `viewport-inbox.jsonl`, zmieniaja dokument w shellu i wysylaja aktualny snapshot do viewportu.
+- Rysowanie kliknieciami w viewportcie:
+  - desktop shell wysyla `DrawingToolChanged` dla narzedzi `Rectangle`, `Line`, `Circle` albo `None`,
+  - Unity `ViewportIpcBridge` zapamietuje pierwszy klik LPM w swiecie roboczym, po drugim kliku wysyla `ShapeDrawn` ze start/end do `viewport-inbox.jsonl`,
+  - desktop shell ma timer inboxa, odbiera `ShapeDrawn`, tworzy encje domenowa i wysyla nowy `DocumentSnapshot` do viewportu.
+- Dodano kontrakty IPC:
+  - `ViewportDrawingTool`,
+  - `ViewportDrawingToolChangedMessage`,
+  - `ViewportShapeDrawnMessage`,
+  - `ViewportPoint`.
 - Ograniczenie:
-  - to nie jest jeszcze rysowanie kliknieciami w viewportcie; ksztalty sa dodawane z domyslnymi wymiarami i pozycja przez przyciski desktop shell,
-  - rysowanie bezposrednio w viewportcie zostalo wpisane jako nieodhaczone `3.7.9`.
+  - rysowanie jest MVP bez podgladu tymczasowego miedzy pierwszym i drugim kliknieciem,
+  - aktywne narzedzie pozostaje wlaczone po narysowaniu ksztaltu, dopoki uzytkownik nie kliknie `Select` albo innego narzedzia,
+  - zaznaczanie Unity nadal moze reagowac na klikniecia w trybie rysowania, bo narzedzia viewportu nie maja jeszcze pelnego routera inputu.
 - Weryfikacja:
   - `dotnet build LaserCad.sln --no-restore` przechodzi,
   - `dotnet test LaserCad.sln --no-restore` przechodzi: `404/404`,

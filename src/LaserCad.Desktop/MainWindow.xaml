@@ -43,6 +43,7 @@
                 <Button Content="Open" Padding="10,4" />
                 <Button Content="Save" Padding="10,4" />
                 <Separator />
+                <Button Content="Select" Padding="10,4" Click="SelectTool_Click" />
                 <Button Content="Rect" Padding="10,4" Click="AddRectangle_Click" />
                 <Button Content="Line" Padding="10,4" Click="AddLine_Click" />
                 <Button Content="Circle" Padding="10,4" Click="AddCircle_Click" />

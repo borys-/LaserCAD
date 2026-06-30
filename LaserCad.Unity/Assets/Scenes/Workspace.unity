@@ -332,6 +332,7 @@ MonoBehaviour:
   selectionService: {fileID: 5002}
   cameraController: {fileID: 1004}
   gridRenderer: {fileID: 3002}
+  workspaceCamera: {fileID: 1002}
 --- !u!1 &3000
 GameObject:
   m_ObjectHideFlags: 0

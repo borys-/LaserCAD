@@ -8,4 +8,6 @@ public enum ViewportMessageKind
     DocumentSnapshot,
     ViewCommand,
     SelectionChanged,
+    DrawingToolChanged,
+    ShapeDrawn,
 }

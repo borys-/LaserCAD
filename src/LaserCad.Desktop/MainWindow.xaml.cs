@@ -3,6 +3,7 @@ using System.Windows.Interop;
 using System.Windows.Threading;
 using LaserCad.Core.Documents;
 using LaserCad.Core.BoxGenerators;
+using LaserCad.Geometry;
 using LaserCad.Geometry.Units;
 using LaserCad.ViewportContract;
 using Microsoft.Win32;
@@ -22,6 +23,7 @@ public partial class MainWindow : Window
     private readonly ViewportIpcClient viewportIpcClient = new();
     private readonly ViewportProcessController viewportProcessController = new();
     private readonly Panel viewportPanel = new() { Dock = DockStyle.Fill };
+    private readonly DispatcherTimer viewportInboxTimer = new() { Interval = TimeSpan.FromMilliseconds(150) };
 
     public MainWindow()
     {
@@ -34,6 +36,7 @@ public partial class MainWindow : Window
         viewportPanel.MouseEnter += (_, _) => viewportProcessController.FocusViewport();
         viewportPanel.MouseDown += (_, _) => viewportProcessController.FocusViewport();
         ViewportHost.MouseEnter += (_, _) => viewportProcessController.FocusViewport();
+        viewportInboxTimer.Tick += (_, _) => ProcessViewportInbox();
         RefreshDocumentSummary();
     }
 
@@ -41,6 +44,7 @@ public partial class MainWindow : Window
     {
         AddWindowMessageHook();
         StartEmbeddedViewport();
+        viewportInboxTimer.Start();
     }
 
     private void Window_Activated(object? sender, EventArgs e)
@@ -91,20 +95,22 @@ public partial class MainWindow : Window
 
     private void AddRectangle_Click(object sender, RoutedEventArgs e)
     {
-        viewModel.AddRectangle();
-        PublishDocument();
+        SetDrawingTool(ViewportDrawingTool.Rectangle);
     }
 
     private void AddLine_Click(object sender, RoutedEventArgs e)
     {
-        viewModel.AddLine();
-        PublishDocument();
+        SetDrawingTool(ViewportDrawingTool.Line);
     }
 
     private void AddCircle_Click(object sender, RoutedEventArgs e)
     {
-        viewModel.AddCircle();
-        PublishDocument();
+        SetDrawingTool(ViewportDrawingTool.Circle);
+    }
+
+    private void SelectTool_Click(object sender, RoutedEventArgs e)
+    {
+        SetDrawingTool(ViewportDrawingTool.None);
     }
 
     private void DeleteSelected_Click(object sender, RoutedEventArgs e)
@@ -270,6 +276,7 @@ public partial class MainWindow : Window
 
     protected override void OnClosed(EventArgs e)
     {
+        viewportInboxTimer.Stop();
         viewportProcessController.Dispose();
         base.OnClosed(e);
     }
@@ -311,6 +318,48 @@ public partial class MainWindow : Window
         var selection = viewportIpcClient.ReadLatestSelectionChanged();
         SelectedEntitiesTextBlock.Text = "Zaznaczone: " + (selection?.EntityIds.Count ?? 0);
         return selection?.EntityIds.ToArray() ?? Array.Empty<Guid>();
+    }
+
+    private void SetDrawingTool(ViewportDrawingTool tool)
+    {
+        viewportIpcClient.SendDrawingTool(tool);
+        StatusTextBlock.Text = tool == ViewportDrawingTool.None
+            ? "Tryb zaznaczania"
+            : "Kliknij dwa punkty w viewportcie: " + tool;
+    }
+
+    private void ProcessViewportInbox()
+    {
+        var changed = false;
+        foreach (var message in viewportIpcClient.ReadPendingShapeDrawn())
+        {
+            ApplyDrawnShape(message);
+            changed = true;
+        }
+
+        if (changed)
+        {
+            PublishDocument();
+        }
+    }
+
+    private void ApplyDrawnShape(ViewportShapeDrawnMessage message)
+    {
+        var start = new Point2D(message.Start.X, message.Start.Y);
+        var end = new Point2D(message.End.X, message.End.Y);
+
+        switch (message.Tool)
+        {
+            case ViewportDrawingTool.Rectangle:
+                viewModel.AddRectangle(start, end);
+                break;
+            case ViewportDrawingTool.Line:
+                viewModel.AddLine(start, end);
+                break;
+            case ViewportDrawingTool.Circle:
+                viewModel.AddCircle(start, end);
+                break;
+        }
     }
 
     private void PublishDocument()
