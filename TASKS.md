@@ -440,6 +440,7 @@ Zalecenie pracy:
 ## 3.8 Wyglad desktop shell
 
 - [x] 3.8.0 Uladnic desktop shell w jasnym stylu narzedzia CAD.
+- [x] 3.8.1 Zastapic tekstowe przyciski toolbaru ikonami z tooltipami.
 
 ## 4.0 Eksport SVG - fundament
 

@@ -75,13 +75,25 @@
         </Style>
 
         <Style x:Key="ToolbarButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="MinWidth" Value="54" />
-            <Setter Property="MinHeight" Value="34" />
-            <Setter Property="Padding" Value="10,4" />
+            <Setter Property="Width" Value="38" />
+            <Setter Property="Height" Value="38" />
+            <Setter Property="MinWidth" Value="38" />
+            <Setter Property="MinHeight" Value="38" />
+            <Setter Property="Padding" Value="0" />
             <Setter Property="Margin" Value="2,0" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="Foreground" Value="#374151" />
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets" />
+            <Setter Property="FontSize" Value="17" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="ToolbarAccentButtonStyle" TargetType="Button" BasedOn="{StaticResource ToolbarButtonStyle}">
+            <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+            <Setter Property="Background" Value="#EFF6FF" />
+            <Setter Property="BorderBrush" Value="#BFDBFE" />
         </Style>
 
         <Style TargetType="GroupBox">
@@ -146,18 +158,18 @@
         <Border DockPanel.Dock="Top" Background="#FFFFFF" BorderBrush="{StaticResource AppBorderBrush}" BorderThickness="0,0,0,1">
             <DockPanel Height="52" LastChildFill="True">
                 <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0">
-                    <Button Content="New" Style="{StaticResource ToolbarButtonStyle}" />
-                    <Button Content="Open" Style="{StaticResource ToolbarButtonStyle}" />
-                    <Button Content="Save" Style="{StaticResource ToolbarButtonStyle}" />
+                    <Button Content="&#xE710;" ToolTip="Nowy projekt" Style="{StaticResource ToolbarButtonStyle}" />
+                    <Button Content="&#xE8E5;" ToolTip="Otworz projekt" Style="{StaticResource ToolbarButtonStyle}" />
+                    <Button Content="&#xE74E;" ToolTip="Zapisz projekt" Style="{StaticResource ToolbarButtonStyle}" />
                     <Border Width="1" Height="24" Background="{StaticResource AppBorderBrush}" Margin="10,0" />
-                    <Button Content="Select" Style="{StaticResource ToolbarButtonStyle}" Click="SelectTool_Click" />
-                    <Button Content="Rect" Style="{StaticResource ToolbarButtonStyle}" Click="AddRectangle_Click" />
-                    <Button Content="Line" Style="{StaticResource ToolbarButtonStyle}" Click="AddLine_Click" />
-                    <Button Content="Circle" Style="{StaticResource ToolbarButtonStyle}" Click="AddCircle_Click" />
-                    <Button Content="Delete" Style="{StaticResource ToolbarButtonStyle}" Click="DeleteSelected_Click" />
+                    <Button Content="&#xE7C9;" ToolTip="Zaznaczanie" Style="{StaticResource ToolbarAccentButtonStyle}" Click="SelectTool_Click" />
+                    <Button Content="&#xE739;" ToolTip="Rysuj prostokat" Style="{StaticResource ToolbarButtonStyle}" Click="AddRectangle_Click" />
+                    <Button Content="&#xE8A1;" ToolTip="Rysuj linie" Style="{StaticResource ToolbarButtonStyle}" Click="AddLine_Click" />
+                    <Button Content="&#xEA3A;" ToolTip="Rysuj okrag" Style="{StaticResource ToolbarButtonStyle}" Click="AddCircle_Click" />
+                    <Button Content="&#xE74D;" ToolTip="Usun zaznaczone" Style="{StaticResource ToolbarButtonStyle}" Click="DeleteSelected_Click" />
                     <Border Width="1" Height="24" Background="{StaticResource AppBorderBrush}" Margin="10,0" />
-                    <Button Content="SVG" Style="{StaticResource ToolbarButtonStyle}" Click="ExportSvg_Click" />
-                    <Button Content="DXF" Style="{StaticResource ToolbarButtonStyle}" Click="ExportDxf_Click" />
+                    <Button Content="&#xEDE1;" ToolTip="Eksport SVG" Style="{StaticResource ToolbarButtonStyle}" Click="ExportSvg_Click" />
+                    <Button Content="&#xEDE2;" ToolTip="Eksport DXF" Style="{StaticResource ToolbarButtonStyle}" Click="ExportDxf_Click" />
                 </StackPanel>
 
                 <TextBlock x:Name="StatusTextBlock"
