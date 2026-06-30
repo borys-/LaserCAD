@@ -30,7 +30,10 @@
 - Weryfikacja wykonana przed buildem release:
   - `dotnet test LaserCad.sln --no-restore --filter "FullyQualifiedName~Text|FullyQualifiedName~Svg|FullyQualifiedName~DocumentSerializer"` przechodzi: `40/40`,
   - `dotnet test LaserCad.sln --no-restore` przechodzi: `436/436`,
-  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen.
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
 - Widoczne po odpaleniu aplikacji:
   - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
   - UI nie ma jeszcze nowego narzedzia tekstowego w toolbarze,
