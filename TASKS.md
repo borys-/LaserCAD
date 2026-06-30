@@ -721,17 +721,17 @@ Zalecenie pracy:
 - [x] MVP.0.13 Potwierdzic, ze zmiana parametru przebudowuje pudelko.
 - [ ] MVP.0.14 Wyeksportowac SVG pudelka testowego.
 - [ ] MVP.0.15 Otworzyc SVG w zewnetrznym programie i potwierdzic skale w mm.
-- [ ] MVP.0.16 Uruchomic komplet testow jednostkowych.
+- [x] MVP.0.16 Uruchomic komplet testow jednostkowych.
 
 ## MVP.1 Kryteria akceptacji MVP
 
-- [ ] MVP.1.0 Uzytkownik moze wybrac profil materialu.
-- [ ] MVP.1.1 Uzytkownik moze ustawic grubosc materialu.
-- [ ] MVP.1.2 Uzytkownik moze ustawic kerf.
-- [ ] MVP.1.3 Uzytkownik moze ustawic szerokosc, glebokosc i wysokosc pudelka.
+- [x] MVP.1.0 Uzytkownik moze wybrac profil materialu.
+- [x] MVP.1.1 Uzytkownik moze ustawic grubosc materialu.
+- [x] MVP.1.2 Uzytkownik moze ustawic kerf.
+- [x] MVP.1.3 Uzytkownik moze ustawic szerokosc, glebokosc i wysokosc pudelka.
 - [ ] MVP.1.4 Uzytkownik widzi geometrie 2D wygenerowanego pudelka.
 - [ ] MVP.1.5 Uzytkownik zmienia parametr i widzi przebudowe modelu.
-- [ ] MVP.1.6 Uzytkownik eksportuje poprawny SVG w milimetrach.
+- [x] MVP.1.6 Uzytkownik eksportuje poprawny SVG w milimetrach.
 - [ ] MVP.1.7 SVG zawiera warstwy cut i engrave, jesli sa uzyte.
-- [ ] MVP.1.8 Testy jednostkowe przechodza lokalnie.
+- [x] MVP.1.8 Testy jednostkowe przechodza lokalnie.
 - [ ] MVP.1.9 Dokumentacja opisuje minimalny workflow: material -> parametry -> generuj -> eksportuj.
