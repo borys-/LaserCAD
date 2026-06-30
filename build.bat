@@ -5,6 +5,7 @@ set "ROOT=%~dp0"
 set "OUTPUT=%ROOT%bin\release"
 set "UNITY_PROJECT=%ROOT%LaserCad.Unity"
 set "UNITY_OUTPUT=%OUTPUT%\LaserCad\LaserCad.exe"
+set "DESKTOP_OUTPUT=%OUTPUT%\LaserCad.Desktop"
 
 if not defined UNITY_EXE (
     set "UNITY_EXE=C:\Program Files\Unity\Hub\Editor\6000.0.0f1\Editor\Unity.exe"
@@ -20,6 +21,9 @@ dotnet restore "%ROOT%LaserCad.sln"
 if errorlevel 1 goto :error
 
 dotnet build "%ROOT%LaserCad.sln" --configuration Release --no-restore -p:OutDir="%OUTPUT%\net9.0\"
+if errorlevel 1 goto :error
+
+dotnet publish "%ROOT%src\LaserCad.Desktop\LaserCad.Desktop.csproj" --configuration Release --no-restore --output "%DESKTOP_OUTPUT%"
 if errorlevel 1 goto :error
 
 dotnet build "%ROOT%src\LaserCad.Core\LaserCad.Core.csproj" --configuration Release --framework netstandard2.1 --no-restore -p:OutDir="%OUTPUT%\unity-domain\"
@@ -45,6 +49,7 @@ if exist "%UNITY_EXE%" (
 echo.
 echo Build finished.
 echo .NET assemblies: "%OUTPUT%\net9.0"
+echo Desktop shell: "%DESKTOP_OUTPUT%\LaserCad.Desktop.exe"
 echo Unity domain assemblies: "%OUTPUT%\unity-domain"
 echo Unity SVG assemblies: "%OUTPUT%\unity-svg"
 echo Unity DXF assemblies: "%OUTPUT%\unity-dxf"
