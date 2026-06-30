@@ -5,6 +5,7 @@
 - Po uwadze uzytkownika poprawiono kierunek UX desktop shell: viewport Unity ma byc widoczny w glownym oknie aplikacji, bez technicznych przyciskow `Start viewport`, `Restart`, `Stop`.
 - Dodatkowo poprawiono fokus osadzonego viewportu: po najechaniu albo kliknieciu centralnego panelu shell wywoluje `SetFocus` na oknie Unity, zeby scroll/zoom dzialal od razu bez dodatkowego klikniecia.
 - Po kolejnej uwadze poprawiono gubienie focusu po minimalizacji/maksymalizacji: `MainWindow` obsluguje `Activated` i `StateChanged`, a po przywroceniu okna przez dispatcher odswieza rozmiar viewportu i ponownie ustawia focus/active window na osadzonym oknie Unity.
+- Poniewaz sam focus nadal nie wystarczal po min/max, dodano hook `WM_MOUSEWHEEL` w `MainWindow`: jesli kursor jest nad panelem viewportu, shell forwarduje komunikat kółka myszy bezposrednio do okna Unity przez `ViewportProcessController.ForwardMouseWheel(...)`.
 - Nowe zmiany techniczne:
   - `LaserCad.Desktop` uzywa `WindowsFormsHost` jako centralnego hosta viewportu,
   - `ViewportProcessController.TryStartEmbedded(IntPtr)` uruchamia Unity playera, czeka na uchwyt okna, osadza go przez Win32 `SetParent`, usuwa ramki okna i dopasowuje rozmiar przez `MoveWindow`,

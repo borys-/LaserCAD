@@ -18,6 +18,7 @@ public sealed class ViewportProcessController : IDisposable
     private const int WsMinimizeBox = 0x00020000;
     private const int WsMaximizeBox = 0x00010000;
     private const int WsSysMenu = 0x00080000;
+    private const int WmMouseWheel = 0x020A;
 
     private Process? process;
     private IntPtr parentWindowHandle;
@@ -150,6 +151,18 @@ public sealed class ViewportProcessController : IDisposable
         SetActiveWindow(viewportWindowHandle);
     }
 
+    public bool ForwardMouseWheel(IntPtr wParam, IntPtr lParam)
+    {
+        if (viewportWindowHandle == IntPtr.Zero)
+        {
+            return false;
+        }
+
+        FocusViewport();
+        SendMessage(viewportWindowHandle, WmMouseWheel, wParam, lParam);
+        return true;
+    }
+
     private static IntPtr WaitForViewportWindowHandle(Process viewportProcess, TimeSpan timeout)
     {
         var deadline = DateTime.UtcNow + timeout;
@@ -185,6 +198,9 @@ public sealed class ViewportProcessController : IDisposable
 
     [DllImport("user32.dll", SetLastError = true)]
     private static extern IntPtr SetActiveWindow(IntPtr windowHandle);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern IntPtr SendMessage(IntPtr windowHandle, int message, IntPtr wParam, IntPtr lParam);
 
     [DllImport("user32.dll", SetLastError = true)]
     private static extern bool GetClientRect(IntPtr windowHandle, out NativeRect rect);

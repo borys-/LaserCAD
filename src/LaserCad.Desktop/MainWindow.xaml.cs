@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Threading;
 using LaserCad.Core.Documents;
 using LaserCad.Core.BoxGenerators;
@@ -15,6 +16,8 @@ namespace LaserCad.Desktop;
 /// </summary>
 public partial class MainWindow : Window
 {
+    private const int WmMouseWheel = 0x020A;
+
     private readonly DesktopShellViewModel viewModel = new();
     private readonly ViewportIpcClient viewportIpcClient = new();
     private readonly ViewportProcessController viewportProcessController = new();
@@ -36,6 +39,7 @@ public partial class MainWindow : Window
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
+        AddWindowMessageHook();
         StartEmbeddedViewport();
     }
 
@@ -152,6 +156,33 @@ public partial class MainWindow : Window
                 viewportProcessController.FocusViewport();
             },
             DispatcherPriority.ApplicationIdle);
+    }
+
+    private void AddWindowMessageHook()
+    {
+        var source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+        source?.AddHook(WindowMessageHook);
+    }
+
+    private IntPtr WindowMessageHook(IntPtr hwnd, int message, IntPtr wParam, IntPtr lParam, ref bool handled)
+    {
+        if (message == WmMouseWheel && IsMouseOverViewportPanel())
+        {
+            handled = viewportProcessController.ForwardMouseWheel(wParam, lParam);
+        }
+
+        return IntPtr.Zero;
+    }
+
+    private bool IsMouseOverViewportPanel()
+    {
+        if (!viewportPanel.IsHandleCreated)
+        {
+            return false;
+        }
+
+        var panelPoint = viewportPanel.PointToClient(System.Windows.Forms.Control.MousePosition);
+        return viewportPanel.ClientRectangle.Contains(panelPoint);
     }
 
     protected override void OnClosed(EventArgs e)
