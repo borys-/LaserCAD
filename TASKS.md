@@ -434,6 +434,7 @@ Zalecenie pracy:
 - [x] 3.7.7 Dodac skalowanie zaznaczonych encji z panelu transformacji.
 - [x] 3.7.8 Podpiac undo/redo dla operacji edycji ksztaltow.
 - [x] 3.7.9 Dodac rysowanie ksztaltow kliknieciami bezposrednio w viewportcie.
+- [x] 3.7.10 Dodac natychmiastowy podglad rysowanego ksztaltu w viewportcie.
 
 ## 4.0 Eksport SVG - fundament
 

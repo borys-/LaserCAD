@@ -30,6 +30,11 @@
   - rysowanie jest MVP bez podgladu tymczasowego miedzy pierwszym i drugim kliknieciem,
   - aktywne narzedzie pozostaje wlaczone po narysowaniu ksztaltu, dopoki uzytkownik nie kliknie `Select` albo innego narzedzia,
   - zaznaczanie Unity nadal moze reagowac na klikniecia w trybie rysowania, bo narzedzia viewportu nie maja jeszcze pelnego routera inputu.
+- Po uwadze, ze okrag pojawia sie dopiero po kilku sekundach, dodano `3.7.10`:
+  - `ViewportIpcBridge` rysuje lokalny podglad `Line`/`Rectangle`/`Circle` w Unity przez GL,
+  - po pierwszym kliknieciu widac podglad od punktu startowego do kursora,
+  - po drugim kliknieciu ostatni ksztalt zostaje jako tymczasowy podglad do czasu przyjscia `DocumentSnapshot` z desktop shell,
+  - to zmniejsza odczuwalne opoznienie zwlaszcza dla kola, ktore nadal jest finalnie dodawane do dokumentu przez desktop shell.
 - Weryfikacja:
   - `dotnet build LaserCad.sln --no-restore` przechodzi,
   - `dotnet test LaserCad.sln --no-restore` przechodzi: `404/404`,
