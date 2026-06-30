@@ -8,6 +8,7 @@ using LaserCad.Core.Kerf;
 using LaserCad.Export.Dxf;
 using LaserCad.Export.Svg;
 using LaserCad.Geometry;
+using LaserCad.Geometry.Units;
 
 namespace LaserCad.Desktop;
 
