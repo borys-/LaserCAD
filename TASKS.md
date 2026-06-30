@@ -441,6 +441,7 @@ Zalecenie pracy:
 
 - [x] 3.8.0 Uladnic desktop shell w jasnym stylu narzedzia CAD.
 - [x] 3.8.1 Zastapic tekstowe przyciski toolbaru ikonami z tooltipami.
+- [x] 3.8.2 Dodac loader viewportu podczas startu Unity.
 
 ## 4.0 Eksport SVG - fundament
 

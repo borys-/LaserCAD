@@ -126,6 +126,13 @@
             <Setter Property="BorderBrush" Value="{StaticResource AppBorderBrush}" />
             <Setter Property="BorderThickness" Value="0,0,1,0" />
         </Style>
+
+        <Style x:Key="ViewportLoadingBarStyle" TargetType="ProgressBar">
+            <Setter Property="Height" Value="4" />
+            <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+            <Setter Property="Background" Value="#E5EAF1" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
     </Window.Resources>
 
     <DockPanel LastChildFill="True">
@@ -298,12 +305,38 @@
                     <Border BorderBrush="#B8C0CC" BorderThickness="1" Background="#FFFFFF">
                         <Grid>
                             <wfi:WindowsFormsHost x:Name="ViewportHost" />
-                            <TextBlock x:Name="ViewportPlaceholderTextBlock"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       FontSize="16"
-                                       Foreground="#9AA4AF"
-                                       Text="Ladowanie widoku..." />
+                            <Grid x:Name="ViewportLoadingOverlay" Background="#F8FAFC">
+                                <StackPanel Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Border Width="48"
+                                            Height="48"
+                                            HorizontalAlignment="Center"
+                                            Background="#EFF6FF"
+                                            BorderBrush="#BFDBFE"
+                                            BorderThickness="1"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="LC"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="17"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{StaticResource AccentBrush}" />
+                                    </Border>
+                                    <TextBlock x:Name="ViewportLoadingTitleTextBlock"
+                                               Text="Uruchamianie widoku roboczego"
+                                               HorizontalAlignment="Center"
+                                               FontSize="15"
+                                               FontWeight="SemiBold"
+                                               Margin="0,0,0,6" />
+                                    <TextBlock x:Name="ViewportLoadingDetailTextBlock"
+                                               Text="Ladowanie viewportu Unity..."
+                                               HorizontalAlignment="Center"
+                                               Foreground="{StaticResource MutedTextBrush}"
+                                               Margin="0,0,0,18" />
+                                    <ProgressBar x:Name="ViewportLoadingProgressBar"
+                                                 IsIndeterminate="True"
+                                                 Style="{StaticResource ViewportLoadingBarStyle}" />
+                                </StackPanel>
+                            </Grid>
                         </Grid>
                     </Border>
                 </Grid>

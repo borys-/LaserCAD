@@ -224,16 +224,26 @@ public partial class MainWindow : Window
 
     private void StartEmbeddedViewport()
     {
+        ShowViewportLoading("Uruchamianie widoku roboczego", "Ladowanie viewportu Unity...", true);
+
         if (viewportProcessController.TryStartEmbedded(viewportPanel.Handle))
         {
-            ViewportPlaceholderTextBlock.Visibility = Visibility.Collapsed;
+            ViewportLoadingOverlay.Visibility = Visibility.Collapsed;
             viewportIpcClient.SendDocument(viewModel.CurrentDocument);
             StatusTextBlock.Text = "Gotowe";
             return;
         }
 
-        ViewportPlaceholderTextBlock.Text = "Nie znaleziono widoku roboczego";
+        ShowViewportLoading("Nie znaleziono widoku roboczego", "Sprawdz build viewportu w katalogu aplikacji.", false);
         StatusTextBlock.Text = "Nie znaleziono viewportu: " + viewportProcessController.ViewportExecutablePath;
+    }
+
+    private void ShowViewportLoading(string title, string detail, bool isProgressVisible)
+    {
+        ViewportLoadingOverlay.Visibility = Visibility.Visible;
+        ViewportLoadingTitleTextBlock.Text = title;
+        ViewportLoadingDetailTextBlock.Text = detail;
+        ViewportLoadingProgressBar.Visibility = isProgressVisible ? Visibility.Visible : Visibility.Collapsed;
     }
 
     private void RestoreViewportInput()
