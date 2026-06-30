@@ -76,6 +76,16 @@ namespace LaserCad.Unity
             }
         }
 
+        private void OnDisable()
+        {
+            Cursor.visible = true;
+        }
+
+        private void OnApplicationQuit()
+        {
+            Cursor.visible = true;
+        }
+
         private void Update()
         {
             if (!ViewportProcessMode.IsViewportProcess())
@@ -164,11 +174,17 @@ namespace LaserCad.Unity
             hasDrawingStartPoint = false;
             isDrawingPointerDown = false;
             isCompletingClickDraw = false;
+            UpdateCursorVisibility();
 
             if (selectionService != null)
             {
                 selectionService.SetInputEnabled(activeDrawingTool == ViewportDrawingTool.None);
             }
+        }
+
+        private void UpdateCursorVisibility()
+        {
+            Cursor.visible = activeDrawingTool == ViewportDrawingTool.None;
         }
 
         private void HandleDrawingInput()
