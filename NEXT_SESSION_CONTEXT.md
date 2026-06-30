@@ -1,5 +1,50 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 3.5 GUI funkcji domenowych
+
+- W tej sesji wykonano do konca sekcje `3.5 GUI funkcji domenowych` od `3.5.4` do `3.5.9`.
+- Nowe commity:
+  - `d9e4cb1 3.5.4 Dodaj panel eksportu SVG`,
+  - `6b687bd 3.5.5 Dodaj panel eksportu DXF`,
+  - `660204f 3.5.6 Dodaj panel materialu i warstw`,
+  - `4f0bc03 3.5.7 Dodaj panel historii undo redo`,
+  - `51b638e 3.5.8 Dodaj panel constraints i dimensions`,
+  - `3f0faee 3.5.9 Dodaj checkliste GUI funkcji domenowych`,
+  - `1b59af5 3.5 Odhacz GUI funkcji domenowych`,
+  - `e74e430 3.5 Dopisz eksportery do builda Unity`.
+- Zmiany techniczne:
+  - Unity ma nowe panele IMGUI: `SvgExportPanel`, `DxfExportPanel`, `MaterialLayersPanel`, `UndoRedoPanel`, `ConstraintsDimensionsPanel`,
+  - `LaserCad.Unity.asmdef` referencjonuje teraz `LaserCad.Export.Svg` i `LaserCad.Export.Dxf`,
+  - projekty `LaserCad.Export.Svg` i `LaserCad.Export.Dxf` multi-targetuja `net9.0;netstandard2.1`,
+  - eksportery maja shim `IsExternalInit` dla `netstandard2.1`,
+  - build `netstandard2.1` eksporterow kopiuje DLL do `LaserCad.Unity/Assets/Plugins/LaserCad.Domain`,
+  - `build.bat` odswieza teraz dla Unity takze DLL SVG i DXF przed buildem playera,
+  - `LaserCadApplicationController` ma `CurrentHistory`, resetuje `UndoRedoStack` przy zaladowaniu nowego dokumentu oraz wystawia `Undo()` i `Redo()`,
+  - panel materialu moze ustawic `CadDocument.MaterialProfile` przez `SetMaterialProfile(MaterialProfile)`.
+- Widoczne po odpaleniu aplikacji:
+  - po prawej stronie widoku sa panele `Eksport SVG`, `Eksport DXF`, `Material i warstwy`, `Historia` oraz `Constraints / Dimensions`,
+  - `Eksport SVG` zapisuje aktualny dokument do pliku `.svg` w `Application.persistentDataPath` i pokazuje pelna sciezke,
+  - `Eksport DXF` analogicznie zapisuje `.dxf`,
+  - `Material i warstwy` pozwala wybrac profil materialu i pokazuje grubosc, kerf, clearance, minimalna szerokosc palca oraz warstwy dokumentu,
+  - `Historia` pokazuje liczniki undo/redo; przyciski beda aktywne, gdy przyszle narzedzia edycyjne zaczna wykonywac komendy przez historie,
+  - `Constraints / Dimensions` pokazuje liczbe szkicow, liczbe powiazan wymiarow i zakres MVP constraints/dimensions.
+- Plan:
+  - odhaczono `3.5.4`-`3.5.9`,
+  - odhaczono cala sekcje `3.5`,
+  - odhaczono `MVP.0.11` i `MVP.0.12`,
+  - `MVP.0.14` zostawiono nieodhaczone, bo panel eksportu istnieje, ale nie zapisano jeszcze osobnego testowego SVG pudelka jako artefaktu akceptacyjnego.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `404/404`,
+  - `dotnet build src\LaserCad.Core\LaserCad.Core.csproj -f netstandard2.1 --no-restore` przechodzi bez ostrzezen,
+  - `dotnet build src\LaserCad.Export.Svg\LaserCad.Export.Svg.csproj -f netstandard2.1 --no-restore` przechodzi bez ostrzezen,
+  - `dotnet build src\LaserCad.Export.Dxf\LaserCad.Export.Dxf.csproj -f netstandard2.1 --no-restore` przechodzi bez ostrzezen,
+  - `cmd /c build.bat` zakonczyl sie sukcesem i wygenerowal `C:\borys\CAD\bin\release\LaserCad\LaserCad.exe`,
+  - log Unity `C:\borys\CAD\bin\release\unity-build.log` zawiera `Build Finished, Result: Success.`; w logu sa komunikaty licencyjne Unity, ale build zakonczyl sie sukcesem.
+- Nastepne kandydaty:
+  - jesli isc po kolei w `TASKS.md`: `8.2 Pozostale generatory`,
+  - jesli domykac MVP: `MVP.0.14` zapis testowego SVG pudelka i `MVP.0.15` sprawdzenie skali w zewnetrznym programie,
+  - najwiekszy brak produkcyjny MVP nadal: `9.0 Kerf compensation`.
+
 ## Aktualizacja po tasku 3.5.3 Przebudowa podgladu pudelka
 
 - Po sekcji `8.1` wykonano kolejny odblokowany task Unity: `3.5.3 Dodac przebudowe podgladu po zmianie parametrow pudelka`.
