@@ -46,7 +46,8 @@ namespace LaserCad.Unity
         public void Initialize()
         {
             CurrentBoxOptions = new BoxGeneratorOptions();
-            LoadDocument(loadDemoDocument ? CreateDemoDocument() : new CadDocument());
+            var isViewportProcess = ViewportProcessMode.IsViewportProcess();
+            LoadDocument(loadDemoDocument && !isViewportProcess ? CreateDemoDocument() : new CadDocument(name: "Viewport"));
         }
 
         /// <summary>

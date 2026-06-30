@@ -407,7 +407,7 @@ Zalecenie pracy:
 - [x] 3.6.11 Dodac komunikat IPC wyslania aktualnego dokumentu do viewportu.
 - [x] 3.6.12 Dodac komunikat IPC zmiany widoku: reset, zoom to fit, grid on/off.
 - [x] 3.6.13 Dodac komunikat IPC zaznaczenia encji z viewportu do shell.
-- [ ] 3.6.14 Utworzyc tryb Unity viewport process uruchamiany z argumentem `--viewport`.
+- [x] 3.6.14 Utworzyc tryb Unity viewport process uruchamiany z argumentem `--viewport`.
 - [ ] 3.6.15 Uruchamiac proces Unity viewport z desktop shell.
 - [ ] 3.6.16 Obslugiwac zamkniecie i restart procesu Unity viewport z desktop shell.
 - [ ] 3.6.17 Wysylac przebudowany dokument pudelka z desktop shell do Unity viewport.
