@@ -25,6 +25,12 @@ if errorlevel 1 goto :error
 dotnet build "%ROOT%src\LaserCad.Core\LaserCad.Core.csproj" --configuration Release --framework netstandard2.1 --no-restore -p:OutDir="%OUTPUT%\unity-domain\"
 if errorlevel 1 goto :error
 
+dotnet build "%ROOT%src\LaserCad.Export.Svg\LaserCad.Export.Svg.csproj" --configuration Release --framework netstandard2.1 --no-restore -p:OutDir="%OUTPUT%\unity-svg\"
+if errorlevel 1 goto :error
+
+dotnet build "%ROOT%src\LaserCad.Export.Dxf\LaserCad.Export.Dxf.csproj" --configuration Release --framework netstandard2.1 --no-restore -p:OutDir="%OUTPUT%\unity-dxf\"
+if errorlevel 1 goto :error
+
 if exist "%UNITY_EXE%" (
     echo.
     echo Building Unity player into "%UNITY_OUTPUT%"
@@ -40,6 +46,8 @@ echo.
 echo Build finished.
 echo .NET assemblies: "%OUTPUT%\net9.0"
 echo Unity domain assemblies: "%OUTPUT%\unity-domain"
+echo Unity SVG assemblies: "%OUTPUT%\unity-svg"
+echo Unity DXF assemblies: "%OUTPUT%\unity-dxf"
 echo Unity project: "%UNITY_PROJECT%"
 if exist "%UNITY_OUTPUT%" (
     echo Desktop executable: "%UNITY_OUTPUT%"
