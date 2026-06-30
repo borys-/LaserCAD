@@ -4,8 +4,8 @@ setlocal
 set "ROOT=%~dp0"
 set "OUTPUT=%ROOT%bin\release"
 set "UNITY_PROJECT=%ROOT%LaserCad.Unity"
-set "UNITY_OUTPUT=%OUTPUT%\LaserCad\LaserCad.exe"
 set "DESKTOP_OUTPUT=%OUTPUT%\LaserCad.Desktop"
+set "UNITY_OUTPUT=%DESKTOP_OUTPUT%\Viewport\LaserCad.exe"
 
 if not defined UNITY_EXE (
     set "UNITY_EXE=C:\Program Files\Unity\Hub\Editor\6000.0.0f1\Editor\Unity.exe"
@@ -55,7 +55,7 @@ echo Unity SVG assemblies: "%OUTPUT%\unity-svg"
 echo Unity DXF assemblies: "%OUTPUT%\unity-dxf"
 echo Unity project: "%UNITY_PROJECT%"
 if exist "%UNITY_OUTPUT%" (
-    echo Desktop executable: "%UNITY_OUTPUT%"
+    echo Unity viewport executable: "%UNITY_OUTPUT%"
 )
 exit /b 0
 
