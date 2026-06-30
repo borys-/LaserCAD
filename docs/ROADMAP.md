@@ -346,6 +346,12 @@ To sa generatory bazowe do dalszego rozwijania workflow, a nie pelne modele prod
 - Uwzglednienie kerfu w finger jointach.
 - Podglad geometrii przed i po kompensacji.
 
+### Ograniczenia kompensacji kerfu MVP
+
+Kompensacja kerfu w pierwszym kroku dziala dla prostych, zamknietych i wypuklych konturow reprezentowanych jako `RectangleEntity` albo zamknieta `PolylineEntity`. Odleglosc offsetu wynosi polowe wartosci kerfu, a tryb `Positive` odsuwa kontury zewnetrzne na zewnatrz i otwory do wewnatrz. Tryb `Negative` odwraca ten kierunek.
+
+Klasyfikacja konturu w MVP opiera sie na orientacji polygonu: obieg przeciwny do wskazowek zegara jest traktowany jako kontur zewnetrzny, a obieg zgodny ze wskazowkami zegara jako kontur wewnetrzny. To nie jest jeszcze analiza zagniezdzenia konturow w dokumencie. Kontury wklesle, luki, okregi jako prawdziwe krzywe, tekst i automatyczna klasyfikacja otworow po polozeniu w arkuszu pozostaja zakresem dalszych etapow.
+
 ## Faza 10 - Tekst
 
 - Font:

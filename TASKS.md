@@ -613,17 +613,17 @@ Zalecenie pracy:
 
 ## 9.0 Kerf compensation
 
-- [ ] 9.0.0 Utworzyc `KerfCompensationOptions`.
-- [ ] 9.0.1 Dodac wartosc kerfu.
-- [ ] 9.0.2 Dodac tryb dodatni.
-- [ ] 9.0.3 Dodac tryb ujemny.
-- [ ] 9.0.4 Dodac offset wewnetrzny.
-- [ ] 9.0.5 Dodac offset zewnetrzny.
-- [ ] 9.0.6 Dodac klasyfikacje konturu jako wewnetrzny/zewnetrzny.
-- [ ] 9.0.7 Dodac podglad geometrii przed kompensacja.
-- [ ] 9.0.8 Dodac podglad geometrii po kompensacji.
-- [ ] 9.0.9 Dodac test kompensacji kwadratu zewnetrznego.
-- [ ] 9.0.10 Dodac test kompensacji otworu wewnetrznego.
+- [x] 9.0.0 Utworzyc `KerfCompensationOptions`.
+- [x] 9.0.1 Dodac wartosc kerfu.
+- [x] 9.0.2 Dodac tryb dodatni.
+- [x] 9.0.3 Dodac tryb ujemny.
+- [x] 9.0.4 Dodac offset wewnetrzny.
+- [x] 9.0.5 Dodac offset zewnetrzny.
+- [x] 9.0.6 Dodac klasyfikacje konturu jako wewnetrzny/zewnetrzny.
+- [x] 9.0.7 Dodac podglad geometrii przed kompensacja.
+- [x] 9.0.8 Dodac podglad geometrii po kompensacji.
+- [x] 9.0.9 Dodac test kompensacji kwadratu zewnetrznego.
+- [x] 9.0.10 Dodac test kompensacji otworu wewnetrznego.
 
 ## 9.1 Kalibracja kerfu
 
@@ -743,7 +743,7 @@ Zalecenie pracy:
 - [x] MVP.0.6 Zaimplementowac zapis i odczyt JSON.
 - [x] MVP.0.7 Zaimplementowac generator finger joint dla prostych krawedzi.
 - [x] MVP.0.8 Zaimplementowac generator otwartego pudelka.
-- [ ] MVP.0.9 Zaimplementowac kompensacje kerfu dla prostych konturow.
+- [x] MVP.0.9 Zaimplementowac kompensacje kerfu dla prostych konturow.
 - [x] MVP.0.10 Zaimplementowac eksport SVG.
 - [x] MVP.0.11 Zaimplementowac prosty widok Unity 2D.
 - [x] MVP.0.12 Zaimplementowac panel zmiany parametrow pudelka.
