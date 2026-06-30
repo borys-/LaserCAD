@@ -415,7 +415,7 @@ Zalecenie pracy:
 - [x] 3.6.19 Dodac build desktop shell do `build.bat`.
 - [x] 3.6.20 Dodac pakowanie Unity playera obok aplikacji desktop shell.
 - [x] 3.6.21 Dodac manualna checkliste QA dla desktop shell + Unity viewport.
-- [ ] 3.6.22 Udokumentowac lifecycle procesu viewportu i granice odpowiedzialnosci shell/viewport.
+- [x] 3.6.22 Udokumentowac lifecycle procesu viewportu i granice odpowiedzialnosci shell/viewport.
 
 ## 4.0 Eksport SVG - fundament
 
