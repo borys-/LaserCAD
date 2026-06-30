@@ -27,6 +27,9 @@ public partial class MainWindow : Window
         MaterialProfileComboBox.SelectedItem = viewModel.SelectedMaterialProfile;
         ViewportHost.Child = viewportPanel;
         viewportPanel.Resize += (_, _) => viewportProcessController.ResizeEmbeddedViewport();
+        viewportPanel.MouseEnter += (_, _) => viewportProcessController.FocusViewport();
+        viewportPanel.MouseDown += (_, _) => viewportProcessController.FocusViewport();
+        ViewportHost.MouseEnter += (_, _) => viewportProcessController.FocusViewport();
         RefreshDocumentSummary();
     }
 

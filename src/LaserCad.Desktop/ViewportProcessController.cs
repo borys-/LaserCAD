@@ -139,6 +139,16 @@ public sealed class ViewportProcessController : IDisposable
             true);
     }
 
+    public void FocusViewport()
+    {
+        if (viewportWindowHandle == IntPtr.Zero)
+        {
+            return;
+        }
+
+        SetFocus(viewportWindowHandle);
+    }
+
     private static IntPtr WaitForViewportWindowHandle(Process viewportProcess, TimeSpan timeout)
     {
         var deadline = DateTime.UtcNow + timeout;
@@ -168,6 +178,9 @@ public sealed class ViewportProcessController : IDisposable
 
     [DllImport("user32.dll", SetLastError = true)]
     private static extern bool MoveWindow(IntPtr windowHandle, int x, int y, int width, int height, bool repaint);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern IntPtr SetFocus(IntPtr windowHandle);
 
     [DllImport("user32.dll", SetLastError = true)]
     private static extern bool GetClientRect(IntPtr windowHandle, out NativeRect rect);

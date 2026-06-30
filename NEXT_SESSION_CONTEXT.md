@@ -3,6 +3,7 @@
 ## Aktualizacja po osadzeniu Unity viewport w desktop shell
 
 - Po uwadze uzytkownika poprawiono kierunek UX desktop shell: viewport Unity ma byc widoczny w glownym oknie aplikacji, bez technicznych przyciskow `Start viewport`, `Restart`, `Stop`.
+- Dodatkowo poprawiono fokus osadzonego viewportu: po najechaniu albo kliknieciu centralnego panelu shell wywoluje `SetFocus` na oknie Unity, zeby scroll/zoom dzialal od razu bez dodatkowego klikniecia.
 - Nowe zmiany techniczne:
   - `LaserCad.Desktop` uzywa `WindowsFormsHost` jako centralnego hosta viewportu,
   - `ViewportProcessController.TryStartEmbedded(IntPtr)` uruchamia Unity playera, czeka na uchwyt okna, osadza go przez Win32 `SetParent`, usuwa ramki okna i dopasowuje rozmiar przez `MoveWindow`,
