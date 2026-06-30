@@ -1,4 +1,5 @@
 using System.Windows;
+using System.Windows.Threading;
 using LaserCad.Core.Documents;
 using LaserCad.Core.BoxGenerators;
 using LaserCad.Geometry.Units;
@@ -36,6 +37,19 @@ public partial class MainWindow : Window
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         StartEmbeddedViewport();
+    }
+
+    private void Window_Activated(object? sender, EventArgs e)
+    {
+        RestoreViewportInput();
+    }
+
+    private void Window_StateChanged(object? sender, EventArgs e)
+    {
+        if (WindowState != WindowState.Minimized)
+        {
+            RestoreViewportInput();
+        }
     }
 
     private void RebuildBoxButton_Click(object sender, RoutedEventArgs e)
@@ -127,6 +141,17 @@ public partial class MainWindow : Window
 
         ViewportPlaceholderTextBlock.Text = "Nie znaleziono widoku roboczego";
         StatusTextBlock.Text = "Nie znaleziono viewportu: " + viewportProcessController.ViewportExecutablePath;
+    }
+
+    private void RestoreViewportInput()
+    {
+        Dispatcher.BeginInvoke(
+            () =>
+            {
+                viewportProcessController.ResizeEmbeddedViewport();
+                viewportProcessController.FocusViewport();
+            },
+            DispatcherPriority.ApplicationIdle);
     }
 
     protected override void OnClosed(EventArgs e)

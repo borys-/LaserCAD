@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="Laser CAD" Height="720" Width="1180"
         MinHeight="560" MinWidth="920"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded"
+        Activated="Window_Activated"
+        StateChanged="Window_StateChanged">
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">

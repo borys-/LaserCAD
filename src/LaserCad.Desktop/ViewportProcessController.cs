@@ -147,6 +147,7 @@ public sealed class ViewportProcessController : IDisposable
         }
 
         SetFocus(viewportWindowHandle);
+        SetActiveWindow(viewportWindowHandle);
     }
 
     private static IntPtr WaitForViewportWindowHandle(Process viewportProcess, TimeSpan timeout)
@@ -181,6 +182,9 @@ public sealed class ViewportProcessController : IDisposable
 
     [DllImport("user32.dll", SetLastError = true)]
     private static extern IntPtr SetFocus(IntPtr windowHandle);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    private static extern IntPtr SetActiveWindow(IntPtr windowHandle);
 
     [DllImport("user32.dll", SetLastError = true)]
     private static extern bool GetClientRect(IntPtr windowHandle, out NativeRect rect);
