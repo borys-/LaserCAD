@@ -20,9 +20,9 @@
                 <MenuItem Header="_Redo" />
             </MenuItem>
             <MenuItem Header="_View">
-                <MenuItem Header="_Reset View" />
-                <MenuItem Header="_Zoom To Fit" />
-                <MenuItem Header="_Grid" IsCheckable="True" IsChecked="True" />
+                <MenuItem Header="_Reset View" Click="ResetView_Click" />
+                <MenuItem Header="_Zoom To Fit" Click="ZoomToFit_Click" />
+                <MenuItem Header="_Grid" IsCheckable="True" IsChecked="True" Click="Grid_Click" />
             </MenuItem>
             <MenuItem Header="_Export">
                 <MenuItem Header="Export _SVG..." Click="ExportSvg_Click" />

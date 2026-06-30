@@ -2,6 +2,7 @@ using System.Windows;
 using LaserCad.Core.Documents;
 using LaserCad.Core.BoxGenerators;
 using LaserCad.Geometry.Units;
+using LaserCad.ViewportContract;
 using Microsoft.Win32;
 
 namespace LaserCad.Desktop;
@@ -65,6 +66,29 @@ public partial class MainWindow : Window
 
         viewModel.SetMaterialProfile(materialProfile);
         RefreshDocumentSummary();
+    }
+
+    private void ResetView_Click(object sender, RoutedEventArgs e)
+    {
+        viewportIpcClient.SendViewCommand(ViewportViewCommand.ResetView);
+        StatusTextBlock.Text = "Wyslano reset widoku do viewportu";
+    }
+
+    private void ZoomToFit_Click(object sender, RoutedEventArgs e)
+    {
+        viewportIpcClient.SendViewCommand(ViewportViewCommand.ZoomToFit);
+        StatusTextBlock.Text = "Wyslano zoom to fit do viewportu";
+    }
+
+    private void Grid_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not System.Windows.Controls.MenuItem menuItem)
+        {
+            return;
+        }
+
+        viewportIpcClient.SendViewCommand(ViewportViewCommand.SetGridVisibility, menuItem.IsChecked);
+        StatusTextBlock.Text = menuItem.IsChecked ? "Wlaczono grid viewportu" : "Wylaczono grid viewportu";
     }
 
     private void ExportFile(string filter, string fileName, Func<string, string> export)
