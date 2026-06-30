@@ -12,6 +12,7 @@
     <ProjectReference Include="..\LaserCad.Core\LaserCad.Core.csproj" />
     <ProjectReference Include="..\LaserCad.Export.Dxf\LaserCad.Export.Dxf.csproj" />
     <ProjectReference Include="..\LaserCad.Export.Svg\LaserCad.Export.Svg.csproj" />
+    <ProjectReference Include="..\LaserCad.Geometry\LaserCad.Geometry.csproj" />
   </ItemGroup>
 
 </Project>

@@ -33,6 +33,17 @@
             </MenuItem>
         </Menu>
 
+        <ToolBarTray DockPanel.Dock="Top" Background="#E6EAEE">
+            <ToolBar>
+                <Button Content="New" Padding="10,4" />
+                <Button Content="Open" Padding="10,4" />
+                <Button Content="Save" Padding="10,4" />
+                <Separator />
+                <Button Content="SVG" Padding="10,4" />
+                <Button Content="DXF" Padding="10,4" />
+            </ToolBar>
+        </ToolBarTray>
+
         <Grid Background="#F3F5F7">
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"

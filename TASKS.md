@@ -398,7 +398,7 @@ Zalecenie pracy:
 - [x] 3.6.2 Utworzyc projekt `LaserCad.Desktop`.
 - [x] 3.6.3 Dodac `LaserCad.Desktop` do solution.
 - [x] 3.6.4 Utworzyc glowne okno Windows z menu `File`, `Edit`, `View`, `Export`, `Help`.
-- [ ] 3.6.5 Dodac bazowy toolbar z akcjami: nowy, otworz, zapisz, eksport SVG, eksport DXF.
+- [x] 3.6.5 Dodac bazowy toolbar z akcjami: nowy, otworz, zapisz, eksport SVG, eksport DXF.
 - [ ] 3.6.6 Dodac dockowane panele shell: parametry pudelka, material/warstwy, historia, properties.
 - [ ] 3.6.7 Przeniesc kontrolki generatora pudelka z IMGUI Unity do desktop shell.
 - [ ] 3.6.8 Przeniesc eksport SVG/DXF z IMGUI Unity do desktop shell.

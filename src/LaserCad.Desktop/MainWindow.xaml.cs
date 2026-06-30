@@ -7,8 +7,11 @@ namespace LaserCad.Desktop;
 /// </summary>
 public partial class MainWindow : Window
 {
+    private readonly DesktopShellViewModel viewModel = new();
+
     public MainWindow()
     {
         InitializeComponent();
+        DataContext = viewModel;
     }
 }
