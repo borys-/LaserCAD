@@ -13,16 +13,23 @@ public sealed class ViewportIpcClient
 {
     private readonly DocumentSerializer documentSerializer = new();
     private readonly string outboxPath;
+    private readonly string inboxPath;
 
-    public ViewportIpcClient(string? outboxPath = null)
+    public ViewportIpcClient(string? outboxPath = null, string? inboxPath = null)
     {
-        this.outboxPath = outboxPath ?? Path.Combine(
+        var ipcDirectory = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "LaserCad",
+            "LaserCad");
+
+        this.outboxPath = outboxPath ?? Path.Combine(
+            ipcDirectory,
             "viewport-outbox.jsonl");
+        this.inboxPath = inboxPath ?? Path.Combine(ipcDirectory, "viewport-inbox.jsonl");
     }
 
     public string OutboxPath => outboxPath;
+
+    public string InboxPath => inboxPath;
 
     public void SendDocument(CadDocument document)
     {
@@ -33,6 +40,34 @@ public sealed class ViewportIpcClient
     public void SendViewCommand(ViewportViewCommand command, bool? enabled = null)
     {
         AppendMessage(ViewportMessageKind.ViewCommand, new ViewportViewCommandMessage(command, enabled));
+    }
+
+    public ViewportSelectionChangedMessage? ReadLatestSelectionChanged()
+    {
+        if (!File.Exists(inboxPath))
+        {
+            return null;
+        }
+
+        ViewportSelectionChangedMessage? latestSelection = null;
+
+        foreach (var line in File.ReadLines(inboxPath))
+        {
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                continue;
+            }
+
+            var envelope = JsonSerializer.Deserialize<ViewportEnvelope>(line);
+            if (envelope == null || envelope.Kind != ViewportMessageKind.SelectionChanged)
+            {
+                continue;
+            }
+
+            latestSelection = envelope.Payload.Deserialize<ViewportSelectionChangedMessage>();
+        }
+
+        return latestSelection;
     }
 
     private void AppendMessage<TPayload>(ViewportMessageKind kind, TPayload payload)

@@ -91,6 +91,15 @@ public partial class MainWindow : Window
         StatusTextBlock.Text = menuItem.IsChecked ? "Wlaczono grid viewportu" : "Wylaczono grid viewportu";
     }
 
+    private void RefreshSelection_Click(object sender, RoutedEventArgs e)
+    {
+        var selection = viewportIpcClient.ReadLatestSelectionChanged();
+        SelectedEntitiesTextBlock.Text = "Zaznaczone: " + (selection?.EntityIds.Count ?? 0);
+        StatusTextBlock.Text = selection == null
+            ? "Brak zdarzen zaznaczenia z viewportu"
+            : "Odczytano zaznaczenie z viewportu";
+    }
+
     private void ExportFile(string filter, string fileName, Func<string, string> export)
     {
         var dialog = new SaveFileDialog

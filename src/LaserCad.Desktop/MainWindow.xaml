@@ -116,6 +116,8 @@
                         <StackPanel Margin="10">
                             <TextBlock x:Name="DocumentNameTextBlock" Text="Dokument: Projekt pudelka" />
                             <TextBlock x:Name="SketchCountTextBlock" Text="Szkice: 1" />
+                            <TextBlock x:Name="SelectedEntitiesTextBlock" Text="Zaznaczone: 0" />
+                            <Button Content="Odswiez zaznaczenie" Click="RefreshSelection_Click" Margin="0,8,0,0" />
                             <TextBlock x:Name="StatusTextBlock" Text="Gotowe" Margin="0,8,0,0" TextWrapping="Wrap" />
                         </StackPanel>
                     </GroupBox>
