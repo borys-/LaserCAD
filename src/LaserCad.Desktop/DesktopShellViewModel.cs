@@ -46,6 +46,10 @@ public sealed class DesktopShellViewModel
 
     public bool CanRedo => history.CanRedo;
 
+    public int KerfCalibrationSlotIndex { get; private set; }
+
+    public double KerfCalibrationMeasuredWidthMillimeters { get; private set; }
+
     public void NewDocument()
     {
         ReplaceDocument(new CadDocument(name: "Nowy projekt").WithMaterialProfile(SelectedMaterialProfile));
@@ -217,6 +221,23 @@ public sealed class DesktopShellViewModel
             : "Podglad nominalny bez kompensacji kerfu";
 
         return document;
+    }
+
+    public void SetKerfCalibrationMeasurement(int slotIndex, double measuredWidthMillimeters)
+    {
+        if (slotIndex < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(slotIndex), "Indeks szczeliny nie moze byc ujemny.");
+        }
+
+        if (measuredWidthMillimeters <= 0.0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(measuredWidthMillimeters), "Pomiar musi byc wiekszy od zera.");
+        }
+
+        KerfCalibrationSlotIndex = slotIndex;
+        KerfCalibrationMeasuredWidthMillimeters = measuredWidthMillimeters;
+        StatusText = $"Pomiar kerfu: szczelina {slotIndex}, {measuredWidthMillimeters:0.###} mm";
     }
 
     private CadDocument CreateBoxDocument(BoxGeneratorOptions options, MaterialProfile materialProfile)

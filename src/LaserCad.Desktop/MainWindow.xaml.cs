@@ -227,6 +227,21 @@ public partial class MainWindow : Window
         PublishKerfPreview(afterCompensation: true);
     }
 
+    private void SaveKerfCalibrationMeasurement_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            viewModel.SetKerfCalibrationMeasurement(
+                ParseInteger(KerfCalibrationSlotIndexTextBox.Text, "Szczelina"),
+                ParseMillimeters(KerfCalibrationMeasuredWidthTextBox.Text, "Pomiar szczeliny"));
+            RefreshDocumentSummary();
+        }
+        catch (Exception ex) when (ex is FormatException or ArgumentOutOfRangeException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
     private void RefreshSelection_Click(object sender, RoutedEventArgs e)
     {
         var selection = viewportIpcClient.ReadLatestSelectionChanged();
@@ -331,6 +346,16 @@ public partial class MainWindow : Window
     private static double ParseNumber(string value, string fieldName)
     {
         if (!double.TryParse(value, out var result))
+        {
+            throw new FormatException("Niepoprawna wartosc pola: " + fieldName);
+        }
+
+        return result;
+    }
+
+    private static int ParseInteger(string value, string fieldName)
+    {
+        if (!int.TryParse(value, out var result))
         {
             throw new FormatException("Niepoprawna wartosc pola: " + fieldName);
         }

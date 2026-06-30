@@ -280,6 +280,21 @@
                         </StackPanel>
                     </GroupBox>
 
+                    <GroupBox Header="Kalibracja kerfu">
+                        <StackPanel>
+                            <TextBlock Text="Szczelina / pomiar mm" Style="{StaticResource FieldLabelStyle}" />
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="KerfCalibrationSlotIndexTextBox" Text="0" Margin="0,0,4,0" />
+                                <TextBox x:Name="KerfCalibrationMeasuredWidthTextBox" Grid.Column="1" Text="20" Margin="4,0,0,0" />
+                            </Grid>
+                            <Button Content="Zapisz pomiar" Click="SaveKerfCalibrationMeasurement_Click" />
+                        </StackPanel>
+                    </GroupBox>
+
                     <GroupBox Header="Transformacje">
                         <StackPanel>
                             <TextBlock Text="Przesuniecie X / Y" Style="{StaticResource FieldLabelStyle}" />
