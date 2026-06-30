@@ -242,6 +242,20 @@ public partial class MainWindow : Window
         }
     }
 
+    private void SaveKerfRecommendationToProfile_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            viewModel.SaveKerfRecommendationToMaterialProfile();
+            MaterialProfileComboBox.SelectedItem = viewModel.SelectedMaterialProfile;
+            PublishDocument();
+        }
+        catch (InvalidOperationException ex)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
     private void RefreshSelection_Click(object sender, RoutedEventArgs e)
     {
         var selection = viewportIpcClient.ReadLatestSelectionChanged();
@@ -457,5 +471,8 @@ public partial class MainWindow : Window
         RedoCountTextBlock.Text = "Redo: " + viewModel.RedoCount;
         StatusTextBlock.Text = viewModel.StatusText;
         LayersItemsControl.ItemsSource = viewModel.CurrentDocument.Layers;
+        KerfCalibrationRecommendationTextBlock.Text = viewModel.KerfCalibrationRecommendedKerfMillimeters is double kerf
+            ? $"Rekomendacja: {kerf:0.###} mm"
+            : "Rekomendacja: -";
     }
 }

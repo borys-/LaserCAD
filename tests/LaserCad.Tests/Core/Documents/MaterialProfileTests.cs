@@ -126,4 +126,23 @@ public sealed class MaterialProfileTests
         Assert.Throws<ArgumentOutOfRangeException>(
             () => _ = new MaterialProfile("Invalid", minimumFingerWidth: Length.FromMillimeters(-1.0)));
     }
+
+    [Test]
+    public void WithDefaultKerf_ShouldReturnProfileWithUpdatedKerf()
+    {
+        var profile = new MaterialProfile(
+            "Plywood 3 mm",
+            Length.FromMillimeters(3.0),
+            Length.FromMillimeters(0.15),
+            Length.FromMillimeters(0.1),
+            Length.FromMillimeters(3.0));
+
+        var updated = profile.WithDefaultKerf(Length.FromMillimeters(0.2));
+
+        Assert.That(updated.Name, Is.EqualTo(profile.Name));
+        Assert.That(updated.Thickness, Is.EqualTo(profile.Thickness));
+        Assert.That(updated.DefaultKerf, Is.EqualTo(Length.FromMillimeters(0.2)));
+        Assert.That(updated.DefaultClearance, Is.EqualTo(profile.DefaultClearance));
+        Assert.That(updated.MinimumFingerWidth, Is.EqualTo(profile.MinimumFingerWidth));
+    }
 }

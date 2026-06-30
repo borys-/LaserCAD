@@ -50,6 +50,8 @@ public sealed class DesktopShellViewModel
 
     public double KerfCalibrationMeasuredWidthMillimeters { get; private set; }
 
+    public double? KerfCalibrationRecommendedKerfMillimeters { get; private set; }
+
     public void NewDocument()
     {
         ReplaceDocument(new CadDocument(name: "Nowy projekt").WithMaterialProfile(SelectedMaterialProfile));
@@ -237,7 +239,31 @@ public sealed class DesktopShellViewModel
 
         KerfCalibrationSlotIndex = slotIndex;
         KerfCalibrationMeasuredWidthMillimeters = measuredWidthMillimeters;
-        StatusText = $"Pomiar kerfu: szczelina {slotIndex}, {measuredWidthMillimeters:0.###} mm";
+        KerfCalibrationRecommendedKerfMillimeters = KerfCalibrationCalculator.CalculateRecommendedKerf(
+            new KerfCalibrationOptions(),
+            slotIndex,
+            Length.FromMillimeters(measuredWidthMillimeters)).Millimeters;
+        StatusText = $"Rekomendowany kerf: {KerfCalibrationRecommendedKerfMillimeters:0.###} mm";
+    }
+
+    public void SaveKerfRecommendationToMaterialProfile()
+    {
+        if (KerfCalibrationRecommendedKerfMillimeters is null)
+        {
+            throw new InvalidOperationException("Najpierw zapisz pomiar kalibracji kerfu.");
+        }
+
+        var updatedProfile = SelectedMaterialProfile.WithDefaultKerf(
+            Length.FromMillimeters(KerfCalibrationRecommendedKerfMillimeters.Value));
+        var index = MaterialProfiles.IndexOf(SelectedMaterialProfile);
+        if (index >= 0)
+        {
+            MaterialProfiles[index] = updatedProfile;
+        }
+
+        SelectedMaterialProfile = updatedProfile;
+        ReplaceDocument(CurrentDocument.WithMaterialProfile(updatedProfile));
+        StatusText = $"Zapisano kerf {updatedProfile.DefaultKerf.Millimeters:0.###} mm do profilu materialu";
     }
 
     private CadDocument CreateBoxDocument(BoxGeneratorOptions options, MaterialProfile materialProfile)

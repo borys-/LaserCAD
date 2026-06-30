@@ -291,7 +291,18 @@
                                 <TextBox x:Name="KerfCalibrationSlotIndexTextBox" Text="0" Margin="0,0,4,0" />
                                 <TextBox x:Name="KerfCalibrationMeasuredWidthTextBox" Grid.Column="1" Text="20" Margin="4,0,0,0" />
                             </Grid>
-                            <Button Content="Zapisz pomiar" Click="SaveKerfCalibrationMeasurement_Click" />
+                            <TextBlock x:Name="KerfCalibrationRecommendationTextBlock"
+                                       Text="Rekomendacja: -"
+                                       Foreground="{StaticResource MutedTextBrush}"
+                                       Margin="0,0,0,8" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button Content="Przelicz" Click="SaveKerfCalibrationMeasurement_Click" Margin="0,0,4,0" />
+                                <Button Grid.Column="1" Content="Zapisz profil" Click="SaveKerfRecommendationToProfile_Click" Margin="4,0,0,0" />
+                            </Grid>
                         </StackPanel>
                     </GroupBox>
 

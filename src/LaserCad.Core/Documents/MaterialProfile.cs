@@ -58,6 +58,14 @@ public sealed class MaterialProfile
     public Length MinimumFingerWidth { get; }
 
     /// <summary>
+    /// Tworzy kopie profilu z nowym domyslnym kerfem.
+    /// </summary>
+    public MaterialProfile WithDefaultKerf(Length defaultKerf)
+    {
+        return new MaterialProfile(Name, Thickness, defaultKerf, DefaultClearance, MinimumFingerWidth);
+    }
+
+    /// <summary>
     /// Zwraca dlugosc po sprawdzeniu, ze nie jest ujemna.
     /// </summary>
     private static Length EnsureNonNegative(Length value, string parameterName, string message)
