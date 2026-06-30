@@ -328,6 +328,12 @@ Generator pudelka w pierwszej wersji tworzy szkic 2D z konturami scianek jako za
 
 To nadal model MVP: generator nie opisuje jeszcze zaleznosci montazowych miedzy konkretnymi krawedziami scianek, nie rozroznia palcow i wciec komplementarnych dla sasiednich elementow, nie zapisuje instancji generatora w dokumencie i nie wykonuje pelnej kompensacji kerfu konturow z klasyfikacja wewnetrzna/zewnetrzna. Ten zakres pozostaje dla kolejnych sekcji UI, kerfu i modelu generatorow.
 
+### Ograniczenia pozostalych generatorow MVP
+
+Pozostale generatory z sekcji 8.2 tworza proste szkice 2D przez wspolny kontrakt `ISketchGenerator`. Dostepne sa generatory: tray, organizer, drawer, divider, pegboard, frame oraz stand. Kazdy zwraca szkic z podstawowymi encjami domenowymi na warstwach `Cut` i, tam gdzie ma to sens, `Score`.
+
+To sa generatory bazowe do dalszego rozwijania workflow, a nie pelne modele produktowe. Nie maja jeszcze wlasnych instancji parametrycznych zapisanych w dokumencie, nie generuja zlozonych polaczen montazowych, nie korzystaja z nestingu i nie sa jeszcze podlaczone do UI desktop shell.
+
 ## Faza 9 - Kerf
 
 - Kompensacja:

@@ -601,15 +601,15 @@ Zalecenie pracy:
 
 ## 8.2 Pozostale generatory
 
-- [ ] 8.2.0 Utworzyc wspolny interfejs generatora.
-- [ ] 8.2.1 Dodac generator tray.
-- [ ] 8.2.2 Dodac generator organizer.
-- [ ] 8.2.3 Dodac generator drawer.
-- [ ] 8.2.4 Dodac generator divider.
-- [ ] 8.2.5 Dodac generator pegboard.
-- [ ] 8.2.6 Dodac generator ramki.
-- [ ] 8.2.7 Dodac generator stojaka/podstawki.
-- [ ] 8.2.8 Dodac test, ze kazdy generator zwraca poprawny dokument/sketch.
+- [x] 8.2.0 Utworzyc wspolny interfejs generatora.
+- [x] 8.2.1 Dodac generator tray.
+- [x] 8.2.2 Dodac generator organizer.
+- [x] 8.2.3 Dodac generator drawer.
+- [x] 8.2.4 Dodac generator divider.
+- [x] 8.2.5 Dodac generator pegboard.
+- [x] 8.2.6 Dodac generator ramki.
+- [x] 8.2.7 Dodac generator stojaka/podstawki.
+- [x] 8.2.8 Dodac test, ze kazdy generator zwraca poprawny dokument/sketch.
 
 ## 9.0 Kerf compensation
 
