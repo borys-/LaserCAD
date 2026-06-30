@@ -5,7 +5,8 @@
     "LaserCad.Core",
     "LaserCad.Geometry",
     "LaserCad.Export.Svg",
-    "LaserCad.Export.Dxf"
+    "LaserCad.Export.Dxf",
+    "LaserCad.ViewportContract"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

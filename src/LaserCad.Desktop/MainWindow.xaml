@@ -1,11 +1,13 @@
 <Window x:Class="LaserCad.Desktop.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Laser CAD" Height="720" Width="1180"
-        MinHeight="560" MinWidth="920">
+        MinHeight="560" MinWidth="920"
+        Loaded="Window_Loaded">
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
@@ -41,10 +43,6 @@
                 <Separator />
                 <Button Content="SVG" Padding="10,4" Click="ExportSvg_Click" />
                 <Button Content="DXF" Padding="10,4" Click="ExportDxf_Click" />
-                <Separator />
-                <Button Content="Start viewport" Padding="10,4" Click="StartViewport_Click" />
-                <Button Content="Restart" Padding="10,4" Click="RestartViewport_Click" />
-                <Button Content="Stop" Padding="10,4" Click="StopViewport_Click" />
             </ToolBar>
         </ToolBarTray>
 
@@ -99,12 +97,16 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <Border Grid.Column="1" Margin="12" BorderBrush="#CFD6DE" BorderThickness="1" Background="#FAFBFC">
-                <TextBlock HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontSize="20"
-                           Foreground="#5D6875"
-                           Text="Unity viewport process" />
+            <Border Grid.Column="1" Margin="12" BorderBrush="#CFD6DE" BorderThickness="1" Background="#151515">
+                <Grid>
+                    <wfi:WindowsFormsHost x:Name="ViewportHost" />
+                    <TextBlock x:Name="ViewportPlaceholderTextBlock"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               Foreground="#9AA4AF"
+                               Text="Ladowanie widoku..." />
+                </Grid>
             </Border>
 
             <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto" Background="#FFFFFF">

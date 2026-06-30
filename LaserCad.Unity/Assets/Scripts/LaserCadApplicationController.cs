@@ -111,8 +111,16 @@ namespace LaserCad.Unity
             }
         }
 
-        private void LoadDocument(CadDocument document)
+        /// <summary>
+        /// Laduje nowy dokument CAD do viewportu.
+        /// </summary>
+        public void LoadDocument(CadDocument document)
         {
+            if (document == null)
+            {
+                throw new ArgumentNullException(nameof(document));
+            }
+
             CurrentDocument = document;
             CurrentHistory = new UndoRedoStack(document);
             if (documentInfoView != null)

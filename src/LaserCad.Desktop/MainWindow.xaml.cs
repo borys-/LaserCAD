@@ -4,6 +4,8 @@ using LaserCad.Core.BoxGenerators;
 using LaserCad.Geometry.Units;
 using LaserCad.ViewportContract;
 using Microsoft.Win32;
+using DockStyle = System.Windows.Forms.DockStyle;
+using Panel = System.Windows.Forms.Panel;
 
 namespace LaserCad.Desktop;
 
@@ -15,6 +17,7 @@ public partial class MainWindow : Window
     private readonly DesktopShellViewModel viewModel = new();
     private readonly ViewportIpcClient viewportIpcClient = new();
     private readonly ViewportProcessController viewportProcessController = new();
+    private readonly Panel viewportPanel = new() { Dock = DockStyle.Fill };
 
     public MainWindow()
     {
@@ -22,7 +25,14 @@ public partial class MainWindow : Window
         DataContext = viewModel;
         MaterialProfileComboBox.ItemsSource = viewModel.MaterialProfiles;
         MaterialProfileComboBox.SelectedItem = viewModel.SelectedMaterialProfile;
+        ViewportHost.Child = viewportPanel;
+        viewportPanel.Resize += (_, _) => viewportProcessController.ResizeEmbeddedViewport();
         RefreshDocumentSummary();
+    }
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+        StartEmbeddedViewport();
     }
 
     private void RebuildBoxButton_Click(object sender, RoutedEventArgs e)
@@ -102,25 +112,18 @@ public partial class MainWindow : Window
             : "Odczytano zaznaczenie z viewportu";
     }
 
-    private void StartViewport_Click(object sender, RoutedEventArgs e)
+    private void StartEmbeddedViewport()
     {
-        StatusTextBlock.Text = viewportProcessController.TryStart()
-            ? "Uruchomiono proces Unity viewport"
-            : "Nie znaleziono viewportu albo proces juz dziala: " + viewportProcessController.ViewportExecutablePath;
-    }
+        if (viewportProcessController.TryStartEmbedded(viewportPanel.Handle))
+        {
+            ViewportPlaceholderTextBlock.Visibility = Visibility.Collapsed;
+            viewportIpcClient.SendDocument(viewModel.CurrentDocument);
+            StatusTextBlock.Text = "Gotowe";
+            return;
+        }
 
-    private void RestartViewport_Click(object sender, RoutedEventArgs e)
-    {
-        StatusTextBlock.Text = viewportProcessController.Restart()
-            ? "Zrestartowano proces Unity viewport"
-            : "Nie znaleziono viewportu: " + viewportProcessController.ViewportExecutablePath;
-    }
-
-    private void StopViewport_Click(object sender, RoutedEventArgs e)
-    {
-        StatusTextBlock.Text = viewportProcessController.Stop()
-            ? "Zamknieto proces Unity viewport"
-            : "Proces Unity viewport nie byl uruchomiony";
+        ViewportPlaceholderTextBlock.Text = "Nie znaleziono widoku roboczego";
+        StatusTextBlock.Text = "Nie znaleziono viewportu: " + viewportProcessController.ViewportExecutablePath;
     }
 
     protected override void OnClosed(EventArgs e)
@@ -131,7 +134,7 @@ public partial class MainWindow : Window
 
     private void ExportFile(string filter, string fileName, Func<string, string> export)
     {
-        var dialog = new SaveFileDialog
+        var dialog = new Microsoft.Win32.SaveFileDialog
         {
             Filter = filter,
             FileName = fileName,

@@ -4,7 +4,7 @@
 
 `LaserCad.Desktop` jest procesem nadrzednym. Przechowuje stan workflow aplikacji, pokazuje menu, toolbar, panele parametrow, materialy, warstwy, properties oraz eksport.
 
-Unity player jest procesem viewportu. Jest uruchamiany przez shell z argumentem `--viewport` i znajduje sie w katalogu `Viewport` obok opublikowanej aplikacji desktopowej.
+Unity player jest procesem viewportu. Jest uruchamiany przez shell z argumentem `--viewport` i znajduje sie w katalogu `Viewport` obok opublikowanej aplikacji desktopowej. Dla uzytkownika viewport jest czescia glownego okna aplikacji: shell automatycznie uruchamia proces i osadza jego okno w centralnym panelu roboczym.
 
 ## Uruchamianie
 
@@ -14,7 +14,9 @@ Shell szuka viewportu pod sciezka:
 <katalog aplikacji desktop>\Viewport\LaserCad.exe
 ```
 
-Klikniecie `Start viewport` uruchamia Unity z argumentem `--viewport`. Klikniecie `Restart` zamyka aktualny proces i uruchamia nowy. Klikniecie `Stop` zamyka proces viewportu. Zamkniecie okna desktop shell rowniez zamyka proces viewportu.
+Po zaladowaniu glownego okna shell uruchamia Unity z argumentem `--viewport`, osadza okno procesu w centralnym panelu i wysyla aktualny dokument przez IPC. Zamkniecie okna desktop shell zamyka proces viewportu.
+
+Techniczne sterowanie procesem viewportu nie jest elementem docelowego UI uzytkownika. Uzytkownik ma widziec obszar roboczy CAD, a nie recznie zarzadzac osobnym procesem.
 
 ## IPC MVP
 

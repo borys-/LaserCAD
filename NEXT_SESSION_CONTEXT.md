@@ -1,5 +1,27 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po osadzeniu Unity viewport w desktop shell
+
+- Po uwadze uzytkownika poprawiono kierunek UX desktop shell: viewport Unity ma byc widoczny w glownym oknie aplikacji, bez technicznych przyciskow `Start viewport`, `Restart`, `Stop`.
+- Nowe zmiany techniczne:
+  - `LaserCad.Desktop` uzywa `WindowsFormsHost` jako centralnego hosta viewportu,
+  - `ViewportProcessController.TryStartEmbedded(IntPtr)` uruchamia Unity playera, czeka na uchwyt okna, osadza go przez Win32 `SetParent`, usuwa ramki okna i dopasowuje rozmiar przez `MoveWindow`,
+  - desktop shell automatycznie startuje viewport w `Window_Loaded` i od razu wysyla aktualny dokument do outboxa IPC,
+  - toolbar nie pokazuje juz technicznych przyciskow procesu viewportu,
+  - dodano `ViewportIpcBridge` po stronie Unity, ktory w trybie `--viewport` czyta `%LOCALAPPDATA%\LaserCad\viewport-outbox.jsonl`, laduje `DocumentSnapshot` przez `DocumentSerializer`, obsluguje komendy widoku i odsyla `SelectionChanged` do inboxa,
+  - `LaserCad.ViewportContract` multi-targetuje teraz `net9.0;netstandard2.1` i kopiuje DLL do pluginow Unity.
+- Dokumentacja:
+  - dopisano `3.6.23` w `TASKS.md`,
+  - `docs/DESKTOP_VIEWPORT_LIFECYCLE.md` opisuje teraz viewport jako wbudowany panel roboczy, a nie recznie zarzadzany proces.
+- Weryfikacja:
+  - `dotnet build LaserCad.sln --no-restore` przechodzi,
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `404/404`,
+  - `dotnet build src\LaserCad.ViewportContract\LaserCad.ViewportContract.csproj -f netstandard2.1 --no-restore` przechodzi,
+  - `cmd /c build.bat` przechodzi po zamknieciu starego uruchomionego `LaserCad.Desktop.exe`,
+  - smoke test potwierdzil, ze `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe` startuje i automatycznie uruchamia proces Unity viewportu z katalogu `Viewport`.
+- Uwaga:
+  - w smoke tescie sprawdzono start procesow, ale nie wykonano jeszcze wizualnego zrzutu osadzonego viewportu; nastepny krok to reczna weryfikacja, czy geometria pudelka jest widoczna w centralnym panelu po starcie i po `Przebuduj`.
+
 ## Aktualizacja po sekcji 3.6 Windows shell + Unity viewport
 
 - W tej sesji wykonano cala sekcje `3.6 Windows shell + Unity viewport` od `3.6.0` do `3.6.22`.
