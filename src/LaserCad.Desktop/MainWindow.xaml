@@ -41,6 +41,8 @@
                 <Separator />
                 <Button Content="SVG" Padding="10,4" Click="ExportSvg_Click" />
                 <Button Content="DXF" Padding="10,4" Click="ExportDxf_Click" />
+                <Separator />
+                <Button Content="Start viewport" Padding="10,4" Click="StartViewport_Click" />
             </ToolBar>
         </ToolBarTray>
 

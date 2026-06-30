@@ -14,6 +14,7 @@ public partial class MainWindow : Window
 {
     private readonly DesktopShellViewModel viewModel = new();
     private readonly ViewportIpcClient viewportIpcClient = new();
+    private readonly ViewportProcessController viewportProcessController = new();
 
     public MainWindow()
     {
@@ -98,6 +99,13 @@ public partial class MainWindow : Window
         StatusTextBlock.Text = selection == null
             ? "Brak zdarzen zaznaczenia z viewportu"
             : "Odczytano zaznaczenie z viewportu";
+    }
+
+    private void StartViewport_Click(object sender, RoutedEventArgs e)
+    {
+        StatusTextBlock.Text = viewportProcessController.TryStart()
+            ? "Uruchomiono proces Unity viewport"
+            : "Nie znaleziono viewportu albo proces juz dziala: " + viewportProcessController.ViewportExecutablePath;
     }
 
     private void ExportFile(string filter, string fileName, Func<string, string> export)
