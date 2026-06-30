@@ -38,3 +38,18 @@
 - Przeciagnac lewym przyciskiem myszy prostokat przez encje i potwierdzic, ze encje w obszarze sa zaznaczone.
 - Potwierdzic, ze zaznaczone encje maja niebieski obrys bounding boxa.
 - Potwierdzic, ze panel pokazuje typ, warstwe i bounding box pierwszej zaznaczonej encji.
+
+## GUI funkcji domenowych
+
+- Uruchomic aplikacje albo scene `Assets/Scenes/Workspace.unity`.
+- Potwierdzic, ze po lewej stronie widoczny jest panel `Generator pudelka`.
+- Zmienic `Szerokosc` i kliknac `Zastosuj`; geometria dokumentu powinna zostac przebudowana.
+- Wybrac typ `Otwarte` i potwierdzic, ze widac 5 paneli pudelka.
+- Wybrac typ `Z pokrywa` i potwierdzic, ze widac 6 paneli pudelka.
+- W panelu `Eksport SVG` kliknac `Eksportuj SVG` i potwierdzic komunikat z pelna sciezka zapisu.
+- W panelu `Eksport DXF` kliknac `Eksportuj DXF` i potwierdzic komunikat z pelna sciezka zapisu.
+- Otworzyc zapisane pliki z katalogu `Application.persistentDataPath` i potwierdzic, ze zawieraja aktualny dokument.
+- W panelu `Material i warstwy` wybrac inny profil materialu i kliknac `Zastosuj material`.
+- Potwierdzic, ze panel `Material i warstwy` pokazuje grubosc, kerf, clearance, minimalna szerokosc palca oraz liste warstw.
+- Potwierdzic, ze panel `Historia` pokazuje liczbe pozycji undo i redo.
+- Potwierdzic, ze panel `Constraints / Dimensions` pokazuje liczbe szkicow oraz liczbe powiazan wymiarow.
