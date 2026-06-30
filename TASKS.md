@@ -404,7 +404,7 @@ Zalecenie pracy:
 - [x] 3.6.8 Przeniesc eksport SVG/DXF z IMGUI Unity do desktop shell.
 - [x] 3.6.9 Przeniesc wybor profilu materialu i liste warstw z IMGUI Unity do desktop shell.
 - [x] 3.6.10 Zdefiniowac kontrakt IPC `LaserCad.ViewportContract` dla komunikacji shell -> viewport.
-- [ ] 3.6.11 Dodac komunikat IPC wyslania aktualnego dokumentu do viewportu.
+- [x] 3.6.11 Dodac komunikat IPC wyslania aktualnego dokumentu do viewportu.
 - [ ] 3.6.12 Dodac komunikat IPC zmiany widoku: reset, zoom to fit, grid on/off.
 - [ ] 3.6.13 Dodac komunikat IPC zaznaczenia encji z viewportu do shell.
 - [ ] 3.6.14 Utworzyc tryb Unity viewport process uruchamiany z argumentem `--viewport`.

@@ -12,6 +12,7 @@ namespace LaserCad.Desktop;
 public partial class MainWindow : Window
 {
     private readonly DesktopShellViewModel viewModel = new();
+    private readonly ViewportIpcClient viewportIpcClient = new();
 
     public MainWindow()
     {
@@ -36,6 +37,7 @@ public partial class MainWindow : Window
                 Length.FromMillimeters(ParseMillimeters(ClearanceTextBox.Text, "Clearance")));
 
             viewModel.ApplyBoxOptions(options);
+            viewportIpcClient.SendDocument(viewModel.CurrentDocument);
             RefreshDocumentSummary();
         }
         catch (Exception ex) when (ex is FormatException or ArgumentOutOfRangeException)
