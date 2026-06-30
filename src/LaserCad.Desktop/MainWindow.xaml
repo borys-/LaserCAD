@@ -69,7 +69,7 @@
                             <TextBox x:Name="FingerWidthTextBox" Text="10" Margin="0,2,0,8" />
                             <TextBlock Text="Clearance" />
                             <TextBox x:Name="ClearanceTextBox" Text="0" Margin="0,2,0,8" />
-                            <Button Content="Przebuduj" />
+                            <Button Content="Przebuduj" Click="RebuildBoxButton_Click" />
                         </StackPanel>
                     </GroupBox>
 
@@ -103,7 +103,7 @@
                         <StackPanel Margin="10">
                             <TextBlock x:Name="DocumentNameTextBlock" Text="Dokument: Projekt pudelka" />
                             <TextBlock x:Name="SketchCountTextBlock" Text="Szkice: 1" />
-                            <TextBlock x:Name="StatusTextBlock" Text="Gotowe" Margin="0,8,0,0" />
+                            <TextBlock x:Name="StatusTextBlock" Text="Gotowe" Margin="0,8,0,0" TextWrapping="Wrap" />
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
