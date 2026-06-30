@@ -1,5 +1,76 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 3.6 Windows shell + Unity viewport
+
+- W tej sesji wykonano cala sekcje `3.6 Windows shell + Unity viewport` od `3.6.0` do `3.6.22`.
+- Nowe commity:
+  - `8870ab3 3.6 Zaplanuj desktop shell z viewportem Unity` byl lokalnie przed startem tej sesji,
+  - `ce10919 3.6.0 Wybierz architekture shell i viewport`,
+  - `1e1fdd1 3.6.1 Wybierz WPF dla desktop shell`,
+  - `8e160f7 3.6.2 Utworz projekt desktop shell`,
+  - `e89cbda 3.6.3 Dodaj desktop shell do solution`,
+  - `61bbb69 3.6.4 Dodaj glowne okno desktop shell`,
+  - `0a1ecc5 3.6.5 Dodaj toolbar desktop shell`,
+  - `f75888a 3.6.6 Dodaj panele desktop shell`,
+  - `5f9eef0 3.6.7 Przenies generator pudelka do desktop shell`,
+  - `1b8e6d3 3.6.8 Przenies eksport do desktop shell`,
+  - `06fdfbe 3.6.9 Przenies materialy i warstwy do desktop shell`,
+  - `7b744fe 3.6.10 Dodaj kontrakt IPC viewportu`,
+  - `f10d1ca 3.6.11 Wysylaj dokument do viewportu`,
+  - `70913c8 3.6.12 Wysylaj komendy widoku do viewportu`,
+  - `f82d754 3.6.13 Odbieraj zaznaczenie z viewportu`,
+  - `dd09958 3.6.14 Dodaj tryb procesu viewportu Unity`,
+  - `85a1645 3.6.14 Dodaj meta trybu viewportu Unity`,
+  - `672ab4a 3.6.15 Uruchamiaj viewport z desktop shell`,
+  - `e21e384 3.6.16 Dodaj restart i zamykanie viewportu`,
+  - `2578913 3.6.17 Wysylaj przebudowany dokument do viewportu`,
+  - `0b42bb7 3.6.18 Zdegraduj panele Unity do debug viewportu`,
+  - `1aeaa9c 3.6.19 Dodaj build desktop shell`,
+  - `01c0555 3.6.20 Pakuj viewport obok desktop shell`,
+  - `3cd6a9d 3.6.21 Dodaj checkliste QA desktop viewport`,
+  - `791af3c 3.6.22 Opisz lifecycle desktop viewport`,
+  - `e615907 3.6 Dopisz dokumenty desktop viewport do README`,
+  - `e6a4992 3.6 Zaktualizuj kryteria MVP po desktop shell`.
+- Zmiany techniczne:
+  - dodano WPF shell `src/LaserCad.Desktop`,
+  - dodano kontrakt `src/LaserCad.ViewportContract`,
+  - shell ma menu `File`, `Edit`, `View`, `Export`, `Help`, toolbar, panele parametrow pudelka, materialow/warstw, historii i properties,
+  - shell generuje dokument pudelka przez domenowy `BoxGenerator`, eksportuje SVG/DXF przez istniejace eksportery i wysyla snapshot dokumentu do viewportu,
+  - prosty IPC MVP zapisuje JSON lines w `%LOCALAPPDATA%\LaserCad\viewport-outbox.jsonl` i czyta zaznaczenie z `%LOCALAPPDATA%\LaserCad\viewport-inbox.jsonl`,
+  - Unity ma tryb `--viewport`; w tym trybie nie laduje demo dokumentu i nie rysuje paneli IMGUI,
+  - `build.bat` publikuje desktop shell oraz pakuje Unity playera do `bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Dokumentacja:
+  - dodano `docs/DESKTOP_VIEWPORT_QA.md`,
+  - dodano `docs/DESKTOP_VIEWPORT_LIFECYCLE.md`,
+  - README linkuje nowe dokumenty.
+- Po przegladzie planu:
+  - odhaczono `3.6.0`-`3.6.22`,
+  - odhaczono `MVP.0.16`,
+  - odhaczono `MVP.1.0`, `MVP.1.1`, `MVP.1.2`, `MVP.1.3`, `MVP.1.6`, `MVP.1.8`,
+  - nie odhaczono `MVP.1.4` i `MVP.1.5`, bo Unity viewport nie konsumuje jeszcze outboxa IPC i nie renderuje dokumentu wyslanego z desktop shell,
+  - `MVP.0.14` i `MVP.0.15` nadal sa nieodhaczone, bo wymagaja artefaktu SVG pudelka testowego i sprawdzenia skali w zewnetrznym programie.
+- Widoczne po odpaleniu aplikacji:
+  - uruchamiac `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - glowne okno WPF pokazuje menu, toolbar oraz trzykolumnowy uklad: panele po lewej, placeholder viewportu w srodku, properties po prawej,
+  - w panelu `Parametry pudelka` zmiana wymiarow i klikniecie `Przebuduj` przebudowuje dokument shell i dopisuje `DocumentSnapshot` do outboxa IPC,
+  - `Material i warstwy` pozwala wybrac profil materialu i pokazuje warstwy dokumentu,
+  - przyciski `SVG` i `DXF` otwieraja systemowy dialog zapisu i eksportuja aktualny dokument,
+  - `Start viewport` uruchamia `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe --viewport`,
+  - `Restart` i `Stop` zarzadzaja procesem viewportu,
+  - `View -> Reset View`, `View -> Zoom To Fit`, `View -> Grid` dopisuja komendy widoku do outboxa IPC,
+  - w Unity uruchomionym z `--viewport` nie powinny byc widoczne dawne panele IMGUI; zostaja tylko w trybie debug bez `--viewport`.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `404/404`,
+  - `cmd /c build.bat` zakonczyl sie sukcesem,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`,
+  - log Unity `C:\borys\CAD\bin\release\unity-build.log` zawiera `Build Finished, Result: Success.`; sa w nim komunikaty licencyjne Unity typu `LicensingClient has failed validation`, ale build zakonczyl sie sukcesem.
+- Nastepne najlepsze kroki:
+  - zaimplementowac po stronie Unity czytanie `viewport-outbox.jsonl` i ladowanie `DocumentSnapshot` do `LaserCadApplicationController`,
+  - wysylac realne `SelectionChanged` z Unity do `viewport-inbox.jsonl`,
+  - po tym odhaczyc dopiero `MVP.1.4` i `MVP.1.5`, jesli zmiana parametrow w desktop shell bedzie widoczna w viewport,
+  - domknac `MVP.0.14` przez zapis testowego SVG pudelka jako artefaktu akceptacyjnego.
+
 ## Aktualizacja po sekcji 3.5 GUI funkcji domenowych
 
 - W tej sesji wykonano do konca sekcje `3.5 GUI funkcji domenowych` od `3.5.4` do `3.5.9`.
