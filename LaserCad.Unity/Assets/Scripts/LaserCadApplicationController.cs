@@ -1,5 +1,6 @@
 using System;
 using LaserCad.Core.BoxGenerators;
+using LaserCad.Core.Commands;
 using LaserCad.Core.Documents;
 using LaserCad.Geometry;
 using UnityEngine;
@@ -25,6 +26,11 @@ namespace LaserCad.Unity
         public CadDocument CurrentDocument { get; private set; }
 
         /// <summary>
+        /// Historia komend edycyjnych dla aktualnego dokumentu.
+        /// </summary>
+        public UndoRedoStack CurrentHistory { get; private set; }
+
+        /// <summary>
         /// Aktualne opcje generatora pudelka prezentowane w UI.
         /// </summary>
         public BoxGeneratorOptions CurrentBoxOptions { get; private set; }
@@ -40,11 +46,7 @@ namespace LaserCad.Unity
         public void Initialize()
         {
             CurrentBoxOptions = new BoxGeneratorOptions();
-            CurrentDocument = loadDemoDocument ? CreateDemoDocument() : new CadDocument();
-            if (documentInfoView != null)
-            {
-                documentInfoView.Show(CurrentDocument);
-            }
+            LoadDocument(loadDemoDocument ? CreateDemoDocument() : new CadDocument());
         }
 
         /// <summary>
@@ -58,11 +60,7 @@ namespace LaserCad.Unity
             }
 
             CurrentBoxOptions = options;
-            CurrentDocument = CreateBoxPreviewDocument(options);
-            if (documentInfoView != null)
-            {
-                documentInfoView.Show(CurrentDocument);
-            }
+            LoadDocument(CreateBoxPreviewDocument(options));
         }
 
         /// <summary>
@@ -75,7 +73,47 @@ namespace LaserCad.Unity
                 throw new ArgumentNullException(nameof(materialProfile));
             }
 
-            CurrentDocument = (CurrentDocument ?? new CadDocument()).WithMaterialProfile(materialProfile);
+            LoadDocument((CurrentDocument ?? new CadDocument()).WithMaterialProfile(materialProfile));
+        }
+
+        /// <summary>
+        /// Cofa ostatnia komende edycyjna, jesli jest dostepna.
+        /// </summary>
+        public void Undo()
+        {
+            if (CurrentHistory == null || !CurrentHistory.CanUndo)
+            {
+                return;
+            }
+
+            CurrentDocument = CurrentHistory.Undo();
+            if (documentInfoView != null)
+            {
+                documentInfoView.Show(CurrentDocument);
+            }
+        }
+
+        /// <summary>
+        /// Ponawia ostatnio cofnieta komende edycyjna, jesli jest dostepna.
+        /// </summary>
+        public void Redo()
+        {
+            if (CurrentHistory == null || !CurrentHistory.CanRedo)
+            {
+                return;
+            }
+
+            CurrentDocument = CurrentHistory.Redo();
+            if (documentInfoView != null)
+            {
+                documentInfoView.Show(CurrentDocument);
+            }
+        }
+
+        private void LoadDocument(CadDocument document)
+        {
+            CurrentDocument = document;
+            CurrentHistory = new UndoRedoStack(document);
             if (documentInfoView != null)
             {
                 documentInfoView.Show(CurrentDocument);
