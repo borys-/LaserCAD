@@ -52,4 +52,20 @@ public sealed class KerfCalibrationCalculatorTests
 
         Assert.That(kerf.Millimeters, Is.EqualTo(0.09).Within(1e-9));
     }
+
+    [Test]
+    public void CalculateRecommendedKerf_WithMeasuredCalibrationSample_ShouldReturnExpectedKerf()
+    {
+        var options = new KerfCalibrationOptions(
+            baseKerf: Length.FromMillimeters(0.1),
+            kerfStep: Length.FromMillimeters(0.02),
+            slotWidth: Length.FromMillimeters(20.0));
+
+        var kerf = KerfCalibrationCalculator.CalculateRecommendedKerf(
+            options,
+            slotIndex: 3,
+            measuredSlotWidth: Length.FromMillimeters(19.98));
+
+        Assert.That(kerf.Millimeters, Is.EqualTo(0.18).Within(1e-9));
+    }
 }
