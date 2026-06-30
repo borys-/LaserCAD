@@ -262,6 +262,24 @@
                         </StackPanel>
                     </GroupBox>
 
+                    <GroupBox Header="Kerf">
+                        <StackPanel>
+                            <TextBlock Text="Tryb kompensacji" Style="{StaticResource FieldLabelStyle}" />
+                            <ComboBox x:Name="KerfModeComboBox" SelectedIndex="0" Margin="0,0,0,8">
+                                <ComboBoxItem Content="Positive" />
+                                <ComboBoxItem Content="Negative" />
+                            </ComboBox>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button Content="Nominalny" Click="ShowNominalKerfPreview_Click" Margin="0,0,4,0" />
+                                <Button Grid.Column="1" Content="Kerf" Click="ShowCompensatedKerfPreview_Click" Margin="4,0,0,0" />
+                            </Grid>
+                        </StackPanel>
+                    </GroupBox>
+
                     <GroupBox Header="Transformacje">
                         <StackPanel>
                             <TextBlock Text="Przesuniecie X / Y" Style="{StaticResource FieldLabelStyle}" />

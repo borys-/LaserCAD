@@ -4,6 +4,7 @@ using System.IO;
 using LaserCad.Core.BoxGenerators;
 using LaserCad.Core.Commands;
 using LaserCad.Core.Documents;
+using LaserCad.Core.Kerf;
 using LaserCad.Export.Dxf;
 using LaserCad.Export.Svg;
 using LaserCad.Geometry;
@@ -188,6 +189,34 @@ public sealed class DesktopShellViewModel
         File.WriteAllText(path, dxf);
         StatusText = "Wyeksportowano DXF: " + path;
         return path;
+    }
+
+    public CadDocument CreateKerfPreviewDocument(KerfCompensationOptions options, bool afterCompensation)
+    {
+        if (options is null)
+        {
+            throw new ArgumentNullException(nameof(options));
+        }
+
+        var document = new CadDocument(
+            id: CurrentDocument.Id,
+            name: afterCompensation ? CurrentDocument.Name + " - kerf" : CurrentDocument.Name,
+            formatVersion: CurrentDocument.FormatVersion,
+            parameters: CurrentDocument.Parameters,
+            layers: CurrentDocument.Layers,
+            materialProfile: CurrentDocument.MaterialProfile);
+
+        foreach (var sketch in CurrentDocument.Sketches)
+        {
+            var preview = KerfCompensator.CreatePreview(sketch, options);
+            document = document.AddSketch(afterCompensation ? preview.AfterCompensation : preview.BeforeCompensation);
+        }
+
+        StatusText = afterCompensation
+            ? $"Podglad kerfu: {options.Mode}, {options.Kerf.Millimeters:0.###} mm"
+            : "Podglad nominalny bez kompensacji kerfu";
+
+        return document;
     }
 
     private CadDocument CreateBoxDocument(BoxGeneratorOptions options, MaterialProfile materialProfile)

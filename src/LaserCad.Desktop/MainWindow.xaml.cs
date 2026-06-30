@@ -3,6 +3,7 @@ using System.Windows.Interop;
 using System.Windows.Threading;
 using LaserCad.Core.Documents;
 using LaserCad.Core.BoxGenerators;
+using LaserCad.Core.Kerf;
 using LaserCad.Geometry;
 using LaserCad.Geometry.Units;
 using LaserCad.ViewportContract;
@@ -216,6 +217,16 @@ public partial class MainWindow : Window
         StatusTextBlock.Text = menuItem.IsChecked ? "Wlaczono grid viewportu" : "Wylaczono grid viewportu";
     }
 
+    private void ShowNominalKerfPreview_Click(object sender, RoutedEventArgs e)
+    {
+        PublishKerfPreview(afterCompensation: false);
+    }
+
+    private void ShowCompensatedKerfPreview_Click(object sender, RoutedEventArgs e)
+    {
+        PublishKerfPreview(afterCompensation: true);
+    }
+
     private void RefreshSelection_Click(object sender, RoutedEventArgs e)
     {
         var selection = viewportIpcClient.ReadLatestSelectionChanged();
@@ -387,6 +398,30 @@ public partial class MainWindow : Window
     {
         viewportIpcClient.SendDocument(viewModel.CurrentDocument);
         RefreshDocumentSummary();
+    }
+
+    private void PublishKerfPreview(bool afterCompensation)
+    {
+        try
+        {
+            var options = new KerfCompensationOptions(
+                Length.FromMillimeters(ParseMillimeters(KerfTextBox.Text, "Kerf")),
+                ReadKerfMode());
+            var previewDocument = viewModel.CreateKerfPreviewDocument(options, afterCompensation);
+            viewportIpcClient.SendDocument(previewDocument);
+            RefreshDocumentSummary();
+        }
+        catch (Exception ex) when (ex is FormatException or ArgumentOutOfRangeException or ArgumentException or InvalidOperationException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
+    private KerfCompensationMode ReadKerfMode()
+    {
+        return KerfModeComboBox.SelectedIndex == 1
+            ? KerfCompensationMode.Negative
+            : KerfCompensationMode.Positive;
     }
 
     private void RefreshDocumentSummary()
