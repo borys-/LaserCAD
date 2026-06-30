@@ -1,3 +1,4 @@
+using System.Globalization;
 using LaserCad.Core.Documents;
 using LaserCad.Geometry;
 
@@ -35,6 +36,12 @@ public sealed class KerfCalibrationGenerator
                     options.SlotWidth.Millimeters,
                     options.SlotHeight.Millimeters,
                     layerName: DefaultLayers.Cut.Name));
+            sketch = sketch.AddEntity(
+                new TextEntity(
+                    options.GetKerfAt(i).Millimeters.ToString("0.###", CultureInfo.InvariantCulture) + " mm",
+                    new Point2D(slotX, slotY + options.SlotHeight.Millimeters + 2.0),
+                    3.0,
+                    layerName: DefaultLayers.Engrave.Name));
         }
 
         return sketch;

@@ -20,13 +20,28 @@ public sealed class KerfCalibrationGeneratorTests
         var sketch = generator.GenerateSketch(options);
 
         Assert.That(sketch.Name, Is.EqualTo("Probnik kerfu"));
-        Assert.That(sketch.Entities, Has.Count.EqualTo(4));
-        Assert.That(sketch.Entities, Has.All.TypeOf<RectangleEntity>());
+        Assert.That(sketch.Entities.OfType<RectangleEntity>().ToArray(), Has.Length.EqualTo(4));
 
-        var slots = sketch.Entities.Skip(1).Cast<RectangleEntity>().ToArray();
+        var slots = sketch.Entities.OfType<RectangleEntity>().Skip(1).ToArray();
         Assert.That(slots.Select(slot => slot.Bounds.Width), Is.All.EqualTo(10.0).Within(1e-9));
         Assert.That(slots.Select(slot => slot.Bounds.Height), Is.All.EqualTo(4.0).Within(1e-9));
         Assert.That(slots.Select(slot => slot.Bounds.MinX), Is.EqualTo(new[] { 1.0, 13.0, 25.0 }).Within(1e-9));
         Assert.That(slots.Select(slot => slot.Bounds.MinY), Is.All.EqualTo(1.0).Within(1e-9));
+    }
+
+    [Test]
+    public void GenerateSketch_ShouldAddEngravedKerfLabels()
+    {
+        var options = new KerfCalibrationOptions(
+            baseKerf: Length.FromMillimeters(0.1),
+            kerfStep: Length.FromMillimeters(0.05),
+            slotCount: 3);
+        var generator = new KerfCalibrationGenerator();
+
+        var sketch = generator.GenerateSketch(options);
+
+        var labels = sketch.Entities.OfType<TextEntity>().ToArray();
+        Assert.That(labels.Select(label => label.Text), Is.EqualTo(new[] { "0.1 mm", "0.15 mm", "0.2 mm" }));
+        Assert.That(labels.Select(label => label.LayerName), Is.All.EqualTo(DefaultLayers.Engrave.Name));
     }
 }
