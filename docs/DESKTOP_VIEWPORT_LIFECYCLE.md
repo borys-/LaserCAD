@@ -46,6 +46,8 @@ Viewport wysyla do inbox:
 
 - `SelectionChanged` z lista identyfikatorow zaznaczonych encji.
 
+W trybie `--viewport` Unity ma wlaczone `Application.runInBackground`, zeby czytac IPC takze wtedy, gdy fokus jest w desktop shell. Dzieki temu operacje z toolbaru shell, np. `Delete`, moga odswiezyc dokument w viewportcie bez recznego klikniecia z powrotem w obszar Unity.
+
 Ten transport jest celowo prosty dla MVP. Kontrakt komunikatow znajduje sie w `LaserCad.ViewportContract` i moze zostac przeniesiony na named pipes albo WebSocket bez zmiany znaczenia komunikatow.
 
 ## Granice odpowiedzialnosci

@@ -50,6 +50,11 @@ namespace LaserCad.Unity
 
         private void Awake()
         {
+            if (ViewportProcessMode.IsViewportProcess())
+            {
+                Application.runInBackground = true;
+            }
+
             var ipcDirectory = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "LaserCad");
