@@ -1,5 +1,55 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 9.1 Kalibracja kerfu
+
+- Wykonano cala sekcje `9.1 Kalibracja kerfu`.
+- Nowe commity:
+  - `3fb9b02 9.1.0 Dodaj generator probnika kerfu`,
+  - `038b8a0 9.1.1 Dodaj szczeliny probnika kerfu`,
+  - `3c656ae 9.1.2 Dodaj etykiety probnika kerfu`,
+  - `9893f17 9.1.3 Dodaj formularz pomiaru kerfu`,
+  - `5a9cdb5 9.1.4 Dodaj przeliczanie kerfu z pomiaru`,
+  - `2afd7fa 9.1.5 Zapisz rekomendacje kerfu do profilu`,
+  - `521ef8b 9.1.6 Dodaj test obliczenia kerfu z pomiaru`,
+  - `b8fae60 9.1 Odhacz kalibracje kerfu`,
+  - `3fa379d 9.1.5 Napraw build zapisu rekomendacji kerfu`.
+- Dodano/rozszerzono namespace `LaserCad.Core.Kerf`:
+  - `KerfCalibrationOptions` opisuje probnik: bazowy kerf, krok, liczbe szczelin, wymiary szczelin, odstep i margines,
+  - `KerfCalibrationGenerator` generuje szkic `Probnik kerfu` z ramka na `Cut`, prostokatnymi szczelinami na `Cut` oraz etykietami wartosci kerfu jako `TextEntity` na `Engrave`,
+  - `KerfCalibrationCalculator.CalculateRecommendedKerf(...)` przelicza rekomendowany kerf z indeksu szczeliny i zmierzonej szerokosci.
+- Dodano `MaterialProfile.WithDefaultKerf(Length)`, zachowujace nazwe, grubosc, clearance i minimalna szerokosc palca.
+- Desktop shell:
+  - w lewym panelu, pod sekcja `Kerf`, dodano sekcje `Kalibracja kerfu`,
+  - pola: indeks szczeliny i zmierzona szerokosc w mm,
+  - `Przelicz` zapisuje pomiar i pokazuje rekomendacje,
+  - `Zapisz profil` podmienia aktualnie wybrany profil materialu na kopie z nowym `DefaultKerf` i aktualizuje dokument/viewport.
+- Ograniczenia MVP:
+  - UI nie ma jeszcze przycisku generujacego osobny dokument probnika jednym kliknieciem,
+  - nie ma kreatora eksport -> wyciecie -> pomiar,
+  - rekomendacja profilu jest zapisywana w biezacym stanie aplikacji/dokumentu, ale nie w trwalej bibliotece materialow,
+  - kalkulator uzywa prostego wzoru: wartosc opisana na szczelinie plus roznica miedzy nominalna i zmierzona szerokoscia szczeliny.
+- Po przegladzie planu:
+  - odhaczono `9.1.0`-`9.1.6` w `TASKS.md`,
+  - dopisano ograniczenia kalibracji kerfu MVP do `docs/ROADMAP.md`,
+  - nie odhaczono nowych kryteriow MVP, bo kalibracja kerfu nie ma osobnego kryterium w `MVP.0`/`MVP.1`.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore --filter FullyQualifiedName~Kerf` przechodzi: `20/20`,
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `432/432`,
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - w lewym panelu pod sekcja `Kerf` szukac nowej sekcji `Kalibracja kerfu`,
+  - wpisac np. szczeline `3` i pomiar `19,98` albo `19.98`, kliknac `Przelicz`,
+  - pole rekomendacji powinno pokazac nowy kerf, a status na gorze powinien potwierdzic rekomendacje,
+  - kliknac `Zapisz profil`, zeby aktualny profil materialu w dokumencie dostal nowy domyslny kerf.
+- Nastepny logiczny krok wedlug `TASKS.md`:
+  - `10.0 Tekst i fonty`, start od `10.0.0 Utworzyc TextEntity z tekstem, pozycja i rozmiarem`,
+  - uwaga: `TextEntity` juz istnieje jako placeholder z podstawowym eksportem/serializacja, wiec przed realizacja `10.0.0` warto przejrzec plan i doprecyzowac, czy chodzi o rozbudowe tekstu o font/alignment/parametry, zamiast tworzyc duplikat,
+  - nadal otwarte sa `3.6.27`, `MVP.0.14`, `MVP.0.15`, `MVP.1.4`, `MVP.1.5`, `MVP.1.7`, `MVP.1.9`.
+
 ## Aktualizacja po sekcji 9.0 Kerf compensation
 
 - Wykonano cala sekcje `9.0 Kerf compensation`.
