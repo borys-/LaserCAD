@@ -252,7 +252,10 @@ public sealed class DocumentSerializer
                 Type = "Text",
                 Text = text.Text,
                 Position = ToDto(text.Position),
-                Height = text.Height
+                Height = text.Height,
+                FontFamily = text.Font.FamilyName,
+                FontFilePath = text.Font.FilePath,
+                Alignment = text.Alignment.ToString()
             },
             _ => throw new NotSupportedException($"Sketch entity type '{entity.GetType().Name}' is not supported.")
         };
@@ -294,7 +297,10 @@ public sealed class DocumentSerializer
                 ToDomain(dto.Position),
                 RequiredDouble(dto.Height, nameof(dto.Height)),
                 dto.Id,
-                dto.LayerName),
+                dto.LayerName,
+                dto.FontFamily ?? TextFontSource.Default.FamilyName,
+                dto.Alignment is null ? TextAlignment.Left : Enum.Parse<TextAlignment>(dto.Alignment, ignoreCase: false),
+                dto.FontFilePath),
             _ => throw new NotSupportedException($"Sketch entity type '{dto.Type}' is not supported.")
         };
     }
@@ -450,6 +456,12 @@ public sealed class DocumentSerializer
         public PointDto? Position { get; init; }
 
         public double? Height { get; init; }
+
+        public string? FontFamily { get; init; }
+
+        public string? FontFilePath { get; init; }
+
+        public string? Alignment { get; init; }
 
         public DimensionBindingDto[]? DimensionBindings { get; init; }
     }

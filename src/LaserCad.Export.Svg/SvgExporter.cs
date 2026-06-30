@@ -65,10 +65,15 @@ public sealed class SvgExporter
             CircleEntity circle => CreateCircleElement(circle),
             ArcEntity arc => CreateArcElement(arc),
             PolylineEntity polyline => CreatePolylineElement(polyline),
+            TextEntity text => CreateTextElement(text, layersByName),
             _ => null,
         };
 
-        element?.SetAttributeValue("stroke", GetLayerColor(entity, layersByName));
+        if (element is not null && entity is not TextEntity)
+        {
+            element.SetAttributeValue("stroke", GetLayerColor(entity, layersByName));
+        }
+
         return element;
     }
 
@@ -149,6 +154,36 @@ public sealed class SvgExporter
             : FormatOpenPath(entity.Polyline.Points);
 
         return new XElement(SvgNamespace + "path", new XAttribute("d", path));
+    }
+
+    private static XElement CreateTextElement(TextEntity entity, IReadOnlyDictionary<string, Layer> layersByName)
+    {
+        var element = new XElement(
+            SvgNamespace + "text",
+            new XAttribute("x", FormatNumber(entity.Position.X)),
+            new XAttribute("y", FormatNumber(entity.Position.Y)),
+            new XAttribute("font-family", entity.Font.FamilyName),
+            new XAttribute("font-size", FormatNumber(entity.Height)),
+            new XAttribute("text-anchor", ToSvgTextAnchor(entity.Alignment)),
+            new XAttribute("fill", GetLayerColor(entity, layersByName)),
+            entity.Text);
+
+        if (entity.Font.FilePath is not null)
+        {
+            element.SetAttributeValue("data-font-file", entity.Font.FilePath);
+        }
+
+        return element;
+    }
+
+    private static string ToSvgTextAnchor(TextAlignment alignment)
+    {
+        return alignment switch
+        {
+            TextAlignment.Center => "middle",
+            TextAlignment.Right => "end",
+            _ => "start"
+        };
     }
 
     private static BoundingBox CalculateBounds(

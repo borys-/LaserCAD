@@ -80,13 +80,52 @@ public sealed class SketchEntityTests
     }
 
     [Test]
-    public void TextEntity_ShouldStorePlaceholderData()
+    public void TextEntity_ShouldStoreTextPositionSizeFontAndAlignment()
     {
-        var entity = new TextEntity("Label", new Point2D(2.0, 3.0), 5.0);
+        var entity = new TextEntity(
+            "Label",
+            new Point2D(2.0, 3.0),
+            5.0,
+            layerName: "Engrave",
+            fontFamily: "Roboto",
+            alignment: TextAlignment.Center,
+            fontFilePath: "fonts/Roboto.ttf");
 
         Assert.That(entity.Text, Is.EqualTo("Label"));
         Assert.That(entity.LayerName, Is.EqualTo("Engrave"));
-        Assert.That(entity.Bounds, Is.EqualTo(new BoundingBox(2.0, 3.0, 2.0, 8.0)));
+        Assert.That(entity.Font.FamilyName, Is.EqualTo("Roboto"));
+        Assert.That(entity.Font.FilePath, Is.EqualTo("fonts/Roboto.ttf"));
+        Assert.That(entity.Alignment, Is.EqualTo(TextAlignment.Center));
+        Assert.That(entity.Bounds, Is.EqualTo(new BoundingBox(-5.5, 3.0, 9.5, 8.0)));
+    }
+
+    [Test]
+    public void TextEntity_ResolveParameters_ShouldReplaceParameterTokens()
+    {
+        var entity = new TextEntity("Panel {Width}", new Point2D(0.0, 0.0), 4.0);
+        var parameters = new ParameterSet(new[]
+        {
+            new Parameter(new ParameterId("Width"), "Width", ParameterType.Number, 120.5),
+        });
+
+        var resolved = entity.ResolveParameters(parameters);
+
+        Assert.That(resolved.Text, Is.EqualTo("Panel 120.5"));
+        Assert.That(resolved.Id, Is.EqualTo(entity.Id));
+    }
+
+    [Test]
+    public void TextToCurveConverter_ShouldCreateClosedCurveForEachVisibleCharacter()
+    {
+        var entity = new TextEntity("A B", new Point2D(10.0, 20.0), 5.0, layerName: "Engrave");
+        var converter = new TextToCurveConverter();
+
+        var curves = converter.ConvertToCurves(entity);
+
+        Assert.That(curves, Has.Count.EqualTo(2));
+        Assert.That(curves[0].LayerName, Is.EqualTo("Engrave"));
+        Assert.That(curves[0].Polyline.IsClosed, Is.True);
+        Assert.That(curves[0].Bounds, Is.EqualTo(new BoundingBox(10.0, 20.0, 13.0, 25.0)));
     }
 
     [Test]

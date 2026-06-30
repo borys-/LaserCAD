@@ -439,8 +439,32 @@ public sealed class DocumentSerializerTests
         Assert.That(text.Id, Is.EqualTo(textId));
         Assert.That(text.LayerName, Is.EqualTo("Engrave"));
         Assert.That(text.Text, Is.EqualTo("Front"));
+        Assert.That(text.Font.FamilyName, Is.EqualTo("Arial"));
+        Assert.That(text.Alignment, Is.EqualTo(TextAlignment.Left));
         Assert.That(text.Position, Is.EqualTo(new Point2D(3.0, 4.0)));
         Assert.That(text.Height, Is.EqualTo(6.0));
+    }
+
+    [Test]
+    public void RoundTrip_WithTextFontAndAlignment_ShouldPreserveTextMetadata()
+    {
+        var document = new CadDocument(layers: Array.Empty<Layer>())
+            .AddSketch(new Sketch().AddEntity(new TextEntity(
+                "Label",
+                new Point2D(2.0, 3.0),
+                4.0,
+                layerName: "Engrave",
+                fontFamily: "Roboto",
+                alignment: TextAlignment.Right,
+                fontFilePath: "fonts/Roboto.ttf")));
+        var serializer = new DocumentSerializer();
+
+        var roundTripped = serializer.Deserialize(serializer.Serialize(document));
+        var text = (TextEntity)roundTripped.Sketches[0].Entities[0];
+
+        Assert.That(text.Font.FamilyName, Is.EqualTo("Roboto"));
+        Assert.That(text.Font.FilePath, Is.EqualTo("fonts/Roboto.ttf"));
+        Assert.That(text.Alignment, Is.EqualTo(TextAlignment.Right));
     }
 
     [Test]

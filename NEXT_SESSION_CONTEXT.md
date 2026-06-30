@@ -1,5 +1,43 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 10.0 Tekst i fonty
+
+- Wykonano cala sekcje `10.0 Tekst i fonty`.
+- Dodano/rozszerzono tekst w domenie:
+  - `TextEntity` przechowuje teraz tekst, pozycje, wysokosc, font, opcjonalna sciezke pliku fontu i alignment,
+  - `TextAlignment`: `Left`, `Center`, `Right`,
+  - `TextFontSource` przechowuje nazwe rodziny fontu i opcjonalny plik fontu,
+  - `TextEntity.ResolveParameters(ParameterSet)` podmienia znaczniki `{ParameterId}` wartosciami parametrow,
+  - `TextToCurveConverter` konwertuje tekst MVP na zamkniete prostokatne polilinie znakow.
+- Serializacja JSON:
+  - `Text` zapisuje/odczytuje teraz `fontFamily`, `fontFilePath` i `alignment`,
+  - zachowano kompatybilnosc ze starszym JSON bez tych pol przez domyslne `Arial` i `Left`.
+- Eksport SVG:
+  - `SvgExporter` eksportuje `TextEntity` jako `<text>`,
+  - ustawia `font-family`, `font-size`, `text-anchor`, `fill` z koloru warstwy i opcjonalne `data-font-file`,
+  - tekst nie dostaje juz `stroke`, bo w SVG naturalnym nosnikiem koloru tekstu jest `fill`.
+- Ograniczenia MVP:
+  - import fontu to metadane sciezki, bez parsowania TTF/OTF,
+  - konwersja na krzywe nie tworzy prawdziwych outline'ow glifow, tylko prostokatne obrysy pola znaku,
+  - tekst parametryczny to prosta podmiana tokenow `{Id}`, bez pelnego parsera szablonow i bez automatycznego reaktywnego przeliczania w dokumencie,
+  - desktop shell nie ma jeszcze osobnego UI do dodawania tekstu; widoczne zmiany sa najlatwiej sprawdzalne przez eksport SVG dokumentu zawierajacego `TextEntity`, np. etykiety probnika kerfu.
+- Po przegladzie planu:
+  - odhaczono `10.0.0`-`10.0.8` w `TASKS.md`,
+  - dopisano ograniczenia tekstu MVP do `docs/ROADMAP.md`,
+  - dopisano nowe pola `Text` do `docs/PROJECT_FILE_FORMAT.md`,
+  - nastepna logiczna sekcja wedlug `TASKS.md`: `11.0 Podglad 3D`, start od `11.0.0 Utworzyc model czesci 3D na bazie konturu 2D`,
+  - nadal otwarte sa `3.6.27`, `MVP.0.14`, `MVP.0.15`, `MVP.1.4`, `MVP.1.5`, `MVP.1.7`, `MVP.1.9`.
+- Weryfikacja wykonana przed buildem release:
+  - `dotnet test LaserCad.sln --no-restore --filter "FullyQualifiedName~Text|FullyQualifiedName~Svg|FullyQualifiedName~DocumentSerializer"` przechodzi: `40/40`,
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `436/436`,
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen.
+- Widoczne po odpaleniu aplikacji:
+  - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - UI nie ma jeszcze nowego narzedzia tekstowego w toolbarze,
+  - istniejace etykiety tekstowe, np. generowane domenowo w probniku kerfu, beda teraz eksportowane do SVG jako realne elementy `<text>` na warstwie `Engrave`,
+  - w wyeksportowanym SVG szukac elementow `<text ... font-family="Arial" ... fill="#0000FF">...`,
+  - pliki projektu JSON z tekstem beda zachowywac font i alignment po round-trip.
+
 ## Aktualizacja po sekcji 9.1 Kalibracja kerfu
 
 - Wykonano cala sekcje `9.1 Kalibracja kerfu`.

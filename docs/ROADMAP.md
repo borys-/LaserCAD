@@ -369,6 +369,14 @@ Rekomendacja moze zostac zapisana do aktualnie wybranego profilu materialu w bie
 - Grawer.
 - Opcjonalnie tekst parametryczny, np. etykiety zalezne od parametrow projektu.
 
+### Ograniczenia tekstu i fontow MVP
+
+Tekst w MVP jest domenowa encja szkicu `TextEntity` z trescia, pozycja, wysokoscia, fontem, opcjonalna sciezka do zaimportowanego pliku fontu oraz wyrownaniem `Left`, `Center` albo `Right`. Domyslnie tekst trafia na warstwe `Engrave`.
+
+Eksport SVG zapisuje tekst jako element `<text>` z `font-family`, `font-size`, `text-anchor` i kolorem wypelnienia wynikajacym z warstwy. Konwersja tekstu na krzywe jest celowo uproszczona: `TextToCurveConverter` zamienia widoczne znaki na prostokatne obrysy pola znaku, a nie na prawdziwe kontury glifow fontu. Import fontu w MVP oznacza przechowanie metadanych sciezki do pliku fontu; nie ma jeszcze parsowania plikow TTF/OTF ani generowania rzeczywistych outline'ow.
+
+Tekst parametryczny obsluguje proste znaczniki `{ParameterId}` podmieniane wartosciami z `ParameterSet`. To nie jest jeszcze pelny parser szablonow ani reaktywne powiazanie tekstu z dokumentem.
+
 ## Faza 11 - Podglad 3D
 
 - Mesh.

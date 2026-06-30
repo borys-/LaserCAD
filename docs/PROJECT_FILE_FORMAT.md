@@ -14,6 +14,7 @@ Plik zapisuje stabilny kontrakt DTO, a nie bezposrednia serializacje klas domeno
 - Szkice sa zapisywane w polu `sketches` jako lista obiektow z `id`, `name` i `entities`.
 - Encje szkicu maja wspolne pola `type`, `id`, `layerName` oraz opcjonalne `dimensionBindings`.
 - Geometria encji jest zapisywana jawnie: punkty jako `{ "x": 0, "y": 0 }`, okregi i luki przez srodek, promien i katy w radianach.
+- Encja `Text` zapisuje `text`, `position`, `height`, opcjonalne `fontFamily`, opcjonalne `fontFilePath` oraz opcjonalne `alignment`.
 - Powiazania wymiarow zapisuja `dimension` oraz `parameterId`, np. szerokosc prostokata -> `Width`.
 - Generatory pozostaja poza zakresem pierwszego formatu zapisu, dopoki ich kontrakt plikowy nie bedzie stabilny.
 

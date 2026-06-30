@@ -637,15 +637,15 @@ Zalecenie pracy:
 
 ## 10.0 Tekst i fonty
 
-- [ ] 10.0.0 Utworzyc `TextEntity` z tekstem, pozycja i rozmiarem.
-- [ ] 10.0.1 Dodac wybor fontu.
-- [ ] 10.0.2 Dodac import fontu.
-- [ ] 10.0.3 Dodac alignment tekstu.
-- [ ] 10.0.4 Dodac eksport tekstu jako SVG text dla MVP.
-- [ ] 10.0.5 Dodac konwersje tekstu na krzywe.
-- [ ] 10.0.6 Dodac tekst na warstwie engrave.
-- [ ] 10.0.7 Dodac tekst parametryczny z wartosci parametrow.
-- [ ] 10.0.8 Dodac test eksportu tekstu.
+- [x] 10.0.0 Utworzyc `TextEntity` z tekstem, pozycja i rozmiarem.
+- [x] 10.0.1 Dodac wybor fontu.
+- [x] 10.0.2 Dodac import fontu.
+- [x] 10.0.3 Dodac alignment tekstu.
+- [x] 10.0.4 Dodac eksport tekstu jako SVG text dla MVP.
+- [x] 10.0.5 Dodac konwersje tekstu na krzywe.
+- [x] 10.0.6 Dodac tekst na warstwie engrave.
+- [x] 10.0.7 Dodac tekst parametryczny z wartosci parametrow.
+- [x] 10.0.8 Dodac test eksportu tekstu.
 
 ## 11.0 Podglad 3D
 

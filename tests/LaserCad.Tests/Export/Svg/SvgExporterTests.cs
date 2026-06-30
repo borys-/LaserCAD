@@ -112,6 +112,26 @@ public class SvgExporterTests
     }
 
     [Test]
+    public void Export_WithTextEntity_ShouldWriteSvgTextElement()
+    {
+        var layers = new[] { new Layer("Engrave", LayerColor.FromHex("#0000FF"), LayerRole.Engrave) };
+        var document = new CadDocument(layers: layers)
+            .AddSketch(new Sketch().AddEntity(new TextEntity(
+                "Front",
+                new Point2D(10, 20),
+                6,
+                layerName: "Engrave",
+                fontFamily: "Roboto",
+                alignment: TextAlignment.Center,
+                fontFilePath: "fonts/Roboto.ttf")));
+        var exporter = new SvgExporter();
+
+        string svg = exporter.Export(document);
+
+        Assert.That(svg, Does.Contain("<text x=\"10\" y=\"20\" font-family=\"Roboto\" font-size=\"6\" text-anchor=\"middle\" fill=\"#0000FF\" data-font-file=\"fonts/Roboto.ttf\">Front</text>"));
+    }
+
+    [Test]
     public void Export_WithLayerColor_ShouldWriteElementStroke()
     {
         var document = new CadDocument(layers: new[] { new Layer("Cut", LayerColor.FromHex("#AA1100")) })
@@ -153,7 +173,8 @@ public class SvgExporterTests
                 new Point2D(80, 0),
                 new Point2D(90, 5),
                 new Point2D(100, 0),
-            })));
+            })))
+            .AddEntity(new TextEntity("T", new Point2D(110, 0), 5));
         var document = new CadDocument(layers: Array.Empty<Layer>()).AddSketch(sketch);
         var exporter = new SvgExporter();
 
@@ -164,6 +185,7 @@ public class SvgExporterTests
         Assert.That(svg, Does.Contain("<circle cx=\"45\" cy=\"5\" r=\"5\" stroke=\"#000000\" />"));
         Assert.That(svg, Does.Contain("<path d=\"M 70 0 A 10 10 0 0 1 60 10\" stroke=\"#000000\" />"));
         Assert.That(svg, Does.Contain("<path d=\"M 80 0 L 90 5 L 100 0\" stroke=\"#000000\" />"));
+        Assert.That(svg, Does.Contain("<text x=\"110\" y=\"0\" font-family=\"Arial\" font-size=\"5\" text-anchor=\"start\" fill=\"#000000\">T</text>"));
     }
 
     [Test]
