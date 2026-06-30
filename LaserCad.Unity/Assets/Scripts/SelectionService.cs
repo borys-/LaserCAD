@@ -27,6 +27,7 @@ namespace LaserCad.Unity
         private Vector2 mouseDownScreenPosition;
         private Vector2 currentMouseScreenPosition;
         private bool isPointerDown;
+        private bool isInputEnabled = true;
 
         /// <summary>
         /// Identyfikatory aktualnie zaznaczonych encji.
@@ -51,7 +52,8 @@ namespace LaserCad.Unity
         {
             get
             {
-                return isPointerDown
+                return isInputEnabled
+                    && isPointerDown
                     && Vector2.Distance(mouseDownScreenPosition, currentMouseScreenPosition) >= dragThresholdPixels;
             }
         }
@@ -74,6 +76,12 @@ namespace LaserCad.Unity
 
         private void Update()
         {
+            if (!isInputEnabled)
+            {
+                isPointerDown = false;
+                return;
+            }
+
             if (Input.GetMouseButtonDown(0))
             {
                 isPointerDown = true;
@@ -99,6 +107,18 @@ namespace LaserCad.Unity
         public void Clear()
         {
             selectedEntityIds.Clear();
+        }
+
+        /// <summary>
+        /// Wlacza albo wylacza obsluge inputu zaznaczania, np. gdy aktywne jest narzedzie rysowania.
+        /// </summary>
+        public void SetInputEnabled(bool enabled)
+        {
+            isInputEnabled = enabled;
+            if (!isInputEnabled)
+            {
+                isPointerDown = false;
+            }
         }
 
         /// <summary>

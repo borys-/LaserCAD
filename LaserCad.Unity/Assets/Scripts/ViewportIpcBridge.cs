@@ -38,6 +38,9 @@ namespace LaserCad.Unity
         [SerializeField]
         private float previewLineWidthPixels = 2f;
 
+        [SerializeField]
+        private float dragDrawThresholdPixels = 4f;
+
         private readonly DocumentSerializer documentSerializer = new DocumentSerializer();
         private readonly HashSet<Guid> lastSentSelection = new HashSet<Guid>();
         private string outboxPath;
@@ -45,7 +48,10 @@ namespace LaserCad.Unity
         private long outboxPosition;
         private ViewportDrawingTool activeDrawingTool = ViewportDrawingTool.None;
         private bool hasDrawingStartPoint;
+        private bool isDrawingPointerDown;
+        private bool isCompletingClickDraw;
         private ViewportPoint drawingStartPoint;
+        private Vector2 drawingStartScreenPosition;
         private ViewportShapeDrawnMessage pendingShapePreview;
 
         private void Awake()
@@ -156,6 +162,13 @@ namespace LaserCad.Unity
 
             activeDrawingTool = message.Tool;
             hasDrawingStartPoint = false;
+            isDrawingPointerDown = false;
+            isCompletingClickDraw = false;
+
+            if (selectionService != null)
+            {
+                selectionService.SetInputEnabled(activeDrawingTool == ViewportDrawingTool.None);
+            }
         }
 
         private void HandleDrawingInput()
@@ -165,26 +178,57 @@ namespace LaserCad.Unity
                 return;
             }
 
-            if (!Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
+            {
+                isDrawingPointerDown = true;
+                isCompletingClickDraw = hasDrawingStartPoint;
+                drawingStartScreenPosition = Input.mousePosition;
+
+                if (!hasDrawingStartPoint)
+                {
+                    drawingStartPoint = GetMouseWorldPoint();
+                    hasDrawingStartPoint = true;
+                }
+
+                return;
+            }
+
+            if (!isDrawingPointerDown || !Input.GetMouseButtonUp(0))
             {
                 return;
             }
 
-            var world = workspaceCamera.ScreenToWorldPoint(Input.mousePosition);
-            var point = new ViewportPoint(world.x, world.y);
+            isDrawingPointerDown = false;
 
-            if (!hasDrawingStartPoint)
+            var endPoint = GetMouseWorldPoint();
+            var dragDistance = Vector2.Distance(drawingStartScreenPosition, Input.mousePosition);
+            if (dragDistance < dragDrawThresholdPixels && !isCompletingClickDraw)
             {
-                drawingStartPoint = point;
-                hasDrawingStartPoint = true;
                 return;
             }
 
-            pendingShapePreview = new ViewportShapeDrawnMessage(activeDrawingTool, drawingStartPoint, point);
+            PublishDrawnShape(endPoint);
+        }
+
+        private void PublishDrawnShape(ViewportPoint endPoint)
+        {
+            if (Math.Abs(drawingStartPoint.X - endPoint.X) <= double.Epsilon
+                && Math.Abs(drawingStartPoint.Y - endPoint.Y) <= double.Epsilon)
+            {
+                return;
+            }
+
+            pendingShapePreview = new ViewportShapeDrawnMessage(activeDrawingTool, drawingStartPoint, endPoint);
             AppendInboxMessage(
                 ViewportMessageKind.ShapeDrawn,
                 pendingShapePreview);
             hasDrawingStartPoint = false;
+        }
+
+        private ViewportPoint GetMouseWorldPoint()
+        {
+            var world = workspaceCamera.ScreenToWorldPoint(Input.mousePosition);
+            return new ViewportPoint(world.x, world.y);
         }
 
         private void HandleDocumentSnapshot(ViewportDocumentSnapshot snapshot)
@@ -288,11 +332,10 @@ namespace LaserCad.Unity
         {
             if (hasDrawingStartPoint && activeDrawingTool != ViewportDrawingTool.None)
             {
-                var world = workspaceCamera.ScreenToWorldPoint(Input.mousePosition);
                 return new ViewportShapeDrawnMessage(
                     activeDrawingTool,
                     drawingStartPoint,
-                    new ViewportPoint(world.x, world.y));
+                    GetMouseWorldPoint());
             }
 
             return pendingShapePreview;

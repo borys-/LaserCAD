@@ -436,6 +436,7 @@ Zalecenie pracy:
 - [x] 3.7.9 Dodac rysowanie ksztaltow kliknieciami bezposrednio w viewportcie.
 - [x] 3.7.10 Dodac natychmiastowy podglad rysowanego ksztaltu w viewportcie.
 - [x] 3.7.11 Odswiezac viewport po usunieciu i edycji z toolbaru bez recznej zmiany focusu.
+- [x] 3.7.12 Obslugiwac rysowanie click-drag-release oraz click-click bez ramki zaznaczenia.
 
 ## 3.8 Wyglad desktop shell
 
