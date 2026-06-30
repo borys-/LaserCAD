@@ -9,6 +9,8 @@ using LaserCad.ViewportContract;
 using Microsoft.Win32;
 using DockStyle = System.Windows.Forms.DockStyle;
 using Panel = System.Windows.Forms.Panel;
+using WinFormsCursor = System.Windows.Forms.Cursor;
+using WinFormsCursors = System.Windows.Forms.Cursors;
 
 namespace LaserCad.Desktop;
 
@@ -22,6 +24,7 @@ public partial class MainWindow : Window
     private readonly DesktopShellViewModel viewModel = new();
     private readonly ViewportIpcClient viewportIpcClient = new();
     private readonly ViewportProcessController viewportProcessController = new();
+    private readonly WinFormsCursor hiddenViewportCursor = CreateHiddenCursor();
     private readonly Panel viewportPanel = new() { Dock = DockStyle.Fill };
     private readonly DispatcherTimer viewportInboxTimer = new() { Interval = TimeSpan.FromMilliseconds(150) };
 
@@ -288,6 +291,7 @@ public partial class MainWindow : Window
     {
         viewportInboxTimer.Stop();
         viewportProcessController.Dispose();
+        hiddenViewportCursor.Dispose();
         base.OnClosed(e);
     }
 
@@ -333,9 +337,16 @@ public partial class MainWindow : Window
     private void SetDrawingTool(ViewportDrawingTool tool)
     {
         viewportIpcClient.SendDrawingTool(tool);
+        viewportPanel.Cursor = tool == ViewportDrawingTool.None ? WinFormsCursors.Default : hiddenViewportCursor;
         StatusTextBlock.Text = tool == ViewportDrawingTool.None
             ? "Tryb zaznaczania"
             : "Kliknij dwa punkty w viewportcie: " + tool;
+    }
+
+    private static WinFormsCursor CreateHiddenCursor()
+    {
+        using var emptyBitmap = new System.Drawing.Bitmap(1, 1);
+        return new WinFormsCursor(emptyBitmap.GetHicon());
     }
 
     private void ProcessViewportInbox()

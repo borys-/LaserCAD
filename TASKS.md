@@ -438,6 +438,7 @@ Zalecenie pracy:
 - [x] 3.7.11 Odswiezac viewport po usunieciu i edycji z toolbaru bez recznej zmiany focusu.
 - [x] 3.7.12 Obslugiwac rysowanie click-drag-release oraz click-click bez ramki zaznaczenia.
 - [x] 3.7.13 Ukrywac systemowy kursor podczas rysowania w viewportcie.
+- [x] 3.7.14 Ukrywac kursor viewportu od razu po wybraniu narzedzia rysowania w shellu.
 
 ## 3.8 Wyglad desktop shell
 
