@@ -253,6 +253,8 @@ Komunikacja shell <-> viewport powinna isc przez jawny kontrakt IPC, np. named p
 
 Decyzja dla MVP: glowna aplikacja Windows jest procesem nadrzednym, a Unity player jest osobnym procesem viewportu uruchamianym i restartowanym przez shell. Unity zachowuje dotychczasowe renderowanie, kamere, grid, snap i zaznaczanie, ale docelowe menu, toolbar, panele parametrow, eksport oraz workflow plikow naleza do procesu desktop shell.
 
+Technologia desktop shell MVP to WPF na .NET dla Windows. WPF daje natywne menu, toolbar, panele i dialogi plikow bez przenoszenia renderowania CAD z Unity.
+
 ## Parametrycznosc
 
 Parametrycznosc jest czescia fundamentu:
