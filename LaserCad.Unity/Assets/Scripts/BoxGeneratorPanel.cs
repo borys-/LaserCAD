@@ -37,6 +37,11 @@ namespace LaserCad.Unity
 
         private void OnGUI()
         {
+            if (ViewportProcessMode.IsViewportProcess())
+            {
+                return;
+            }
+
             if (applicationController == null)
             {
                 return;

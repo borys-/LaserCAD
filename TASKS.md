@@ -411,7 +411,7 @@ Zalecenie pracy:
 - [x] 3.6.15 Uruchamiac proces Unity viewport z desktop shell.
 - [x] 3.6.16 Obslugiwac zamkniecie i restart procesu Unity viewport z desktop shell.
 - [x] 3.6.17 Wysylac przebudowany dokument pudelka z desktop shell do Unity viewport.
-- [ ] 3.6.18 Usunac albo zdegradowac panele IMGUI Unity do trybu debug viewportu.
+- [x] 3.6.18 Usunac albo zdegradowac panele IMGUI Unity do trybu debug viewportu.
 - [ ] 3.6.19 Dodac build desktop shell do `build.bat`.
 - [ ] 3.6.20 Dodac pakowanie Unity playera obok aplikacji desktop shell.
 - [ ] 3.6.21 Dodac manualna checkliste QA dla desktop shell + Unity viewport.

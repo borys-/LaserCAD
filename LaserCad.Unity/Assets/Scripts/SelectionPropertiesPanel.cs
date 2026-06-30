@@ -21,6 +21,11 @@ namespace LaserCad.Unity
 
         private void OnGUI()
         {
+            if (ViewportProcessMode.IsViewportProcess())
+            {
+                return;
+            }
+
             if (selectionService == null)
             {
                 return;
