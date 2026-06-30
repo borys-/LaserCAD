@@ -45,11 +45,69 @@
         </ToolBarTray>
 
         <Grid Background="#F3F5F7">
-            <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       FontSize="20"
-                       Foreground="#5D6875"
-                       Text="Laser CAD desktop shell" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="320" />
+            </Grid.ColumnDefinitions>
+
+            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto" Background="#FFFFFF">
+                <StackPanel Margin="12">
+                    <GroupBox Header="Parametry pudelka" Margin="0,0,0,12">
+                        <StackPanel Margin="10">
+                            <TextBlock Text="Szerokosc" />
+                            <TextBox x:Name="BoxWidthTextBox" Text="100" Margin="0,2,0,8" />
+                            <TextBlock Text="Glebokosc" />
+                            <TextBox x:Name="BoxDepthTextBox" Text="80" Margin="0,2,0,8" />
+                            <TextBlock Text="Wysokosc" />
+                            <TextBox x:Name="BoxHeightTextBox" Text="50" Margin="0,2,0,8" />
+                            <TextBlock Text="Grubosc materialu" />
+                            <TextBox x:Name="MaterialThicknessTextBox" Text="3" Margin="0,2,0,8" />
+                            <TextBlock Text="Kerf" />
+                            <TextBox x:Name="KerfTextBox" Text="0" Margin="0,2,0,8" />
+                            <TextBlock Text="Szerokosc palca" />
+                            <TextBox x:Name="FingerWidthTextBox" Text="10" Margin="0,2,0,8" />
+                            <TextBlock Text="Clearance" />
+                            <TextBox x:Name="ClearanceTextBox" Text="0" Margin="0,2,0,8" />
+                            <Button Content="Przebuduj" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="Material i warstwy">
+                        <StackPanel Margin="10">
+                            <ComboBox x:Name="MaterialProfileComboBox" DisplayMemberPath="Name" Margin="0,0,0,8" />
+                            <ItemsControl x:Name="LayersItemsControl" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Border Grid.Column="1" Margin="12" BorderBrush="#CFD6DE" BorderThickness="1" Background="#FAFBFC">
+                <TextBlock HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="20"
+                           Foreground="#5D6875"
+                           Text="Unity viewport process" />
+            </Border>
+
+            <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto" Background="#FFFFFF">
+                <StackPanel Margin="12">
+                    <GroupBox Header="Historia" Margin="0,0,0,12">
+                        <StackPanel Margin="10">
+                            <TextBlock Text="Undo: 0" />
+                            <TextBlock Text="Redo: 0" />
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="Properties">
+                        <StackPanel Margin="10">
+                            <TextBlock x:Name="DocumentNameTextBlock" Text="Dokument: Projekt pudelka" />
+                            <TextBlock x:Name="SketchCountTextBlock" Text="Szkice: 1" />
+                            <TextBlock x:Name="StatusTextBlock" Text="Gotowe" Margin="0,8,0,0" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
     </DockPanel>
 </Window>
