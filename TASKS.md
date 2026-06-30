@@ -627,13 +627,13 @@ Zalecenie pracy:
 
 ## 9.1 Kalibracja kerfu
 
-- [ ] 9.1.0 Utworzyc generator probnika kerfu.
-- [ ] 9.1.1 Dodac zestaw szczelin testowych.
-- [ ] 9.1.2 Dodac opis wartosci na probniku jako grawer.
-- [ ] 9.1.3 Dodac formularz wpisania pomiaru.
-- [ ] 9.1.4 Dodac przeliczenie rekomendowanego kerfu.
-- [ ] 9.1.5 Dodac zapis rekomendacji do profilu materialu.
-- [ ] 9.1.6 Dodac test obliczenia kerfu z pomiaru.
+- [x] 9.1.0 Utworzyc generator probnika kerfu.
+- [x] 9.1.1 Dodac zestaw szczelin testowych.
+- [x] 9.1.2 Dodac opis wartosci na probniku jako grawer.
+- [x] 9.1.3 Dodac formularz wpisania pomiaru.
+- [x] 9.1.4 Dodac przeliczenie rekomendowanego kerfu.
+- [x] 9.1.5 Dodac zapis rekomendacji do profilu materialu.
+- [x] 9.1.6 Dodac test obliczenia kerfu z pomiaru.
 
 ## 10.0 Tekst i fonty
 

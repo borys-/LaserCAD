@@ -352,6 +352,12 @@ Kompensacja kerfu w pierwszym kroku dziala dla prostych, zamknietych i wypuklych
 
 Klasyfikacja konturu w MVP opiera sie na orientacji polygonu: obieg przeciwny do wskazowek zegara jest traktowany jako kontur zewnetrzny, a obieg zgodny ze wskazowkami zegara jako kontur wewnetrzny. To nie jest jeszcze analiza zagniezdzenia konturow w dokumencie. Kontury wklesle, luki, okregi jako prawdziwe krzywe, tekst i automatyczna klasyfikacja otworow po polozeniu w arkuszu pozostaja zakresem dalszych etapow.
 
+### Ograniczenia kalibracji kerfu MVP
+
+Kalibracja kerfu w MVP tworzy prosty probnik 2D z ramka, prostokatnymi szczelinami testowymi i etykietami grawerowanymi z wartosciami kerfu. Formularz w desktop shell pozwala wpisac indeks szczeliny oraz zmierzona szerokosc, a domenowy kalkulator przelicza rekomendowany kerf wzgledem nominalnej szerokosci szczeliny.
+
+Rekomendacja moze zostac zapisana do aktualnie wybranego profilu materialu w biezacej sesji aplikacji i w dokumencie. To nie jest jeszcze trwala biblioteka materialow ani pelny wizard kalibracyjny: UI nie generuje osobnego dokumentu probnika jednym kliknieciem, nie zapisuje historii pomiarow, nie prowadzi uzytkownika przez eksport/wyciecie i nie utrwala zmienionego profilu poza aktualnym stanem projektu.
+
 ## Faza 10 - Tekst
 
 - Font:
