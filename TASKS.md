@@ -422,6 +422,19 @@ Zalecenie pracy:
 - [x] 3.6.26 Przekazywac scroll myszy do viewportu, gdy kursor jest nad panelem Unity.
 - [ ] 3.6.27 Naprawic znany problem: po minimalizacji i maksymalizacji okna scroll/zoom viewportu nadal potrafi nie dzialac bez dodatkowej interakcji.
 
+## 3.7 Edycja ksztaltow w desktop shell
+
+- [x] 3.7.0 Dodac przyciski dodawania podstawowych ksztaltow w toolbarze desktop shell.
+- [x] 3.7.1 Dodac dodawanie prostokata do aktualnego szkicu i wysylke dokumentu do viewportu.
+- [x] 3.7.2 Dodac dodawanie linii do aktualnego szkicu i wysylke dokumentu do viewportu.
+- [x] 3.7.3 Dodac dodawanie okregu do aktualnego szkicu i wysylke dokumentu do viewportu.
+- [x] 3.7.4 Dodac usuwanie zaznaczonych encji odczytanych z viewportu.
+- [x] 3.7.5 Dodac przesuwanie zaznaczonych encji z panelu transformacji.
+- [x] 3.7.6 Dodac obracanie zaznaczonych encji z panelu transformacji.
+- [x] 3.7.7 Dodac skalowanie zaznaczonych encji z panelu transformacji.
+- [x] 3.7.8 Podpiac undo/redo dla operacji edycji ksztaltow.
+- [ ] 3.7.9 Dodac rysowanie ksztaltow kliknieciami bezposrednio w viewportcie.
+
 ## 4.0 Eksport SVG - fundament
 
 - [x] 4.0.0 Utworzyc `SvgExportOptions`.

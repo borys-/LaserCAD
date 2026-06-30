@@ -89,6 +89,89 @@ public partial class MainWindow : Window
         ExportFile("DXF files (*.dxf)|*.dxf", "laser-cad-box.dxf", viewModel.ExportDxf);
     }
 
+    private void AddRectangle_Click(object sender, RoutedEventArgs e)
+    {
+        viewModel.AddRectangle();
+        PublishDocument();
+    }
+
+    private void AddLine_Click(object sender, RoutedEventArgs e)
+    {
+        viewModel.AddLine();
+        PublishDocument();
+    }
+
+    private void AddCircle_Click(object sender, RoutedEventArgs e)
+    {
+        viewModel.AddCircle();
+        PublishDocument();
+    }
+
+    private void DeleteSelected_Click(object sender, RoutedEventArgs e)
+    {
+        viewModel.DeleteEntities(ReadSelectedEntityIds());
+        PublishDocument();
+    }
+
+    private void MoveSelected_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            viewModel.MoveEntities(
+                ReadSelectedEntityIds(),
+                ParseMillimeters(MoveXTextBox.Text, "Przesuniecie X"),
+                ParseMillimeters(MoveYTextBox.Text, "Przesuniecie Y"));
+            PublishDocument();
+        }
+        catch (Exception ex) when (ex is FormatException or ArgumentOutOfRangeException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
+    private void RotateSelected_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            viewModel.RotateEntities(
+                ReadSelectedEntityIds(),
+                ParseNumber(RotateDegreesTextBox.Text, "Obrot"));
+            PublishDocument();
+        }
+        catch (Exception ex) when (ex is FormatException or ArgumentOutOfRangeException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
+    private void ScaleSelected_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            viewModel.ScaleEntities(
+                ReadSelectedEntityIds(),
+                ParseNumber(ScaleXTextBox.Text, "Skala X"),
+                ParseNumber(ScaleYTextBox.Text, "Skala Y"));
+            PublishDocument();
+        }
+        catch (Exception ex) when (ex is FormatException or ArgumentOutOfRangeException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
+    private void Undo_Click(object sender, RoutedEventArgs e)
+    {
+        viewModel.Undo();
+        PublishDocument();
+    }
+
+    private void Redo_Click(object sender, RoutedEventArgs e)
+    {
+        viewModel.Redo();
+        PublishDocument();
+    }
+
     private void MaterialProfileComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
         if (MaterialProfileComboBox.SelectedItem is not MaterialProfile materialProfile)
@@ -210,6 +293,11 @@ public partial class MainWindow : Window
 
     private static double ParseMillimeters(string value, string fieldName)
     {
+        return ParseNumber(value, fieldName);
+    }
+
+    private static double ParseNumber(string value, string fieldName)
+    {
         if (!double.TryParse(value, out var result))
         {
             throw new FormatException("Niepoprawna wartosc pola: " + fieldName);
@@ -218,10 +306,25 @@ public partial class MainWindow : Window
         return result;
     }
 
+    private IReadOnlyList<Guid> ReadSelectedEntityIds()
+    {
+        var selection = viewportIpcClient.ReadLatestSelectionChanged();
+        SelectedEntitiesTextBlock.Text = "Zaznaczone: " + (selection?.EntityIds.Count ?? 0);
+        return selection?.EntityIds.ToArray() ?? Array.Empty<Guid>();
+    }
+
+    private void PublishDocument()
+    {
+        viewportIpcClient.SendDocument(viewModel.CurrentDocument);
+        RefreshDocumentSummary();
+    }
+
     private void RefreshDocumentSummary()
     {
         DocumentNameTextBlock.Text = "Dokument: " + viewModel.CurrentDocument.Name;
         SketchCountTextBlock.Text = "Szkice: " + viewModel.CurrentDocument.Sketches.Count;
+        UndoCountTextBlock.Text = "Undo: " + viewModel.UndoCount;
+        RedoCountTextBlock.Text = "Redo: " + viewModel.RedoCount;
         StatusTextBlock.Text = viewModel.StatusText;
         LayersItemsControl.ItemsSource = viewModel.CurrentDocument.Layers;
     }

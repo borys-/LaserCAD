@@ -20,8 +20,8 @@
                 <MenuItem Header="E_xit" />
             </MenuItem>
             <MenuItem Header="_Edit">
-                <MenuItem Header="_Undo" />
-                <MenuItem Header="_Redo" />
+                <MenuItem Header="_Undo" Click="Undo_Click" />
+                <MenuItem Header="_Redo" Click="Redo_Click" />
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Header="_Reset View" Click="ResetView_Click" />
@@ -42,6 +42,11 @@
                 <Button Content="New" Padding="10,4" />
                 <Button Content="Open" Padding="10,4" />
                 <Button Content="Save" Padding="10,4" />
+                <Separator />
+                <Button Content="Rect" Padding="10,4" Click="AddRectangle_Click" />
+                <Button Content="Line" Padding="10,4" Click="AddLine_Click" />
+                <Button Content="Circle" Padding="10,4" Click="AddCircle_Click" />
+                <Button Content="Delete" Padding="10,4" Click="DeleteSelected_Click" />
                 <Separator />
                 <Button Content="SVG" Padding="10,4" Click="ExportSvg_Click" />
                 <Button Content="DXF" Padding="10,4" Click="ExportDxf_Click" />
@@ -96,6 +101,26 @@
                             </ItemsControl>
                         </StackPanel>
                     </GroupBox>
+
+                    <GroupBox Header="Transformacje" Margin="0,12,0,0">
+                        <StackPanel Margin="10">
+                            <TextBlock Text="Przesuniecie X / Y" />
+                            <StackPanel Orientation="Horizontal" Margin="0,2,0,8">
+                                <TextBox x:Name="MoveXTextBox" Text="10" Width="106" Margin="0,0,8,0" />
+                                <TextBox x:Name="MoveYTextBox" Text="0" Width="106" />
+                            </StackPanel>
+                            <Button Content="Przesun zaznaczone" Click="MoveSelected_Click" Margin="0,0,0,8" />
+                            <TextBlock Text="Obrot w stopniach" />
+                            <TextBox x:Name="RotateDegreesTextBox" Text="15" Margin="0,2,0,8" />
+                            <Button Content="Obroc zaznaczone" Click="RotateSelected_Click" Margin="0,0,0,8" />
+                            <TextBlock Text="Skala X / Y" />
+                            <StackPanel Orientation="Horizontal" Margin="0,2,0,8">
+                                <TextBox x:Name="ScaleXTextBox" Text="1,1" Width="106" Margin="0,0,8,0" />
+                                <TextBox x:Name="ScaleYTextBox" Text="1,1" Width="106" />
+                            </StackPanel>
+                            <Button Content="Skaluj zaznaczone" Click="ScaleSelected_Click" />
+                        </StackPanel>
+                    </GroupBox>
                 </StackPanel>
             </ScrollViewer>
 
@@ -115,8 +140,12 @@
                 <StackPanel Margin="12">
                     <GroupBox Header="Historia" Margin="0,0,0,12">
                         <StackPanel Margin="10">
-                            <TextBlock Text="Undo: 0" />
-                            <TextBlock Text="Redo: 0" />
+                            <TextBlock x:Name="UndoCountTextBlock" Text="Undo: 0" />
+                            <TextBlock x:Name="RedoCountTextBlock" Text="Redo: 0" />
+                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                <Button Content="Undo" Click="Undo_Click" Width="110" Margin="0,0,8,0" />
+                                <Button Content="Redo" Click="Redo_Click" Width="110" />
+                            </StackPanel>
                         </StackPanel>
                     </GroupBox>
 

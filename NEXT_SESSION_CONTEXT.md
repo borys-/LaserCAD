@@ -1,5 +1,30 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po edycji ksztaltow w desktop shell
+
+- Dodano sekcje `3.7 Edycja ksztaltow w desktop shell` w `TASKS.md`.
+- Wykonano `3.7.0`-`3.7.8`.
+- Desktop shell ma teraz w toolbarze przyciski `Rect`, `Line`, `Circle`, `Delete`.
+- Dodano panel `Transformacje` po lewej stronie:
+  - przesuniecie zaznaczenia o X/Y,
+  - obrot zaznaczenia w stopniach,
+  - skalowanie zaznaczenia X/Y.
+- `DesktopShellViewModel` uzywa teraz `UndoRedoStack` dla dokumentu i wykonuje edycje przez domenowe komendy:
+  - `AddEntityCommand`,
+  - `DeleteCommand`,
+  - `MoveCommand`,
+  - `RotateCommand`,
+  - `ScaleCommand`,
+  - `CommandGroup` dla operacji na wielu zaznaczonych encjach.
+- Operacje edycji odczytuja ostatnie zaznaczenie z `viewport-inbox.jsonl`, zmieniaja dokument w shellu i wysylaja aktualny snapshot do viewportu.
+- Ograniczenie:
+  - to nie jest jeszcze rysowanie kliknieciami w viewportcie; ksztalty sa dodawane z domyslnymi wymiarami i pozycja przez przyciski desktop shell,
+  - rysowanie bezposrednio w viewportcie zostalo wpisane jako nieodhaczone `3.7.9`.
+- Weryfikacja:
+  - `dotnet build LaserCad.sln --no-restore` przechodzi,
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `404/404`,
+  - `cmd /c build.bat` przechodzi i generuje `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`.
+
 ## Aktualizacja po osadzeniu Unity viewport w desktop shell
 
 - Po uwadze uzytkownika poprawiono kierunek UX desktop shell: viewport Unity ma byc widoczny w glownym oknie aplikacji, bez technicznych przyciskow `Start viewport`, `Restart`, `Stop`.
