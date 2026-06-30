@@ -251,6 +251,8 @@ Docelowy kierunek UI to aplikacja Windows jako glowny shell oraz Unity jako osob
 
 Komunikacja shell <-> viewport powinna isc przez jawny kontrakt IPC, np. named pipes, localhost WebSocket albo inny wymienialny adapter. Kontrakt powinien przesylac intencje i stan dokumentu, a nie typy UI. Pierwszy krok MVP moze uzyc prostego protokolu JSON.
 
+Decyzja dla MVP: glowna aplikacja Windows jest procesem nadrzednym, a Unity player jest osobnym procesem viewportu uruchamianym i restartowanym przez shell. Unity zachowuje dotychczasowe renderowanie, kamere, grid, snap i zaznaczanie, ale docelowe menu, toolbar, panele parametrow, eksport oraz workflow plikow naleza do procesu desktop shell.
+
 ## Parametrycznosc
 
 Parametrycznosc jest czescia fundamentu:

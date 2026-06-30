@@ -393,7 +393,7 @@ Zalecenie pracy:
 
 ## 3.6 Windows shell + Unity viewport
 
-- [ ] 3.6.0 Podjac decyzje architektoniczna: glowna aplikacja Windows, Unity jako osobny proces viewportu.
+- [x] 3.6.0 Podjac decyzje architektoniczna: glowna aplikacja Windows, Unity jako osobny proces viewportu.
 - [ ] 3.6.1 Wybrac technologie desktop shell MVP: WPF.
 - [ ] 3.6.2 Utworzyc projekt `LaserCad.Desktop`.
 - [ ] 3.6.3 Dodac `LaserCad.Desktop` do solution.
