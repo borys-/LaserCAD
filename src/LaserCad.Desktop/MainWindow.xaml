@@ -25,8 +25,8 @@
                 <MenuItem Header="_Grid" IsCheckable="True" IsChecked="True" />
             </MenuItem>
             <MenuItem Header="_Export">
-                <MenuItem Header="Export _SVG..." />
-                <MenuItem Header="Export _DXF..." />
+                <MenuItem Header="Export _SVG..." Click="ExportSvg_Click" />
+                <MenuItem Header="Export _DXF..." Click="ExportDxf_Click" />
             </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="_About Laser CAD" />
@@ -39,8 +39,8 @@
                 <Button Content="Open" Padding="10,4" />
                 <Button Content="Save" Padding="10,4" />
                 <Separator />
-                <Button Content="SVG" Padding="10,4" />
-                <Button Content="DXF" Padding="10,4" />
+                <Button Content="SVG" Padding="10,4" Click="ExportSvg_Click" />
+                <Button Content="DXF" Padding="10,4" Click="ExportDxf_Click" />
             </ToolBar>
         </ToolBarTray>
 

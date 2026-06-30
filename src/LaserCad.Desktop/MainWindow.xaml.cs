@@ -1,6 +1,7 @@
 using System.Windows;
 using LaserCad.Core.BoxGenerators;
 using LaserCad.Geometry.Units;
+using Microsoft.Win32;
 
 namespace LaserCad.Desktop;
 
@@ -38,6 +39,33 @@ public partial class MainWindow : Window
         {
             StatusTextBlock.Text = ex.Message;
         }
+    }
+
+    private void ExportSvg_Click(object sender, RoutedEventArgs e)
+    {
+        ExportFile("SVG files (*.svg)|*.svg", "laser-cad-box.svg", viewModel.ExportSvg);
+    }
+
+    private void ExportDxf_Click(object sender, RoutedEventArgs e)
+    {
+        ExportFile("DXF files (*.dxf)|*.dxf", "laser-cad-box.dxf", viewModel.ExportDxf);
+    }
+
+    private void ExportFile(string filter, string fileName, Func<string, string> export)
+    {
+        var dialog = new SaveFileDialog
+        {
+            Filter = filter,
+            FileName = fileName,
+        };
+
+        if (dialog.ShowDialog(this) != true)
+        {
+            return;
+        }
+
+        export(dialog.FileName);
+        RefreshDocumentSummary();
     }
 
     private static double ParseMillimeters(string value, string fieldName)
