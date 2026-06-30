@@ -37,8 +37,33 @@ public sealed class ViewportProcessController : IDisposable
         return process != null;
     }
 
+    public bool Stop()
+    {
+        if (!IsRunning || process == null)
+        {
+            return false;
+        }
+
+        process.CloseMainWindow();
+        if (!process.WaitForExit(3000))
+        {
+            process.Kill();
+        }
+
+        process.Dispose();
+        process = null;
+        return true;
+    }
+
+    public bool Restart()
+    {
+        Stop();
+        return TryStart();
+    }
+
     public void Dispose()
     {
+        Stop();
         process?.Dispose();
     }
 

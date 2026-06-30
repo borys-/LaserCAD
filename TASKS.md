@@ -409,7 +409,7 @@ Zalecenie pracy:
 - [x] 3.6.13 Dodac komunikat IPC zaznaczenia encji z viewportu do shell.
 - [x] 3.6.14 Utworzyc tryb Unity viewport process uruchamiany z argumentem `--viewport`.
 - [x] 3.6.15 Uruchamiac proces Unity viewport z desktop shell.
-- [ ] 3.6.16 Obslugiwac zamkniecie i restart procesu Unity viewport z desktop shell.
+- [x] 3.6.16 Obslugiwac zamkniecie i restart procesu Unity viewport z desktop shell.
 - [ ] 3.6.17 Wysylac przebudowany dokument pudelka z desktop shell do Unity viewport.
 - [ ] 3.6.18 Usunac albo zdegradowac panele IMGUI Unity do trybu debug viewportu.
 - [ ] 3.6.19 Dodac build desktop shell do `build.bat`.

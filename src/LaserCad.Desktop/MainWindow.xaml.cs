@@ -108,6 +108,26 @@ public partial class MainWindow : Window
             : "Nie znaleziono viewportu albo proces juz dziala: " + viewportProcessController.ViewportExecutablePath;
     }
 
+    private void RestartViewport_Click(object sender, RoutedEventArgs e)
+    {
+        StatusTextBlock.Text = viewportProcessController.Restart()
+            ? "Zrestartowano proces Unity viewport"
+            : "Nie znaleziono viewportu: " + viewportProcessController.ViewportExecutablePath;
+    }
+
+    private void StopViewport_Click(object sender, RoutedEventArgs e)
+    {
+        StatusTextBlock.Text = viewportProcessController.Stop()
+            ? "Zamknieto proces Unity viewport"
+            : "Proces Unity viewport nie byl uruchomiony";
+    }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        viewportProcessController.Dispose();
+        base.OnClosed(e);
+    }
+
     private void ExportFile(string filter, string fileName, Func<string, string> export)
     {
         var dialog = new SaveFileDialog
