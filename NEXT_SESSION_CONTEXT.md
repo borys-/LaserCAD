@@ -1,5 +1,53 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 8.2 Pozostale generatory
+
+- Wykonano cala sekcje `8.2 Pozostale generatory`.
+- Nowe commity:
+  - `e064b0e 8.2.0 Dodaj wspolny interfejs generatora`,
+  - `3c535fd 8.2.1 Dodaj generator tray`,
+  - `b3460b1 8.2.2 Dodaj generator organizer`,
+  - `7a5ea2e 8.2.3 Dodaj generator drawer`,
+  - `599a9f0 8.2.4 Dodaj generator divider`,
+  - `34de661 8.2.5 Dodaj generator pegboard`,
+  - `0a1c15e 8.2.6 Dodaj generator ramki`,
+  - `8a24e64 8.2.7 Dodaj generator stojaka`,
+  - `270b675 8.2.8 Dodaj testy pozostalych generatorow`,
+  - `0f3d860 8.2 Odhacz pozostale generatory`.
+- Dodano namespace `LaserCad.Core.Generators`:
+  - `ISketchGenerator` jako wspolny kontrakt generatorow szkicu 2D,
+  - `RectangularGeneratorOptions` jako wspolne opcje wymiarow prostokatnych,
+  - `TrayGenerator`,
+  - `OrganizerGenerator`,
+  - `DrawerGenerator`,
+  - `DividerGenerator`,
+  - `PegboardGenerator`,
+  - `FrameGenerator`,
+  - `StandGenerator`.
+- Generatory zwracaja domenowy `Sketch` z encjami `RectangleEntity`, `LineEntity` i/lub `CircleEntity`.
+- Warstwy:
+  - glowna geometria produkcyjna jest na `DefaultLayers.Cut`,
+  - linie pomocnicze tacki, organizera i szuflady sa na `DefaultLayers.Score`.
+- Dodano testy `tests/LaserCad.Tests/Core/Generators/AdditionalGeneratorsTests.cs`:
+  - kazdy generator zwraca nazwany, niepusty szkic,
+  - testowana jest podstawowa struktura encji dla tray, organizer, drawer, divider, pegboard, frame i stand.
+- Po przegladzie planu:
+  - odhaczono `8.2.0`-`8.2.8` w `TASKS.md`,
+  - dopisano ograniczenia pozostalych generatorow MVP do `docs/ROADMAP.md`,
+  - nie odhaczono zadnych nowych kryteriow MVP, bo generatory 8.2 nie sa jeszcze podlaczone do desktop shell ani serializowane jako edytowalne instancje generatora w dokumencie.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `418/418`,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - brak nowego UI dla generatorow 8.2 w desktop shell,
+  - aplikacja powinna wygladac jak po poprzedniej sesji,
+  - zmiana jest domenowa i testowa; do recznej weryfikacji w UI nadal uzywac istniejacego generatora pudelka, rysowania ksztaltow, edycji i eksportu.
+- Nastepny logiczny krok wedlug `TASKS.md`:
+  - `9.0 Kerf compensation`, start od `9.0.0 Utworzyc KerfCompensationOptions`,
+  - alternatywnie domknac znany bug `3.6.27` scroll/zoom po minimalizacji i maksymalizacji, jesli priorytetem jest UX viewportu.
+
 ## Aktualizacja po edycji ksztaltow w desktop shell
 
 - Dodano sekcje `3.7 Edycja ksztaltow w desktop shell` w `TASKS.md`.
