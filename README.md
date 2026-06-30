@@ -27,6 +27,8 @@ Repozytorium zdalne:
 - [docs/ROADMAP.md](docs/ROADMAP.md) - ogolna roadmapa produktu.
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) - architektura i podzial odpowiedzialnosci projektow.
 - [docs/CODING_STANDARDS.md](docs/CODING_STANDARDS.md) - standardy kodowania i pracy nad projektem.
+- [docs/DESKTOP_VIEWPORT_LIFECYCLE.md](docs/DESKTOP_VIEWPORT_LIFECYCLE.md) - lifecycle desktop shell i procesu Unity viewport.
+- [docs/DESKTOP_VIEWPORT_QA.md](docs/DESKTOP_VIEWPORT_QA.md) - manualna checklista QA dla desktop shell + Unity viewport.
 - [TASKS.md](TASKS.md) - szczegolowa lista taskow implementacyjnych.
 
 ## Testy
