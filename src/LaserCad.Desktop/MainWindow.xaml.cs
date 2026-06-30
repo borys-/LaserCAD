@@ -1,3 +1,4 @@
+using System.IO;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -85,6 +86,89 @@ public partial class MainWindow : Window
         {
             StatusTextBlock.Text = ex.Message;
         }
+    }
+
+    private void NewProject_Click(object sender, RoutedEventArgs e)
+    {
+        viewModel.NewDocument();
+        MaterialProfileComboBox.SelectedItem = viewModel.SelectedMaterialProfile;
+        PublishDocument();
+    }
+
+    private void OpenProject_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new Microsoft.Win32.OpenFileDialog
+        {
+            Filter = "Laser CAD project (*.lasercad.json)|*.lasercad.json|JSON files (*.json)|*.json|All files (*.*)|*.*",
+            FileName = "laser-cad-project.lasercad.json",
+        };
+
+        if (dialog.ShowDialog(this) != true)
+        {
+            return;
+        }
+
+        try
+        {
+            viewModel.LoadProject(dialog.FileName);
+            MaterialProfileComboBox.ItemsSource = viewModel.MaterialProfiles;
+            MaterialProfileComboBox.SelectedItem = viewModel.SelectedMaterialProfile;
+            PublishDocument();
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or InvalidOperationException or ArgumentException or NotSupportedException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
+    private void SaveProject_Click(object sender, RoutedEventArgs e)
+    {
+        if (viewModel.CurrentProjectPath is null)
+        {
+            SaveProjectAs_Click(sender, e);
+            return;
+        }
+
+        try
+        {
+            viewModel.SaveProject(viewModel.CurrentProjectPath);
+            RefreshDocumentSummary();
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException or NotSupportedException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
+    private void SaveProjectAs_Click(object sender, RoutedEventArgs e)
+    {
+        var dialog = new Microsoft.Win32.SaveFileDialog
+        {
+            Filter = "Laser CAD project (*.lasercad.json)|*.lasercad.json|JSON files (*.json)|*.json|All files (*.*)|*.*",
+            FileName = viewModel.CurrentProjectPath is null
+                ? "laser-cad-project.lasercad.json"
+                : System.IO.Path.GetFileName(viewModel.CurrentProjectPath),
+        };
+
+        if (dialog.ShowDialog(this) != true)
+        {
+            return;
+        }
+
+        try
+        {
+            viewModel.SaveProject(dialog.FileName);
+            RefreshDocumentSummary();
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException or NotSupportedException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
+    private void Exit_Click(object sender, RoutedEventArgs e)
+    {
+        Close();
     }
 
     private void ExportSvg_Click(object sender, RoutedEventArgs e)

@@ -1,5 +1,38 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po zapisie i wczytywaniu stanu projektu
+
+- Podpieto stan projektu w desktop shell:
+  - `File -> New` i ikona nowego projektu tworza pusty dokument z aktualnym profilem materialu,
+  - `File -> Open...` i ikona otwierania wczytuja projekt JSON przez `DocumentSerializer`,
+  - `File -> Save` zapisuje do zapamietanej sciezki albo przechodzi do `Save As`, jesli projekt nie byl jeszcze zapisany,
+  - `File -> Save As...` zapisuje aktualny dokument do `*.lasercad.json`,
+  - `File -> Exit` zamyka aplikacje.
+- `DesktopShellViewModel` ma teraz:
+  - `CurrentProjectPath`,
+  - `SaveProject(string path)`,
+  - `LoadProject(string path)`.
+- Po wczytaniu projektu:
+  - dokument zastępuje biezacy stan i resetuje undo/redo,
+  - profil materialu z dokumentu staje sie aktualnym profilem,
+  - jesli profilu nie ma na liscie materialow, jest dodawany do listy,
+  - shell wysyla dokument do Unity viewportu i odswieza panele.
+- Ograniczenia:
+  - zapisywany jest aktualny `CadDocument`; historia undo/redo, aktywne narzedzie rysowania i stan kamery viewportu nie sa jeszcze utrwalane,
+  - `BoxOptions` nie sa jeszcze trwale zapisywane jako edytowalna instancja generatora, bo generatory nadal nie sa serializowane w modelu dokumentu.
+- Weryfikacja:
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen,
+  - `dotnet test LaserCad.sln --no-restore --filter FullyQualifiedName~DocumentSerializer` przechodzi: `18/18`,
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `436/436`,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe` po kolejnym buildzie release,
+  - w menu `File` szukac aktywnych opcji `New`, `Open...`, `Save`, `Save As...`, `Exit`,
+  - te same akcje sa pod ikonami nowy/otworz/zapisz w toolbarze,
+  - zapisany plik projektu ma format JSON i proponowane rozszerzenie `*.lasercad.json`.
+
 ## Aktualizacja po sekcji 10.0 Tekst i fonty
 
 - Wykonano cala sekcje `10.0 Tekst i fonty`.

@@ -138,11 +138,12 @@
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="_New" />
-                <MenuItem Header="_Open..." />
-                <MenuItem Header="_Save" />
+                <MenuItem Header="_New" Click="NewProject_Click" />
+                <MenuItem Header="_Open..." Click="OpenProject_Click" />
+                <MenuItem Header="_Save" Click="SaveProject_Click" />
+                <MenuItem Header="Save _As..." Click="SaveProjectAs_Click" />
                 <Separator />
-                <MenuItem Header="E_xit" />
+                <MenuItem Header="E_xit" Click="Exit_Click" />
             </MenuItem>
             <MenuItem Header="_Edit">
                 <MenuItem Header="_Undo" Click="Undo_Click" />
@@ -165,9 +166,9 @@
         <Border DockPanel.Dock="Top" Background="#FFFFFF" BorderBrush="{StaticResource AppBorderBrush}" BorderThickness="0,0,0,1">
             <DockPanel Height="52" LastChildFill="True">
                 <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0">
-                    <Button Content="&#xE710;" ToolTip="Nowy projekt" Style="{StaticResource ToolbarButtonStyle}" />
-                    <Button Content="&#xE8E5;" ToolTip="Otworz projekt" Style="{StaticResource ToolbarButtonStyle}" />
-                    <Button Content="&#xE74E;" ToolTip="Zapisz projekt" Style="{StaticResource ToolbarButtonStyle}" />
+                    <Button Content="&#xE710;" ToolTip="Nowy projekt" Style="{StaticResource ToolbarButtonStyle}" Click="NewProject_Click" />
+                    <Button Content="&#xE8E5;" ToolTip="Otworz projekt" Style="{StaticResource ToolbarButtonStyle}" Click="OpenProject_Click" />
+                    <Button Content="&#xE74E;" ToolTip="Zapisz projekt" Style="{StaticResource ToolbarButtonStyle}" Click="SaveProject_Click" />
                     <Border Width="1" Height="24" Background="{StaticResource AppBorderBrush}" Margin="10,0" />
                     <Button Content="&#xE7C9;" ToolTip="Zaznaczanie" Style="{StaticResource ToolbarAccentButtonStyle}" Click="SelectTool_Click" />
                     <Button Content="&#xE739;" ToolTip="Rysuj prostokat" Style="{StaticResource ToolbarButtonStyle}" Click="AddRectangle_Click" />

@@ -18,6 +18,7 @@ namespace LaserCad.Desktop;
 public sealed class DesktopShellViewModel
 {
     private readonly BoxGenerator boxGenerator = new();
+    private readonly DocumentSerializer documentSerializer = new();
     private UndoRedoStack history;
 
     public DesktopShellViewModel()
@@ -39,6 +40,8 @@ public sealed class DesktopShellViewModel
 
     public string StatusText { get; private set; }
 
+    public string? CurrentProjectPath { get; private set; }
+
     public int UndoCount => history.UndoCount;
 
     public int RedoCount => history.RedoCount;
@@ -56,7 +59,43 @@ public sealed class DesktopShellViewModel
     public void NewDocument()
     {
         ReplaceDocument(new CadDocument(name: "Nowy projekt").WithMaterialProfile(SelectedMaterialProfile));
+        CurrentProjectPath = null;
         StatusText = "Utworzono nowy projekt";
+    }
+
+    public void SaveProject(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            throw new ArgumentException("Sciezka projektu nie moze byc pusta.", nameof(path));
+        }
+
+        File.WriteAllText(path, documentSerializer.Serialize(CurrentDocument));
+        CurrentProjectPath = path;
+        StatusText = "Zapisano projekt: " + path;
+    }
+
+    public void LoadProject(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path))
+        {
+            throw new ArgumentException("Sciezka projektu nie moze byc pusta.", nameof(path));
+        }
+
+        var document = documentSerializer.Deserialize(File.ReadAllText(path));
+        ReplaceDocument(document);
+        CurrentProjectPath = path;
+
+        if (document.MaterialProfile is not null)
+        {
+            SelectedMaterialProfile = document.MaterialProfile;
+            if (!MaterialProfiles.Any(profile => profile.Name == document.MaterialProfile.Name))
+            {
+                MaterialProfiles.Add(document.MaterialProfile);
+            }
+        }
+
+        StatusText = "Wczytano projekt: " + path;
     }
 
     public void ApplyBoxOptions(BoxGeneratorOptions options)

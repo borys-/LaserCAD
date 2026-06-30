@@ -446,6 +446,14 @@ Zalecenie pracy:
 - [x] 3.8.1 Zastapic tekstowe przyciski toolbaru ikonami z tooltipami.
 - [x] 3.8.2 Dodac loader viewportu podczas startu Unity.
 
+## 3.9 Stan projektu w desktop shell
+
+- [x] 3.9.0 Podpiac akcje `New`, `Open`, `Save` i `Save As` w menu oraz toolbarze.
+- [x] 3.9.1 Zapisywac aktualny dokument projektu przez `DocumentSerializer`.
+- [x] 3.9.2 Wczytywac dokument projektu z pliku JSON i resetowac historie undo/redo.
+- [x] 3.9.3 Po wczytaniu wysylac dokument do viewportu i odswiezac panele shell.
+- [x] 3.9.4 Pamietac aktualna sciezke projektu dla kolejnych zapisow `Save`.
+
 ## 4.0 Eksport SVG - fundament
 
 - [x] 4.0.0 Utworzyc `SvgExportOptions`.

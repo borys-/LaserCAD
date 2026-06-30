@@ -6,7 +6,9 @@ Manualna checklista dla sekcji 3.6.
 
 - Uruchom `bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`.
 - Sprawdz, ze widoczne jest menu `File`, `Edit`, `View`, `Export`, `Help`.
-- Sprawdz, ze toolbar ma akcje `New`, `Open`, `Save`, `SVG`, `DXF`, `Start viewport`, `Restart`, `Stop`.
+- Sprawdz, ze toolbar ma akcje `New`, `Open`, `Save`, `SVG` i `DXF`.
+- Sprawdz, ze `File -> Save As...` zapisuje projekt jako `*.lasercad.json`, a kolejne `File -> Save` nadpisuje ten sam plik.
+- Sprawdz, ze `File -> Open...` wczytuje zapisany projekt, odswieza panel `Properties` i wysyla geometrie do viewportu.
 - Zmien wartosci w panelu `Parametry pudelka` i kliknij `Przebuduj`.
 - Sprawdz, ze panel `Properties` pokazuje dokument `Projekt pudelka`, liczbe szkicow oraz status przebudowy.
 - Zmien profil w panelu `Material i warstwy`.
