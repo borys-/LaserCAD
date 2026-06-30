@@ -1,5 +1,56 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 9.0 Kerf compensation
+
+- Wykonano cala sekcje `9.0 Kerf compensation`.
+- Nowe commity:
+  - `d0c7e0f 9.0.0 Dodaj opcje kompensacji kerfu`,
+  - `4843fca 9.0.4 Dodaj kompensator kerfu`,
+  - `7268542 9.0.9 Dodaj testy kompensacji kerfu`,
+  - `dfd2e4f 9.0.7 Dodaj podglad kerfu w desktop shell`,
+  - `b839ea0 9.0 Odhacz kompensacje kerfu`.
+- Dodano namespace `LaserCad.Core.Kerf`:
+  - `KerfCompensationOptions` z wartoscia kerfu i trybem kompensacji,
+  - `KerfCompensationMode`: `Positive`, `Negative`,
+  - `KerfContourClassification`: `Outer`, `Inner`,
+  - `KerfCompensationPreview` jako para szkicow przed/po,
+  - `KerfCompensator` z `Compensate(...)`, `CreatePreview(...)` i `Classify(...)`.
+- Zasady MVP:
+  - odleglosc offsetu to polowa wartosci kerfu,
+  - `Positive` odsuwa kontury zewnetrzne na zewnatrz i wewnetrzne do srodka,
+  - `Negative` odwraca kierunek,
+  - obieg CCW jest traktowany jako kontur zewnetrzny, a CW jako kontur wewnetrzny,
+  - obslugiwane sa `RectangleEntity` oraz zamkniete wypukle `PolylineEntity`,
+  - nie ma jeszcze analizy zagniezdzenia konturow, obslugi konturow wkleslych, luk, okregow jako krzywych ani tekstu.
+- Desktop shell:
+  - dodano panel `Kerf` po lewej stronie pod panelem materialu i warstw,
+  - panel ma wybor trybu `Positive`/`Negative`,
+  - przycisk `Nominalny` wysyla do viewportu dokument bez kompensacji,
+  - przycisk `Kerf` wysyla do viewportu tymczasowy dokument podgladu po kompensacji,
+  - podglad nie zmienia `CurrentDocument`; to tylko snapshot wyslany do Unity viewport.
+- Po przegladzie planu:
+  - odhaczono `9.0.0`-`9.0.10` w `TASKS.md`,
+  - odhaczono `MVP.0.9`,
+  - dopisano ograniczenia kompensacji kerfu MVP do `docs/ROADMAP.md`,
+  - nie odhaczono `MVP.1.4` i `MVP.1.5`, bo nie wykonano recznej wizualnej weryfikacji viewportu w tej sesji.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `425/425`,
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - w lewym panelu, pod `Material i warstwy`, szukac nowej sekcji `Kerf`,
+  - ustawic wartosc pola `Kerf` w `Parametry pudelka`, wybrac `Positive` albo `Negative`,
+  - kliknac `Kerf`, zeby viewport pokazal skompensowane kontury,
+  - kliknac `Nominalny`, zeby wrocic do geometrii bez kompensacji,
+  - przy typowym kwadracie/prostokacie w trybie `Positive` zewnetrzny obrys powinien byc minimalnie wiekszy o pol kerfu na strone.
+- Nastepny logiczny krok wedlug `TASKS.md`:
+  - `9.1 Kalibracja kerfu`, start od `9.1.0 Utworzyc generator probnika kerfu`,
+  - alternatywnie domknac znany bug `3.6.27` scroll/zoom po minimalizacji i maksymalizacji, jesli priorytetem jest UX viewportu,
+  - warto tez recznie zweryfikowac `MVP.1.4` i `MVP.1.5` na gotowym buildzie, bo technicznie viewport powinien juz pokazywac dokument i przebudowe, ale taski pozostaja nieodhaczone bez potwierdzenia.
+
 ## Aktualizacja po sekcji 8.2 Pozostale generatory
 
 - Wykonano cala sekcje `8.2 Pozostale generatory`.
