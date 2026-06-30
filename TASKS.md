@@ -417,6 +417,10 @@ Zalecenie pracy:
 - [x] 3.6.21 Dodac manualna checkliste QA dla desktop shell + Unity viewport.
 - [x] 3.6.22 Udokumentowac lifecycle procesu viewportu i granice odpowiedzialnosci shell/viewport.
 - [x] 3.6.23 Osadzic Unity viewport w glownym oknie desktop shell i ukryc techniczna kontrole procesu.
+- [x] 3.6.24 Poprawic fokus osadzonego viewportu po najechaniu i kliknieciu.
+- [x] 3.6.25 Przywracac fokus viewportu po minimalizacji i maksymalizacji okna.
+- [x] 3.6.26 Przekazywac scroll myszy do viewportu, gdy kursor jest nad panelem Unity.
+- [ ] 3.6.27 Naprawic znany problem: po minimalizacji i maksymalizacji okna scroll/zoom viewportu nadal potrafi nie dzialac bez dodatkowej interakcji.
 
 ## 4.0 Eksport SVG - fundament
 

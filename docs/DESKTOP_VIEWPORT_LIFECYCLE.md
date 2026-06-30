@@ -18,6 +18,16 @@ Po zaladowaniu glownego okna shell uruchamia Unity z argumentem `--viewport`, os
 
 Techniczne sterowanie procesem viewportu nie jest elementem docelowego UI uzytkownika. Uzytkownik ma widziec obszar roboczy CAD, a nie recznie zarzadzac osobnym procesem.
 
+## Znane problemy
+
+Osadzanie Unity jako child-window WPF/WinForms ma problem z przekazywaniem wejscia po minimalizacji i maksymalizacji glownego okna. Wykonano trzy proby obejscia:
+
+- ustawianie focusu na oknie Unity po najechaniu albo kliknieciu panelu viewportu,
+- ponowne ustawianie focusu po `Activated` i `StateChanged`,
+- forwardowanie `WM_MOUSEWHEEL` do okna Unity, gdy kursor jest nad panelem viewportu.
+
+Wedlug recznej weryfikacji uzytkownika problem nadal wystepuje: po minimalizacji i maksymalizacji okna scroll/zoom viewportu moze nie dzialac. Tego nie nalezy traktowac jako naprawione. Kolejny kierunek to zmiana sposobu osadzania albo transportu wejscia, np. dedykowany panel hostujacy z pelnym message pump, inny mechanizm embedowania Unity, albo render viewportu bez natywnego child-window.
+
 ## IPC MVP
 
 Pierwszy adapter IPC uzywa plikow JSON lines:

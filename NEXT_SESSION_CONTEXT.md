@@ -24,6 +24,7 @@
   - smoke test potwierdzil, ze `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe` startuje i automatycznie uruchamia proces Unity viewportu z katalogu `Viewport`.
 - Uwaga:
   - w smoke tescie sprawdzono start procesow, ale nie wykonano jeszcze wizualnego zrzutu osadzonego viewportu; nastepny krok to reczna weryfikacja, czy geometria pudelka jest widoczna w centralnym panelu po starcie i po `Przebuduj`.
+  - Uzytkownik potwierdzil, ze mimo commitow `3.6.24`, `3.6.25` i `3.6.26` problem scrolla po minimalizacji/maksymalizacji nadal wystepuje. Zapisano to jako znany problem w `docs/DESKTOP_VIEWPORT_LIFECYCLE.md` i jako nieodhaczony task `3.6.27`. Nie uznawac tego buga za naprawiony bez ponownej recznej weryfikacji.
 
 ## Aktualizacja po sekcji 3.6 Windows shell + Unity viewport
 
