@@ -65,6 +65,23 @@ namespace LaserCad.Unity
             }
         }
 
+        /// <summary>
+        /// Aktualizuje profil materialu aktualnego dokumentu.
+        /// </summary>
+        public void SetMaterialProfile(MaterialProfile materialProfile)
+        {
+            if (materialProfile == null)
+            {
+                throw new ArgumentNullException(nameof(materialProfile));
+            }
+
+            CurrentDocument = (CurrentDocument ?? new CadDocument()).WithMaterialProfile(materialProfile);
+            if (documentInfoView != null)
+            {
+                documentInfoView.Show(CurrentDocument);
+            }
+        }
+
         private CadDocument CreateBoxPreviewDocument(BoxGeneratorOptions options)
         {
             var materialProfile = CurrentDocument != null && CurrentDocument.MaterialProfile != null
