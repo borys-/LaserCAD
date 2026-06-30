@@ -437,6 +437,10 @@ Zalecenie pracy:
 - [x] 3.7.10 Dodac natychmiastowy podglad rysowanego ksztaltu w viewportcie.
 - [x] 3.7.11 Odswiezac viewport po usunieciu i edycji z toolbaru bez recznej zmiany focusu.
 
+## 3.8 Wyglad desktop shell
+
+- [x] 3.8.0 Uladnic desktop shell w jasnym stylu narzedzia CAD.
+
 ## 4.0 Eksport SVG - fundament
 
 - [x] 4.0.0 Utworzyc `SvgExportOptions`.
