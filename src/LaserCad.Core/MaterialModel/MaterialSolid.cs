@@ -70,6 +70,24 @@ public sealed class MaterialSolid
     }
 
     /// <summary>
+    /// Tworzy prostopadloscian materialowy z prostokata 2D i profilu materialu aktualnego dokumentu.
+    /// </summary>
+    public static MaterialSolid FromRectangle(string name, RectangleEntity rectangle, CadDocument document)
+    {
+        if (document is null)
+        {
+            throw new ArgumentNullException(nameof(document));
+        }
+
+        if (document.MaterialProfile is null)
+        {
+            throw new InvalidOperationException("Document must have a material profile to create a material solid.");
+        }
+
+        return FromRectangle(name, rectangle, document.MaterialProfile);
+    }
+
+    /// <summary>
     /// Stabilny identyfikator elementu materialowego.
     /// </summary>
     public Guid Id { get; }

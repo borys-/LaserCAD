@@ -70,6 +70,30 @@ public sealed class MaterialSolidTests
     }
 
     [Test]
+    public void FromRectangle_WithDocument_ShouldUseDocumentMaterialProfile()
+    {
+        var material = DefaultMaterialProfiles.Plywood4Mm;
+        var document = new CadDocument().WithMaterialProfile(material);
+        var rectangle = new RectangleEntity(new Point2D(0.0, 0.0), 20.0, 10.0);
+
+        var solid = MaterialSolid.FromRectangle("Plyta frontowa", rectangle, document);
+
+        Assert.That(solid.MaterialProfile, Is.SameAs(material));
+        Assert.That(solid.Thickness.Millimeters, Is.EqualTo(4.0));
+        Assert.That(solid.Mesh.Vertices.Select(vertex => vertex.Z), Does.Contain(4.0));
+    }
+
+    [Test]
+    public void FromRectangle_WithDocumentWithoutMaterialProfile_ShouldThrow()
+    {
+        var document = new CadDocument();
+        var rectangle = new RectangleEntity(new Point2D(0.0, 0.0), 20.0, 10.0);
+
+        Assert.Throws<InvalidOperationException>(() =>
+            MaterialSolid.FromRectangle("Plyta frontowa", rectangle, document));
+    }
+
+    [Test]
     public void Constructor_ShouldUseDefaultOrientation()
     {
         var material = DefaultMaterialProfiles.Plywood3Mm;
