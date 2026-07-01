@@ -162,6 +162,10 @@
                           Header="_Template Library Panel"
                           IsCheckable="True"
                           Click="TemplateLibraryPanel_Click" />
+                <MenuItem x:Name="AdvancedPanelsMenuItem"
+                          Header="_Advanced Panels"
+                          IsCheckable="True"
+                          Click="AdvancedPanels_Click" />
             </MenuItem>
             <MenuItem Header="_Tools">
                 <MenuItem Header="_Settings..." InputGestureText="Ctrl+," Click="Settings_Click" />
@@ -290,7 +294,7 @@
                         </StackPanel>
                     </GroupBox>
 
-                    <GroupBox Header="Kerf">
+                    <GroupBox x:Name="KerfPanelGroupBox" Header="Kerf" Visibility="Collapsed">
                         <StackPanel>
                             <TextBlock Text="Tryb kompensacji" Style="{StaticResource FieldLabelStyle}" />
                             <ComboBox x:Name="KerfModeComboBox" SelectedIndex="0" Margin="0,0,0,8">
@@ -308,7 +312,7 @@
                         </StackPanel>
                     </GroupBox>
 
-                    <GroupBox Header="Kalibracja kerfu">
+                    <GroupBox x:Name="KerfCalibrationPanelGroupBox" Header="Kalibracja kerfu" Visibility="Collapsed">
                         <StackPanel>
                             <TextBlock Text="Szczelina / pomiar mm" Style="{StaticResource FieldLabelStyle}" />
                             <Grid Margin="0,0,0,8">
@@ -334,7 +338,7 @@
                         </StackPanel>
                     </GroupBox>
 
-                    <GroupBox Header="Transformacje">
+                    <GroupBox x:Name="TransformsPanelGroupBox" Header="Transformacje" Visibility="Collapsed">
                         <StackPanel>
                             <TextBlock Text="Przesuniecie X / Y" Style="{StaticResource FieldLabelStyle}" />
                             <Grid Margin="0,0,0,8">

@@ -372,6 +372,17 @@ public partial class MainWindow : Window
             : Visibility.Collapsed;
     }
 
+    private void AdvancedPanels_Click(object sender, RoutedEventArgs e)
+    {
+        var visibility = AdvancedPanelsMenuItem.IsChecked
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+
+        KerfPanelGroupBox.Visibility = visibility;
+        KerfCalibrationPanelGroupBox.Visibility = visibility;
+        TransformsPanelGroupBox.Visibility = visibility;
+    }
+
     private void Settings_Click(object sender, RoutedEventArgs e)
     {
         var settingsWindow = new SettingsWindow
