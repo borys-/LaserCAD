@@ -42,6 +42,7 @@ public partial class MainWindow : Window
     private readonly WinFormsCursor hiddenViewportCursor = CreateHiddenCursor();
     private readonly Panel viewportPanel = new() { Dock = DockStyle.Fill };
     private readonly DispatcherTimer viewportInboxTimer = new() { Interval = TimeSpan.FromMilliseconds(150) };
+    private WorkspacePanelPreferences workspacePanelPreferences = new();
 
     public MainWindow()
     {
@@ -58,6 +59,7 @@ public partial class MainWindow : Window
         ViewportHost.MouseEnter += (_, _) => viewportProcessController.FocusViewport();
         viewportInboxTimer.Tick += (_, _) => ProcessViewportInbox();
         ConfigureKeyboardShortcuts();
+        LoadWorkspacePanelPreferences();
         RefreshDocumentSummary();
     }
 
@@ -360,34 +362,26 @@ public partial class MainWindow : Window
 
     private void BoxGeneratorPanel_Click(object sender, RoutedEventArgs e)
     {
-        BoxGeneratorPanelGroupBox.Visibility = BoxGeneratorPanelMenuItem.IsChecked
-            ? Visibility.Visible
-            : Visibility.Collapsed;
+        ApplyWorkspacePanelVisibility();
+        SaveWorkspacePanelPreferences();
     }
 
     private void TemplateLibraryPanel_Click(object sender, RoutedEventArgs e)
     {
-        TemplateLibraryPanelGroupBox.Visibility = TemplateLibraryPanelMenuItem.IsChecked
-            ? Visibility.Visible
-            : Visibility.Collapsed;
+        ApplyWorkspacePanelVisibility();
+        SaveWorkspacePanelPreferences();
     }
 
     private void AdvancedPanels_Click(object sender, RoutedEventArgs e)
     {
-        var visibility = AdvancedPanelsMenuItem.IsChecked
-            ? Visibility.Visible
-            : Visibility.Collapsed;
-
-        KerfPanelGroupBox.Visibility = visibility;
-        KerfCalibrationPanelGroupBox.Visibility = visibility;
-        TransformsPanelGroupBox.Visibility = visibility;
+        ApplyWorkspacePanelVisibility();
+        SaveWorkspacePanelPreferences();
     }
 
     private void HistoryPanel_Click(object sender, RoutedEventArgs e)
     {
-        HistoryPanelGroupBox.Visibility = HistoryPanelMenuItem.IsChecked
-            ? Visibility.Visible
-            : Visibility.Collapsed;
+        ApplyWorkspacePanelVisibility();
+        SaveWorkspacePanelPreferences();
     }
 
     private void CleanWorkspace_Click(object sender, RoutedEventArgs e)
@@ -397,6 +391,33 @@ public partial class MainWindow : Window
         AdvancedPanelsMenuItem.IsChecked = false;
         HistoryPanelMenuItem.IsChecked = false;
 
+        ApplyWorkspacePanelVisibility();
+        SaveWorkspacePanelPreferences();
+
+        StatusTextBlock.Text = "Czysty widok roboczy";
+    }
+
+    private void LoadWorkspacePanelPreferences()
+    {
+        workspacePanelPreferences = WorkspacePanelPreferences.Load();
+        BoxGeneratorPanelMenuItem.IsChecked = workspacePanelPreferences.IsBoxGeneratorPanelVisible;
+        TemplateLibraryPanelMenuItem.IsChecked = workspacePanelPreferences.IsTemplateLibraryPanelVisible;
+        AdvancedPanelsMenuItem.IsChecked = workspacePanelPreferences.AreAdvancedPanelsVisible;
+        HistoryPanelMenuItem.IsChecked = workspacePanelPreferences.IsHistoryPanelVisible;
+        ApplyWorkspacePanelVisibility();
+    }
+
+    private void SaveWorkspacePanelPreferences()
+    {
+        workspacePanelPreferences.IsBoxGeneratorPanelVisible = BoxGeneratorPanelMenuItem.IsChecked;
+        workspacePanelPreferences.IsTemplateLibraryPanelVisible = TemplateLibraryPanelMenuItem.IsChecked;
+        workspacePanelPreferences.AreAdvancedPanelsVisible = AdvancedPanelsMenuItem.IsChecked;
+        workspacePanelPreferences.IsHistoryPanelVisible = HistoryPanelMenuItem.IsChecked;
+        workspacePanelPreferences.Save();
+    }
+
+    private void ApplyWorkspacePanelVisibility()
+    {
         BoxGeneratorPanelGroupBox.Visibility = Visibility.Collapsed;
         TemplateLibraryPanelGroupBox.Visibility = Visibility.Collapsed;
         KerfPanelGroupBox.Visibility = Visibility.Collapsed;
@@ -404,7 +425,27 @@ public partial class MainWindow : Window
         TransformsPanelGroupBox.Visibility = Visibility.Collapsed;
         HistoryPanelGroupBox.Visibility = Visibility.Collapsed;
 
-        StatusTextBlock.Text = "Czysty widok roboczy";
+        if (BoxGeneratorPanelMenuItem.IsChecked)
+        {
+            BoxGeneratorPanelGroupBox.Visibility = Visibility.Visible;
+        }
+
+        if (TemplateLibraryPanelMenuItem.IsChecked)
+        {
+            TemplateLibraryPanelGroupBox.Visibility = Visibility.Visible;
+        }
+
+        if (AdvancedPanelsMenuItem.IsChecked)
+        {
+            KerfPanelGroupBox.Visibility = Visibility.Visible;
+            KerfCalibrationPanelGroupBox.Visibility = Visibility.Visible;
+            TransformsPanelGroupBox.Visibility = Visibility.Visible;
+        }
+
+        if (HistoryPanelMenuItem.IsChecked)
+        {
+            HistoryPanelGroupBox.Visibility = Visibility.Visible;
+        }
     }
 
     private void Settings_Click(object sender, RoutedEventArgs e)
