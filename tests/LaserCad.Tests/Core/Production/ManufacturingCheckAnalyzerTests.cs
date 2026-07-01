@@ -1,6 +1,7 @@
 using LaserCad.Core.Documents;
 using LaserCad.Core.Production;
 using LaserCad.Geometry;
+using LaserCad.Geometry.Units;
 using NUnit.Framework;
 
 namespace LaserCad.Tests.Core.Production;
@@ -40,6 +41,23 @@ public class ManufacturingCheckAnalyzerTests
             check.Code == "OpenContour" &&
             check.Severity == ManufacturingCheckSeverity.Warning &&
             check.EntityId == polyline.Id));
+    }
+
+    [Test]
+    public void Analyze_WithLinesCloserThanMinimumSpacing_ShouldReturnSmallSpacingWarning()
+    {
+        var first = new LineEntity(new LineSegment2D(new Point2D(0.0, 0.0), new Point2D(10.0, 0.0)));
+        var second = new LineEntity(new LineSegment2D(new Point2D(0.0, 0.5), new Point2D(10.0, 0.5)));
+        var document = CreateDocument(first, second);
+        var analyzer = new ManufacturingCheckAnalyzer(new ManufacturingCheckOptions(
+            minimumSpacing: Length.FromMillimeters(1.0)));
+
+        var checks = analyzer.Analyze(document);
+
+        Assert.That(checks, Has.Some.Matches<ManufacturingCheck>(check =>
+            check.Code == "SmallSpacing" &&
+            check.Severity == ManufacturingCheckSeverity.Warning &&
+            check.EntityId == second.Id));
     }
 
     private static CadDocument CreateDocument(params Entity[] entities)
