@@ -33,7 +33,26 @@ public sealed class ManufacturingCheckAnalyzer
         AddOpenContourChecks(document, checks);
         AddSmallSpacingChecks(document, checks);
         AddThinBridgeChecks(document, checks);
+        AddCutOrderSuggestion(document, checks);
         return checks;
+    }
+
+    private static void AddCutOrderSuggestion(CadDocument document, List<ManufacturingCheck> checks)
+    {
+        var closedContours = GetClosedContours(document)
+            .OrderBy(contour => contour.Bounds.Width * contour.Bounds.Height)
+            .ToArray();
+
+        if (closedContours.Length < 2)
+        {
+            return;
+        }
+
+        checks.Add(new ManufacturingCheck(
+            "CutOrderSuggestion",
+            "Sugestia kolejnosci ciecia: najpierw mniejsze kontury wewnetrzne i detale, na koncu najwieksze obrysy zewnetrzne.",
+            ManufacturingCheckSeverity.Info,
+            closedContours[0].EntityId));
     }
 
     private void AddThinBridgeChecks(CadDocument document, List<ManufacturingCheck> checks)
