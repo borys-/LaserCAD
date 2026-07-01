@@ -55,6 +55,15 @@ public sealed class MaterialSolidTests
     }
 
     [Test]
+    public void Constructor_WithMeshThicknessDifferentThanMaterial_ShouldThrow()
+    {
+        var material = DefaultMaterialProfiles.Plywood3Mm;
+        var mesh = CreateMesh(4.0);
+
+        Assert.Throws<ArgumentException>(() => new MaterialSolid("Plyta frontowa", material, mesh));
+    }
+
+    [Test]
     public void FromRectangle_ShouldCreateCuboidWithMaterialThickness()
     {
         var material = DefaultMaterialProfiles.Plywood3Mm;
@@ -131,14 +140,14 @@ public sealed class MaterialSolidTests
                 new Vector3D(0.0, 0.0, 0.0)));
     }
 
-    private static Mesh3D CreateMesh()
+    private static Mesh3D CreateMesh(double thicknessMillimeters = 3.0)
     {
         return new Mesh3D(
             new[]
             {
                 new Point3D(0.0, 0.0, 0.0),
                 new Point3D(1.0, 0.0, 0.0),
-                new Point3D(0.0, 1.0, 0.0),
+                new Point3D(0.0, 1.0, thicknessMillimeters),
             },
             new[] { 0, 1, 2 });
     }

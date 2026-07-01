@@ -1,5 +1,6 @@
 using LaserCad.Core.Documents;
 using LaserCad.Core.Preview3D;
+using LaserCad.Geometry;
 using LaserCad.Geometry.Units;
 
 namespace LaserCad.Core.MaterialModel;
@@ -33,6 +34,7 @@ public sealed class MaterialSolid
         Name = name;
         MaterialProfile = materialProfile ?? throw new ArgumentNullException(nameof(materialProfile));
         Mesh = mesh ?? throw new ArgumentNullException(nameof(mesh));
+        ValidateMeshThickness(Mesh, MaterialProfile);
         Orientation = orientation ?? MaterialSolidOrientation.Default;
     }
 
@@ -116,4 +118,19 @@ public sealed class MaterialSolid
     /// Grubosc elementu materialowego wynikajaca bezposrednio z profilu materialu.
     /// </summary>
     public Length Thickness => MaterialProfile.Thickness;
+
+    private static void ValidateMeshThickness(Mesh3D mesh, MaterialProfile materialProfile)
+    {
+        var minZ = mesh.Vertices.Min(vertex => vertex.Z);
+        var maxZ = mesh.Vertices.Max(vertex => vertex.Z);
+        var meshThickness = maxZ - minZ;
+        var materialThickness = materialProfile.Thickness.Millimeters;
+
+        if (Math.Abs(meshThickness - materialThickness) > GeometryTolerance.Default)
+        {
+            throw new ArgumentException(
+                "Mesh thickness must match material profile thickness.",
+                nameof(mesh));
+        }
+    }
 }
