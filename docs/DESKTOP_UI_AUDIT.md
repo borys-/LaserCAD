@@ -33,7 +33,6 @@ Wszystkie widoczne pozycje menu, przyciski toolbaru i przyciski widocznych domys
 
 ## Widoczne placeholdery albo slabe miejsca
 
-- Okno `Settings` pokazuje ustawienia i skroty, ale nie zapisuje jeszcze zmian uzytkownika.
 - Panel `Properties` ma przycisk `Odswiez zaznaczenie`, bo zaznaczenie z viewportu nie jest jeszcze w pelni reaktywne w shellu.
 
 ## Decyzje po audycie
@@ -42,3 +41,4 @@ Wszystkie widoczne pozycje menu, przyciski toolbaru i przyciski widocznych domys
 - Generatory, historia oraz konfiguracja zaawansowana sa dostepne jawnie z menu `View`.
 - `Help -> About Laser CAD` ma realne okno informacyjne od `3.10.7`.
 - Po `3.10.8` nie ma widocznych domyslnie akcji bez przeplywu end-to-end.
+- Po `3.10.9` okno `Settings` pokazuje tylko dzialajaca liste skrotow; edycja ustawien pozostaje poza aktualnym zakresem.
