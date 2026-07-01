@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Laser CAD" Height="780" Width="1280"
+        Title="Laser CAD" Height="860" Width="1440"
         MinHeight="620" MinWidth="1040"
         Background="#F4F6F8"
         FontFamily="Segoe UI"
@@ -196,9 +196,9 @@
 
         <Grid Background="#F4F6F8">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="268" />
+                <ColumnDefinition Width="240" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="240" />
             </Grid.ColumnDefinitions>
 
             <ScrollViewer Grid.Column="0" Style="{StaticResource PanelScrollStyle}">
@@ -364,7 +364,7 @@
             </ScrollViewer>
 
             <Border Grid.Column="1" Background="#EEF1F5">
-                <Grid Margin="12">
+                <Grid Margin="8">
                     <Border BorderBrush="#B8C0CC" BorderThickness="1" Background="#FFFFFF">
                         <Grid>
                             <wfi:WindowsFormsHost x:Name="ViewportHost" />
