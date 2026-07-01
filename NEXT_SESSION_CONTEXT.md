@@ -32,11 +32,12 @@
   - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen po `15.0.1`,
   - `dotnet test LaserCad.sln --no-restore --filter FullyQualifiedName~ExampleProjectRegression` przechodzi: `1/1`,
   - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen po `15.0.3`.
-- Do wykonania na koniec tej sesji:
-  - pelny `dotnet test LaserCad.sln --no-restore`,
-  - pelny `dotnet build LaserCad.sln --no-restore`,
-  - `cmd /c build.bat`,
-  - push do `origin/master`.
+- Weryfikacja koncowa:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `456/456`,
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
 - Widoczne po odpaleniu aplikacji:
   - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
   - w menu szukac nowej pozycji `Tools -> Settings...`,
