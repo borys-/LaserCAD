@@ -363,6 +363,26 @@ public sealed class DocumentSerializerTests
     }
 
     [Test]
+    public void RoundTrip_WithMaterialSolidCutout_ShouldPreserveCutout()
+    {
+        var material = DefaultMaterialProfiles.Plywood3Mm;
+        var rectangle = new RectangleEntity(new Point2D(0.0, 0.0), 100.0, 60.0);
+        var cutout = CutoutFeature.Circle("Otwor", new Point2D(50.0, 30.0), 5.0);
+        var solid = MaterialSolid.FromRectangle("Plyta frontowa", rectangle, material)
+            .AddCutout(cutout, minimumBridgeMillimeters: 5.0);
+        var document = new CadDocument(layers: Array.Empty<Layer>()).AddMaterialSolid(solid);
+        var serializer = new DocumentSerializer();
+
+        var roundTrippedDocument = serializer.Deserialize(serializer.Serialize(document));
+        var roundTrippedCutout = roundTrippedDocument.MaterialSolids.Single().Cutouts.Single();
+
+        Assert.That(roundTrippedCutout.Id, Is.EqualTo(cutout.Id));
+        Assert.That(roundTrippedCutout.Name, Is.EqualTo("Otwor"));
+        Assert.That(roundTrippedCutout.Kind, Is.EqualTo(CutoutFeatureKind.Circle));
+        Assert.That(roundTrippedCutout.Contour.Vertices, Is.EqualTo(cutout.Contour.Vertices));
+    }
+
+    [Test]
     public void RoundTrip_WithParametersAndLayers_ShouldPreserveDocumentValues()
     {
         var id = Guid.NewGuid();

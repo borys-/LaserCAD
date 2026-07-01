@@ -122,7 +122,8 @@ public sealed class DocumentSerializer
             Name = materialSolid.Name,
             MaterialProfile = ToDto(materialSolid.MaterialProfile),
             Mesh = ToDto(materialSolid.Mesh),
-            Orientation = ToDto(materialSolid.Orientation)
+            Orientation = ToDto(materialSolid.Orientation),
+            Cutouts = materialSolid.Cutouts.Select(ToDto).ToArray()
         };
     }
 
@@ -133,7 +134,30 @@ public sealed class DocumentSerializer
             dto.Name,
             ToDomain(RequiredMaterialProfile(dto.MaterialProfile)),
             ToDomain(RequiredMesh(dto.Mesh)),
-            ToDomain(RequiredOrientation(dto.Orientation)));
+            ToDomain(RequiredOrientation(dto.Orientation)),
+            (dto.Cutouts ?? Array.Empty<CutoutFeatureDto>()).Select(ToDomain));
+    }
+
+    private static CutoutFeatureDto ToDto(CutoutFeature cutout)
+    {
+        return new CutoutFeatureDto
+        {
+            Id = cutout.Id,
+            Name = cutout.Name,
+            Kind = cutout.Kind.ToString(),
+            FaceName = cutout.FaceName,
+            Contour = cutout.Contour.Vertices.Select(ToDto).ToArray()
+        };
+    }
+
+    private static CutoutFeature ToDomain(CutoutFeatureDto dto)
+    {
+        return new CutoutFeature(
+            dto.Id,
+            dto.Name,
+            Enum.Parse<CutoutFeatureKind>(dto.Kind, ignoreCase: false),
+            new Polygon2D(RequiredPoints(dto.Contour, "Cutout")),
+            dto.FaceName);
     }
 
     private static MeshDto ToDto(Mesh3D mesh)
@@ -550,6 +574,21 @@ public sealed class DocumentSerializer
         public MeshDto? Mesh { get; set; }
 
         public OrientationDto? Orientation { get; set; }
+
+        public CutoutFeatureDto[]? Cutouts { get; set; }
+    }
+
+    private sealed class CutoutFeatureDto
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; } = string.Empty;
+
+        public string Kind { get; set; } = string.Empty;
+
+        public string? FaceName { get; set; }
+
+        public PointDto[]? Contour { get; set; }
     }
 
     private sealed class MeshDto
