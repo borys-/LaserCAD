@@ -69,6 +69,44 @@ public sealed class MaterialSolidTests
         Assert.That(solid.Mesh.Vertices.Select(vertex => vertex.Z), Does.Contain(3.0));
     }
 
+    [Test]
+    public void Constructor_ShouldUseDefaultOrientation()
+    {
+        var material = DefaultMaterialProfiles.Plywood3Mm;
+        var mesh = CreateMesh();
+
+        var solid = new MaterialSolid("Plyta frontowa", material, mesh);
+
+        Assert.That(solid.Orientation.Position, Is.EqualTo(new Point3D(0.0, 0.0, 0.0)));
+        Assert.That(solid.Orientation.RotationRadians, Is.EqualTo(0.0));
+        Assert.That(solid.Orientation.SurfaceNormal, Is.EqualTo(Vector3D.UnitZ));
+    }
+
+    [Test]
+    public void Constructor_ShouldPreserveOrientation()
+    {
+        var material = DefaultMaterialProfiles.Plywood3Mm;
+        var mesh = CreateMesh();
+        var orientation = new MaterialSolidOrientation(
+            new Point3D(10.0, 20.0, 30.0),
+            Math.PI / 2.0,
+            new Vector3D(0.0, 1.0, 0.0));
+
+        var solid = new MaterialSolid("Plyta frontowa", material, mesh, orientation);
+
+        Assert.That(solid.Orientation, Is.SameAs(orientation));
+    }
+
+    [Test]
+    public void Orientation_WithZeroNormal_ShouldThrow()
+    {
+        Assert.Throws<ArgumentException>(() =>
+            new MaterialSolidOrientation(
+                new Point3D(0.0, 0.0, 0.0),
+                0.0,
+                new Vector3D(0.0, 0.0, 0.0)));
+    }
+
     private static Mesh3D CreateMesh()
     {
         return new Mesh3D(

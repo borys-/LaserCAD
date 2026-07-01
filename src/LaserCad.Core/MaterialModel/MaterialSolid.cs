@@ -12,7 +12,12 @@ public sealed class MaterialSolid
     /// <summary>
     /// Tworzy element materialowy powiazany z profilem materialu.
     /// </summary>
-    public MaterialSolid(Guid id, string name, MaterialProfile materialProfile, Mesh3D mesh)
+    public MaterialSolid(
+        Guid id,
+        string name,
+        MaterialProfile materialProfile,
+        Mesh3D mesh,
+        MaterialSolidOrientation? orientation = null)
     {
         if (id == Guid.Empty)
         {
@@ -28,13 +33,18 @@ public sealed class MaterialSolid
         Name = name;
         MaterialProfile = materialProfile ?? throw new ArgumentNullException(nameof(materialProfile));
         Mesh = mesh ?? throw new ArgumentNullException(nameof(mesh));
+        Orientation = orientation ?? MaterialSolidOrientation.Default;
     }
 
     /// <summary>
     /// Tworzy element materialowy z nowym identyfikatorem.
     /// </summary>
-    public MaterialSolid(string name, MaterialProfile materialProfile, Mesh3D mesh)
-        : this(Guid.NewGuid(), name, materialProfile, mesh)
+    public MaterialSolid(
+        string name,
+        MaterialProfile materialProfile,
+        Mesh3D mesh,
+        MaterialSolidOrientation? orientation = null)
+        : this(Guid.NewGuid(), name, materialProfile, mesh, orientation)
     {
     }
 
@@ -78,6 +88,11 @@ public sealed class MaterialSolid
     /// Mesh prostopadloscianu albo innej bryly materialowej.
     /// </summary>
     public Mesh3D Mesh { get; }
+
+    /// <summary>
+    /// Orientacja elementu materialowego w przestrzeni 3D.
+    /// </summary>
+    public MaterialSolidOrientation Orientation { get; }
 
     /// <summary>
     /// Grubosc elementu materialowego wynikajaca bezposrednio z profilu materialu.
