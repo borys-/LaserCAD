@@ -1,0 +1,13 @@
+{
+  "id": "organizer-grid-basic",
+  "name": "Organizer z przegrodami",
+  "generatorType": "Organizer",
+  "description": "Startowy organizer z prostokatnym obrysem i siatka przegrod.",
+  "parameters": {
+    "widthMillimeters": 180.0,
+    "depthMillimeters": 120.0,
+    "materialThicknessMillimeters": 3.0,
+    "columns": 3,
+    "rows": 2
+  }
+}
