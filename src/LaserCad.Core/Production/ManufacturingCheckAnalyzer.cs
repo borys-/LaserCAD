@@ -20,7 +20,28 @@ public sealed class ManufacturingCheckAnalyzer
 
         var checks = new List<ManufacturingCheck>();
         AddDuplicateLineChecks(document, checks);
+        AddOpenContourChecks(document, checks);
         return checks;
+    }
+
+    private static void AddOpenContourChecks(CadDocument document, List<ManufacturingCheck> checks)
+    {
+        foreach (var sketch in document.Sketches)
+        {
+            foreach (var polyline in sketch.Entities.OfType<PolylineEntity>())
+            {
+                if (polyline.Polyline.IsClosed)
+                {
+                    continue;
+                }
+
+                checks.Add(new ManufacturingCheck(
+                    "OpenContour",
+                    "Wykryto otwarty kontur polilinii.",
+                    ManufacturingCheckSeverity.Warning,
+                    polyline.Id));
+            }
+        }
     }
 
     private static void AddDuplicateLineChecks(CadDocument document, List<ManufacturingCheck> checks)
