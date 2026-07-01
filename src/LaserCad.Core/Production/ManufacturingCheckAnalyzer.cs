@@ -8,6 +8,16 @@ namespace LaserCad.Core.Production;
 /// </summary>
 public sealed class ManufacturingCheckAnalyzer
 {
+    private readonly ManufacturingCheckOptions options;
+
+    /// <summary>
+    /// Tworzy analizator kontroli produkcyjnych.
+    /// </summary>
+    public ManufacturingCheckAnalyzer(ManufacturingCheckOptions? options = null)
+    {
+        this.options = options ?? new ManufacturingCheckOptions();
+    }
+
     /// <summary>
     /// Zwraca liste wynikow kontroli produkcyjnych dla dokumentu.
     /// </summary>
@@ -21,7 +31,36 @@ public sealed class ManufacturingCheckAnalyzer
         var checks = new List<ManufacturingCheck>();
         AddDuplicateLineChecks(document, checks);
         AddOpenContourChecks(document, checks);
+        AddSmallSpacingChecks(document, checks);
         return checks;
+    }
+
+    private void AddSmallSpacingChecks(CadDocument document, List<ManufacturingCheck> checks)
+    {
+        var segments = GetEntitySegments(document).ToArray();
+
+        for (int i = 0; i < segments.Length; i++)
+        {
+            for (int j = i + 1; j < segments.Length; j++)
+            {
+                if (segments[i].EntityId == segments[j].EntityId)
+                {
+                    continue;
+                }
+
+                var distance = DistanceBetweenSegments(segments[i].Segment, segments[j].Segment);
+                if (distance <= GeometryTolerance.Default || distance >= options.MinimumSpacing.Millimeters)
+                {
+                    continue;
+                }
+
+                checks.Add(new ManufacturingCheck(
+                    "SmallSpacing",
+                    "Wykryto odstep mniejszy niz zalecane minimum.",
+                    ManufacturingCheckSeverity.Warning,
+                    segments[j].EntityId));
+            }
+        }
     }
 
     private static void AddOpenContourChecks(CadDocument document, List<ManufacturingCheck> checks)
@@ -115,6 +154,37 @@ public sealed class ManufacturingCheckAnalyzer
     }
 
     private readonly record struct EntitySegment(Guid EntityId, LineSegment2D Segment);
+
+    private static double DistanceBetweenSegments(LineSegment2D first, LineSegment2D second)
+    {
+        var intersection = Intersections2D.Intersect(first, second);
+        if (!intersection.IsNone && !intersection.IsParallel)
+        {
+            return 0.0;
+        }
+
+        return new[]
+        {
+            DistancePointToSegment(first.Start, second),
+            DistancePointToSegment(first.End, second),
+            DistancePointToSegment(second.Start, first),
+            DistancePointToSegment(second.End, first),
+        }.Min();
+    }
+
+    private static double DistancePointToSegment(Point2D point, LineSegment2D segment)
+    {
+        var segmentVector = segment.End - segment.Start;
+        var lengthSquared = segmentVector.Dot(segmentVector);
+        if (lengthSquared <= GeometryTolerance.Default)
+        {
+            return point.DistanceTo(segment.Start);
+        }
+
+        var pointVector = point - segment.Start;
+        var t = Math.Max(0.0, Math.Min(1.0, pointVector.Dot(segmentVector) / lengthSquared));
+        return point.DistanceTo(segment.PointAt(t));
+    }
 
     private readonly record struct SegmentKey(long StartX, long StartY, long EndX, long EndY)
     {
