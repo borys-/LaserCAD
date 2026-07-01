@@ -777,4 +777,4 @@ Te elementy sa swiadomie odlozone poza biezacy plan, dopoki nie pojawi sie realn
 - [x] MVP.1.6 Uzytkownik eksportuje poprawny SVG w milimetrach.
 - [ ] MVP.1.7 SVG zawiera warstwy cut i engrave, jesli sa uzyte.
 - [x] MVP.1.8 Testy jednostkowe przechodza lokalnie.
-- [ ] MVP.1.9 Dokumentacja opisuje minimalny workflow: material -> parametry -> generuj -> eksportuj.
+- [x] MVP.1.9 Dokumentacja opisuje minimalny workflow: material -> parametry -> generuj -> eksportuj.
