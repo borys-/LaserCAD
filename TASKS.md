@@ -454,6 +454,20 @@ Zalecenie pracy:
 - [x] 3.9.3 Po wczytaniu wysylac dokument do viewportu i odswiezac panele shell.
 - [x] 3.9.4 Pamietac aktualna sciezke projektu dla kolejnych zapisow `Save`.
 
+## 3.10 Porzadek UI i przestrzen robocza
+
+- [ ] 3.10.0 Ustalic domyslny uklad shell z maksymalna przestrzenia robocza viewportu.
+- [ ] 3.10.1 Ukryc domyslnie panele generatorow i pokazywac je dopiero po kliknieciu jawnej akcji.
+- [ ] 3.10.2 Ukryc domyslnie panele konfiguracji zaawansowanej i udostepnic je przez zwijany panel, zakladke albo menu.
+- [ ] 3.10.3 Ukryc domyslnie panel historii i udostepnic go przez przycisk albo pozycje menu.
+- [ ] 3.10.4 Zapewnic szybki powrot do czystego widoku roboczego jednym kliknieciem.
+- [ ] 3.10.5 Zapamietywac preferowany stan widocznosci paneli miedzy uruchomieniami aplikacji.
+- [ ] 3.10.6 Zrobic audyt wszystkich widocznych elementow UI: menu, toolbaru, paneli, przyciskow i pol formularzy.
+- [ ] 3.10.7 Zaimplementowac wszystkie placeholdery UI, ktore sa obecnie widoczne jako realne akcje.
+- [ ] 3.10.8 Doprowadzic wszystkie widoczne akcje UI do dzialania end-to-end.
+- [ ] 3.10.9 Usuwac z widoku tylko te funkcje, ktore sa swiadomie poza zakresem aktualnej wersji, zamiast zostawiac niedzialajace kontrolki.
+- [ ] 3.10.10 Dodac manualna checkliste QA dla domyslnie czystego UI i wszystkich widocznych akcji.
+
 ## 4.0 Eksport SVG - fundament
 
 - [x] 4.0.0 Utworzyc `SvgExportOptions`.
@@ -657,16 +671,16 @@ Zalecenie pracy:
 
 ## 11.0 Podglad 3D
 
-- [ ] 11.0.0 Utworzyc model czesci 3D na bazie konturu 2D.
-- [ ] 11.0.1 Dodac extrusion o grubosc materialu.
-- [ ] 11.0.2 Dodac generowanie mesh dla prostokata.
-- [ ] 11.0.3 Dodac generowanie mesh dla polygonu.
-- [ ] 11.0.4 Dodac material wizualny sklejki.
-- [ ] 11.0.5 Dodac widok zlozonego pudelka.
-- [ ] 11.0.6 Dodac animacje skladania.
-- [ ] 11.0.7 Dodac animacje rozkladania.
-- [ ] 11.0.8 Dodac prosta detekcje kolizji elementow.
-- [ ] 11.0.9 Dodac test/manual QA dla podgladu 3D.
+- [x] 11.0.0 Utworzyc model czesci 3D na bazie konturu 2D.
+- [x] 11.0.1 Dodac extrusion o grubosc materialu.
+- [x] 11.0.2 Dodac generowanie mesh dla prostokata.
+- [x] 11.0.3 Dodac generowanie mesh dla polygonu.
+- [x] 11.0.4 Dodac material wizualny sklejki.
+- [x] 11.0.5 Dodac widok zlozonego pudelka.
+- [x] 11.0.6 Dodac animacje skladania.
+- [x] 11.0.7 Dodac animacje rozkladania.
+- [x] 11.0.8 Dodac prosta detekcje kolizji elementow.
+- [x] 11.0.9 Dodac test/manual QA dla podgladu 3D.
 
 ## 12.0 Produkcja i nesting
 
@@ -701,44 +715,36 @@ Zalecenie pracy:
 - [ ] 13.0.0 Utworzyc katalog biblioteki materialow.
 - [ ] 13.0.1 Dodac profil sklejki 3 mm.
 - [ ] 13.0.2 Dodac profil sklejki 4 mm.
-- [ ] 13.0.3 Dodac profil MDF.
-- [ ] 13.0.4 Dodac profil akrylu.
-- [ ] 13.0.5 Utworzyc katalog szablonow.
-- [ ] 13.0.6 Dodac szablon pudelka.
-- [ ] 13.0.7 Dodac szablon organizera.
-- [ ] 13.0.8 Dodac szablon podstawki.
-- [ ] 13.0.9 Dodac szablon stojaka.
-- [ ] 13.0.10 Dodac UI wyboru szablonu.
-- [ ] 13.0.11 Dodac test ladowania biblioteki.
-
-## 14.0 Pluginy
-
-- [ ] 14.0.0 Zdefiniowac minimalne API pluginu.
-- [ ] 14.0.1 Dodac kontrakt generatora pluginowego.
-- [ ] 14.0.2 Dodac kontrakt eksportera pluginowego.
-- [ ] 14.0.3 Dodac kontrakt narzedzia pluginowego.
-- [ ] 14.0.4 Dodac manifest pluginu.
-- [ ] 14.0.5 Dodac ladowanie pluginu z katalogu.
-- [ ] 14.0.6 Dodac izolacje bledow pluginu.
-- [ ] 14.0.7 Dodac przykladowy plugin generatora.
-- [ ] 14.0.8 Dodac przykladowy plugin eksportera.
-- [ ] 14.0.9 Dodac test ladowania manifestu.
+- [ ] 13.0.3 Utworzyc katalog szablonow.
+- [ ] 13.0.4 Dodac szablon pudelka.
+- [ ] 13.0.5 Dodac szablon organizera.
+- [ ] 13.0.6 Dodac szablon podstawki.
+- [ ] 13.0.7 Dodac szablon stojaka.
+- [ ] 13.0.8 Dodac UI wyboru szablonu.
+- [ ] 13.0.9 Dodac test ladowania biblioteki.
 
 ## 15.0 Przygotowanie wersji 1.0
 
-- [ ] 15.0.0 Ustalic minimalne wymagania systemowe.
-- [ ] 15.0.1 Utworzyc instalator.
-- [ ] 15.0.2 Dodac auto update.
-- [ ] 15.0.3 Dodac ekran ustawien.
-- [ ] 15.0.4 Dodac konfiguracje skrotow klawiszowych.
-- [ ] 15.0.5 Dodac dokumentacje uzytkownika.
-- [ ] 15.0.6 Dodac tutorial tworzenia pierwszego pudelka.
-- [ ] 15.0.7 Dodac tutorial kalibracji kerfu.
-- [ ] 15.0.8 Dodac przykladowe projekty.
-- [ ] 15.0.9 Zamrozic wersje formatu pliku.
-- [ ] 15.0.10 Dodac testy regresyjne dla przykladowych projektow.
-- [ ] 15.0.11 Dodac checklist QA przed wydaniem.
-- [ ] 15.0.12 Przygotowac release notes.
+- [ ] 15.0.0 Dodac ekran ustawien.
+- [ ] 15.0.1 Dodac konfiguracje skrotow klawiszowych.
+- [ ] 15.0.2 Dodac testy regresyjne dla przykladowych projektow.
+- [ ] 15.0.3 Dodac checklist QA przed wydaniem.
+
+## Poza aktualnym zakresem
+
+Te elementy sa swiadomie odlozone poza biezacy plan, dopoki nie pojawi sie realna potrzeba produktowa:
+
+- profile biblioteki materialow dla MDF i akrylu,
+- system pluginow,
+- minimalne wymagania systemowe,
+- instalator,
+- auto update,
+- release notes,
+- pelna dokumentacja uzytkownika,
+- tutorial tworzenia pierwszego pudelka,
+- tutorial kalibracji kerfu,
+- przykladowe projekty,
+- zamrozenie wersji formatu pliku.
 
 ## MVP.0 Minimalna sciezka do pierwszej uzywalnej wersji
 

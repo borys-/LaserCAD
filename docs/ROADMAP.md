@@ -389,6 +389,12 @@ Tekst parametryczny obsluguje proste znaczniki `{ParameterId}` podmieniane warto
 - Kolizje.
 - Wizualizacja materialu.
 
+### Ograniczenia podgladu 3D MVP
+
+Podglad 3D w pierwszym kroku tworzy proste meshe przez ekstrudowanie prostokatow i zamknietych polilinii o grubosc aktualnego profilu materialu. Domena udostepnia `Contour3DBuilder`, `Part3D`, `Mesh3D` i `Point3D`, a Unity jest tylko adapterem renderujacym wynik.
+
+Triangulacja polygonu jest uproszczona do wachlarza, wiec MVP jest przeznaczone dla prostych konturow wypuklych. Widok zlozonego pudelka, animacja skladania/rozkladania i kolizje sa heurystyczna wizualizacja: nie ma jeszcze pelnej semantyki scianek generatora, zawiasow montazowych ani dokladnych testow bryl.
+
 ## Faza 12 - Produkcja
 
 - Nesting:
