@@ -1,5 +1,6 @@
 using LaserCad.Core.Parameters;
 using LaserCad.Core.MaterialModel;
+using LaserCad.Core.Preview3D;
 
 namespace LaserCad.Core.Documents;
 
@@ -180,6 +181,52 @@ public sealed class CadDocument
     }
 
     /// <summary>
+    /// Zwraca nowy dokument z usunietym elementem materialowym 3D.
+    /// </summary>
+    public CadDocument RemoveMaterialSolid(Guid materialSolidId)
+    {
+        return new CadDocument(
+            Id,
+            Name,
+            FormatVersion,
+            Parameters,
+            Layers,
+            Sketches,
+            Generators,
+            MaterialProfile,
+            MaterialSolids.Where(materialSolid => materialSolid.Id != materialSolidId));
+    }
+
+    /// <summary>
+    /// Zwraca nowy dokument z przesunietym elementem materialowym 3D.
+    /// </summary>
+    public CadDocument MoveMaterialSolid(Guid materialSolidId, Vector3D offset)
+    {
+        return ReplaceMaterialSolidOrientation(
+            materialSolidId,
+            orientation => new MaterialSolidOrientation(
+                new Point3D(
+                    orientation.Position.X + offset.X,
+                    orientation.Position.Y + offset.Y,
+                    orientation.Position.Z + offset.Z),
+                orientation.RotationRadians,
+                orientation.SurfaceNormal));
+    }
+
+    /// <summary>
+    /// Zwraca nowy dokument z obroconym elementem materialowym 3D.
+    /// </summary>
+    public CadDocument RotateMaterialSolid(Guid materialSolidId, double rotationRadians)
+    {
+        return ReplaceMaterialSolidOrientation(
+            materialSolidId,
+            orientation => new MaterialSolidOrientation(
+                orientation.Position,
+                orientation.RotationRadians + rotationRadians,
+                orientation.SurfaceNormal));
+    }
+
+    /// <summary>
     /// Zwraca nowy dokument z ustawionym profilem materialu.
     /// Uzywaj przy wyborze materialu albo zmianie domyslnych ustawien produkcyjnych.
     /// </summary>
@@ -191,5 +238,36 @@ public sealed class CadDocument
         }
 
         return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, materialProfile, MaterialSolids);
+    }
+
+    private CadDocument ReplaceMaterialSolidOrientation(
+        Guid materialSolidId,
+        Func<MaterialSolidOrientation, MaterialSolidOrientation> update)
+    {
+        if (materialSolidId == Guid.Empty)
+        {
+            throw new ArgumentException("Material solid id cannot be empty.", nameof(materialSolidId));
+        }
+
+        var found = false;
+        var updatedSolids = MaterialSolids
+            .Select(materialSolid =>
+            {
+                if (materialSolid.Id != materialSolidId)
+                {
+                    return materialSolid;
+                }
+
+                found = true;
+                return materialSolid.WithOrientation(update(materialSolid.Orientation));
+            })
+            .ToArray();
+
+        if (!found)
+        {
+            throw new InvalidOperationException("Material solid was not found in document.");
+        }
+
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, MaterialProfile, updatedSolids);
     }
 }

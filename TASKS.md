@@ -762,7 +762,7 @@ Celem etapu 2 jest workflow: uzytkownik projektuje bryle z realnego materialu, l
 - [x] 16.1.3 Dodac tryb laczenia plyt pod katem 90 stopni.
 - [x] 16.1.4 Dodac podglad relacji montazowej miedzy dwiema plytami.
 - [x] 16.1.5 Dodac wykrywanie kolizji plyt po polaczeniu.
-- [ ] 16.1.6 Dodac podstawowe operacje edycji plyty 3D: przesun, obroc, usun.
+- [x] 16.1.6 Dodac podstawowe operacje edycji plyty 3D: przesun, obroc, usun.
 - [ ] 16.1.7 Dodac test/manual QA rysowania i laczenia kilku plyt.
 
 ## 16.2 Negatywy i wyciecia

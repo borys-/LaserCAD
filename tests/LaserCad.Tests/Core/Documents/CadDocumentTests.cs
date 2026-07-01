@@ -1,5 +1,8 @@
 using LaserCad.Core.Documents;
+using LaserCad.Core.MaterialModel;
 using LaserCad.Core.Parameters;
+using LaserCad.Core.Preview3D;
+using LaserCad.Geometry;
 
 namespace LaserCad.Tests.Core.Documents;
 
@@ -226,5 +229,49 @@ public sealed class CadDocumentTests
         Assert.That(updatedDocument.FormatVersion, Is.EqualTo(2));
         Assert.That(updatedDocument.Parameters.FindById(new ParameterId("Width")), Is.SameAs(parameter));
         Assert.That(document.Parameters.Parameters, Is.Empty);
+    }
+
+    [Test]
+    public void MoveMaterialSolid_ShouldReturnDocumentWithMovedSolid()
+    {
+        var solid = CreateMaterialSolid();
+        var document = new CadDocument().AddMaterialSolid(solid);
+
+        var updatedDocument = document.MoveMaterialSolid(solid.Id, new Vector3D(1.0, 2.0, 3.0));
+
+        Assert.That(updatedDocument.MaterialSolids.Single().Orientation.Position, Is.EqualTo(new Point3D(1.0, 2.0, 3.0)));
+        Assert.That(document.MaterialSolids.Single().Orientation.Position, Is.EqualTo(new Point3D(0.0, 0.0, 0.0)));
+    }
+
+    [Test]
+    public void RotateMaterialSolid_ShouldReturnDocumentWithRotatedSolid()
+    {
+        var solid = CreateMaterialSolid();
+        var document = new CadDocument().AddMaterialSolid(solid);
+
+        var updatedDocument = document.RotateMaterialSolid(solid.Id, Math.PI / 2.0);
+
+        Assert.That(updatedDocument.MaterialSolids.Single().Orientation.RotationRadians, Is.EqualTo(Math.PI / 2.0));
+        Assert.That(document.MaterialSolids.Single().Orientation.RotationRadians, Is.EqualTo(0.0));
+    }
+
+    [Test]
+    public void RemoveMaterialSolid_ShouldReturnDocumentWithoutSolid()
+    {
+        var solid = CreateMaterialSolid();
+        var document = new CadDocument().AddMaterialSolid(solid);
+
+        var updatedDocument = document.RemoveMaterialSolid(solid.Id);
+
+        Assert.That(updatedDocument.MaterialSolids, Is.Empty);
+        Assert.That(document.MaterialSolids, Has.Count.EqualTo(1));
+    }
+
+    private static MaterialSolid CreateMaterialSolid()
+    {
+        return MaterialSolid.FromRectangle(
+            "Plyta",
+            new RectangleEntity(new Point2D(0.0, 0.0), 10.0, 5.0),
+            DefaultMaterialProfiles.Plywood3Mm);
     }
 }
