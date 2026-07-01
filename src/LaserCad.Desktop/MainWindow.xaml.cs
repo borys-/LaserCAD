@@ -383,6 +383,13 @@ public partial class MainWindow : Window
         TransformsPanelGroupBox.Visibility = visibility;
     }
 
+    private void HistoryPanel_Click(object sender, RoutedEventArgs e)
+    {
+        HistoryPanelGroupBox.Visibility = HistoryPanelMenuItem.IsChecked
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+    }
+
     private void Settings_Click(object sender, RoutedEventArgs e)
     {
         var settingsWindow = new SettingsWindow

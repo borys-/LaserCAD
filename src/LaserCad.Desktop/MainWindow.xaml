@@ -166,6 +166,10 @@
                           Header="_Advanced Panels"
                           IsCheckable="True"
                           Click="AdvancedPanels_Click" />
+                <MenuItem x:Name="HistoryPanelMenuItem"
+                          Header="_History Panel"
+                          IsCheckable="True"
+                          Click="HistoryPanel_Click" />
             </MenuItem>
             <MenuItem Header="_Tools">
                 <MenuItem Header="_Settings..." InputGestureText="Ctrl+," Click="Settings_Click" />
@@ -424,7 +428,7 @@
                           BorderBrush="{StaticResource AppBorderBrush}"
                           BorderThickness="1,0,0,0">
                 <StackPanel>
-                    <GroupBox Header="Historia">
+                    <GroupBox x:Name="HistoryPanelGroupBox" Header="Historia" Visibility="Collapsed">
                         <StackPanel>
                             <Grid Margin="0,0,0,10">
                                 <Grid.ColumnDefinitions>
