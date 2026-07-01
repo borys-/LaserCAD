@@ -1,0 +1,104 @@
+{
+  "formatVersion": 1,
+  "id": "7fb05988-b1c7-41de-985b-04b3a66d792f",
+  "name": "Przyklad - otwarte pudelko",
+  "parameters": [
+    {
+      "id": "Width",
+      "name": "Szerokosc",
+      "type": "Length",
+      "value": 100,
+      "displayUnit": "mm"
+    },
+    {
+      "id": "Depth",
+      "name": "Glebokosc",
+      "type": "Length",
+      "value": 80,
+      "displayUnit": "mm"
+    }
+  ],
+  "layers": [
+    {
+      "name": "Cut",
+      "color": "#FF0000",
+      "role": "Cut"
+    },
+    {
+      "name": "Engrave",
+      "color": "#0000FF",
+      "role": "Engrave"
+    },
+    {
+      "name": "Score",
+      "color": "#00AA00",
+      "role": "Score"
+    },
+    {
+      "name": "Ignore",
+      "color": "#808080",
+      "role": "Ignore"
+    }
+  ],
+  "sketches": [
+    {
+      "id": "5f7d4ff4-5d10-4275-af2e-9345f1cf2e38",
+      "name": "Szkic produkcyjny",
+      "entities": [
+        {
+          "type": "Rectangle",
+          "id": "2155ff0b-b277-4a68-80c0-0b698769bcb9",
+          "layerName": "Cut",
+          "corners": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "x": 100,
+              "y": 0
+            },
+            {
+              "x": 100,
+              "y": 80
+            },
+            {
+              "x": 0,
+              "y": 80
+            }
+          ],
+          "dimensionBindings": [
+            {
+              "dimension": "Width",
+              "parameterId": "Width"
+            },
+            {
+              "dimension": "Height",
+              "parameterId": "Depth"
+            }
+          ]
+        },
+        {
+          "type": "Text",
+          "id": "fe3ccfa6-a419-45c5-a396-47dec2a974eb",
+          "layerName": "Engrave",
+          "text": "Laser CAD",
+          "position": {
+            "x": 10,
+            "y": 20
+          },
+          "height": 6,
+          "fontFamily": "Arial",
+          "alignment": "Left"
+        }
+      ]
+    }
+  ],
+  "materialProfile": {
+    "name": "Sklejka 3 mm",
+    "thicknessMillimeters": 3,
+    "defaultKerfMillimeters": 0.15,
+    "defaultClearanceMillimeters": 0.1,
+    "minimumFingerWidthMillimeters": 3
+  }
+}
