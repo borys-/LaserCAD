@@ -716,7 +716,7 @@ Zalecenie pracy:
 - [x] 13.0.1 Dodac profil sklejki 3 mm.
 - [x] 13.0.2 Dodac profil sklejki 4 mm.
 - [x] 13.0.3 Utworzyc katalog szablonow.
-- [ ] 13.0.4 Dodac szablon pudelka.
+- [x] 13.0.4 Dodac szablon pudelka.
 - [ ] 13.0.5 Dodac szablon organizera.
 - [ ] 13.0.6 Dodac szablon podstawki.
 - [ ] 13.0.7 Dodac szablon stojaka.

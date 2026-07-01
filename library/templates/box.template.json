@@ -1,0 +1,16 @@
+{
+  "id": "box-open-basic",
+  "name": "Pudelko otwarte",
+  "generatorType": "Box",
+  "description": "Startowy szablon otwartego pudelka z finger jointami.",
+  "parameters": {
+    "widthMillimeters": 100.0,
+    "depthMillimeters": 80.0,
+    "heightMillimeters": 50.0,
+    "materialThicknessMillimeters": 3.0,
+    "kerfMillimeters": 0.15,
+    "fingerWidthMillimeters": 10.0,
+    "clearanceMillimeters": 0.1,
+    "boxType": "Open"
+  }
+}
