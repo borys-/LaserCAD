@@ -413,6 +413,12 @@ Triangulacja polygonu jest uproszczona do wachlarza, wiec MVP jest przeznaczone 
   - zbyt cienkie mostki materialu,
   - kolejnosc ciecia: otwory wewnetrzne przed konturem zewnetrznym.
 
+### Ograniczenia produkcji i nestingu MVP
+
+Nesting w pierwszym kroku uklada prostokatne elementy domenowe `NestingItem` na arkuszu `SheetSize` kolejnymi rzedami. Uwzglednia margines arkusza, odstep miedzy elementami oraz opcjonalny obrot elementu o 90 stopni, jesli pomaga zmiescic szeroki prostokat.
+
+To nie jest jeszcze nesting rzeczywistych konturow CAD z dokumentu. Algorytm nie rozpoznaje automatycznie scianek generatora, nie pakuje polygonow nieregularnych, nie optymalizuje kolejnosci ani nie minimalizuje odpadu. Statystyki produkcyjne sa szacunkiem MVP: zuzycie materialu liczone jest z pol prostokatow, dlugosc ciecia jako suma ich obwodow, a czas ciecia jako dlugosc podzielona przez zadana predkosc.
+
 ## Faza 13 - Biblioteka
 
 - Materialy:

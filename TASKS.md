@@ -684,18 +684,18 @@ Zalecenie pracy:
 
 ## 12.0 Produkcja i nesting
 
-- [ ] 12.0.0 Utworzyc `SheetSize`.
-- [ ] 12.0.1 Dodac szerokosc arkusza.
-- [ ] 12.0.2 Dodac wysokosc arkusza.
-- [ ] 12.0.3 Dodac margines arkusza.
-- [ ] 12.0.4 Utworzyc `NestingOptions`.
-- [ ] 12.0.5 Dodac odstep miedzy elementami.
-- [ ] 12.0.6 Dodac mozliwosc obrotu elementow.
-- [ ] 12.0.7 Dodac prosty nesting rzedami.
-- [ ] 12.0.8 Dodac statystyke zuzycia materialu.
-- [ ] 12.0.9 Dodac statystyke dlugosci ciecia.
-- [ ] 12.0.10 Dodac szacowany czas ciecia.
-- [ ] 12.0.11 Dodac test nestingu kilku prostokatow.
+- [x] 12.0.0 Utworzyc `SheetSize`.
+- [x] 12.0.1 Dodac szerokosc arkusza.
+- [x] 12.0.2 Dodac wysokosc arkusza.
+- [x] 12.0.3 Dodac margines arkusza.
+- [x] 12.0.4 Utworzyc `NestingOptions`.
+- [x] 12.0.5 Dodac odstep miedzy elementami.
+- [x] 12.0.6 Dodac mozliwosc obrotu elementow.
+- [x] 12.0.7 Dodac prosty nesting rzedami.
+- [x] 12.0.8 Dodac statystyke zuzycia materialu.
+- [x] 12.0.9 Dodac statystyke dlugosci ciecia.
+- [x] 12.0.10 Dodac szacowany czas ciecia.
+- [x] 12.0.11 Dodac test nestingu kilku prostokatow.
 
 ## 12.1 Manufacturing checks
 

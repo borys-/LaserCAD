@@ -1,5 +1,66 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 12.0 Produkcja i nesting
+
+- Wykonano cala sekcje `12.0 Produkcja i nesting`.
+- Nowe commity:
+  - `bb2b0f4 12.0.0 Utworz SheetSize`,
+  - `3b631c2 12.0.1 Dodaj szerokosc arkusza`,
+  - `71ff3e9 12.0.2 Dodaj wysokosc arkusza`,
+  - `7630b59 12.0.3 Dodaj margines arkusza`,
+  - `1df7a54 12.0.4 Utworz NestingOptions`,
+  - `7a58535 12.0.5 Dodaj odstep nestingu`,
+  - `7583b48 12.0.6 Dodaj obrot elementow nestingu`,
+  - `c780fd0 12.0.7 Dodaj prosty nesting rzedami`,
+  - `3509774 12.0.8 Dodaj statystyke zuzycia materialu`,
+  - `6d0a011 12.0.9 Dodaj statystyke dlugosci ciecia`,
+  - `05a4cf0 12.0.10 Dodaj szacowany czas ciecia`,
+  - `0167603 12.0.11 Dodaj test nestingu prostokatow`.
+- Dodano namespace `LaserCad.Core.Production`:
+  - `SheetSize` z szerokoscia, wysokoscia i marginesem,
+  - `NestingOptions` z odstepem miedzy elementami i flaga obrotu,
+  - `NestingItem`,
+  - `NestedPart`,
+  - `NestingResult`,
+  - `RowNestingPlanner`,
+  - `ProductionStatistics`,
+  - `ProductionStatisticsCalculator`.
+- `RowNestingPlanner`:
+  - uklada prostokatne elementy kolejnymi rzedami,
+  - respektuje margines arkusza i odstep miedzy elementami,
+  - potrafi obrocic element o 90 stopni, jesli `AllowRotation` jest wlaczone,
+  - rzuca blad, gdy element nie miesci sie na arkuszu.
+- Statystyki produkcyjne MVP:
+  - zuzycie materialu to suma pol ulozonych prostokatow / pole arkusza,
+  - dlugosc ciecia to suma obwodow ulozonych prostokatow,
+  - szacowany czas ciecia to dlugosc ciecia / predkosc ciecia w mm/min.
+- Dodano testy w `tests/LaserCad.Tests/Core/Production`:
+  - `SheetSizeTests`,
+  - `NestingOptionsTests`,
+  - `RowNestingPlannerTests`,
+  - `ProductionStatisticsCalculatorTests`.
+- Dokumentacja:
+  - odhaczono `12.0.0`-`12.0.11` w `TASKS.md`,
+  - dopisano ograniczenia produkcji i nestingu MVP do `docs/ROADMAP.md`.
+- Ograniczenia MVP:
+  - nesting operuje na prostokatnych `NestingItem`, a nie na rzeczywistych konturach dokumentu,
+  - nie ma jeszcze automatycznego wyciagania scianek/generatorow z `CadDocument`,
+  - nie ma optymalizacji odpadu ani pakowania nieregularnych polygonow,
+  - statystyki sa szacunkowe i prostokatne.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `451/451`,
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - brak nowego panelu UI dla nestingu w desktop shell,
+  - aplikacja powinna wygladac jak po sekcji 11.0,
+  - zmiana jest domenowa i testowa; do recznej weryfikacji UI nadal uzywac istniejacego generatora pudelka, podgladu 2D/3D, zapisu/odczytu i eksportu.
+- Po przegladzie planu:
+  - nastepna logiczna sekcja wedlug `TASKS.md`: `12.1 Manufacturing checks`, start od `12.1.0 Utworzyc ManufacturingCheck`,
+  - nadal otwarte sa m.in. `3.6.27`, cala sekcja `3.10`, `MVP.0.14`, `MVP.0.15`, `MVP.1.4`, `MVP.1.5`, `MVP.1.7`, `MVP.1.9`.
+
 ## Aktualizacja po sekcji 11.0 Podglad 3D
 
 - Wykonano cala sekcje `11.0 Podglad 3D`.
