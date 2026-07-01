@@ -29,6 +29,7 @@ Repozytorium zdalne:
 - [docs/CODING_STANDARDS.md](docs/CODING_STANDARDS.md) - standardy kodowania i pracy nad projektem.
 - [docs/DESKTOP_VIEWPORT_LIFECYCLE.md](docs/DESKTOP_VIEWPORT_LIFECYCLE.md) - lifecycle desktop shell i procesu Unity viewport.
 - [docs/DESKTOP_VIEWPORT_QA.md](docs/DESKTOP_VIEWPORT_QA.md) - manualna checklista QA dla desktop shell + Unity viewport.
+- [docs/RELEASE_QA_CHECKLIST.md](docs/RELEASE_QA_CHECKLIST.md) - checklista QA przed wydaniem.
 - [TASKS.md](TASKS.md) - szczegolowa lista taskow implementacyjnych.
 
 ## Testy

@@ -1,5 +1,49 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 15.0 Przygotowanie wersji 1.0
+
+- Wykonano cala sekcje `15.0 Przygotowanie wersji 1.0`.
+- Nowe commity:
+  - `e6b35fe 15.0.0 Dodaj ekran ustawien`,
+  - `bf592d3 15.0.1 Dodaj konfiguracje skrotow klawiszowych`,
+  - `1aa25fb 15.0.2 Dodaj regresje przykladowych projektow`,
+  - `8bc4083 15.0.3 Dodaj checklist QA przed wydaniem`.
+- Desktop shell:
+  - dodano menu `Tools -> Settings...`,
+  - dodano okno `SettingsWindow` z sekcjami widoku roboczego, jednostek i skrotow klawiszowych,
+  - dodano katalog domyslnych skrotow `KeyboardShortcutCatalog`,
+  - podpieto realne skroty: `Ctrl+N`, `Ctrl+O`, `Ctrl+S`, `Ctrl+Shift+S`, `Ctrl+Shift+D`, `Ctrl+Z`, `Ctrl+Y`, `Home`, `Ctrl+0`, `Ctrl+,`,
+  - menu pokazuje tekst skrotow przy odpowiednich akcjach.
+- Regresje wydaniowe:
+  - dodano przykładowy projekt `examples/projects/open-box.lasercad.json`,
+  - dodano test `tests/LaserCad.Tests/Release/ExampleProjectRegressionTests.cs`,
+  - test wczytuje wszystkie `examples/projects/*.lasercad.json`, robi round-trip przez `DocumentSerializer` oraz eksportuje SVG i DXF.
+- Dokumentacja:
+  - dodano `docs/RELEASE_QA_CHECKLIST.md`,
+  - dodano link do checklisty wydaniowej w `README.md`,
+  - odhaczono `15.0.0`-`15.0.3` w `TASKS.md`.
+- Po przegladzie planu:
+  - sekcja `15.0` jest zamknieta,
+  - nie dodawano nowych taskow,
+  - nadal otwarte sa m.in. `3.6.27`, cala sekcja `3.10`, `MVP.0.14`, `MVP.0.15`, `MVP.1.4`, `MVP.1.5`, `MVP.1.7`, `MVP.1.9`,
+  - nastepny logiczny krok produktowy to raczej `3.10 Porzadek UI i przestrzen robocza`, bo nowe ustawienia i widoczne panele zwiekszaja potrzebe uporzadkowania domyslnego widoku.
+- Weryfikacja wykonana w trakcie:
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen po `15.0.0`,
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen po `15.0.1`,
+  - `dotnet test LaserCad.sln --no-restore --filter FullyQualifiedName~ExampleProjectRegression` przechodzi: `1/1`,
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen po `15.0.3`.
+- Do wykonania na koniec tej sesji:
+  - pelny `dotnet test LaserCad.sln --no-restore`,
+  - pelny `dotnet build LaserCad.sln --no-restore`,
+  - `cmd /c build.bat`,
+  - push do `origin/master`.
+- Widoczne po odpaleniu aplikacji:
+  - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - w menu szukac nowej pozycji `Tools -> Settings...`,
+  - okno ustawien pokazuje preferencje widoku, jednostki oraz liste skrotow,
+  - w menu `File`, `Edit`, `View`, `Tools` i `Export` widac teksty skrotow przy akcjach,
+  - skroty powinny wywolywac te same akcje co menu/toolbar, np. `Ctrl+N`, `Ctrl+S`, `Ctrl+Z`, `Ctrl+Y`, `Home`, `Ctrl+0`.
+
 ## Aktualizacja po sekcji 13.0 Biblioteka
 
 - Wykonano cala sekcje `13.0 Biblioteka`.
