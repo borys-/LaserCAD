@@ -48,4 +48,29 @@ public sealed class ProductionStatisticsCalculatorTests
 
         Assert.That(statistics.CuttingLengthMillimeters, Is.EqualTo(60.0));
     }
+
+    [Test]
+    public void Calculate_ShouldReturnEstimatedCuttingTime()
+    {
+        var sheet = new SheetSize(
+            Length.FromMillimeters(100.0),
+            Length.FromMillimeters(100.0));
+        var result = new NestingResult(new[]
+        {
+            new NestedPart(
+                new NestingItem("A", Length.FromMillimeters(20.0), Length.FromMillimeters(10.0)),
+                Length.FromMillimeters(0.0),
+                Length.FromMillimeters(0.0),
+                Length.FromMillimeters(20.0),
+                Length.FromMillimeters(10.0),
+                isRotated: false),
+        });
+
+        ProductionStatistics statistics = new ProductionStatisticsCalculator().Calculate(
+            sheet,
+            result,
+            cuttingSpeedMillimetersPerMinute: 30.0);
+
+        Assert.That(statistics.EstimatedCuttingTimeMinutes, Is.EqualTo(2.0));
+    }
 }

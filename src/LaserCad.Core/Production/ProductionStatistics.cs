@@ -8,7 +8,10 @@ public sealed class ProductionStatistics
     /// <summary>
     /// Tworzy statystyki produkcyjne.
     /// </summary>
-    public ProductionStatistics(double materialUsageRatio, double cuttingLengthMillimeters = 0.0)
+    public ProductionStatistics(
+        double materialUsageRatio,
+        double cuttingLengthMillimeters = 0.0,
+        double estimatedCuttingTimeMinutes = 0.0)
     {
         if (materialUsageRatio < 0.0)
         {
@@ -20,8 +23,14 @@ public sealed class ProductionStatistics
             throw new ArgumentOutOfRangeException(nameof(cuttingLengthMillimeters), "Cutting length must be non-negative.");
         }
 
+        if (estimatedCuttingTimeMinutes < 0.0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(estimatedCuttingTimeMinutes), "Cutting time must be non-negative.");
+        }
+
         MaterialUsageRatio = materialUsageRatio;
         CuttingLengthMillimeters = cuttingLengthMillimeters;
+        EstimatedCuttingTimeMinutes = estimatedCuttingTimeMinutes;
     }
 
     /// <summary>
@@ -33,4 +42,9 @@ public sealed class ProductionStatistics
     /// Szacowana laczna dlugosc ciecia.
     /// </summary>
     public double CuttingLengthMillimeters { get; }
+
+    /// <summary>
+    /// Szacowany czas ciecia w minutach.
+    /// </summary>
+    public double EstimatedCuttingTimeMinutes { get; }
 }
