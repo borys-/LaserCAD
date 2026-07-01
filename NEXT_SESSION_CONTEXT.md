@@ -1,5 +1,48 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 16.0A Bryly z pochyla sciana
+
+- Wykonano cala sekcje `16.0A Bryly z pochyla sciana`.
+- Nowy commit:
+  - `8a30902 16.0A Dodaj bryle z pochyla sciana`.
+- Commit zostal wypchniety na `origin/master`.
+- Dodano namespace/typy w `LaserCad.Core.MaterialModel`:
+  - `SlopedMaterialSolidOptions` z parametrami `Width`, `Depth`, `FrontHeight`, `BackHeight`, wyliczanym `HeightDelta` i `SlopedDepth`,
+  - `SlopedMaterialSolid` jako domenowy model kontrolowanej bryly plytowej z jedna pochyla gorna sciana,
+  - `UnfoldedMaterialPart` jako plaska czesc materialowa z nazwa i zewnetrznym konturem `Polygon2D`.
+- `SlopedMaterialSolid`:
+  - przechowuje `Id`, `Name`, `MaterialProfile`, `Options`, `Orientation` i `PreviewMesh`,
+  - waliduje pusty identyfikator i pusta nazwe,
+  - korzysta z profilu materialu jako informacji o materiale plyt,
+  - tworzy pogladowy mesh 3D z 8 wierzcholkami i 12 trojkatami,
+  - metoda `Unfold()` zwraca 6 czesci: `Front`, `Back`, `Left side`, `Right side`, `Bottom`, `Sloped top`,
+  - boki lewe/prawe sa trapezami wynikajacymi z roznicy `FrontHeight` i `BackHeight`,
+  - pochyla gora ma glebokosc liczona jako przeciwprostokatna przekroju bocznego.
+- Dodano testy w `tests/LaserCad.Tests/Core/MaterialModel/SlopedMaterialSolidTests.cs`:
+  - zachowanie kontraktu i opcji,
+  - parametry pochylenia i `SlopedDepth`,
+  - mesh pogladowy z pochyla gorna sciana,
+  - walidacja zerowej/ujemnej wysokosci,
+  - rozwiniecie na dwa boki trapezowe i cztery prostokatne panele.
+- Dokumentacja:
+  - odhaczono `16.0A.0`-`16.0A.6` w `TASKS.md`,
+  - dopisano ograniczenia bryly z pochyla sciana MVP do `docs/ROADMAP.md`.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore --filter FullyQualifiedName~MaterialModel` przechodzi: `21/21`,
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `479/479`,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - brak nowych kontrolek UI dla bryly trapezowej,
+  - aplikacja powinna wygladac jak po poprzedniej wersji,
+  - zmiana jest domenowa i testowa; recznie nadal weryfikowac istniejacy workflow pudelka, widok 2D/3D i eksport SVG/DXF,
+  - nowy model bedzie widoczny dopiero po podlaczeniu workflow etapu 2 w kolejnych sekcjach.
+- Po przegladzie planu:
+  - sekcja `16.0A` jest zamknieta,
+  - nastepny logiczny task to `16.1.0 Dodac narzedzie rysowania plyty/prostokata materialowego w widoku 3D`,
+  - nadal otwarte sa manualne kryteria `3.6.27`, `MVP.0.15`, `MVP.1.4`, `MVP.1.5` oraz kryteria Etapu 2 MVP.
+
 ## Aktualizacja po sekcji 16.0 Model materialowy 3D
 
 - Najpierw zapisano i wypchnieto zalegly plan Etapu 2:
