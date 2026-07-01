@@ -49,4 +49,30 @@ public sealed class RowNestingPlannerTests
         Assert.That(result.Parts[0].Width.Millimeters, Is.EqualTo(30.0));
         Assert.That(result.Parts[0].Height.Millimeters, Is.EqualTo(80.0));
     }
+
+    [Test]
+    public void Nest_WithSeveralRectangles_ShouldKeepEveryRectangleInsideSheet()
+    {
+        var sheet = new SheetSize(
+            Length.FromMillimeters(120.0),
+            Length.FromMillimeters(80.0),
+            Length.FromMillimeters(5.0));
+        var options = new NestingOptions(spacing: Length.FromMillimeters(5.0));
+        var items = new[]
+        {
+            new NestingItem("Front", Length.FromMillimeters(30.0), Length.FromMillimeters(20.0)),
+            new NestingItem("Back", Length.FromMillimeters(30.0), Length.FromMillimeters(20.0)),
+            new NestingItem("Side", Length.FromMillimeters(20.0), Length.FromMillimeters(20.0)),
+            new NestingItem("Bottom", Length.FromMillimeters(40.0), Length.FromMillimeters(25.0)),
+        };
+
+        NestingResult result = new RowNestingPlanner().Nest(sheet, items, options);
+
+        Assert.That(result.Parts, Has.Count.EqualTo(4));
+        Assert.That(result.Parts, Is.All.Matches<NestedPart>(part =>
+            part.X.Millimeters >= sheet.Margin.Millimeters &&
+            part.Y.Millimeters >= sheet.Margin.Millimeters &&
+            part.X.Millimeters + part.Width.Millimeters <= sheet.Width.Millimeters - sheet.Margin.Millimeters &&
+            part.Y.Millimeters + part.Height.Millimeters <= sheet.Height.Millimeters - sheet.Margin.Millimeters));
+    }
 }
