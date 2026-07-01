@@ -1,5 +1,39 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po domknieciu artefaktu eksportu MVP
+
+- Wykonano maly task weryfikacyjny `MVP.0.14`:
+  - dodano przykladowy eksport `examples/exports/open-box.svg`,
+  - odhaczono `MVP.0.14 Wyeksportowac SVG pudelka testowego`,
+  - odhaczono `MVP.1.7 SVG zawiera warstwy cut i engrave, jesli sa uzyte`.
+- Nowy commit:
+  - `f9871c3 MVP.0.14 Dodaj eksport testowego pudelka SVG`.
+- Bezposrednio przed tym lokalnie byl juz commit:
+  - `6d1708e MVP.1.9 Opisz minimalny workflow MVP`.
+- `examples/exports/open-box.svg` zawiera:
+  - `width="100mm"`,
+  - `height="80mm"`,
+  - `viewBox="0 0 100 80"`,
+  - czerwona geometrie `Cut` (`#FF0000`),
+  - niebieski tekst `Engrave` (`#0000FF`).
+- Po przegladzie planu nadal otwarte sa:
+  - `3.6.27` znany problem scroll/zoom viewportu po minimalizacji i maksymalizacji,
+  - `MVP.0.15` otwarcie SVG w zewnetrznym programie i potwierdzenie skali w mm,
+  - `MVP.1.4` reczne potwierdzenie widocznosci geometrii 2D wygenerowanego pudelka,
+  - `MVP.1.5` reczne potwierdzenie, ze zmiana parametru przebudowuje model w viewportcie.
+- Nie odhaczano `MVP.0.15`, `MVP.1.4` ani `MVP.1.5`, bo wymagaja realnej recznej weryfikacji aplikacji / zewnetrznego programu.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `456/456`,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - w `View -> Box Generator Panel` wlaczyc panel generatora, kliknac `Przebuduj` i sprawdzic, czy w viewportcie widac rozlozone scianki pudelka,
+  - zmienic szerokosc/glebokosc/wysokosc i kliknac `Przebuduj`; viewport powinien pokazac zmieniona geometrie,
+  - przez `Export -> Export SVG...` wyeksportowac plik i porownac z referencja `examples/exports/open-box.svg`,
+  - w zewnetrznym programie sprawdzic, czy referencyjny SVG ma rozmiar `100 mm x 80 mm` i poprawne warstwy kolorow.
+
 ## Aktualizacja po sekcji 3.10 Porzadek UI i przestrzen robocza
 
 - Wykonano cala sekcje `3.10 Porzadek UI i przestrzen robocza`.
