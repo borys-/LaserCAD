@@ -79,6 +79,18 @@ public sealed class MaterialSolidTests
     }
 
     [Test]
+    public void FromRectangle_WithPlywood3Mm_ShouldCreateThreeMillimeterCuboid()
+    {
+        var rectangle = new RectangleEntity(new Point2D(0.0, 0.0), 30.0, 15.0);
+
+        var solid = MaterialSolid.FromRectangle("Testowa plyta", rectangle, DefaultMaterialProfiles.Plywood3Mm);
+
+        Assert.That(solid.Thickness.Millimeters, Is.EqualTo(3.0));
+        Assert.That(solid.Mesh.Vertices.Min(vertex => vertex.Z), Is.EqualTo(0.0));
+        Assert.That(solid.Mesh.Vertices.Max(vertex => vertex.Z), Is.EqualTo(3.0));
+    }
+
+    [Test]
     public void FromRectangle_WithDocument_ShouldUseDocumentMaterialProfile()
     {
         var material = DefaultMaterialProfiles.Plywood4Mm;
