@@ -22,7 +22,8 @@ public sealed class ProductionStatisticsCalculator
 
         var sheetArea = sheetSize.Width.Millimeters * sheetSize.Height.Millimeters;
         var partsArea = result.Parts.Sum(part => part.Width.Millimeters * part.Height.Millimeters);
+        var cuttingLength = result.Parts.Sum(part => 2.0 * (part.Width.Millimeters + part.Height.Millimeters));
 
-        return new ProductionStatistics(partsArea / sheetArea);
+        return new ProductionStatistics(partsArea / sheetArea, cuttingLength);
     }
 }
