@@ -721,7 +721,7 @@ Zalecenie pracy:
 - [x] 13.0.6 Dodac szablon podstawki.
 - [x] 13.0.7 Dodac szablon stojaka.
 - [x] 13.0.8 Dodac UI wyboru szablonu.
-- [ ] 13.0.9 Dodac test ladowania biblioteki.
+- [x] 13.0.9 Dodac test ladowania biblioteki.
 
 ## 15.0 Przygotowanie wersji 1.0
 
