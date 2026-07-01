@@ -1,5 +1,64 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 16.2 Negatywy i wyciecia
+
+- Wykonano cala sekcje `16.2 Negatywy i wyciecia`.
+- Nowe commity:
+  - `55d61b3 16.2.0 Dodaj wyciecia materialowe`,
+  - `3d58e13 16.2.8 Dodaj wyciecia w bryle trapezowej`,
+  - `e65ae95 16.2 Dodaj serializacje wyciec materialowych`,
+  - `453a941 16.2 Opisz format wyciec materialowych`.
+- Commity zostaly wypchniete na `origin/master`.
+- Dodano w `LaserCad.Core.MaterialModel`:
+  - `CutoutFeatureKind` z typami `Rectangle`, `Circle`, `Polyline`,
+  - `CutoutFeature` z fabrykami `Rectangle`, `Circle`, `FromClosedPolyline`,
+  - `FlatMaterialPreview` z konturem zewnetrznym i `InnerContours`.
+- Rozszerzono `MaterialSolid`:
+  - nowa kolekcja `Cutouts`,
+  - metoda `AddCutout(...)`,
+  - walidacja, ze wyciecie miesci sie w obrysie plyty,
+  - walidacja minimalnego mostka materialu wokol wyciecia,
+  - `CreateFlatPreview()` zwraca kontur zewnetrzny plyty oraz wyciecia jako kontury wewnetrzne.
+- Rozszerzono `SlopedMaterialSolid`:
+  - nowa kolekcja `Cutouts`,
+  - metoda `AddCutout(...)` wymaga `FaceName`,
+  - wyciecia sa walidowane wzgledem rozwinietej sciany, takze trapezowej,
+  - `Unfold()` przenosi wyciecia do odpowiednich `UnfoldedMaterialPart.InnerContours`,
+  - mozna osadzic okragle otwory w dwoch roznych scianach tej samej bryly.
+- Rozszerzono `UnfoldedMaterialPart`:
+  - dodano `InnerContours`.
+- Rozszerzono `DocumentSerializer`:
+  - serializuje i deserializuje `materialSolids[].cutouts`,
+  - zapisuje `id`, `name`, `kind`, opcjonalne `faceName` i `contour`,
+  - okragle wyciecie MVP jest zapisywane jako wielokatowy kontur.
+- Testy:
+  - prostokatne, okragle i poliliniowe wyciecie,
+  - odrzucenie otwartej polilinii,
+  - walidacja wyciecia poza plyta,
+  - walidacja zbyt malego mostka,
+  - plaski preview plyty z okraglym otworem jako konturem wewnetrznym,
+  - dwa otwory okragle na dwoch scianach bryly trapezowej,
+  - walidacja otworu poza trapezowa sciana po rozwinieciu,
+  - round-trip serializacji wyciecia w `MaterialSolid`.
+- Dokumentacja:
+  - odhaczono `16.2.0`-`16.2.10` w `TASKS.md`,
+  - zaktualizowano `docs/PROJECT_FILE_FORMAT.md`,
+  - dopisano ograniczenia negatywow i wyciec MVP do `docs/ROADMAP.md`.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `502/502`,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - brak nowych kontrolek UI do dodawania wyciec,
+  - aplikacja powinna wygladac jak po sekcji `16.1`,
+  - mozna nadal recznie sprawdzic rysowanie plyty materialowej 3D i licznik `Plyty 3D`,
+  - zmiany wyciec sa na razie domenowe, serializacyjne i testowe; beda widoczne w UI po podlaczeniu workflow negatywow w kolejnych krokach.
+- Po przegladzie planu:
+  - sekcja `16.2` jest zamknieta,
+  - nastepna logiczna sekcja to `16.3 Rozwiniecie modelu 3D do czesci 2D`, start od `16.3.0 Ustalic kontrakt FlatPart dla czesci do wyciecia`,
+  - nadal otwarte sa manualne kryteria `3.6.27`, `MVP.0.15`, `MVP.1.4`, `MVP.1.5` oraz kryteria Etapu 2 MVP.
+
 ## Aktualizacja po sekcji 16.1 Edycja i laczenie elementow 3D
 
 - Wykonano cala sekcje `16.1 Edycja i laczenie elementow 3D`.
