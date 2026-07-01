@@ -358,6 +358,20 @@ public partial class MainWindow : Window
         StatusTextBlock.Text = menuItem.IsChecked ? "Wlaczono grid viewportu" : "Wylaczono grid viewportu";
     }
 
+    private void BoxGeneratorPanel_Click(object sender, RoutedEventArgs e)
+    {
+        BoxGeneratorPanelGroupBox.Visibility = BoxGeneratorPanelMenuItem.IsChecked
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+    }
+
+    private void TemplateLibraryPanel_Click(object sender, RoutedEventArgs e)
+    {
+        TemplateLibraryPanelGroupBox.Visibility = TemplateLibraryPanelMenuItem.IsChecked
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+    }
+
     private void Settings_Click(object sender, RoutedEventArgs e)
     {
         var settingsWindow = new SettingsWindow
