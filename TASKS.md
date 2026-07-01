@@ -718,7 +718,7 @@ Zalecenie pracy:
 - [x] 13.0.3 Utworzyc katalog szablonow.
 - [x] 13.0.4 Dodac szablon pudelka.
 - [x] 13.0.5 Dodac szablon organizera.
-- [ ] 13.0.6 Dodac szablon podstawki.
+- [x] 13.0.6 Dodac szablon podstawki.
 - [ ] 13.0.7 Dodac szablon stojaka.
 - [ ] 13.0.8 Dodac UI wyboru szablonu.
 - [ ] 13.0.9 Dodac test ladowania biblioteki.

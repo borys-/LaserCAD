@@ -1,0 +1,11 @@
+{
+  "id": "stand-base-basic",
+  "name": "Podstawka",
+  "generatorType": "Stand",
+  "description": "Prosta podstawka startowa do dalszego dopasowania wymiarow.",
+  "parameters": {
+    "widthMillimeters": 120.0,
+    "depthMillimeters": 70.0,
+    "materialThicknessMillimeters": 3.0
+  }
+}
