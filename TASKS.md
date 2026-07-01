@@ -746,13 +746,13 @@ Celem etapu 2 jest workflow: uzytkownik projektuje bryle z realnego materialu, l
 
 ## 16.0A Bryly z pochyla sciana
 
-- [ ] 16.0A.0 Ustalic kontrakt bryly materialowej z jedna pochyla sciana.
-- [ ] 16.0A.1 Dodac tworzenie bryly, ktorej bok po rozwinieciu jest trapezem.
-- [ ] 16.0A.2 Dodac parametry pochylenia: wysokosc przednia, wysokosc tylna albo kat pochylenia.
-- [ ] 16.0A.3 Dodac walidacje, ze pochylenie nie tworzy zerowej ani ujemnej sciany.
-- [ ] 16.0A.4 Pokazac podglad 3D bryly z pochyla sciana.
-- [ ] 16.0A.5 Rozwinac pochyla bryle do czesci 2D z bokami trapezowymi.
-- [ ] 16.0A.6 Dodac test: bryla z pochyla sciana generuje dwa boki trapezowe i poprawne prostokatne sciany.
+- [x] 16.0A.0 Ustalic kontrakt bryly materialowej z jedna pochyla sciana.
+- [x] 16.0A.1 Dodac tworzenie bryly, ktorej bok po rozwinieciu jest trapezem.
+- [x] 16.0A.2 Dodac parametry pochylenia: wysokosc przednia, wysokosc tylna albo kat pochylenia.
+- [x] 16.0A.3 Dodac walidacje, ze pochylenie nie tworzy zerowej ani ujemnej sciany.
+- [x] 16.0A.4 Pokazac podglad 3D bryly z pochyla sciana.
+- [x] 16.0A.5 Rozwinac pochyla bryle do czesci 2D z bokami trapezowymi.
+- [x] 16.0A.6 Dodac test: bryla z pochyla sciana generuje dwa boki trapezowe i poprawne prostokatne sciany.
 
 ## 16.1 Edycja i laczenie elementow 3D
 

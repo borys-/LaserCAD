@@ -521,6 +521,12 @@ Pochyla sciana w MVP powinna byc modelowana jako kontrolowany wariant bryly plyt
 
 Negatywy w MVP powinny zaczac od prostokatow, okregow i zamknietych polilinii lezacych na jednej plycie. Wariant wymagany dla etapu 2 to dwa okragle otwory osadzone w dwoch roznych scianach bryly, takze gdy jedna z czesci po rozwinieciu jest trapezem. Rozwiniecie 2D powinno zachowac kontur zewnetrzny i kontury wewnetrzne, a eksport DXF powinien utrzymac warstwy cut, engrave i score.
 
+### Ograniczenia bryly z pochyla sciana MVP
+
+Model `SlopedMaterialSolid` reprezentuje kontrolowana bryle plytowa z jedna pochyla gorna sciana. Parametry obejmuja szerokosc, glebokosc, wysokosc przednia i wysokosc tylna, a profil materialu nadal odpowiada za grubosc plyt uzytych w konstrukcji.
+
+Mesh `PreviewMesh` sluzy do pogladowego podgladu 3D bryly, a metoda `Unfold` zwraca szesc plaskich czesci: front, tyl, dwa boki trapezowe, dno i pochyla gore. To nie jest jeszcze ogolny solver rozwijania dowolnych bryl ani pelny model laczen plyt. Rozwiniecie nie dodaje jeszcze finger jointow, kerfu, otworow negatywowych ani automatycznego nestingu.
+
 ## Wyrozniki produktu
 
 ### Pelna parametrycznosc
