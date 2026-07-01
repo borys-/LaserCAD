@@ -1,5 +1,6 @@
 using System.IO;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using LaserCad.Core.BoxGenerators;
@@ -24,6 +25,17 @@ public partial class MainWindow : Window
 {
     private const int WmMouseWheel = 0x020A;
 
+    private static readonly RoutedCommand NewProjectCommand = new();
+    private static readonly RoutedCommand OpenProjectCommand = new();
+    private static readonly RoutedCommand SaveProjectCommand = new();
+    private static readonly RoutedCommand ExportSvgCommand = new();
+    private static readonly RoutedCommand ExportDxfCommand = new();
+    private static readonly RoutedCommand UndoCommand = new();
+    private static readonly RoutedCommand RedoCommand = new();
+    private static readonly RoutedCommand ResetViewCommand = new();
+    private static readonly RoutedCommand ZoomToFitCommand = new();
+    private static readonly RoutedCommand SettingsCommand = new();
+
     private readonly DesktopShellViewModel viewModel = new();
     private readonly ViewportIpcClient viewportIpcClient = new();
     private readonly ViewportProcessController viewportProcessController = new();
@@ -45,7 +57,28 @@ public partial class MainWindow : Window
         viewportPanel.MouseDown += (_, _) => viewportProcessController.FocusViewport();
         ViewportHost.MouseEnter += (_, _) => viewportProcessController.FocusViewport();
         viewportInboxTimer.Tick += (_, _) => ProcessViewportInbox();
+        ConfigureKeyboardShortcuts();
         RefreshDocumentSummary();
+    }
+
+    private void ConfigureKeyboardShortcuts()
+    {
+        AddShortcut(NewProjectCommand, Key.N, ModifierKeys.Control, NewProject_Click);
+        AddShortcut(OpenProjectCommand, Key.O, ModifierKeys.Control, OpenProject_Click);
+        AddShortcut(SaveProjectCommand, Key.S, ModifierKeys.Control, SaveProject_Click);
+        AddShortcut(ExportSvgCommand, Key.S, ModifierKeys.Control | ModifierKeys.Shift, ExportSvg_Click);
+        AddShortcut(ExportDxfCommand, Key.D, ModifierKeys.Control | ModifierKeys.Shift, ExportDxf_Click);
+        AddShortcut(UndoCommand, Key.Z, ModifierKeys.Control, Undo_Click);
+        AddShortcut(RedoCommand, Key.Y, ModifierKeys.Control, Redo_Click);
+        AddShortcut(ResetViewCommand, Key.Home, ModifierKeys.None, ResetView_Click);
+        AddShortcut(ZoomToFitCommand, Key.D0, ModifierKeys.Control, ZoomToFit_Click);
+        AddShortcut(SettingsCommand, Key.OemComma, ModifierKeys.Control, Settings_Click);
+    }
+
+    private void AddShortcut(RoutedCommand command, Key key, ModifierKeys modifiers, RoutedEventHandler handler)
+    {
+        InputBindings.Add(new KeyBinding(command, new KeyGesture(key, modifiers)));
+        CommandBindings.Add(new CommandBinding(command, (_, e) => handler(this, e)));
     }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)

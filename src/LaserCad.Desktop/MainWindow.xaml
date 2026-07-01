@@ -138,28 +138,28 @@
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="_New" Click="NewProject_Click" />
-                <MenuItem Header="_Open..." Click="OpenProject_Click" />
-                <MenuItem Header="_Save" Click="SaveProject_Click" />
+                <MenuItem Header="_New" InputGestureText="Ctrl+N" Click="NewProject_Click" />
+                <MenuItem Header="_Open..." InputGestureText="Ctrl+O" Click="OpenProject_Click" />
+                <MenuItem Header="_Save" InputGestureText="Ctrl+S" Click="SaveProject_Click" />
                 <MenuItem Header="Save _As..." Click="SaveProjectAs_Click" />
                 <Separator />
                 <MenuItem Header="E_xit" Click="Exit_Click" />
             </MenuItem>
             <MenuItem Header="_Edit">
-                <MenuItem Header="_Undo" Click="Undo_Click" />
-                <MenuItem Header="_Redo" Click="Redo_Click" />
+                <MenuItem Header="_Undo" InputGestureText="Ctrl+Z" Click="Undo_Click" />
+                <MenuItem Header="_Redo" InputGestureText="Ctrl+Y" Click="Redo_Click" />
             </MenuItem>
             <MenuItem Header="_View">
-                <MenuItem Header="_Reset View" Click="ResetView_Click" />
-                <MenuItem Header="_Zoom To Fit" Click="ZoomToFit_Click" />
+                <MenuItem Header="_Reset View" InputGestureText="Home" Click="ResetView_Click" />
+                <MenuItem Header="_Zoom To Fit" InputGestureText="Ctrl+0" Click="ZoomToFit_Click" />
                 <MenuItem Header="_Grid" IsCheckable="True" IsChecked="True" Click="Grid_Click" />
             </MenuItem>
             <MenuItem Header="_Tools">
-                <MenuItem Header="_Settings..." Click="Settings_Click" />
+                <MenuItem Header="_Settings..." InputGestureText="Ctrl+," Click="Settings_Click" />
             </MenuItem>
             <MenuItem Header="_Export">
-                <MenuItem Header="Export _SVG..." Click="ExportSvg_Click" />
-                <MenuItem Header="Export _DXF..." Click="ExportDxf_Click" />
+                <MenuItem Header="Export _SVG..." InputGestureText="Ctrl+Shift+S" Click="ExportSvg_Click" />
+                <MenuItem Header="Export _DXF..." InputGestureText="Ctrl+Shift+D" Click="ExportDxf_Click" />
             </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="_About Laser CAD" />

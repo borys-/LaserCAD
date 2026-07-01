@@ -10,6 +10,7 @@ public partial class SettingsWindow : Window
     public SettingsWindow()
     {
         InitializeComponent();
+        KeyboardShortcutsItemsControl.ItemsSource = KeyboardShortcutCatalog.Defaults;
     }
 
     private void Close_Click(object sender, RoutedEventArgs e)
