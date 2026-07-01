@@ -24,4 +24,15 @@ public sealed class SheetSizeTests
 
         Assert.That(sheetSize.Height.Millimeters, Is.EqualTo(300.0));
     }
+
+    [Test]
+    public void Constructor_ShouldStoreMargin()
+    {
+        var sheetSize = new SheetSize(
+            Length.FromMillimeters(600.0),
+            Length.FromMillimeters(300.0),
+            Length.FromMillimeters(10.0));
+
+        Assert.That(sheetSize.Margin.Millimeters, Is.EqualTo(10.0));
+    }
 }
