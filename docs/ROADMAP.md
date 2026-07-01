@@ -525,7 +525,11 @@ Negatywy w MVP powinny zaczac od prostokatow, okregow i zamknietych polilinii le
 
 Model `SlopedMaterialSolid` reprezentuje kontrolowana bryle plytowa z jedna pochyla gorna sciana. Parametry obejmuja szerokosc, glebokosc, wysokosc przednia i wysokosc tylna, a profil materialu nadal odpowiada za grubosc plyt uzytych w konstrukcji.
 
-Mesh `PreviewMesh` sluzy do pogladowego podgladu 3D bryly, a metoda `Unfold` zwraca szesc plaskich czesci: front, tyl, dwa boki trapezowe, dno i pochyla gore. To nie jest jeszcze ogolny solver rozwijania dowolnych bryl ani pelny model laczen plyt. Rozwiniecie nie dodaje jeszcze finger jointow, kerfu, otworow negatywowych ani automatycznego nestingu.
+Mesh `PreviewMesh` sluzy do pogladowego podgladu 3D bryly, a metoda `Unfold` zwraca szesc plaskich czesci: front, tyl, dwa boki trapezowe, dno i pochyla gore. Wyciecia przypisane do nazwanych scian sa przenoszone do rozwinietych czesci jako kontury wewnetrzne. To nie jest jeszcze ogolny solver rozwijania dowolnych bryl ani pelny model laczen plyt. Rozwiniecie nie dodaje jeszcze finger jointow, kerfu ani automatycznego nestingu.
+
+### Ograniczenia negatywow i wyciec MVP
+
+`CutoutFeature` obsluguje prostokat, okrag przyblizony wielokatowym konturem oraz zamknieta polilinie. Wyciecie jest walidowane wzgledem lokalnego obrysu plyty albo rozwinietej sciany bryly trapezowej, a minimalny mostek materialu jest sprawdzany na podstawie bounding boxow konturu. To nie jest jeszcze pelna analiza polygonow z otworami, kolizjami wielu negatywow ani dokladna walidacja technologiczna wszystkich ksztaltow.
 
 ## Wyrozniki produktu
 
