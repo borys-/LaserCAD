@@ -1,5 +1,62 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 16.1 Edycja i laczenie elementow 3D
+
+- Wykonano cala sekcje `16.1 Edycja i laczenie elementow 3D`.
+- Nowe commity:
+  - `db35d4c 16.1.0 Dodaj narzedzie plyty materialowej`,
+  - `2f19b3e 16.1.1 Dodaj snap do plyt 3D`,
+  - `80cb2f4 16.1.2 Dodaj montaz plyt 3D`,
+  - `cac48f5 16.1.4 Dodaj podglad relacji plyt 3D`,
+  - `66972f6 16.1.6 Dodaj edycje plyt 3D`,
+  - `3775e7f 16.1.7 Dodaj QA plyt 3D`.
+- Commity zostaly wypchniete na `origin/master`.
+- Widoczny workflow UI:
+  - w toolbarze desktop shell dodano przycisk `Rysuj plyte materialowa 3D`,
+  - IPC ma nowy `ViewportDrawingTool.MaterialPlate`,
+  - po narysowaniu plyty desktop tworzy `MaterialSolid` z aktualnego profilu materialu,
+  - viewport Unity rysuje niebieski obrys plyty materialowej,
+  - panel `Properties` pokazuje licznik `Plyty 3D`.
+- Domena 3D:
+  - `MaterialSolid.WithOrientation(...)`,
+  - `Vector3D.UnitX`,
+  - `MaterialSolidSnapService` z wynikami `MaterialSolidSnapPoint` i `MaterialSolidSnapKind`,
+  - `MaterialSolidAssemblyService` z `AttachToSurface`, `CreateRightAngleJoint` i `CreateRightAnglePreview`,
+  - `MaterialSolidSurfaceAttachment`,
+  - `MaterialSolidConnectionPreview`,
+  - `MaterialSolidCollisionDetector` i `MaterialSolidCollision`,
+  - `CadDocument.RemoveMaterialSolid`, `MoveMaterialSolid`, `RotateMaterialSolid`.
+- Testy:
+  - dodano testy snapu do narozy i krawedzi plyt,
+  - dodano testy przyciagania do powierzchni i laczenia 90 stopni,
+  - dodano test podgladu relacji montazowej,
+  - dodano testy kolizji plyt,
+  - dodano testy przesuwania, obracania i usuwania plyt z dokumentu.
+- Dokumentacja:
+  - dodano `docs/MATERIAL_SOLID_3D_QA.md`,
+  - dodano link do checklisty w `README.md`,
+  - odhaczono `16.1.0`-`16.1.7` w `TASKS.md`.
+- Wazne ograniczenia:
+  - UI pozwala narysowac plyte materialowa i pokazuje jej obrys,
+  - snap, przyciaganie do powierzchni, laczenie 90 stopni, podglad relacji, kolizje i edycja plyt sa gotowe domenowo,
+  - pelna interaktywna obsluga snapu/montazu/kolizji w viewportcie i panelach UI nadal jest do rozbudowy w kolejnych sekcjach.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `490/490`,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - w toolbarze kliknac `Rysuj plyte materialowa 3D`,
+  - kliknac i przeciagnac w viewportcie jak przy prostokacie,
+  - sprawdzic, ze w viewportcie pojawia sie niebieski obrys plyty,
+  - w panelu `Properties` sprawdzic licznik `Plyty 3D`,
+  - zapisac i wczytac projekt, zeby potwierdzic odtworzenie `materialSolids`.
+- Po przegladzie planu:
+  - sekcja `16.1` jest zamknieta,
+  - nastepna logiczna sekcja to `16.2 Negatywy i wyciecia`, start od `16.2.0 Ustalic kontrakt CutoutFeature dla wyciecia w elemencie materialowym`,
+  - nadal otwarte sa manualne kryteria `3.6.27`, `MVP.0.15`, `MVP.1.4`, `MVP.1.5` oraz kryteria Etapu 2 MVP.
+
 ## Aktualizacja po sekcji 16.0A Bryly z pochyla sciana
 
 - Wykonano cala sekcje `16.0A Bryly z pochyla sciana`.
