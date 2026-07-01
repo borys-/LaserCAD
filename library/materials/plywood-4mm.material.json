@@ -1,0 +1,8 @@
+{
+  "id": "plywood-4mm",
+  "name": "Sklejka 4 mm",
+  "thicknessMillimeters": 4.0,
+  "defaultKerfMillimeters": 0.16,
+  "defaultClearanceMillimeters": 0.1,
+  "minimumFingerWidthMillimeters": 4.0
+}
