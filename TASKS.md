@@ -725,7 +725,7 @@ Zalecenie pracy:
 
 ## 15.0 Przygotowanie wersji 1.0
 
-- [ ] 15.0.0 Dodac ekran ustawien.
+- [x] 15.0.0 Dodac ekran ustawien.
 - [ ] 15.0.1 Dodac konfiguracje skrotow klawiszowych.
 - [ ] 15.0.2 Dodac testy regresyjne dla przykladowych projektow.
 - [ ] 15.0.3 Dodac checklist QA przed wydaniem.

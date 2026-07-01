@@ -325,6 +325,16 @@ public partial class MainWindow : Window
         StatusTextBlock.Text = menuItem.IsChecked ? "Wlaczono grid viewportu" : "Wylaczono grid viewportu";
     }
 
+    private void Settings_Click(object sender, RoutedEventArgs e)
+    {
+        var settingsWindow = new SettingsWindow
+        {
+            Owner = this,
+        };
+        settingsWindow.ShowDialog();
+        StatusTextBlock.Text = "Zamknieto ustawienia";
+    }
+
     private void ShowNominalKerfPreview_Click(object sender, RoutedEventArgs e)
     {
         PublishKerfPreview(afterCompensation: false);

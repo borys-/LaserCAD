@@ -154,6 +154,9 @@
                 <MenuItem Header="_Zoom To Fit" Click="ZoomToFit_Click" />
                 <MenuItem Header="_Grid" IsCheckable="True" IsChecked="True" Click="Grid_Click" />
             </MenuItem>
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Settings..." Click="Settings_Click" />
+            </MenuItem>
             <MenuItem Header="_Export">
                 <MenuItem Header="Export _SVG..." Click="ExportSvg_Click" />
                 <MenuItem Header="Export _DXF..." Click="ExportDxf_Click" />
