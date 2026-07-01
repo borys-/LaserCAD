@@ -10,7 +10,7 @@ public sealed class UnfoldedMaterialPart
     /// <summary>
     /// Tworzy plaska czesc z nazwa i konturem zewnetrznym.
     /// </summary>
-    public UnfoldedMaterialPart(string name, Polygon2D outerContour)
+    public UnfoldedMaterialPart(string name, Polygon2D outerContour, IEnumerable<Polygon2D>? innerContours = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -19,6 +19,7 @@ public sealed class UnfoldedMaterialPart
 
         Name = name;
         OuterContour = outerContour ?? throw new ArgumentNullException(nameof(outerContour));
+        InnerContours = innerContours?.ToArray() ?? Array.Empty<Polygon2D>();
     }
 
     /// <summary>
@@ -30,4 +31,9 @@ public sealed class UnfoldedMaterialPart
     /// Zewnetrzny kontur czesci do wyciecia.
     /// </summary>
     public Polygon2D OuterContour { get; }
+
+    /// <summary>
+    /// Kontury wewnetrzne wyciec nalezacych do czesci.
+    /// </summary>
+    public IReadOnlyList<Polygon2D> InnerContours { get; }
 }

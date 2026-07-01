@@ -17,7 +17,8 @@ public sealed class SlopedMaterialSolid
         string name,
         MaterialProfile materialProfile,
         SlopedMaterialSolidOptions options,
-        MaterialSolidOrientation? orientation = null)
+        MaterialSolidOrientation? orientation = null,
+        IEnumerable<CutoutFeature>? cutouts = null)
     {
         if (id == Guid.Empty)
         {
@@ -35,6 +36,12 @@ public sealed class SlopedMaterialSolid
         Options = options ?? throw new ArgumentNullException(nameof(options));
         Orientation = orientation ?? MaterialSolidOrientation.Default;
         PreviewMesh = CreatePreviewMesh(options);
+        Cutouts = cutouts?.ToArray() ?? Array.Empty<CutoutFeature>();
+
+        foreach (var cutout in Cutouts)
+        {
+            ValidateCutoutOnFace(cutout, MaterialProfile.MinimumFingerWidth.Millimeters);
+        }
     }
 
     /// <summary>
@@ -80,6 +87,37 @@ public sealed class SlopedMaterialSolid
     public Mesh3D PreviewMesh { get; }
 
     /// <summary>
+    /// Wyciecia osadzone na nazwanych scianach bryly.
+    /// </summary>
+    public IReadOnlyList<CutoutFeature> Cutouts { get; }
+
+    /// <summary>
+    /// Zwraca bryle z dodanym wycieciem na wskazanej scianie.
+    /// </summary>
+    public SlopedMaterialSolid AddCutout(CutoutFeature cutout, double? minimumBridgeMillimeters = null)
+    {
+        if (cutout is null)
+        {
+            throw new ArgumentNullException(nameof(cutout));
+        }
+
+        if (cutout.FaceName is null)
+        {
+            throw new ArgumentException("Sloped material solid cutout must have a face name.", nameof(cutout));
+        }
+
+        ValidateCutoutOnFace(cutout, minimumBridgeMillimeters ?? MaterialProfile.MinimumFingerWidth.Millimeters);
+
+        return new SlopedMaterialSolid(
+            Id,
+            Name,
+            MaterialProfile,
+            Options,
+            Orientation,
+            Cutouts.Append(cutout));
+    }
+
+    /// <summary>
     /// Rozwija bryle na plaskie czesci materialowe.
     /// </summary>
     public IReadOnlyList<UnfoldedMaterialPart> Unfold()
@@ -90,7 +128,7 @@ public sealed class SlopedMaterialSolid
         var backHeight = Options.BackHeight.Millimeters;
         var slopedDepth = Options.SlopedDepth.Millimeters;
 
-        return new[]
+        var parts = new[]
         {
             CreateRectanglePart("Front", width, frontHeight),
             CreateRectanglePart("Back", width, backHeight),
@@ -99,6 +137,15 @@ public sealed class SlopedMaterialSolid
             CreateRectanglePart("Bottom", width, depth),
             CreateRectanglePart("Sloped top", width, slopedDepth)
         };
+
+        return parts
+            .Select(part => new UnfoldedMaterialPart(
+                part.Name,
+                part.OuterContour,
+                Cutouts
+                    .Where(cutout => string.Equals(cutout.FaceName, part.Name, StringComparison.OrdinalIgnoreCase))
+                    .Select(cutout => cutout.Contour)))
+            .ToArray();
     }
 
     private static Mesh3D CreatePreviewMesh(SlopedMaterialSolidOptions options)
@@ -161,5 +208,66 @@ public sealed class SlopedMaterialSolid
                 new Point2D(depth, backHeight),
                 new Point2D(0.0, frontHeight)
             }));
+    }
+
+    private void ValidateCutoutOnFace(CutoutFeature cutout, double minimumBridgeMillimeters)
+    {
+        if (minimumBridgeMillimeters < 0.0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(minimumBridgeMillimeters), "Minimum bridge cannot be negative.");
+        }
+
+        var face = Unfold()
+            .FirstOrDefault(part => string.Equals(part.Name, cutout.FaceName, StringComparison.OrdinalIgnoreCase))
+            ?? throw new ArgumentException("Cutout face does not exist in sloped material solid.", nameof(cutout));
+
+        foreach (var vertex in cutout.Contour.Vertices)
+        {
+            if (!IsPointInsideConvexPolygon(vertex, face.OuterContour))
+            {
+                throw new ArgumentException("Cutout must fit inside the unfolded face contour.", nameof(cutout));
+            }
+        }
+
+        var faceBounds = face.OuterContour.Bounds;
+        var cutoutBounds = cutout.Bounds;
+        var bridge = Math.Min(
+            Math.Min(cutoutBounds.MinX - faceBounds.MinX, faceBounds.MaxX - cutoutBounds.MaxX),
+            Math.Min(cutoutBounds.MinY - faceBounds.MinY, faceBounds.MaxY - cutoutBounds.MaxY));
+
+        if (bridge < minimumBridgeMillimeters - GeometryTolerance.Default)
+        {
+            throw new ArgumentException("Cutout leaves a bridge smaller than the required minimum.", nameof(cutout));
+        }
+    }
+
+    private static bool IsPointInsideConvexPolygon(Point2D point, Polygon2D polygon)
+    {
+        var vertices = polygon.Vertices;
+        var hasPositive = false;
+        var hasNegative = false;
+
+        for (var index = 0; index < vertices.Count; index++)
+        {
+            var a = vertices[index];
+            var b = vertices[(index + 1) % vertices.Count];
+            var cross = ((b.X - a.X) * (point.Y - a.Y)) - ((b.Y - a.Y) * (point.X - a.X));
+
+            if (cross > GeometryTolerance.Default)
+            {
+                hasPositive = true;
+            }
+            else if (cross < -GeometryTolerance.Default)
+            {
+                hasNegative = true;
+            }
+
+            if (hasPositive && hasNegative)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
