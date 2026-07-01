@@ -1,5 +1,55 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 16.0 Model materialowy 3D
+
+- Najpierw zapisano i wypchnieto zalegly plan Etapu 2:
+  - commit `e324f03 Doprecyzuj plan etapu 2`.
+- Wykonano cala sekcje `16.0 Model materialowy 3D`.
+- Nowe commity:
+  - `dd11d45 16.0.0 Dodaj kontrakt MaterialSolid`,
+  - `f70d533 16.0.1 Dodaj prostopadloscian materialowy`,
+  - `f604291 16.0.2 Dodaj orientacje elementu materialowego`,
+  - `bcc1e57 16.0.3 Powiaz element materialowy z dokumentem`,
+  - `0a01fcc 16.0.4 Waliduj grubosc bryly materialowej`,
+  - `f441391 16.0.5 Dodaj test bryly ze sklejki 3 mm`,
+  - `5336e0a 16.0.6 Dodaj serializacje elementow materialowych`.
+- Dodano namespace `LaserCad.Core.MaterialModel`:
+  - `MaterialSolid` jako domenowy element materialowy 3D z `Id`, `Name`, `MaterialProfile`, `Mesh`, `Orientation` i `Thickness`,
+  - `MaterialSolid.FromRectangle(...)` tworzy prostopadloscian z `RectangleEntity` i grubosci profilu materialu,
+  - wariant `FromRectangle(..., CadDocument document)` bierze profil materialu z dokumentu i rzuca `InvalidOperationException`, gdy dokument nie ma materialu,
+  - konstruktor waliduje, ze zakres Z mesha odpowiada `MaterialProfile.Thickness`.
+- Dodano `MaterialSolidOrientation`:
+  - `Position` jako `Point3D`,
+  - `RotationRadians`,
+  - `SurfaceNormal` jako `Vector3D`,
+  - domyslna orientacja lezy na plaszczyznie XY z normalna `UnitZ`,
+  - zerowa normalna jest odrzucana.
+- Dodano `Vector3D` w `LaserCad.Core.Preview3D`.
+- Rozszerzono `CadDocument`:
+  - nowa kolekcja `MaterialSolids`,
+  - nowa niemutujaca metoda `AddMaterialSolid`.
+- Rozszerzono `DocumentSerializer`:
+  - serializuje i deserializuje `materialSolids`,
+  - zapisuje profil materialu bryly, mesh 3D, indeksy trojkatow oraz orientacje,
+  - stare/puste dokumenty nadal odtwarzaja pusta kolekcje `MaterialSolids`.
+- Dokumentacja:
+  - `docs/PROJECT_FILE_FORMAT.md` opisuje pole `materialSolids`, mesh i orientacje,
+  - odhaczono `16.0.0`-`16.0.6` w `TASKS.md`.
+- Weryfikacja:
+  - po taskach uruchamiano testy celowane i pelne,
+  - finalnie `dotnet test LaserCad.sln --no-restore` przechodzi: `471/471`,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - brak nowych kontrolek UI dla `MaterialSolid`,
+  - aplikacja powinna wygladac jak po poprzedniej wersji,
+  - zmiana jest domenowa i plikowa; do recznej weryfikacji UI nadal uzyc istniejacego workflow pudelka, widoku 2D/3D i eksportu SVG/DXF.
+- Po przegladzie planu:
+  - sekcja `16.0` jest zamknieta,
+  - nastepny logiczny task to `16.0A.0 Ustalic kontrakt bryly materialowej z jedna pochyla sciana`,
+  - nadal otwarte sa manualne kryteria `3.6.27`, `MVP.0.15`, `MVP.1.4`, `MVP.1.5`.
+
 ## Aktualizacja po domknieciu artefaktu eksportu MVP
 
 - Wykonano maly task weryfikacyjny `MVP.0.14`:
