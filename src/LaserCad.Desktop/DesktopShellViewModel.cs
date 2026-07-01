@@ -4,7 +4,9 @@ using System.IO;
 using LaserCad.Core.BoxGenerators;
 using LaserCad.Core.Commands;
 using LaserCad.Core.Documents;
+using LaserCad.Core.Generators;
 using LaserCad.Core.Kerf;
+using LaserCad.Core.Library;
 using LaserCad.Export.Dxf;
 using LaserCad.Export.Svg;
 using LaserCad.Geometry;
@@ -23,8 +25,12 @@ public sealed class DesktopShellViewModel
 
     public DesktopShellViewModel()
     {
-        MaterialProfiles = new ObservableCollection<MaterialProfile>(DefaultMaterialProfiles.All);
-        SelectedMaterialProfile = DefaultMaterialProfiles.Plywood3Mm;
+        var library = LoadProjectLibrary();
+        LibraryTemplates = new ObservableCollection<LibraryTemplate>(library.Templates);
+        MaterialProfiles = new ObservableCollection<MaterialProfile>(MergeProfiles(library.Materials));
+        SelectedMaterialProfile = MaterialProfiles.FirstOrDefault(profile => profile.Name == DefaultMaterialProfiles.Plywood3Mm.Name)
+            ?? DefaultMaterialProfiles.Plywood3Mm;
+        SelectedLibraryTemplate = LibraryTemplates.FirstOrDefault();
         BoxOptions = new BoxGeneratorOptions();
         history = new UndoRedoStack(CreateBoxDocument(BoxOptions, SelectedMaterialProfile));
         StatusText = "Gotowe";
@@ -36,7 +42,11 @@ public sealed class DesktopShellViewModel
 
     public ObservableCollection<MaterialProfile> MaterialProfiles { get; }
 
+    public ObservableCollection<LibraryTemplate> LibraryTemplates { get; }
+
     public MaterialProfile SelectedMaterialProfile { get; private set; }
+
+    public LibraryTemplate? SelectedLibraryTemplate { get; private set; }
 
     public string StatusText { get; private set; }
 
@@ -103,6 +113,35 @@ public sealed class DesktopShellViewModel
         BoxOptions = options ?? throw new ArgumentNullException(nameof(options));
         ReplaceDocument(CreateBoxDocument(BoxOptions, SelectedMaterialProfile));
         StatusText = "Przebudowano podglad pudelka";
+    }
+
+    public void SelectLibraryTemplate(LibraryTemplate? template)
+    {
+        SelectedLibraryTemplate = template;
+    }
+
+    public void ApplySelectedLibraryTemplate()
+    {
+        if (SelectedLibraryTemplate is null)
+        {
+            StatusText = "Brak wybranego szablonu";
+            return;
+        }
+
+        ApplyLibraryTemplate(SelectedLibraryTemplate);
+    }
+
+    public void ApplyLibraryTemplate(LibraryTemplate template)
+    {
+        if (template is null)
+        {
+            throw new ArgumentNullException(nameof(template));
+        }
+
+        var document = new CadDocument(name: template.Name).WithMaterialProfile(SelectedMaterialProfile);
+        var sketch = CreateSketchFromTemplate(template);
+        ReplaceDocument(document.AddSketch(sketch));
+        StatusText = "Wczytano szablon: " + template.Name;
     }
 
     public void SetMaterialProfile(MaterialProfile materialProfile)
@@ -311,6 +350,113 @@ public sealed class DesktopShellViewModel
         return new CadDocument(name: "Projekt pudelka")
             .WithMaterialProfile(materialProfile)
             .AddSketch(boxGenerator.GenerateSketch(options));
+    }
+
+    private static ProjectLibrary LoadProjectLibrary()
+    {
+        var loader = new ProjectLibraryLoader();
+        var libraryDirectory = Path.Combine(AppContext.BaseDirectory, "library");
+        return loader.Load(libraryDirectory);
+    }
+
+    private static IEnumerable<MaterialProfile> MergeProfiles(IEnumerable<LibraryMaterialProfile> libraryMaterials)
+    {
+        var profiles = new List<MaterialProfile>();
+        foreach (var material in libraryMaterials)
+        {
+            profiles.Add(material.Profile);
+        }
+
+        foreach (var profile in DefaultMaterialProfiles.All)
+        {
+            if (!profiles.Any(item => item.Name == profile.Name))
+            {
+                profiles.Add(profile);
+            }
+        }
+
+        return profiles;
+    }
+
+    private Sketch CreateSketchFromTemplate(LibraryTemplate template)
+    {
+        return template.GeneratorType switch
+        {
+            "Box" => CreateBoxSketchFromTemplate(template),
+            "Organizer" => CreateOrganizerSketchFromTemplate(template),
+            "Stand" => CreateStandSketchFromTemplate(template),
+            _ => throw new InvalidOperationException("Nieobslugiwany typ generatora szablonu: " + template.GeneratorType),
+        };
+    }
+
+    private Sketch CreateBoxSketchFromTemplate(LibraryTemplate template)
+    {
+        var options = new BoxGeneratorOptions(
+            Length.FromMillimeters(ReadDouble(template, "widthMillimeters")),
+            Length.FromMillimeters(ReadDouble(template, "depthMillimeters")),
+            Length.FromMillimeters(ReadDouble(template, "heightMillimeters")),
+            Length.FromMillimeters(ReadDouble(template, "materialThicknessMillimeters")),
+            Length.FromMillimeters(ReadDouble(template, "kerfMillimeters")),
+            Length.FromMillimeters(ReadDouble(template, "fingerWidthMillimeters")),
+            Length.FromMillimeters(ReadDouble(template, "clearanceMillimeters")),
+            ReadBoxType(template));
+        BoxOptions = options;
+        return boxGenerator.GenerateSketch(options);
+    }
+
+    private static Sketch CreateOrganizerSketchFromTemplate(LibraryTemplate template)
+    {
+        var options = CreateRectangularOptions(template);
+        return new OrganizerGenerator(
+            options,
+            ReadInt(template, "columns"),
+            ReadInt(template, "rows")).GenerateSketch();
+    }
+
+    private static Sketch CreateStandSketchFromTemplate(LibraryTemplate template)
+    {
+        return new StandGenerator(CreateRectangularOptions(template)).GenerateSketch();
+    }
+
+    private static RectangularGeneratorOptions CreateRectangularOptions(LibraryTemplate template)
+    {
+        return new RectangularGeneratorOptions(
+            Length.FromMillimeters(ReadDouble(template, "widthMillimeters")),
+            Length.FromMillimeters(ReadDouble(template, "depthMillimeters")),
+            Length.FromMillimeters(ReadDouble(template, "materialThicknessMillimeters")));
+    }
+
+    private static BoxGeneratorType ReadBoxType(LibraryTemplate template)
+    {
+        var value = ReadString(template, "boxType");
+        return Enum.TryParse<BoxGeneratorType>(value, ignoreCase: true, out var boxType)
+            ? boxType
+            : BoxGeneratorType.Open;
+    }
+
+    private static double ReadDouble(LibraryTemplate template, string key)
+    {
+        return Convert.ToDouble(ReadParameter(template, key));
+    }
+
+    private static int ReadInt(LibraryTemplate template, string key)
+    {
+        return Convert.ToInt32(ReadParameter(template, key));
+    }
+
+    private static string ReadString(LibraryTemplate template, string key)
+    {
+        return Convert.ToString(ReadParameter(template, key)) ?? string.Empty;
+    }
+
+    private static object ReadParameter(LibraryTemplate template, string key)
+    {
+        if (!template.Parameters.TryGetValue(key, out var value))
+        {
+            throw new InvalidOperationException("Szablon nie zawiera parametru: " + key);
+        }
+
+        return value;
     }
 
     private void ReplaceDocument(CadDocument document)

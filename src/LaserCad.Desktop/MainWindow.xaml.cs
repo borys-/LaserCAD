@@ -2,9 +2,10 @@ using System.IO;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Threading;
-using LaserCad.Core.Documents;
 using LaserCad.Core.BoxGenerators;
+using LaserCad.Core.Documents;
 using LaserCad.Core.Kerf;
+using LaserCad.Core.Library;
 using LaserCad.Geometry;
 using LaserCad.Geometry.Units;
 using LaserCad.ViewportContract;
@@ -36,6 +37,8 @@ public partial class MainWindow : Window
         DataContext = viewModel;
         MaterialProfileComboBox.ItemsSource = viewModel.MaterialProfiles;
         MaterialProfileComboBox.SelectedItem = viewModel.SelectedMaterialProfile;
+        LibraryTemplateComboBox.ItemsSource = viewModel.LibraryTemplates;
+        LibraryTemplateComboBox.SelectedItem = viewModel.SelectedLibraryTemplate;
         ViewportHost.Child = viewportPanel;
         viewportPanel.Resize += (_, _) => viewportProcessController.ResizeEmbeddedViewport();
         viewportPanel.MouseEnter += (_, _) => viewportProcessController.FocusViewport();
@@ -111,9 +114,11 @@ public partial class MainWindow : Window
         try
         {
             viewModel.LoadProject(dialog.FileName);
-            MaterialProfileComboBox.ItemsSource = viewModel.MaterialProfiles;
-            MaterialProfileComboBox.SelectedItem = viewModel.SelectedMaterialProfile;
-            PublishDocument();
+        MaterialProfileComboBox.ItemsSource = viewModel.MaterialProfiles;
+        MaterialProfileComboBox.SelectedItem = viewModel.SelectedMaterialProfile;
+        LibraryTemplateComboBox.ItemsSource = viewModel.LibraryTemplates;
+        LibraryTemplateComboBox.SelectedItem = viewModel.SelectedLibraryTemplate;
+        PublishDocument();
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or InvalidOperationException or ArgumentException or NotSupportedException)
         {
@@ -276,6 +281,25 @@ public partial class MainWindow : Window
         viewModel.SetMaterialProfile(materialProfile);
         viewportIpcClient.SendDocument(viewModel.CurrentDocument);
         RefreshDocumentSummary();
+    }
+
+    private void LibraryTemplateComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        viewModel.SelectLibraryTemplate(LibraryTemplateComboBox.SelectedItem as LibraryTemplate);
+        RefreshDocumentSummary();
+    }
+
+    private void ApplyLibraryTemplate_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            viewModel.ApplySelectedLibraryTemplate();
+            PublishDocument();
+        }
+        catch (Exception ex) when (ex is InvalidOperationException or ArgumentException or ArgumentOutOfRangeException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
     }
 
     private void ResetView_Click(object sender, RoutedEventArgs e)
@@ -558,5 +582,6 @@ public partial class MainWindow : Window
         KerfCalibrationRecommendationTextBlock.Text = viewModel.KerfCalibrationRecommendedKerfMillimeters is double kerf
             ? $"Rekomendacja: {kerf:0.###} mm"
             : "Rekomendacja: -";
+        LibraryTemplateDescriptionTextBlock.Text = viewModel.SelectedLibraryTemplate?.Description ?? "Brak szablonu";
     }
 }

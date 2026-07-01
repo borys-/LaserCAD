@@ -17,4 +17,8 @@
     <ProjectReference Include="..\LaserCad.ViewportContract\LaserCad.ViewportContract.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\..\library\**\*.*" Link="library\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

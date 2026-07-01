@@ -263,6 +263,21 @@
                         </StackPanel>
                     </GroupBox>
 
+                    <GroupBox Header="Biblioteka szablonow">
+                        <StackPanel>
+                            <ComboBox x:Name="LibraryTemplateComboBox"
+                                      DisplayMemberPath="Name"
+                                      SelectionChanged="LibraryTemplateComboBox_SelectionChanged"
+                                      Margin="0,0,0,8" />
+                            <TextBlock x:Name="LibraryTemplateDescriptionTextBlock"
+                                       Text="Brak szablonu"
+                                       Foreground="{StaticResource MutedTextBrush}"
+                                       TextWrapping="Wrap"
+                                       Margin="0,0,0,8" />
+                            <Button Content="Uzyj szablonu" Click="ApplyLibraryTemplate_Click" />
+                        </StackPanel>
+                    </GroupBox>
+
                     <GroupBox Header="Kerf">
                         <StackPanel>
                             <TextBlock Text="Tryb kompensacji" Style="{StaticResource FieldLabelStyle}" />
