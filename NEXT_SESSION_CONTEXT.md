@@ -1,5 +1,50 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 12.1 Manufacturing checks
+
+- Wykonano cala sekcje `12.1 Manufacturing checks`.
+- Nowe commity:
+  - `72bf4a3 12.1.0 Utworz ManufacturingCheck`,
+  - `4ec1283 12.1.1 Dodaj poziomy kontroli produkcji`,
+  - `0ed2fb3 12.1.2 Dodaj wykrywanie podwojnych linii`,
+  - `0a7c92b 12.1.3 Dodaj wykrywanie otwartych konturow`,
+  - `5cc0937 12.1.4 Dodaj wykrywanie zbyt malych odstepow`,
+  - `56f0726 12.1.5 Dodaj wykrywanie zbyt cienkich mostkow`,
+  - `4065f1a 12.1.6 Dodaj sugestie kolejnosci ciecia`,
+  - `c6c5d83 12.1.7 Dodaj test podwojnej linii`,
+  - `820115b 12.1.8 Dodaj test otwartego konturu`,
+  - `4b38ba8 12.1.9 Dodaj test zbyt malego odstepu`.
+- Dodano/rozszerzono namespace `LaserCad.Core.Production`:
+  - `ManufacturingCheck`,
+  - `ManufacturingCheckSeverity` z poziomami `Info`, `Warning`, `Error`,
+  - `ManufacturingCheckOptions` z progami `MinimumSpacing` i `MinimumBridgeWidth`,
+  - `ManufacturingCheckAnalyzer`.
+- `ManufacturingCheckAnalyzer`:
+  - wykrywa podwojne linie jako identyczne odcinki, takze w odwroconym kierunku,
+  - wykrywa otwarte kontury dla `PolylineEntity` z `IsClosed == false`,
+  - wykrywa zbyt male odstepy miedzy odcinkami roznych encji,
+  - wykrywa zbyt cienkie mostki MVP jako male szczeliny miedzy bounding boxami zamknietych konturow,
+  - dodaje informacyjna sugestie kolejnosci ciecia: mniejsze kontury/detale przed najwiekszymi obrysami.
+- Dodano testy w `tests/LaserCad.Tests/Core/Production/ManufacturingCheckAnalyzerTests.cs`:
+  - podwojna linia,
+  - otwarty kontur,
+  - zbyt maly odstep.
+- Dokumentacja:
+  - odhaczono `12.1.0`-`12.1.9` w `TASKS.md`,
+  - dopisano ograniczenia manufacturing checks MVP do `docs/ROADMAP.md`.
+- Ograniczenia MVP:
+  - reguly dzialaja na encjach szkicu, a nie na finalnym preflight eksporcie,
+  - analizowane odcinki pochodza z linii, prostokatow i polilinii,
+  - mostki sa szacowane z bounding boxow, bez dokladnej analizy polygonow i zagniezdzenia otworow,
+  - sugestia kolejnosci ciecia jest informacyjna i heurystyczna.
+- Widoczne po odpaleniu aplikacji:
+  - brak nowego panelu UI dla manufacturing checks w desktop shell,
+  - aplikacja powinna wygladac jak po sekcji `12.0`,
+  - zmiana jest domenowa i testowa; recznie nadal weryfikowac istniejacy generator pudelka, viewport 2D/3D, zapis/odczyt oraz eksport SVG/DXF.
+- Po przegladzie planu:
+  - nastepna logiczna sekcja wedlug `TASKS.md`: `13.0 Biblioteka`, start od `13.0.0 Utworzyc katalog biblioteki materialow`,
+  - nadal otwarte sa m.in. `3.6.27`, cala sekcja `3.10`, `MVP.0.14`, `MVP.0.15`, `MVP.1.4`, `MVP.1.5`, `MVP.1.7`, `MVP.1.9`.
+
 ## Aktualizacja po sekcji 12.0 Produkcja i nesting
 
 - Wykonano cala sekcje `12.0 Produkcja i nesting`.

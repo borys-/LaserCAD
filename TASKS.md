@@ -699,16 +699,16 @@ Zalecenie pracy:
 
 ## 12.1 Manufacturing checks
 
-- [ ] 12.1.0 Utworzyc `ManufacturingCheck`.
-- [ ] 12.1.1 Dodac poziomy: info, warning, error.
-- [ ] 12.1.2 Dodac wykrywanie podwojnych linii.
-- [ ] 12.1.3 Dodac wykrywanie otwartych konturow.
-- [ ] 12.1.4 Dodac wykrywanie zbyt malych odstepow.
-- [ ] 12.1.5 Dodac wykrywanie zbyt cienkich mostkow.
-- [ ] 12.1.6 Dodac sugestie kolejnosci ciecia.
-- [ ] 12.1.7 Dodac test podwojnej linii.
-- [ ] 12.1.8 Dodac test otwartego konturu.
-- [ ] 12.1.9 Dodac test zbyt malego odstepu.
+- [x] 12.1.0 Utworzyc `ManufacturingCheck`.
+- [x] 12.1.1 Dodac poziomy: info, warning, error.
+- [x] 12.1.2 Dodac wykrywanie podwojnych linii.
+- [x] 12.1.3 Dodac wykrywanie otwartych konturow.
+- [x] 12.1.4 Dodac wykrywanie zbyt malych odstepow.
+- [x] 12.1.5 Dodac wykrywanie zbyt cienkich mostkow.
+- [x] 12.1.6 Dodac sugestie kolejnosci ciecia.
+- [x] 12.1.7 Dodac test podwojnej linii.
+- [x] 12.1.8 Dodac test otwartego konturu.
+- [x] 12.1.9 Dodac test zbyt malego odstepu.
 
 ## 13.0 Biblioteka
 

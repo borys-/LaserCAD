@@ -419,6 +419,12 @@ Nesting w pierwszym kroku uklada prostokatne elementy domenowe `NestingItem` na 
 
 To nie jest jeszcze nesting rzeczywistych konturow CAD z dokumentu. Algorytm nie rozpoznaje automatycznie scianek generatora, nie pakuje polygonow nieregularnych, nie optymalizuje kolejnosci ani nie minimalizuje odpadu. Statystyki produkcyjne sa szacunkiem MVP: zuzycie materialu liczone jest z pol prostokatow, dlugosc ciecia jako suma ich obwodow, a czas ciecia jako dlugosc podzielona przez zadana predkosc.
 
+### Ograniczenia manufacturing checks MVP
+
+Kontrole produkcyjne w pierwszym kroku dzialaja w domenie `LaserCad.Core.Production` na aktualnych encjach szkicow dokumentu. `ManufacturingCheckAnalyzer` wykrywa podwojne odcinki ciecia, otwarte polilinie, zbyt male odstepy miedzy odcinkami, zbyt cienkie mostki materialu oraz dodaje informacyjna sugestie kolejnosci ciecia.
+
+To nie jest jeszcze pelny preflight eksportu. Reguly operuja na odcinkach wyprowadzonych z linii, prostokatow i polilinii, a mostki sa szacowane z bounding boxow zamknietych konturow. Analizator nie rozpoznaje jeszcze rzeczywistego zagniezdzenia otworow, luk i okregow jako dokladnych krzywych, semantyki konkretnych generatorow ani kolejnosci technologicznej zaleznosci od materialu i maszyny.
+
 ## Faza 13 - Biblioteka
 
 - Materialy:
