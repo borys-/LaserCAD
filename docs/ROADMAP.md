@@ -440,6 +440,12 @@ To nie jest jeszcze pelny preflight eksportu. Reguly operuja na odcinkach wyprow
 - Biblioteka profili materialowych.
 - Biblioteka ustawien generatorow.
 
+### Ograniczenia biblioteki MVP
+
+Biblioteka w pierwszym kroku jest katalogiem zasobow JSON dostarczanym z aplikacja. Profile materialow sa ladowane z `library/materials`, a szablony generatorow z `library/templates`. Desktop shell pokazuje szablony w lewym panelu i pozwala utworzyc dokument startowy z wybranego szablonu.
+
+To nie jest jeszcze edytowalna biblioteka uzytkownika ani marketplace szablonow. Aplikacja nie zapisuje zmian profili z powrotem do katalogu biblioteki, nie wersjonuje szablonow i nie serializuje instancji generatora jako aktywnego, edytowalnego wezla dokumentu. Szablon po uzyciu generuje aktualny szkic dokumentu.
+
 ## Faza 14 - Pluginy
 
 - API:
