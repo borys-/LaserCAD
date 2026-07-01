@@ -1,5 +1,57 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 3.10 Porzadek UI i przestrzen robocza
+
+- Wykonano cala sekcje `3.10 Porzadek UI i przestrzen robocza`.
+- Nowe commity:
+  - `9ef1468 3.10.0 Ustal domyslny uklad roboczy`,
+  - `55b1faa 3.10.1 Ukryj panele generatorow na starcie`,
+  - `e140b9d 3.10.2 Ukryj panele zaawansowane na starcie`,
+  - `2c171a4 3.10.3 Ukryj panel historii na starcie`,
+  - `0056729 3.10.4 Dodaj szybki czysty widok`,
+  - `5521838 3.10.5 Zapamietaj widocznosc paneli`,
+  - `743d275 3.10.6 Dodaj audyt UI desktop shell`,
+  - `9dfeb22 3.10.7 Dodaj okno About`,
+  - `4df6047 3.10.8 Opisz domkniete akcje UI`,
+  - `6b349f7 3.10.9 Usun niedzialajace ustawienia z widoku`,
+  - `4072ad9 3.10.10 Dodaj checkliste czystego UI`.
+- Desktop shell:
+  - domyslne okno startuje w rozmiarze `1440x860`,
+  - boczne kolumny startowe zwezono do `240 px`,
+  - margines wokol viewportu zmniejszono do `8 px`,
+  - panele generatorow (`Parametry pudelka`, `Biblioteka szablonow`) sa domyslnie ukryte i dostepne z `View`,
+  - panele zaawansowane (`Kerf`, `Kalibracja kerfu`, `Transformacje`) sa domyslnie ukryte i dostepne przez `View -> Advanced Panels`,
+  - panel `Historia` jest domyslnie ukryty i dostepny przez `View -> History Panel`,
+  - dodano `View -> Clean Workspace` oraz przycisk czystego widoku w toolbarze,
+  - stan widocznosci paneli jest zapisywany w `%LOCALAPPDATA%\LaserCad\desktop-shell-settings.json`,
+  - `Help -> About Laser CAD` pokazuje realne okno informacyjne,
+  - `Settings` usunieto niedzialajace kontrolki preferencji; okno pokazuje teraz dzialajaca liste skrotow.
+- Dokumentacja:
+  - dodano `docs/DESKTOP_UI_AUDIT.md`,
+  - dodano `docs/DESKTOP_CLEAN_UI_QA.md`,
+  - dodano link do checklisty czystego UI w `README.md`,
+  - odhaczono `3.10.0`-`3.10.10` w `TASKS.md`.
+- Po przegladzie planu:
+  - sekcja `3.10` jest zamknieta,
+  - nadal otwarte sa `3.6.27`, `MVP.0.14`, `MVP.0.15`, `MVP.1.4`, `MVP.1.5`, `MVP.1.7`, `MVP.1.9`,
+  - nastepny logiczny krok produktowy to reczna weryfikacja i domykanie kryteriow MVP zwiazanych z widocznoscia geometrii, przebudowa modelu i eksportem SVG.
+- Weryfikacja:
+  - `dotnet build LaserCad.sln --no-restore` przechodzil po kazdym tasku 3.10,
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `456/456`,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - domyslnie viewport powinien zajmowac wiecej miejsca niz w poprzedniej wersji,
+  - po lewej domyslnie widac `Material i warstwy`, po prawej `Properties`,
+  - panele generatorow, zaawansowane i historia nie powinny byc widoczne na czystym starcie,
+  - w `View` sprawdzic pozycje `Box Generator Panel`, `Template Library Panel`, `Advanced Panels`, `History Panel`, `Clean Workspace`,
+  - przelaczniki paneli powinny przywracac panele i zapamietywac stan po restarcie aplikacji,
+  - przycisk czystego widoku w toolbarze powinien chowac wszystkie opcjonalne panele,
+  - `Help -> About Laser CAD` powinno pokazac okno informacyjne,
+  - `Tools -> Settings...` powinno pokazac liste skrotow bez niedzialajacych kontrolek preferencji.
+
 ## Aktualizacja po sekcji 15.0 Przygotowanie wersji 1.0
 
 - Wykonano cala sekcje `15.0 Przygotowanie wersji 1.0`.
