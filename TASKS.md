@@ -713,7 +713,7 @@ Zalecenie pracy:
 ## 13.0 Biblioteka
 
 - [x] 13.0.0 Utworzyc katalog biblioteki materialow.
-- [ ] 13.0.1 Dodac profil sklejki 3 mm.
+- [x] 13.0.1 Dodac profil sklejki 3 mm.
 - [ ] 13.0.2 Dodac profil sklejki 4 mm.
 - [ ] 13.0.3 Utworzyc katalog szablonow.
 - [ ] 13.0.4 Dodac szablon pudelka.
