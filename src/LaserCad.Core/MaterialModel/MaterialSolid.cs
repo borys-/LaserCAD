@@ -119,6 +119,14 @@ public sealed class MaterialSolid
     /// </summary>
     public Length Thickness => MaterialProfile.Thickness;
 
+    /// <summary>
+    /// Zwraca ten sam element materialowy z nowa orientacja w przestrzeni.
+    /// </summary>
+    public MaterialSolid WithOrientation(MaterialSolidOrientation orientation)
+    {
+        return new MaterialSolid(Id, Name, MaterialProfile, Mesh, orientation);
+    }
+
     private static void ValidateMeshThickness(Mesh3D mesh, MaterialProfile materialProfile)
     {
         var minZ = mesh.Vertices.Min(vertex => vertex.Z);
