@@ -1,6 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using LaserCad.Core.MaterialModel;
 using LaserCad.Core.Parameters;
+using LaserCad.Core.Preview3D;
 using LaserCad.Geometry;
 using LaserCad.Geometry.Units;
 
@@ -43,7 +45,8 @@ public sealed class DocumentSerializer
             Parameters = document.Parameters.Parameters.Select(ToDto).ToArray(),
             Layers = document.Layers.Select(ToDto).ToArray(),
             Sketches = document.Sketches.Select(ToDto).ToArray(),
-            MaterialProfile = document.MaterialProfile is null ? null : ToDto(document.MaterialProfile)
+            MaterialProfile = document.MaterialProfile is null ? null : ToDto(document.MaterialProfile),
+            MaterialSolids = document.MaterialSolids.Select(ToDto).ToArray()
         };
 
         return JsonSerializer.Serialize(dto, JsonOptions);
@@ -66,10 +69,19 @@ public sealed class DocumentSerializer
         var layers = dto.Layers?.Select(ToDomain).ToArray();
         var sketches = (dto.Sketches ?? Array.Empty<SketchDto>()).Select(ToDomain).ToArray();
         var materialProfile = dto.MaterialProfile is null ? null : ToDomain(dto.MaterialProfile);
+        var materialSolids = (dto.MaterialSolids ?? Array.Empty<MaterialSolidDto>()).Select(ToDomain).ToArray();
         var formatVersion = dto.FormatVersion == 0 ? SupportedFormatVersion : dto.FormatVersion;
         EnsureSupportedFormatVersion(formatVersion);
 
-        return new CadDocument(dto.Id, dto.Name, formatVersion, parameters, layers, sketches, materialProfile: materialProfile);
+        return new CadDocument(
+            dto.Id,
+            dto.Name,
+            formatVersion,
+            parameters,
+            layers,
+            sketches,
+            materialProfile: materialProfile,
+            materialSolids: materialSolids);
     }
 
     private static void EnsureSupportedFormatVersion(int formatVersion)
@@ -100,6 +112,62 @@ public sealed class DocumentSerializer
             Length.FromMillimeters(dto.DefaultKerfMillimeters),
             Length.FromMillimeters(dto.DefaultClearanceMillimeters),
             Length.FromMillimeters(dto.MinimumFingerWidthMillimeters));
+    }
+
+    private static MaterialSolidDto ToDto(MaterialSolid materialSolid)
+    {
+        return new MaterialSolidDto
+        {
+            Id = materialSolid.Id,
+            Name = materialSolid.Name,
+            MaterialProfile = ToDto(materialSolid.MaterialProfile),
+            Mesh = ToDto(materialSolid.Mesh),
+            Orientation = ToDto(materialSolid.Orientation)
+        };
+    }
+
+    private static MaterialSolid ToDomain(MaterialSolidDto dto)
+    {
+        return new MaterialSolid(
+            dto.Id,
+            dto.Name,
+            ToDomain(RequiredMaterialProfile(dto.MaterialProfile)),
+            ToDomain(RequiredMesh(dto.Mesh)),
+            ToDomain(RequiredOrientation(dto.Orientation)));
+    }
+
+    private static MeshDto ToDto(Mesh3D mesh)
+    {
+        return new MeshDto
+        {
+            Vertices = mesh.Vertices.Select(ToDto).ToArray(),
+            TriangleIndices = mesh.TriangleIndices.ToArray()
+        };
+    }
+
+    private static Mesh3D ToDomain(MeshDto dto)
+    {
+        return new Mesh3D(
+            (dto.Vertices ?? Array.Empty<Point3DDto>()).Select(ToDomain),
+            dto.TriangleIndices ?? Array.Empty<int>());
+    }
+
+    private static OrientationDto ToDto(MaterialSolidOrientation orientation)
+    {
+        return new OrientationDto
+        {
+            Position = ToDto(orientation.Position),
+            RotationRadians = orientation.RotationRadians,
+            SurfaceNormal = ToDto(orientation.SurfaceNormal)
+        };
+    }
+
+    private static MaterialSolidOrientation ToDomain(OrientationDto dto)
+    {
+        return new MaterialSolidOrientation(
+            ToDomain(dto.Position),
+            dto.RotationRadians,
+            ToDomain(dto.SurfaceNormal));
     }
 
     private static LayerDto ToDto(Layer layer)
@@ -332,6 +400,26 @@ public sealed class DocumentSerializer
         };
     }
 
+    private static Point3DDto ToDto(Point3D point)
+    {
+        return new Point3DDto
+        {
+            X = point.X,
+            Y = point.Y,
+            Z = point.Z
+        };
+    }
+
+    private static Vector3DDto ToDto(Vector3D vector)
+    {
+        return new Vector3DDto
+        {
+            X = vector.X,
+            Y = vector.Y,
+            Z = vector.Z
+        };
+    }
+
     private static Point2D ToDomain(PointDto? dto)
     {
         if (dto is null)
@@ -340,6 +428,41 @@ public sealed class DocumentSerializer
         }
 
         return new Point2D(dto.X, dto.Y);
+    }
+
+    private static Point3D ToDomain(Point3DDto? dto)
+    {
+        if (dto is null)
+        {
+            throw new InvalidOperationException("Point3D DTO is required.");
+        }
+
+        return new Point3D(dto.X, dto.Y, dto.Z);
+    }
+
+    private static Vector3D ToDomain(Vector3DDto? dto)
+    {
+        if (dto is null)
+        {
+            throw new InvalidOperationException("Vector3D DTO is required.");
+        }
+
+        return new Vector3D(dto.X, dto.Y, dto.Z);
+    }
+
+    private static MaterialProfileDto RequiredMaterialProfile(MaterialProfileDto? dto)
+    {
+        return dto ?? throw new InvalidOperationException("Material solid requires material profile.");
+    }
+
+    private static MeshDto RequiredMesh(MeshDto? dto)
+    {
+        return dto ?? throw new InvalidOperationException("Material solid requires mesh.");
+    }
+
+    private static OrientationDto RequiredOrientation(OrientationDto? dto)
+    {
+        return dto ?? throw new InvalidOperationException("Material solid requires orientation.");
     }
 
     private static Point2D[] RequiredPoints(PointDto[]? points, string entityType)
@@ -373,6 +496,8 @@ public sealed class DocumentSerializer
         public SketchDto[]? Sketches { get; set; }
 
         public MaterialProfileDto? MaterialProfile { get; set; }
+
+        public MaterialSolidDto[]? MaterialSolids { get; set; }
     }
 
     private sealed class ParameterDto
@@ -412,6 +537,35 @@ public sealed class DocumentSerializer
         public double DefaultClearanceMillimeters { get; set; }
 
         public double MinimumFingerWidthMillimeters { get; set; }
+    }
+
+    private sealed class MaterialSolidDto
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; } = string.Empty;
+
+        public MaterialProfileDto? MaterialProfile { get; set; }
+
+        public MeshDto? Mesh { get; set; }
+
+        public OrientationDto? Orientation { get; set; }
+    }
+
+    private sealed class MeshDto
+    {
+        public Point3DDto[]? Vertices { get; set; }
+
+        public int[]? TriangleIndices { get; set; }
+    }
+
+    private sealed class OrientationDto
+    {
+        public Point3DDto? Position { get; set; }
+
+        public double RotationRadians { get; set; }
+
+        public Vector3DDto? SurfaceNormal { get; set; }
     }
 
     private sealed class SketchDto
@@ -471,6 +625,24 @@ public sealed class DocumentSerializer
         public double X { get; set; }
 
         public double Y { get; set; }
+    }
+
+    private sealed class Point3DDto
+    {
+        public double X { get; set; }
+
+        public double Y { get; set; }
+
+        public double Z { get; set; }
+    }
+
+    private sealed class Vector3DDto
+    {
+        public double X { get; set; }
+
+        public double Y { get; set; }
+
+        public double Z { get; set; }
     }
 
     private sealed class DimensionBindingDto

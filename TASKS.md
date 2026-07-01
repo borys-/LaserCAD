@@ -742,7 +742,7 @@ Celem etapu 2 jest workflow: uzytkownik projektuje bryle z realnego materialu, l
 - [x] 16.0.3 Dodac powiazanie elementu 3D z profilem materialu dokumentu.
 - [x] 16.0.4 Dodac walidacje, ze grubosc bryly pochodzi z materialu, a nie z recznie wpisanej wartosci geometrii.
 - [x] 16.0.5 Dodac test: sklejka 3 mm tworzy prostopadloscian o grubosci 3 mm.
-- [ ] 16.0.6 Dodac serializacje elementow materialowych 3D do pliku projektu.
+- [x] 16.0.6 Dodac serializacje elementow materialowych 3D do pliku projektu.
 
 ## 16.0A Bryly z pochyla sciana
 

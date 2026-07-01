@@ -16,6 +16,9 @@ Plik zapisuje stabilny kontrakt DTO, a nie bezposrednia serializacje klas domeno
 - Geometria encji jest zapisywana jawnie: punkty jako `{ "x": 0, "y": 0 }`, okregi i luki przez srodek, promien i katy w radianach.
 - Encja `Text` zapisuje `text`, `position`, `height`, opcjonalne `fontFamily`, opcjonalne `fontFilePath` oraz opcjonalne `alignment`.
 - Powiazania wymiarow zapisuja `dimension` oraz `parameterId`, np. szerokosc prostokata -> `Width`.
+- Elementy materialowe 3D sa zapisywane w polu `materialSolids` jako lista obiektow z `id`, `name`, `materialProfile`, `mesh` i `orientation`.
+- Mesh elementu materialowego zapisuje wierzcholki 3D `{ "x": 0, "y": 0, "z": 0 }` oraz `triangleIndices`.
+- Orientacja elementu materialowego zapisuje `position`, `rotationRadians` oraz `surfaceNormal`.
 - Generatory pozostaja poza zakresem pierwszego formatu zapisu, dopoki ich kontrakt plikowy nie bedzie stabilny.
 
 ## Przykladowy dokument

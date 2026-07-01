@@ -1,4 +1,5 @@
 using LaserCad.Core.Parameters;
+using LaserCad.Core.MaterialModel;
 
 namespace LaserCad.Core.Documents;
 
@@ -20,7 +21,8 @@ public sealed class CadDocument
         IEnumerable<Layer>? layers = null,
         IEnumerable<Sketch>? sketches = null,
         IEnumerable<GeneratorInstance>? generators = null,
-        MaterialProfile? materialProfile = null)
+        MaterialProfile? materialProfile = null,
+        IEnumerable<MaterialSolid>? materialSolids = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -40,6 +42,7 @@ public sealed class CadDocument
         Sketches = sketches?.ToArray() ?? Array.Empty<Sketch>();
         Generators = generators?.ToArray() ?? Array.Empty<GeneratorInstance>();
         MaterialProfile = materialProfile;
+        MaterialSolids = materialSolids?.ToArray() ?? Array.Empty<MaterialSolid>();
 
         if (Layers.Any(layer => layer is null))
         {
@@ -54,6 +57,11 @@ public sealed class CadDocument
         if (Generators.Any(generator => generator is null))
         {
             throw new ArgumentException("Document generators cannot contain null values.", nameof(generators));
+        }
+
+        if (MaterialSolids.Any(materialSolid => materialSolid is null))
+        {
+            throw new ArgumentException("Document material solids cannot contain null values.", nameof(materialSolids));
         }
 
         if (Id == Guid.Empty)
@@ -103,12 +111,17 @@ public sealed class CadDocument
     public MaterialProfile? MaterialProfile { get; }
 
     /// <summary>
+    /// Elementy materialowe 3D nalezace do dokumentu.
+    /// </summary>
+    public IReadOnlyList<MaterialSolid> MaterialSolids { get; }
+
+    /// <summary>
     /// Zwraca nowy dokument z dodanym parametrem.
     /// Uzywaj tej metody zamiast modyfikowania kolekcji bezposrednio, aby zachowac niemutowalny styl modelu.
     /// </summary>
     public CadDocument AddParameter(Parameter parameter)
     {
-        return new CadDocument(Id, Name, FormatVersion, Parameters.Add(parameter), Layers, Sketches, Generators, MaterialProfile);
+        return new CadDocument(Id, Name, FormatVersion, Parameters.Add(parameter), Layers, Sketches, Generators, MaterialProfile, MaterialSolids);
     }
 
     /// <summary>
@@ -122,7 +135,7 @@ public sealed class CadDocument
             throw new ArgumentNullException(nameof(layer));
         }
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers.Append(layer), Sketches, Generators, MaterialProfile);
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers.Append(layer), Sketches, Generators, MaterialProfile, MaterialSolids);
     }
 
     /// <summary>
@@ -136,7 +149,7 @@ public sealed class CadDocument
             throw new ArgumentNullException(nameof(sketch));
         }
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches.Append(sketch), Generators, MaterialProfile);
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches.Append(sketch), Generators, MaterialProfile, MaterialSolids);
     }
 
     /// <summary>
@@ -150,7 +163,20 @@ public sealed class CadDocument
             throw new ArgumentNullException(nameof(generator));
         }
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators.Append(generator), MaterialProfile);
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators.Append(generator), MaterialProfile, MaterialSolids);
+    }
+
+    /// <summary>
+    /// Zwraca nowy dokument z dodanym elementem materialowym 3D.
+    /// </summary>
+    public CadDocument AddMaterialSolid(MaterialSolid materialSolid)
+    {
+        if (materialSolid is null)
+        {
+            throw new ArgumentNullException(nameof(materialSolid));
+        }
+
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, MaterialProfile, MaterialSolids.Append(materialSolid));
     }
 
     /// <summary>
@@ -164,6 +190,6 @@ public sealed class CadDocument
             throw new ArgumentNullException(nameof(materialProfile));
         }
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, materialProfile);
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, materialProfile, MaterialSolids);
     }
 }

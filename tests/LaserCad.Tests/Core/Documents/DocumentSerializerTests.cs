@@ -1,6 +1,8 @@
 using System.Text.Json;
 using LaserCad.Core.Documents;
+using LaserCad.Core.MaterialModel;
 using LaserCad.Core.Parameters;
+using LaserCad.Core.Preview3D;
 using LaserCad.Geometry;
 using LaserCad.Geometry.Units;
 
@@ -45,6 +47,7 @@ public sealed class DocumentSerializerTests
         Assert.That(document.Sketches, Is.Empty);
         Assert.That(document.Generators, Is.Empty);
         Assert.That(document.MaterialProfile, Is.Null);
+        Assert.That(document.MaterialSolids, Is.Empty);
     }
 
     [Test]
@@ -307,6 +310,56 @@ public sealed class DocumentSerializerTests
         Assert.That(roundTrippedDocument.Sketches, Is.Empty);
         Assert.That(roundTrippedDocument.Generators, Is.Empty);
         Assert.That(roundTrippedDocument.MaterialProfile, Is.Null);
+        Assert.That(roundTrippedDocument.MaterialSolids, Is.Empty);
+    }
+
+    [Test]
+    public void Serialize_WithMaterialSolid_ShouldWriteMaterialSolidValues()
+    {
+        var material = DefaultMaterialProfiles.Plywood3Mm;
+        var rectangle = new RectangleEntity(new Point2D(0.0, 0.0), 20.0, 10.0);
+        var solid = MaterialSolid.FromRectangle("Plyta frontowa", rectangle, material);
+        var document = new CadDocument(layers: Array.Empty<Layer>()).AddMaterialSolid(solid);
+        var serializer = new DocumentSerializer();
+
+        var json = serializer.Serialize(document);
+        using var parsedJson = JsonDocument.Parse(json);
+        var materialSolid = parsedJson.RootElement.GetProperty("materialSolids")[0];
+
+        Assert.That(materialSolid.GetProperty("id").GetGuid(), Is.EqualTo(solid.Id));
+        Assert.That(materialSolid.GetProperty("name").GetString(), Is.EqualTo("Plyta frontowa"));
+        Assert.That(materialSolid.GetProperty("materialProfile").GetProperty("thicknessMillimeters").GetDouble(), Is.EqualTo(3.0));
+        Assert.That(materialSolid.GetProperty("mesh").GetProperty("vertices").GetArrayLength(), Is.EqualTo(8));
+        Assert.That(materialSolid.GetProperty("mesh").GetProperty("triangleIndices").GetArrayLength(), Is.EqualTo(36));
+        Assert.That(materialSolid.GetProperty("orientation").GetProperty("surfaceNormal").GetProperty("z").GetDouble(), Is.EqualTo(1.0));
+    }
+
+    [Test]
+    public void RoundTrip_WithMaterialSolid_ShouldPreserveMaterialSolid()
+    {
+        var material = DefaultMaterialProfiles.Plywood3Mm;
+        var rectangle = new RectangleEntity(new Point2D(0.0, 0.0), 20.0, 10.0);
+        var orientation = new MaterialSolidOrientation(
+            new Point3D(5.0, 6.0, 7.0),
+            Math.PI / 4.0,
+            new Vector3D(0.0, 1.0, 0.0));
+        var mesh = MaterialSolid.FromRectangle("Plyta frontowa", rectangle, material).Mesh;
+        var solid = new MaterialSolid(Guid.NewGuid(), "Plyta frontowa", material, mesh, orientation);
+        var document = new CadDocument(layers: Array.Empty<Layer>()).AddMaterialSolid(solid);
+        var serializer = new DocumentSerializer();
+
+        var roundTrippedDocument = serializer.Deserialize(serializer.Serialize(document));
+        var roundTrippedSolid = roundTrippedDocument.MaterialSolids.Single();
+
+        Assert.That(roundTrippedSolid.Id, Is.EqualTo(solid.Id));
+        Assert.That(roundTrippedSolid.Name, Is.EqualTo("Plyta frontowa"));
+        Assert.That(roundTrippedSolid.MaterialProfile.Name, Is.EqualTo(material.Name));
+        Assert.That(roundTrippedSolid.Thickness.Millimeters, Is.EqualTo(3.0));
+        Assert.That(roundTrippedSolid.Mesh.Vertices, Is.EqualTo(solid.Mesh.Vertices));
+        Assert.That(roundTrippedSolid.Mesh.TriangleIndices, Is.EqualTo(solid.Mesh.TriangleIndices));
+        Assert.That(roundTrippedSolid.Orientation.Position, Is.EqualTo(new Point3D(5.0, 6.0, 7.0)));
+        Assert.That(roundTrippedSolid.Orientation.RotationRadians, Is.EqualTo(Math.PI / 4.0));
+        Assert.That(roundTrippedSolid.Orientation.SurfaceNormal, Is.EqualTo(new Vector3D(0.0, 1.0, 0.0)));
     }
 
     [Test]
