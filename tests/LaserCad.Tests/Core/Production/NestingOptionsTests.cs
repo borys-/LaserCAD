@@ -12,4 +12,12 @@ public sealed class NestingOptionsTests
 
         Assert.That(options.Spacing.Millimeters, Is.EqualTo(4.0));
     }
+
+    [Test]
+    public void Constructor_ShouldStoreAllowRotation()
+    {
+        var options = new NestingOptions(allowRotation: true);
+
+        Assert.That(options.AllowRotation, Is.True);
+    }
 }
