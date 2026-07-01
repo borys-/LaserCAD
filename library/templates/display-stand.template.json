@@ -1,0 +1,11 @@
+{
+  "id": "display-stand-basic",
+  "name": "Stojak ekspozycyjny",
+  "generatorType": "Stand",
+  "description": "Prosty stojak ekspozycyjny z prostokatnego generatora.",
+  "parameters": {
+    "widthMillimeters": 90.0,
+    "depthMillimeters": 140.0,
+    "materialThicknessMillimeters": 3.0
+  }
+}
