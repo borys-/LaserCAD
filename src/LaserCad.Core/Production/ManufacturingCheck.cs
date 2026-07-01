@@ -8,7 +8,11 @@ public sealed class ManufacturingCheck
     /// <summary>
     /// Tworzy wynik kontroli produkcyjnej.
     /// </summary>
-    public ManufacturingCheck(string code, string message, Guid? entityId = null)
+    public ManufacturingCheck(
+        string code,
+        string message,
+        ManufacturingCheckSeverity severity = ManufacturingCheckSeverity.Warning,
+        Guid? entityId = null)
     {
         if (string.IsNullOrWhiteSpace(code))
         {
@@ -22,6 +26,7 @@ public sealed class ManufacturingCheck
 
         Code = code;
         Message = message;
+        Severity = severity;
         EntityId = entityId;
     }
 
@@ -34,6 +39,11 @@ public sealed class ManufacturingCheck
     /// Czytelny opis problemu albo sugestii.
     /// </summary>
     public string Message { get; }
+
+    /// <summary>
+    /// Poziom istotnosci wyniku kontroli.
+    /// </summary>
+    public ManufacturingCheckSeverity Severity { get; }
 
     /// <summary>
     /// Opcjonalny identyfikator encji powiazanej z wynikiem kontroli.
