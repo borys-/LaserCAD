@@ -463,7 +463,7 @@ Zalecenie pracy:
 - [x] 3.10.4 Zapewnic szybki powrot do czystego widoku roboczego jednym kliknieciem.
 - [x] 3.10.5 Zapamietywac preferowany stan widocznosci paneli miedzy uruchomieniami aplikacji.
 - [x] 3.10.6 Zrobic audyt wszystkich widocznych elementow UI: menu, toolbaru, paneli, przyciskow i pol formularzy.
-- [ ] 3.10.7 Zaimplementowac wszystkie placeholdery UI, ktore sa obecnie widoczne jako realne akcje.
+- [x] 3.10.7 Zaimplementowac wszystkie placeholdery UI, ktore sa obecnie widoczne jako realne akcje.
 - [ ] 3.10.8 Doprowadzic wszystkie widoczne akcje UI do dzialania end-to-end.
 - [ ] 3.10.9 Usuwac z widoku tylko te funkcje, ktore sa swiadomie poza zakresem aktualnej wersji, zamiast zostawiac niedzialajace kontrolki.
 - [ ] 3.10.10 Dodac manualna checkliste QA dla domyslnie czystego UI i wszystkich widocznych akcji.

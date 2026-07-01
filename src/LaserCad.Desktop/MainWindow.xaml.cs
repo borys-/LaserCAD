@@ -458,6 +458,16 @@ public partial class MainWindow : Window
         StatusTextBlock.Text = "Zamknieto ustawienia";
     }
 
+    private void About_Click(object sender, RoutedEventArgs e)
+    {
+        System.Windows.MessageBox.Show(
+            this,
+            "Laser CAD\nParametryczny CAD do projektow pod wycinarke laserowa.\n\nWersja MVP 1.0",
+            "About Laser CAD",
+            MessageBoxButton.OK,
+            MessageBoxImage.Information);
+    }
+
     private void ShowNominalKerfPreview_Click(object sender, RoutedEventArgs e)
     {
         PublishKerfPreview(afterCompensation: false);

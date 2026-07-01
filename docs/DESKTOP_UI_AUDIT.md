@@ -30,7 +30,6 @@ Audyt dla sekcji `3.10 Porzadek UI i przestrzen robocza`.
 
 ## Widoczne placeholdery albo slabe miejsca
 
-- `Help -> About Laser CAD` jest widoczne, ale nie ma jeszcze realnej akcji.
 - Okno `Settings` pokazuje ustawienia i skroty, ale nie zapisuje jeszcze zmian uzytkownika.
 - Panel `Properties` ma przycisk `Odswiez zaznaczenie`, bo zaznaczenie z viewportu nie jest jeszcze w pelni reaktywne w shellu.
 
@@ -38,4 +37,4 @@ Audyt dla sekcji `3.10 Porzadek UI i przestrzen robocza`.
 
 - Domyslny widok pozostaje czysty: viewport, material/warstwy i properties.
 - Generatory, historia oraz konfiguracja zaawansowana sa dostepne jawnie z menu `View`.
-- Najblizszy placeholder do domkniecia w `3.10.7` to `Help -> About Laser CAD`, bo jest widoczny jako gotowa akcja.
+- `Help -> About Laser CAD` ma realne okno informacyjne od `3.10.7`.

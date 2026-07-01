@@ -180,7 +180,7 @@
                 <MenuItem Header="Export _DXF..." InputGestureText="Ctrl+Shift+D" Click="ExportDxf_Click" />
             </MenuItem>
             <MenuItem Header="_Help">
-                <MenuItem Header="_About Laser CAD" />
+                <MenuItem Header="_About Laser CAD" Click="About_Click" />
             </MenuItem>
         </Menu>
 
