@@ -1,5 +1,62 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 11.0 Podglad 3D
+
+- Wykonano cala sekcje `11.0 Podglad 3D`.
+- Nowe commity:
+  - `232d591 11.0.0 Dodaj domenowy model czesci 3D`,
+  - `00dec46 11.0.4 Dodaj podglad 3D w Unity`,
+  - `36d94c3 11.0.9 Dodaj QA podgladu 3D`.
+- Dodano namespace `LaserCad.Core.Preview3D`:
+  - `Point3D`,
+  - `Mesh3D`,
+  - `Part3D`,
+  - `Contour3DBuilder`.
+- `Contour3DBuilder`:
+  - tworzy czesc 3D z `RectangleEntity`,
+  - tworzy czesc 3D z zamknietej `PolylineEntity`,
+  - ekstruduje kontur o grubosc materialu,
+  - generuje prosta siatke trojkatow dla prostokata i polygonu.
+- Dodano testy `tests/LaserCad.Tests/Core/Preview3D/Contour3DBuilderTests.cs`:
+  - mesh prostokata ma 8 wierzcholkow i 12 trojkatow,
+  - grubosc materialu trafia do wspolrzednej `Z`,
+  - zamknieta polilinia tworzy mesh,
+  - otwarta polilinia jest odrzucana.
+- Unity:
+  - dodano `ThreeDPreviewRenderer`,
+  - komponent jest podpiety do sceny `LaserCad.Unity/Assets/Scenes/Workspace.unity`,
+  - renderer buduje podglad z prostokatow i zamknietych polilinii aktualnego dokumentu,
+  - pokazuje izometryczny podglad obok geometrii 2D,
+  - uzywa prostego materialu wizualnego sklejki,
+  - animuje przejscie miedzy rozlozeniem i zlozeniem,
+  - oznacza kolorem kolizji elementy z nachodzacymi bounding boxami.
+- Dokumentacja:
+  - dodano `docs/THREE_D_PREVIEW_QA.md`,
+  - dopisano ograniczenia podgladu 3D MVP do `docs/ROADMAP.md`,
+  - odhaczono `11.0.0`-`11.0.9` w `TASKS.md`.
+- Ograniczenia MVP:
+  - meshe sa tworzone tylko dla `RectangleEntity` i zamknietych `PolylineEntity`,
+  - triangulacja polygonu jest uproszczona wachlarzem i najlepiej dziala dla konturow wypuklych,
+  - widok zlozonego pudelka jest heurystyczny, bez semantyki konkretnych scianek generatora,
+  - detekcja kolizji uzywa `Renderer.bounds`, a nie dokladnych testow bryl.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore --filter FullyQualifiedName~Preview3D` przechodzi: `4/4`,
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen,
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `440/440`,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowac lub otworzyc dokument z prostokatami albo zamknietymi poliliniami,
+  - w centralnym viewportcie, obok geometrii 2D, szukac izometrycznego podgladu 3D w kolorze sklejki,
+  - po zmianie parametrow pudelka podglad 3D powinien przebudowac sie razem z dokumentem,
+  - w dzialajacym Unity playerze podglad powinien powoli przechodzic miedzy ukladem rozlozonym i zlozonym,
+  - elementy, ktorych bounding boxy nachodza na siebie, moga zmienic kolor na czerwony jako sygnal kolizji.
+- Po przegladzie planu:
+  - nastepna logiczna sekcja wedlug `TASKS.md`: `12.0 Produkcja i nesting`, start od `12.0.0 Utworzyc SheetSize`,
+  - nadal otwarte sa m.in. `3.6.27`, cala sekcja `3.10`, `MVP.0.14`, `MVP.0.15`, `MVP.1.4`, `MVP.1.5`, `MVP.1.7`, `MVP.1.9`.
+
 ## Aktualizacja po zapisie i wczytywaniu stanu projektu
 
 - Podpieto stan projektu w desktop shell:
