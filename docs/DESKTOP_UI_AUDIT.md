@@ -25,8 +25,11 @@ Audyt dla sekcji `3.10 Porzadek UI i przestrzen robocza`.
 - Przelaczniki paneli w menu `View`.
 - `Tools -> Settings`.
 - `Export -> SVG`, `Export -> DXF`.
+- `Help -> About Laser CAD`.
 - Rysowanie podstawowych ksztaltow z toolbaru przez viewport.
 - Usuwanie zaznaczonych encji na podstawie zaznaczenia z viewportu.
+
+Wszystkie widoczne pozycje menu, przyciski toolbaru i przyciski widocznych domyslnie paneli maja przypisany handler albo sa swiadomie tylko wyswietleniem stanu.
 
 ## Widoczne placeholdery albo slabe miejsca
 
@@ -38,3 +41,4 @@ Audyt dla sekcji `3.10 Porzadek UI i przestrzen robocza`.
 - Domyslny widok pozostaje czysty: viewport, material/warstwy i properties.
 - Generatory, historia oraz konfiguracja zaawansowana sa dostepne jawnie z menu `View`.
 - `Help -> About Laser CAD` ma realne okno informacyjne od `3.10.7`.
+- Po `3.10.8` nie ma widocznych domyslnie akcji bez przeplywu end-to-end.
