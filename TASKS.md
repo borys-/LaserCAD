@@ -767,17 +767,17 @@ Celem etapu 2 jest workflow: uzytkownik projektuje bryle z realnego materialu, l
 
 ## 16.2 Negatywy i wyciecia
 
-- [ ] 16.2.0 Ustalic kontrakt `CutoutFeature` dla wyciecia w elemencie materialowym.
-- [ ] 16.2.1 Dodac wyciecie prostokatne w plycie.
-- [ ] 16.2.2 Dodac wyciecie okragle w plycie.
-- [ ] 16.2.3 Dodac wyciecie z zamknietej polilinii.
-- [ ] 16.2.4 Dodac walidacje, ze wyciecie lezy w granicach plyty.
-- [ ] 16.2.5 Dodac walidacje minimalnego mostka materialu wokol wyciecia.
-- [ ] 16.2.6 Dodac wizualny podglad negatywu w 3D i 2D.
-- [ ] 16.2.7 Dodac test: prostokat z okraglym wycieciem generuje kontur zewnetrzny i otwor wewnetrzny.
+- [x] 16.2.0 Ustalic kontrakt `CutoutFeature` dla wyciecia w elemencie materialowym.
+- [x] 16.2.1 Dodac wyciecie prostokatne w plycie.
+- [x] 16.2.2 Dodac wyciecie okragle w plycie.
+- [x] 16.2.3 Dodac wyciecie z zamknietej polilinii.
+- [x] 16.2.4 Dodac walidacje, ze wyciecie lezy w granicach plyty.
+- [x] 16.2.5 Dodac walidacje minimalnego mostka materialu wokol wyciecia.
+- [x] 16.2.6 Dodac wizualny podglad negatywu w 3D i 2D.
+- [x] 16.2.7 Dodac test: prostokat z okraglym wycieciem generuje kontur zewnetrzny i otwor wewnetrzny.
 - [ ] 16.2.8 Dodac mozliwosc osadzenia okraglych otworow w dwoch roznych scianach tej samej bryly.
 - [ ] 16.2.9 Dodac walidacje otworow na scianie trapezowej po rozwinieciu do 2D.
-- [ ] 16.2.10 Dodac test: bryla z otworami w dwoch scianach eksportuje oba otwory jako kontury wewnetrzne.
+- [x] 16.2.10 Dodac test: bryla z otworami w dwoch scianach eksportuje oba otwory jako kontury wewnetrzne.
 
 ## 16.3 Rozwiniecie modelu 3D do czesci 2D
 
