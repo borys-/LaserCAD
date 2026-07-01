@@ -468,6 +468,59 @@ To nie jest jeszcze edytowalna biblioteka uzytkownika ani marketplace szablonow.
 - Stabilny format pliku.
 - Zestaw testow regresyjnych.
 
+## Etap 2 - od modelu 3D do DXF
+
+Etap 2 rozwija aplikacje z generatora pudelka i edytora 2D w narzedzie, w ktorym uzytkownik moze projektowac z realnego materialu. Material ma fizyczna grubosc, np. sklejka 3 mm, wiec narysowany prostokat staje sie plyta 3D o grubosci 3 mm, a nie tylko plaska figura.
+
+Docelowy workflow etapu 2:
+
+1. Uzytkownik wybiera material i arkusz roboczy, np. sklejka 3 mm oraz obszar 300 mm x 300 mm.
+2. Uzytkownik rysuje plyty materialowe w 3D.
+3. Program pomaga laczyc plyty przez snap do krawedzi, narozy i powierzchni.
+4. Uzytkownik moze zrobic wariant bryly z jedna pochyla sciana, tak aby boczne czesci po rozwinieciu byly trapezami.
+5. Uzytkownik dodaje negatywy, np. okragle otwory w jednej albo dwoch scianach bryly.
+6. Program rozwija model 3D do listy plaskich czesci 2D.
+7. Program uklada czesci na jednym albo wielu arkuszach materialu.
+8. Uzytkownik eksportuje jeden albo wiele plikow DXF z warstwami produkcyjnymi.
+
+Najwazniejsza decyzja produktowa: uzytkownik mysli o obiekcie jako o zestawie plyt z materialu, a aplikacja bierze odpowiedzialnosc za przygotowanie plaskich plikow produkcyjnych. Etap 2 nie powinien zaczynac od pelnego modelera brylowego CSG. Pierwsza wersja powinna obslugiwac proste plyty, laczenia pod katem 90 stopni, wariant bryly z jedna pochyla sciana, prostokatne i okragle wyciecia oraz nesting na prostokatnym arkuszu.
+
+### Zakres techniczny etapu 2
+
+- model materialowego elementu 3D z gruboscia z profilu materialu,
+- bryla z jedna pochyla sciana i trapezowymi bokami po rozwinieciu,
+- edycja i laczenie kilku plyt 3D,
+- negatywowe wyciecia w plytach, w tym okragle otwory w dwoch scianach tej samej bryly,
+- rozwiniecie plyt 3D do czesci 2D,
+- nesting czesci na arkuszu materialu,
+- eksport DXF z ulozonych arkuszy,
+- testy domenowe oraz manualna checklista przeplywu 3D -> 2D -> DXF.
+
+### Szybki workflow do lasera
+
+Najkrotsza sciezka etapu 2 powinna zaczynac sie od kreatora `Bryla trapezowa`, a nie od pustego modelera 3D. Uzytkownik powinien moc wpisac szerokosc, glebokosc, wysokosc przodu, wysokosc tylu, material i kerf, a program powinien natychmiast pokazac model 3D oraz rozwiniecie 2D.
+
+Priorytetowe usprawnienia workflow:
+
+- gotowe typy konstrukcji: prostopadloscian, bryla z pochyla gora, klin, obudowa z pochylonym panelem, rynienka trapezowa,
+- otwory jako cechy sciany: `Dodaj otwor okragly`, srednica, odleglosc od lewej i dolnej krawedzi,
+- kopiowanie otworu na przeciwlegla sciane,
+- jednoczesny podglad 3D i rozwiniecia 2D,
+- przycisk `Przygotuj do ciecia`, ktory wykonuje rozwiniecie, kontrole produkcyjne, nesting i podglad eksportu,
+- pamietanie ostatnich ustawien materialu, arkusza, kerfu, marginesow, odstepow i typowych srednic otworow,
+- opcjonalne etykiety grawerowane czesci, np. front, tyl, bok lewy, bok prawy, dno,
+- eksport `DXF dla lasera` z domyslnymi ustawieniami warstw i jednostek.
+
+Praktyczny cel UX: uzytkownik, ktory zna wymiary prostej obudowy trapezowej, powinien dojsc do poprawnego DXF bez recznego rysowania kazdej sciany od zera.
+
+### Ograniczenia etapu 2 MVP
+
+Pierwsza wersja etapu 2 powinna obslugiwac plyty o stalej grubosci wynikajacej z profilu materialu. Geometria 3D moze byc reprezentowana jako zestaw plaskich elementow z orientacja w przestrzeni, a nie jako pelny model brylowy z dowolnymi operacjami boolean.
+
+Pochyla sciana w MVP powinna byc modelowana jako kontrolowany wariant bryly plytowej: wysokosc przednia i tylna albo kat pochylenia tworza trapezowe boki po rozwinieciu. To nie jest jeszcze dowolne scinanie bryly ani pelne modelowanie powierzchni swobodnych.
+
+Negatywy w MVP powinny zaczac od prostokatow, okregow i zamknietych polilinii lezacych na jednej plycie. Wariant wymagany dla etapu 2 to dwa okragle otwory osadzone w dwoch roznych scianach bryly, takze gdy jedna z czesci po rozwinieciu jest trapezem. Rozwiniecie 2D powinno zachowac kontur zewnetrzny i kontury wewnetrzne, a eksport DXF powinien utrzymac warstwy cut, engrave i score.
+
 ## Wyrozniki produktu
 
 ### Pelna parametrycznosc

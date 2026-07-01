@@ -730,6 +730,120 @@ Zalecenie pracy:
 - [x] 15.0.2 Dodac testy regresyjne dla przykladowych projektow.
 - [x] 15.0.3 Dodac checklist QA przed wydaniem.
 
+## Etap 2 - od modelu 3D do DXF
+
+Celem etapu 2 jest workflow: uzytkownik projektuje bryle z realnego materialu, laczy kilka elementow, definiuje wyciecia negatywowe, a program generuje plaskie czesci do wyciecia, uklada je na arkuszu materialu i eksportuje jeden albo wiele plikow DXF.
+
+## 16.0 Model materialowy 3D
+
+- [ ] 16.0.0 Ustalic kontrakt `MaterialSolid` dla elementu 3D o grubosci wynikajacej z profilu materialu.
+- [ ] 16.0.1 Dodac tworzenie prostopadloscianu z prostokata 2D i grubosci materialu.
+- [ ] 16.0.2 Dodac orientacje elementu w przestrzeni 3D: pozycja, obrot i normalna powierzchni.
+- [ ] 16.0.3 Dodac powiazanie elementu 3D z profilem materialu dokumentu.
+- [ ] 16.0.4 Dodac walidacje, ze grubosc bryly pochodzi z materialu, a nie z recznie wpisanej wartosci geometrii.
+- [ ] 16.0.5 Dodac test: sklejka 3 mm tworzy prostopadloscian o grubosci 3 mm.
+- [ ] 16.0.6 Dodac serializacje elementow materialowych 3D do pliku projektu.
+
+## 16.0A Bryly z pochyla sciana
+
+- [ ] 16.0A.0 Ustalic kontrakt bryly materialowej z jedna pochyla sciana.
+- [ ] 16.0A.1 Dodac tworzenie bryly, ktorej bok po rozwinieciu jest trapezem.
+- [ ] 16.0A.2 Dodac parametry pochylenia: wysokosc przednia, wysokosc tylna albo kat pochylenia.
+- [ ] 16.0A.3 Dodac walidacje, ze pochylenie nie tworzy zerowej ani ujemnej sciany.
+- [ ] 16.0A.4 Pokazac podglad 3D bryly z pochyla sciana.
+- [ ] 16.0A.5 Rozwinac pochyla bryle do czesci 2D z bokami trapezowymi.
+- [ ] 16.0A.6 Dodac test: bryla z pochyla sciana generuje dwa boki trapezowe i poprawne prostokatne sciany.
+
+## 16.1 Edycja i laczenie elementow 3D
+
+- [ ] 16.1.0 Dodac narzedzie rysowania plyty/prostokata materialowego w widoku 3D.
+- [ ] 16.1.1 Dodac snap do krawedzi i narozy istniejacych plyt 3D.
+- [ ] 16.1.2 Dodac przyciaganie nowej plyty do powierzchni istniejacej plyty.
+- [ ] 16.1.3 Dodac tryb laczenia plyt pod katem 90 stopni.
+- [ ] 16.1.4 Dodac podglad relacji montazowej miedzy dwiema plytami.
+- [ ] 16.1.5 Dodac wykrywanie kolizji plyt po polaczeniu.
+- [ ] 16.1.6 Dodac podstawowe operacje edycji plyty 3D: przesun, obroc, usun.
+- [ ] 16.1.7 Dodac test/manual QA rysowania i laczenia kilku plyt.
+
+## 16.2 Negatywy i wyciecia
+
+- [ ] 16.2.0 Ustalic kontrakt `CutoutFeature` dla wyciecia w elemencie materialowym.
+- [ ] 16.2.1 Dodac wyciecie prostokatne w plycie.
+- [ ] 16.2.2 Dodac wyciecie okragle w plycie.
+- [ ] 16.2.3 Dodac wyciecie z zamknietej polilinii.
+- [ ] 16.2.4 Dodac walidacje, ze wyciecie lezy w granicach plyty.
+- [ ] 16.2.5 Dodac walidacje minimalnego mostka materialu wokol wyciecia.
+- [ ] 16.2.6 Dodac wizualny podglad negatywu w 3D i 2D.
+- [ ] 16.2.7 Dodac test: prostokat z okraglym wycieciem generuje kontur zewnetrzny i otwor wewnetrzny.
+- [ ] 16.2.8 Dodac mozliwosc osadzenia okraglych otworow w dwoch roznych scianach tej samej bryly.
+- [ ] 16.2.9 Dodac walidacje otworow na scianie trapezowej po rozwinieciu do 2D.
+- [ ] 16.2.10 Dodac test: bryla z otworami w dwoch scianach eksportuje oba otwory jako kontury wewnetrzne.
+
+## 16.3 Rozwiniecie modelu 3D do czesci 2D
+
+- [ ] 16.3.0 Ustalic kontrakt `FlatPart` dla czesci do wyciecia.
+- [ ] 16.3.1 Dodac ekstrakcje obrysu plyty 3D jako konturu 2D.
+- [ ] 16.3.2 Dodac ekstrakcje wyciec negatywowych jako konturow wewnetrznych.
+- [ ] 16.3.3 Zachowac warstwy technologiczne: cut, engrave, score, ignore.
+- [ ] 16.3.4 Dodac oznaczenia czesci wynikajace z nazw elementow 3D.
+- [ ] 16.3.5 Dodac wykrywanie duplikatow identycznych czesci.
+- [ ] 16.3.6 Dodac test: kilka plyt 3D daje liste plaskich czesci 2D.
+- [ ] 16.3.7 Dodac manualna checkliste QA rozwiniecia 3D -> 2D.
+
+## 16.4 Arkusz materialu i nesting czesci
+
+- [ ] 16.4.0 Dodac UI ustawienia arkusza materialu, np. 300 mm x 300 mm.
+- [ ] 16.4.1 Podlaczyc `FlatPart` do istniejacego modelu nestingu.
+- [ ] 16.4.2 Ukladac czesci na arkuszu z marginesem i odstepem technologicznym.
+- [ ] 16.4.3 Dodac obrot czesci w nestingu.
+- [ ] 16.4.4 Dodac obsluge wielu arkuszy, gdy czesci nie mieszcza sie na jednym.
+- [ ] 16.4.5 Pokazac podglad ulozenia 2D przed eksportem.
+- [ ] 16.4.6 Dodac ostrzezenie, gdy czesc nie miesci sie na arkuszu.
+- [ ] 16.4.7 Dodac statystyki: liczba arkuszy, zuzycie materialu, dlugosc ciecia.
+- [ ] 16.4.8 Dodac test: elementy wieksze niz arkusz zwracaja czytelny blad.
+
+## 16.5 Eksport DXF z ulozonych arkuszy
+
+- [ ] 16.5.0 Dodac eksport DXF z wyniku nestingu, a nie tylko z aktualnego dokumentu.
+- [ ] 16.5.1 Eksportowac kazdy arkusz jako osobny plik DXF.
+- [ ] 16.5.2 Dodac opcje eksportu jednego zbiorczego DXF z wieloma arkuszami obok siebie.
+- [ ] 16.5.3 Zachowac warstwy cut/engrave/score w DXF.
+- [ ] 16.5.4 Eksportowac otwory negatywowe jako kontury wewnetrzne na warstwie cut.
+- [ ] 16.5.5 Dodac nazewnictwo plikow: nazwa projektu + numer arkusza.
+- [ ] 16.5.6 Dodac test regresyjny eksportu DXF dla modelu z kilkoma plytami i otworem.
+- [ ] 16.5.7 Dodac manualna checkliste QA: model 3D -> rozwiniecie -> nesting 300x300 -> DXF.
+
+## 16.6 Szybki workflow do lasera
+
+- [ ] 16.6.0 Dodac kreator `Bryla trapezowa` jako najszybsza sciezke tworzenia modelu z pochyla sciana.
+- [ ] 16.6.1 W kreatorze bryly trapezowej obslugiwac pola: szerokosc, glebokosc, wysokosc przod, wysokosc tyl, material i kerf.
+- [ ] 16.6.2 Dodac gotowe typy konstrukcji: prostopadloscian, bryla z pochyla gora, klin, obudowa z pochylonym panelem, rynienka trapezowa.
+- [ ] 16.6.3 Dodac akcje `Dodaj otwor okragly` po wybraniu sciany.
+- [ ] 16.6.4 Dodac pozycjonowanie otworu przez srednice oraz odleglosc od lewej i dolnej krawedzi sciany.
+- [ ] 16.6.5 Dodac akcje `Kopiuj otwor na przeciwlegla sciane`.
+- [ ] 16.6.6 Pokazac jednoczesnie podglad 3D i automatyczne rozwiniecie 2D.
+- [ ] 16.6.7 Dodac przycisk `Przygotuj do ciecia`, ktory wykonuje rozwiniecie, kontrole produkcyjne, nesting i podglad eksportu.
+- [ ] 16.6.8 Pamietac ostatnio uzyte ustawienia: material, arkusz, kerf, margines, odstep i typowe srednice otworow.
+- [ ] 16.6.9 Dodac opcjonalne etykiety grawerowane czesci: front, tyl, bok lewy, bok prawy, dno.
+- [ ] 16.6.10 Dodac akcje `Eksportuj DXF dla lasera` z domyslnymi ustawieniami produkcyjnymi.
+- [ ] 16.6.11 Dodac manualna checkliste QA szybkiego workflow: kreator -> otwory -> przygotuj do ciecia -> eksport DXF.
+
+## Etap 2 MVP - kryteria akceptacji
+
+- [ ] E2.MVP.0 Uzytkownik wybiera material, np. sklejke 3 mm.
+- [ ] E2.MVP.1 Uzytkownik rysuje prostokat materialowy, ktory w 3D ma grubosc materialu.
+- [ ] E2.MVP.2 Uzytkownik laczy kilka plyt w prosta bryle 3D.
+- [ ] E2.MVP.3 Uzytkownik dodaje okragle albo prostokatne wyciecie negatywowe w plycie.
+- [ ] E2.MVP.4 Program generuje plaskie czesci 2D potrzebne do wyciecia.
+- [ ] E2.MVP.5 Program uklada czesci na arkuszu 300 mm x 300 mm.
+- [ ] E2.MVP.6 Program eksportuje jeden albo wiele plikow DXF z poprawnymi warstwami.
+- [ ] E2.MVP.7 Testy jednostkowe i regresyjne dla etapu 2 przechodza lokalnie.
+- [ ] E2.MVP.8 Uzytkownik tworzy bryle z jedna pochyla sciana, tak aby boczne czesci byly trapezami.
+- [ ] E2.MVP.9 Uzytkownik dodaje okragle otwory w dwoch scianach bryly, a eksport DXF zachowuje je jako wyciecia.
+- [ ] E2.MVP.10 GUI etapu 2 uzywa polskich nazw dla widocznych akcji, paneli, pol i komunikatow, jezeli istnieje naturalna polska nazwa.
+- [ ] E2.MVP.11 Uzytkownik moze przejsc od kreatora bryly trapezowej do eksportu DXF przez jedna akcje `Przygotuj do ciecia`.
+- [ ] E2.MVP.12 Program ostrzega przed problemami produkcyjnymi przed eksportem DXF.
+
 ## Poza aktualnym zakresem
 
 Te elementy sa swiadomie odlozone poza biezacy plan, dopoki nie pojawi sie realna potrzeba produktowa:

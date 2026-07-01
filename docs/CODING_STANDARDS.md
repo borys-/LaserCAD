@@ -121,6 +121,13 @@ Nazwy powinny opisywac intencje domenowa, np. `MaterialThickness`, `Kerf`, `Fing
 - Dokumenty Markdown powinny byc czytelne w terminalu i na GitHubie.
 - Nowe decyzje projektowe zapisywac w `README.md`, `docs/CODING_STANDARDS.md` albo odpowiednim dokumencie w `docs`.
 
+## Teksty UI
+
+- Teksty widoczne dla uzytkownika w GUI powinny byc po polsku, jezeli istnieje naturalna polska nazwa.
+- Angielskie nazwy moga zostac tylko tam, gdzie sa standardem technicznym albo formatem pliku, np. DXF, SVG, kerf, snap, zoom.
+- Nazwy menu, paneli, przyciskow, etykiet pol i komunikatow powinny byc spojne w calym desktop shell.
+- Publiczne API i nazwy klas moga pozostac po angielsku, jezeli lepiej pasuja do kodu i istniejacych kontraktow domenowych.
+
 ## Git i taski
 
 - Jeden task z `TASKS.md` powinien odpowiadac jednemu commitowi.
