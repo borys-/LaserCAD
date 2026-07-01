@@ -1,5 +1,67 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 13.0 Biblioteka
+
+- Wykonano cala sekcje `13.0 Biblioteka`.
+- Nowe commity:
+  - `9b81ff0 13.0.0 Utworz katalog biblioteki materialow`,
+  - `da6d1b8 13.0.1 Dodaj profil sklejki 3 mm`,
+  - `376f338 13.0.2 Dodaj profil sklejki 4 mm`,
+  - `6295bd7 13.0.3 Utworz katalog szablonow`,
+  - `a345be4 13.0.4 Dodaj szablon pudelka`,
+  - `8d0f763 13.0.5 Dodaj szablon organizera`,
+  - `10de593 13.0.6 Dodaj szablon podstawki`,
+  - `c0664ab 13.0.7 Dodaj szablon stojaka`,
+  - `6dd5ae5 13.0.8 Dodaj UI wyboru szablonu`,
+  - `981af85 13.0.9 Dodaj test ladowania biblioteki`,
+  - `0b90e27 13.0 Opisz ograniczenia biblioteki MVP`.
+- Dodano zasoby biblioteki:
+  - `library/materials/plywood-3mm.material.json`,
+  - `library/materials/plywood-4mm.material.json`,
+  - `library/templates/box.template.json`,
+  - `library/templates/organizer.template.json`,
+  - `library/templates/stand-base.template.json`,
+  - `library/templates/display-stand.template.json`.
+- Dodano namespace `LaserCad.Core.Library`:
+  - `ProjectLibrary`,
+  - `ProjectLibraryLoader`,
+  - `LibraryMaterialProfile`,
+  - `LibraryTemplate`,
+  - wewnetrzne DTO do parsowania materialow i szablonow JSON.
+- Desktop shell:
+  - laduje profile materialow z `library/materials` i laczy je z profilami domyslnymi bez duplikowania nazw,
+  - kopiuje katalog `library` do outputu aplikacji przez `LaserCad.Desktop.csproj`,
+  - ma nowy panel `Biblioteka szablonow` w lewym panelu,
+  - pozwala wybrac szablon i kliknac `Uzyj szablonu`,
+  - szablony `Box`, `Organizer` i `Stand` generuja nowy dokument startowy na bazie istniejacych generatorow domenowych.
+- Dodano test `tests/LaserCad.Tests/Core/Library/ProjectLibraryLoaderTests.cs`.
+- Dokumentacja:
+  - odhaczono `13.0.0`-`13.0.9` w `TASKS.md`,
+  - dopisano ograniczenia biblioteki MVP do `docs/ROADMAP.md`.
+- Ograniczenia MVP:
+  - biblioteka jest katalogiem zasobow JSON dostarczanym z aplikacja,
+  - nie ma jeszcze edytowalnej biblioteki uzytkownika ani zapisu zmian profili z UI do katalogu biblioteki,
+  - szablon po uzyciu generuje aktualny szkic dokumentu; instancje generatorow nadal nie sa trwale serializowane jako edytowalne wezly dokumentu,
+  - szablon podstawki i stojaka korzystaja z tego samego `StandGenerator` z roznymi parametrami startowymi.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore --filter FullyQualifiedName~Library` przechodzi: `1/1`,
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `455/455`,
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`,
+  - potwierdzono, ze `C:\borys\CAD\bin\release\LaserCad.Desktop\library` zawiera pliki materialow i szablonow.
+- Widoczne po odpaleniu aplikacji:
+  - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - w lewym panelu pod `Material i warstwy` szukac nowej sekcji `Biblioteka szablonow`,
+  - lista powinna zawierac: `Pudelko otwarte`, `Organizer z przegrodami`, `Podstawka`, `Stojak ekspozycyjny`,
+  - po wybraniu szablonu i kliknieciu `Uzyj szablonu` dokument oraz viewport powinny przeladowac sie do geometrii wybranego generatora,
+  - w comboboxie materialow nadal widac profile sklejki 3 mm i 4 mm, teraz ladowane z biblioteki i uzupelnione profilami domyslnymi bez duplikatow.
+- Po przegladzie planu:
+  - nastepna logiczna sekcja wedlug `TASKS.md`: `15.0 Przygotowanie wersji 1.0`, start od `15.0.0 Dodac ekran ustawien`,
+  - faza `14.0 Pluginy` pozostaje tylko w roadmapie i nie ma rozpisanych taskow w `TASKS.md`,
+  - nadal otwarte sa m.in. `3.6.27`, cala sekcja `3.10`, `MVP.0.14`, `MVP.0.15`, `MVP.1.4`, `MVP.1.5`, `MVP.1.7`, `MVP.1.9`.
+
 ## Aktualizacja po sekcji 12.1 Manufacturing checks
 
 - Wykonano cala sekcje `12.1 Manufacturing checks`.
