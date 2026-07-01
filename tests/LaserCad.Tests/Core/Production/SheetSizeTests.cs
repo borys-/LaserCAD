@@ -14,4 +14,14 @@ public sealed class SheetSizeTests
 
         Assert.That(sheetSize.Width.Millimeters, Is.EqualTo(600.0));
     }
+
+    [Test]
+    public void Constructor_ShouldStoreHeight()
+    {
+        var sheetSize = new SheetSize(
+            Length.FromMillimeters(600.0),
+            Length.FromMillimeters(300.0));
+
+        Assert.That(sheetSize.Height.Millimeters, Is.EqualTo(300.0));
+    }
 }
