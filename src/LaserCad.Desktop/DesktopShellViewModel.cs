@@ -7,6 +7,7 @@ using LaserCad.Core.Documents;
 using LaserCad.Core.Generators;
 using LaserCad.Core.Kerf;
 using LaserCad.Core.Library;
+using LaserCad.Core.MaterialModel;
 using LaserCad.Export.Dxf;
 using LaserCad.Export.Svg;
 using LaserCad.Geometry;
@@ -171,6 +172,26 @@ public sealed class DesktopShellViewModel
 
         Execute(new AddEntityCommand(GetEditableSketchId(), new RectangleEntity(new Point2D(minX, minY), width, height, layerName: "Cut")));
         StatusText = "Dodano prostokat";
+    }
+
+    public void AddMaterialPlate(Point2D start, Point2D end)
+    {
+        var minX = Math.Min(start.X, end.X);
+        var minY = Math.Min(start.Y, end.Y);
+        var width = Math.Abs(end.X - start.X);
+        var height = Math.Abs(end.Y - start.Y);
+
+        if (width <= 0.0 || height <= 0.0)
+        {
+            StatusText = "Plyta materialowa wymaga dwoch roznych punktow";
+            return;
+        }
+
+        var material = CurrentDocument.MaterialProfile ?? SelectedMaterialProfile;
+        var rectangle = new RectangleEntity(new Point2D(minX, minY), width, height, layerName: "Cut");
+        var solid = MaterialSolid.FromRectangle("Plyta materialowa", rectangle, material);
+        ReplaceDocument(CurrentDocument.AddMaterialSolid(solid));
+        StatusText = "Dodano plyte materialowa 3D";
     }
 
     public void AddLine()

@@ -375,6 +375,12 @@ namespace LaserCad.Unity
                 return;
             }
 
+            if (preview.Tool == ViewportDrawingTool.MaterialPlate)
+            {
+                DrawRectangle(start, end, width);
+                return;
+            }
+
             if (preview.Tool == ViewportDrawingTool.Circle)
             {
                 DrawCircle(start, Vector3.Distance(start, end), width);

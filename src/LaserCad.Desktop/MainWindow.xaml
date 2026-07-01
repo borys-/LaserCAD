@@ -194,6 +194,7 @@
                     <Button Content="&#xE7C9;" ToolTip="Zaznaczanie" Style="{StaticResource ToolbarAccentButtonStyle}" Click="SelectTool_Click" />
                     <Button Content="&#xE80F;" ToolTip="Czysty widok roboczy" Style="{StaticResource ToolbarButtonStyle}" Click="CleanWorkspace_Click" />
                     <Button Content="&#xE739;" ToolTip="Rysuj prostokat" Style="{StaticResource ToolbarButtonStyle}" Click="AddRectangle_Click" />
+                    <Button Content="&#xE8A9;" ToolTip="Rysuj plyte materialowa 3D" Style="{StaticResource ToolbarButtonStyle}" Click="AddMaterialPlate_Click" />
                     <Button Content="&#xE8A1;" ToolTip="Rysuj linie" Style="{StaticResource ToolbarButtonStyle}" Click="AddLine_Click" />
                     <Button Content="&#xEA3A;" ToolTip="Rysuj okrag" Style="{StaticResource ToolbarButtonStyle}" Click="AddCircle_Click" />
                     <Button Content="&#xE74D;" ToolTip="Usun zaznaczone" Style="{StaticResource ToolbarButtonStyle}" Click="DeleteSelected_Click" />
@@ -455,6 +456,7 @@
                         <StackPanel>
                             <TextBlock x:Name="DocumentNameTextBlock" Text="Dokument: Projekt pudelka" Margin="0,0,0,6" />
                             <TextBlock x:Name="SketchCountTextBlock" Text="Szkice: 1" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,6" />
+                            <TextBlock x:Name="MaterialSolidCountTextBlock" Text="Plyty 3D: 0" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,6" />
                             <TextBlock x:Name="SelectedEntitiesTextBlock" Text="Zaznaczone: 0" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,10" />
                             <Button Content="Odswiez zaznaczenie" Click="RefreshSelection_Click" />
                         </StackPanel>

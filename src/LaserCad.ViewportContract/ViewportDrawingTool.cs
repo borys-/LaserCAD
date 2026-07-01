@@ -7,6 +7,7 @@ public enum ViewportDrawingTool
 {
     None,
     Rectangle,
+    MaterialPlate,
     Line,
     Circle,
 }

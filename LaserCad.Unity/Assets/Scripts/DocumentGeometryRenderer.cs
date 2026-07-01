@@ -71,6 +71,12 @@ namespace LaserCad.Unity
                 }
             }
 
+            GL.Color(new Color(0.15f, 0.45f, 0.95f, 1f));
+            foreach (var materialSolid in applicationController.CurrentDocument.MaterialSolids)
+            {
+                DrawMaterialSolidFootprint(materialSolid, width);
+            }
+
             GL.End();
             GL.PopMatrix();
         }
@@ -176,6 +182,21 @@ namespace LaserCad.Unity
 
             DrawLine(position, position + new Vector3(size, 0f, 0f), width);
             DrawLine(position, position + new Vector3(0f, size, 0f), width);
+        }
+
+        private void DrawMaterialSolidFootprint(LaserCad.Core.MaterialModel.MaterialSolid materialSolid, float width)
+        {
+            var bounds = materialSolid.Mesh.Bounds2D;
+            var offset = materialSolid.Orientation.Position;
+            var a = new Vector3((float)(bounds.MinX + offset.X), (float)(bounds.MinY + offset.Y), 0f);
+            var b = new Vector3((float)(bounds.MaxX + offset.X), (float)(bounds.MinY + offset.Y), 0f);
+            var c = new Vector3((float)(bounds.MaxX + offset.X), (float)(bounds.MaxY + offset.Y), 0f);
+            var d = new Vector3((float)(bounds.MinX + offset.X), (float)(bounds.MaxY + offset.Y), 0f);
+
+            DrawLine(a, b, width);
+            DrawLine(b, c, width);
+            DrawLine(c, d, width);
+            DrawLine(d, a, width);
         }
 
         private float GetWorldUnitsPerPixel()

@@ -756,7 +756,7 @@ Celem etapu 2 jest workflow: uzytkownik projektuje bryle z realnego materialu, l
 
 ## 16.1 Edycja i laczenie elementow 3D
 
-- [ ] 16.1.0 Dodac narzedzie rysowania plyty/prostokata materialowego w widoku 3D.
+- [x] 16.1.0 Dodac narzedzie rysowania plyty/prostokata materialowego w widoku 3D.
 - [ ] 16.1.1 Dodac snap do krawedzi i narozy istniejacych plyt 3D.
 - [ ] 16.1.2 Dodac przyciaganie nowej plyty do powierzchni istniejacej plyty.
 - [ ] 16.1.3 Dodac tryb laczenia plyt pod katem 90 stopni.

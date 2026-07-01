@@ -7,6 +7,7 @@ using LaserCad.Core.BoxGenerators;
 using LaserCad.Core.Documents;
 using LaserCad.Core.Kerf;
 using LaserCad.Core.Library;
+using LaserCad.Core.MaterialModel;
 using LaserCad.Geometry;
 using LaserCad.Geometry.Units;
 using LaserCad.ViewportContract;
@@ -224,6 +225,11 @@ public partial class MainWindow : Window
     private void AddRectangle_Click(object sender, RoutedEventArgs e)
     {
         SetDrawingTool(ViewportDrawingTool.Rectangle);
+    }
+
+    private void AddMaterialPlate_Click(object sender, RoutedEventArgs e)
+    {
+        SetDrawingTool(ViewportDrawingTool.MaterialPlate);
     }
 
     private void AddLine_Click(object sender, RoutedEventArgs e)
@@ -675,6 +681,9 @@ public partial class MainWindow : Window
             case ViewportDrawingTool.Rectangle:
                 viewModel.AddRectangle(start, end);
                 break;
+            case ViewportDrawingTool.MaterialPlate:
+                viewModel.AddMaterialPlate(start, end);
+                break;
             case ViewportDrawingTool.Line:
                 viewModel.AddLine(start, end);
                 break;
@@ -718,6 +727,7 @@ public partial class MainWindow : Window
     {
         DocumentNameTextBlock.Text = "Dokument: " + viewModel.CurrentDocument.Name;
         SketchCountTextBlock.Text = "Szkice: " + viewModel.CurrentDocument.Sketches.Count;
+        MaterialSolidCountTextBlock.Text = "Plyty 3D: " + viewModel.CurrentDocument.MaterialSolids.Count;
         UndoCountTextBlock.Text = "Undo: " + viewModel.UndoCount;
         RedoCountTextBlock.Text = "Redo: " + viewModel.RedoCount;
         StatusTextBlock.Text = viewModel.StatusText;
