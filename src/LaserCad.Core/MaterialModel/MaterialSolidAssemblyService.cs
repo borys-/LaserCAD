@@ -65,6 +65,31 @@ public sealed class MaterialSolidAssemblyService
             RotateNormalByRightAngle(targetSolid.Orientation.SurfaceNormal));
     }
 
+    /// <summary>
+    /// Tworzy podglad relacji montazowej pod katem prostym.
+    /// </summary>
+    public MaterialSolidConnectionPreview CreateRightAnglePreview(
+        MaterialSolid movingSolid,
+        MaterialSolid targetSolid,
+        Point3D anchorPoint)
+    {
+        if (movingSolid is null)
+        {
+            throw new ArgumentNullException(nameof(movingSolid));
+        }
+
+        if (targetSolid is null)
+        {
+            throw new ArgumentNullException(nameof(targetSolid));
+        }
+
+        return new MaterialSolidConnectionPreview(
+            movingSolid.Id,
+            targetSolid.Id,
+            anchorPoint,
+            Math.PI / 2.0);
+    }
+
     private static (Point3D Min, Point3D Max) GetWorldBounds(MaterialSolid solid)
     {
         var offset = solid.Orientation.Position;
