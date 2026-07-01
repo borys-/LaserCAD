@@ -390,6 +390,23 @@ public partial class MainWindow : Window
             : Visibility.Collapsed;
     }
 
+    private void CleanWorkspace_Click(object sender, RoutedEventArgs e)
+    {
+        BoxGeneratorPanelMenuItem.IsChecked = false;
+        TemplateLibraryPanelMenuItem.IsChecked = false;
+        AdvancedPanelsMenuItem.IsChecked = false;
+        HistoryPanelMenuItem.IsChecked = false;
+
+        BoxGeneratorPanelGroupBox.Visibility = Visibility.Collapsed;
+        TemplateLibraryPanelGroupBox.Visibility = Visibility.Collapsed;
+        KerfPanelGroupBox.Visibility = Visibility.Collapsed;
+        KerfCalibrationPanelGroupBox.Visibility = Visibility.Collapsed;
+        TransformsPanelGroupBox.Visibility = Visibility.Collapsed;
+        HistoryPanelGroupBox.Visibility = Visibility.Collapsed;
+
+        StatusTextBlock.Text = "Czysty widok roboczy";
+    }
+
     private void Settings_Click(object sender, RoutedEventArgs e)
     {
         var settingsWindow = new SettingsWindow

@@ -153,6 +153,7 @@
                 <MenuItem Header="_Reset View" InputGestureText="Home" Click="ResetView_Click" />
                 <MenuItem Header="_Zoom To Fit" InputGestureText="Ctrl+0" Click="ZoomToFit_Click" />
                 <MenuItem Header="_Grid" IsCheckable="True" IsChecked="True" Click="Grid_Click" />
+                <MenuItem Header="_Clean Workspace" Click="CleanWorkspace_Click" />
                 <Separator />
                 <MenuItem x:Name="BoxGeneratorPanelMenuItem"
                           Header="Box _Generator Panel"
@@ -191,6 +192,7 @@
                     <Button Content="&#xE74E;" ToolTip="Zapisz projekt" Style="{StaticResource ToolbarButtonStyle}" Click="SaveProject_Click" />
                     <Border Width="1" Height="24" Background="{StaticResource AppBorderBrush}" Margin="10,0" />
                     <Button Content="&#xE7C9;" ToolTip="Zaznaczanie" Style="{StaticResource ToolbarAccentButtonStyle}" Click="SelectTool_Click" />
+                    <Button Content="&#xE80F;" ToolTip="Czysty widok roboczy" Style="{StaticResource ToolbarButtonStyle}" Click="CleanWorkspace_Click" />
                     <Button Content="&#xE739;" ToolTip="Rysuj prostokat" Style="{StaticResource ToolbarButtonStyle}" Click="AddRectangle_Click" />
                     <Button Content="&#xE8A1;" ToolTip="Rysuj linie" Style="{StaticResource ToolbarButtonStyle}" Click="AddLine_Click" />
                     <Button Content="&#xEA3A;" ToolTip="Rysuj okrag" Style="{StaticResource ToolbarButtonStyle}" Click="AddCircle_Click" />

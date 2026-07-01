@@ -460,7 +460,7 @@ Zalecenie pracy:
 - [x] 3.10.1 Ukryc domyslnie panele generatorow i pokazywac je dopiero po kliknieciu jawnej akcji.
 - [x] 3.10.2 Ukryc domyslnie panele konfiguracji zaawansowanej i udostepnic je przez zwijany panel, zakladke albo menu.
 - [x] 3.10.3 Ukryc domyslnie panel historii i udostepnic go przez przycisk albo pozycje menu.
-- [ ] 3.10.4 Zapewnic szybki powrot do czystego widoku roboczego jednym kliknieciem.
+- [x] 3.10.4 Zapewnic szybki powrot do czystego widoku roboczego jednym kliknieciem.
 - [ ] 3.10.5 Zapamietywac preferowany stan widocznosci paneli miedzy uruchomieniami aplikacji.
 - [ ] 3.10.6 Zrobic audyt wszystkich widocznych elementow UI: menu, toolbaru, paneli, przyciskow i pol formularzy.
 - [ ] 3.10.7 Zaimplementowac wszystkie placeholdery UI, ktore sa obecnie widoczne jako realne akcje.
