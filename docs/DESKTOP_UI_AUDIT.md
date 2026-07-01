@@ -1,0 +1,41 @@
+# Audyt UI desktop shell
+
+Audyt dla sekcji `3.10 Porzadek UI i przestrzen robocza`.
+
+## Widoczne domyslnie
+
+- Menu glowne: `File`, `Edit`, `View`, `Tools`, `Export`, `Help`.
+- Toolbar: nowy projekt, otworz, zapisz, zaznaczanie, czysty widok roboczy, rysowanie prostokata, linii i okregu, usuwanie zaznaczenia, eksport SVG i DXF.
+- Lewy panel domyslny: `Material i warstwy`.
+- Prawy panel domyslny: `Properties`.
+- Centralny obszar: osadzony viewport Unity z loaderem startowym.
+
+## Panele ukryte domyslnie
+
+- `Parametry pudelka`: dostep przez `View -> Box Generator Panel`.
+- `Biblioteka szablonow`: dostep przez `View -> Template Library Panel`.
+- `Kerf`, `Kalibracja kerfu`, `Transformacje`: dostep przez `View -> Advanced Panels`.
+- `Historia`: dostep przez `View -> History Panel`.
+
+## Akcje end-to-end
+
+- `File -> New`, `Open`, `Save`, `Save As`, `Exit`.
+- `Edit -> Undo`, `Redo`.
+- `View -> Reset View`, `Zoom To Fit`, `Grid`, `Clean Workspace`.
+- Przelaczniki paneli w menu `View`.
+- `Tools -> Settings`.
+- `Export -> SVG`, `Export -> DXF`.
+- Rysowanie podstawowych ksztaltow z toolbaru przez viewport.
+- Usuwanie zaznaczonych encji na podstawie zaznaczenia z viewportu.
+
+## Widoczne placeholdery albo slabe miejsca
+
+- `Help -> About Laser CAD` jest widoczne, ale nie ma jeszcze realnej akcji.
+- Okno `Settings` pokazuje ustawienia i skroty, ale nie zapisuje jeszcze zmian uzytkownika.
+- Panel `Properties` ma przycisk `Odswiez zaznaczenie`, bo zaznaczenie z viewportu nie jest jeszcze w pelni reaktywne w shellu.
+
+## Decyzje po audycie
+
+- Domyslny widok pozostaje czysty: viewport, material/warstwy i properties.
+- Generatory, historia oraz konfiguracja zaawansowana sa dostepne jawnie z menu `View`.
+- Najblizszy placeholder do domkniecia w `3.10.7` to `Help -> About Laser CAD`, bo jest widoczny jako gotowa akcja.
