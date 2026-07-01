@@ -762,7 +762,7 @@ Te elementy sa swiadomie odlozone poza biezacy plan, dopoki nie pojawi sie realn
 - [x] MVP.0.11 Zaimplementowac prosty widok Unity 2D.
 - [x] MVP.0.12 Zaimplementowac panel zmiany parametrow pudelka.
 - [x] MVP.0.13 Potwierdzic, ze zmiana parametru przebudowuje pudelko.
-- [ ] MVP.0.14 Wyeksportowac SVG pudelka testowego.
+- [x] MVP.0.14 Wyeksportowac SVG pudelka testowego.
 - [ ] MVP.0.15 Otworzyc SVG w zewnetrznym programie i potwierdzic skale w mm.
 - [x] MVP.0.16 Uruchomic komplet testow jednostkowych.
 
@@ -775,6 +775,6 @@ Te elementy sa swiadomie odlozone poza biezacy plan, dopoki nie pojawi sie realn
 - [ ] MVP.1.4 Uzytkownik widzi geometrie 2D wygenerowanego pudelka.
 - [ ] MVP.1.5 Uzytkownik zmienia parametr i widzi przebudowe modelu.
 - [x] MVP.1.6 Uzytkownik eksportuje poprawny SVG w milimetrach.
-- [ ] MVP.1.7 SVG zawiera warstwy cut i engrave, jesli sa uzyte.
+- [x] MVP.1.7 SVG zawiera warstwy cut i engrave, jesli sa uzyte.
 - [x] MVP.1.8 Testy jednostkowe przechodza lokalnie.
 - [x] MVP.1.9 Dokumentacja opisuje minimalny workflow: material -> parametry -> generuj -> eksportuj.
