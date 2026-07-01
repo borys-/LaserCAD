@@ -736,7 +736,7 @@ Celem etapu 2 jest workflow: uzytkownik projektuje bryle z realnego materialu, l
 
 ## 16.0 Model materialowy 3D
 
-- [ ] 16.0.0 Ustalic kontrakt `MaterialSolid` dla elementu 3D o grubosci wynikajacej z profilu materialu.
+- [x] 16.0.0 Ustalic kontrakt `MaterialSolid` dla elementu 3D o grubosci wynikajacej z profilu materialu.
 - [ ] 16.0.1 Dodac tworzenie prostopadloscianu z prostokata 2D i grubosci materialu.
 - [ ] 16.0.2 Dodac orientacje elementu w przestrzeni 3D: pozycja, obrot i normalna powierzchni.
 - [ ] 16.0.3 Dodac powiazanie elementu 3D z profilem materialu dokumentu.
