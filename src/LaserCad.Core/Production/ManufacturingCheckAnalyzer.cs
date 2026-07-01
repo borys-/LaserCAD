@@ -32,7 +32,33 @@ public sealed class ManufacturingCheckAnalyzer
         AddDuplicateLineChecks(document, checks);
         AddOpenContourChecks(document, checks);
         AddSmallSpacingChecks(document, checks);
+        AddThinBridgeChecks(document, checks);
         return checks;
+    }
+
+    private void AddThinBridgeChecks(CadDocument document, List<ManufacturingCheck> checks)
+    {
+        var contours = GetClosedContours(document).ToArray();
+
+        for (int i = 0; i < contours.Length; i++)
+        {
+            for (int j = i + 1; j < contours.Length; j++)
+            {
+                var bridgeWidth = GetAxisAlignedGap(contours[i].Bounds, contours[j].Bounds);
+                if (bridgeWidth is null ||
+                    bridgeWidth <= GeometryTolerance.Default ||
+                    bridgeWidth >= options.MinimumBridgeWidth.Millimeters)
+                {
+                    continue;
+                }
+
+                checks.Add(new ManufacturingCheck(
+                    "ThinBridge",
+                    "Wykryto mostek materialu cienszy niz zalecane minimum.",
+                    ManufacturingCheckSeverity.Warning,
+                    contours[j].EntityId));
+            }
+        }
     }
 
     private void AddSmallSpacingChecks(CadDocument document, List<ManufacturingCheck> checks)
@@ -153,7 +179,56 @@ public sealed class ManufacturingCheckAnalyzer
         }
     }
 
+    private static IEnumerable<EntityBounds> GetClosedContours(CadDocument document)
+    {
+        foreach (var sketch in document.Sketches)
+        {
+            foreach (var entity in sketch.Entities)
+            {
+                if (entity is RectangleEntity or CircleEntity)
+                {
+                    yield return new EntityBounds(entity.Id, entity.Bounds);
+                }
+
+                if (entity is PolylineEntity polyline && polyline.Polyline.IsClosed)
+                {
+                    yield return new EntityBounds(entity.Id, entity.Bounds);
+                }
+            }
+        }
+    }
+
+    private static double? GetAxisAlignedGap(BoundingBox first, BoundingBox second)
+    {
+        var xOverlap = first.MinX <= second.MaxX && second.MinX <= first.MaxX;
+        var yOverlap = first.MinY <= second.MaxY && second.MinY <= first.MaxY;
+
+        if (yOverlap && first.MaxX < second.MinX)
+        {
+            return second.MinX - first.MaxX;
+        }
+
+        if (yOverlap && second.MaxX < first.MinX)
+        {
+            return first.MinX - second.MaxX;
+        }
+
+        if (xOverlap && first.MaxY < second.MinY)
+        {
+            return second.MinY - first.MaxY;
+        }
+
+        if (xOverlap && second.MaxY < first.MinY)
+        {
+            return first.MinY - second.MaxY;
+        }
+
+        return null;
+    }
+
     private readonly record struct EntitySegment(Guid EntityId, LineSegment2D Segment);
+
+    private readonly record struct EntityBounds(Guid EntityId, BoundingBox Bounds);
 
     private static double DistanceBetweenSegments(LineSegment2D first, LineSegment2D second)
     {
