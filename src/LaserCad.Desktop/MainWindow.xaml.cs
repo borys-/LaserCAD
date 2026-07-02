@@ -148,6 +148,26 @@ public partial class MainWindow : Window
         }
     }
 
+    private void PrepareToCut_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var previewDocument = viewModel.PrepareToCut(
+                ParseMillimeters(SheetWidthTextBox.Text, "Szerokosc arkusza"),
+                ParseMillimeters(SheetHeightTextBox.Text, "Wysokosc arkusza"),
+                ParseMillimeters(SheetMarginTextBox.Text, "Margines arkusza"),
+                ParseMillimeters(SheetSpacingTextBox.Text, "Odstep czesci"),
+                SheetAllowRotationCheckBox.IsChecked == true);
+
+            viewportIpcClient.SendDocument(previewDocument);
+            RefreshDocumentSummary();
+        }
+        catch (Exception ex) when (ex is FormatException or ArgumentOutOfRangeException or ArgumentException or InvalidOperationException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
     private void NewProject_Click(object sender, RoutedEventArgs e)
     {
         viewModel.NewDocument();
@@ -867,5 +887,6 @@ public partial class MainWindow : Window
         NestingSummaryTextBlock.Text = viewModel.LastNestedPartCount > 0
             ? $"Nesting: {viewModel.LastNestedPartCount} czesci / {viewModel.LastNestedSheetCount} ark. / {viewModel.LastMaterialUsageRatio:P0} / {viewModel.LastCuttingLengthMillimeters:0.#} mm"
             : "Nesting: -";
+        ManufacturingChecksSummaryTextBlock.Text = viewModel.LastManufacturingCheckSummary;
     }
 }

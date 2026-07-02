@@ -553,7 +553,9 @@
                             </Grid>
                             <CheckBox x:Name="SheetAllowRotationCheckBox" Content="Obrot 90°" Margin="0,0,0,8" />
                             <Button Content="Przygotuj arkusz" Click="PrepareSheet_Click" Margin="0,0,0,8" />
+                            <Button Content="Przygotuj do ciecia" Click="PrepareToCut_Click" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,0,8" />
                             <TextBlock x:Name="NestingSummaryTextBlock" Text="Nesting: -" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,10" />
+                            <TextBlock x:Name="ManufacturingChecksSummaryTextBlock" Text="Kontrole: -" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,10" />
                             <TextBlock x:Name="SelectedEntitiesTextBlock" Text="Zaznaczone: 0" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,10" />
                             <Button Content="Odswiez zaznaczenie" Click="RefreshSelection_Click" />
                         </StackPanel>

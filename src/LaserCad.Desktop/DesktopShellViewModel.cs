@@ -26,6 +26,7 @@ public sealed class DesktopShellViewModel
     private readonly MaterialUnfolder materialUnfolder = new();
     private readonly FlatPartNestingPlanner flatPartNestingPlanner = new();
     private readonly ProductionStatisticsCalculator productionStatisticsCalculator = new();
+    private readonly ManufacturingCheckAnalyzer manufacturingCheckAnalyzer = new();
     private UndoRedoStack history;
 
     public DesktopShellViewModel()
@@ -78,6 +79,8 @@ public sealed class DesktopShellViewModel
     public double LastMaterialUsageRatio { get; private set; }
 
     public double LastCuttingLengthMillimeters { get; private set; }
+
+    public string LastManufacturingCheckSummary { get; private set; } = "Kontrole: -";
 
     public void NewDocument()
     {
@@ -522,6 +525,30 @@ public sealed class DesktopShellViewModel
         StatusText = $"Przygotowano nesting: {LastNestedPartCount} czesci / {LastNestedSheetCount} ark.";
 
         return CreateNestingPreviewDocument(sheet, sheets);
+    }
+
+    public CadDocument PrepareToCut(
+        double sheetWidthMillimeters,
+        double sheetHeightMillimeters,
+        double marginMillimeters,
+        double spacingMillimeters,
+        bool allowRotation)
+    {
+        var workflowPreview = CreateSlopedWorkflowPreviewDocument();
+        var checks = manufacturingCheckAnalyzer.Analyze(workflowPreview);
+        var errors = checks.Count(check => check.Severity == ManufacturingCheckSeverity.Error);
+        var warnings = checks.Count(check => check.Severity == ManufacturingCheckSeverity.Warning);
+        LastManufacturingCheckSummary = $"Kontrole: {errors} bledow / {warnings} ostrz.";
+
+        var nestingPreview = CreateNestingPreviewDocument(
+            sheetWidthMillimeters,
+            sheetHeightMillimeters,
+            marginMillimeters,
+            spacingMillimeters,
+            allowRotation);
+
+        StatusText = $"Przygotowano do ciecia: {LastNestedPartCount} czesci / {LastNestedSheetCount} ark. / {errors} bledow / {warnings} ostrz.";
+        return nestingPreview;
     }
 
     public CadDocument CreateSlopedWorkflowPreviewDocument()
