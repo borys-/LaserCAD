@@ -1,5 +1,80 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcjach 16.3, 16.4 i 16.5
+
+- Wykonano sekcje:
+  - `16.3 Rozwiniecie modelu 3D do czesci 2D`,
+  - `16.4 Arkusz materialu i nesting czesci`,
+  - `16.5 Eksport DXF z ulozonych arkuszy`.
+- Nowe commity:
+  - `59b1a1a 16.3.0 Dodaj kontrakt FlatPart`,
+  - `e98cae6 16.3.1 Dodaj rozwijanie plyt 3D`,
+  - `50112cc 16.3.7 Opisz QA rozwiniecia 3D`,
+  - `dd6f12b 16.4.1 Podlacz FlatPart do nestingu`,
+  - `175c370 16.4.0 Dodaj ustawienia arkusza w UI`,
+  - `7e15d54 16.4.8 Opisz QA nestingu materialu`,
+  - `b489236 16.5.0 Zachowaj FlatPart w wyniku nestingu`,
+  - `858fa2a 16.5.1 Dodaj eksport DXF arkuszy`,
+  - `bb049f0 16.5.2 Dodaj eksport nestingu z UI`,
+  - `84695ba 16.5.7 Opisz QA eksportu DXF arkuszy`.
+- Commity zostaly wypchniete na `origin/master`.
+- Dodano w `LaserCad.Core.MaterialModel`:
+  - `FlatPart` z konturem zewnetrznym, konturami wewnetrznymi, warstwami, `Quantity` i `SourceNames`,
+  - `MaterialUnfoldingOptions`,
+  - `MaterialUnfolder` rozwijajacy dokumentowe `MaterialSolid` oraz `SlopedMaterialSolid`.
+- Dodano w `LaserCad.Core.Production`:
+  - `FlatPartNestingPlanner`,
+  - `NestedFlatPart`,
+  - `FlatPartSheetNestingResult`,
+  - mapowanie `FlatPart` na `NestingItem`,
+  - nesting jedno- i wieloarkuszowy z marginesem, odstepem i opcjonalnym obrotem,
+  - czytelny blad dla czesci wiekszej niz pusty arkusz.
+- Dodano w `LaserCad.Export.Dxf`:
+  - `NestedSheetDxfExporter`,
+  - `NestedSheetDxfExportResult`,
+  - eksport osobnych plikow DXF dla arkuszy,
+  - eksport zbiorczego DXF z arkuszami obok siebie,
+  - nazewnictwo `Nazwa-projektu-sheet-001.dxf`,
+  - kontury zewnetrzne i otwory jako zamkniete polilinie na warstwie `Cut`.
+- Desktop shell:
+  - w panelu `Properties` dodano ustawienia arkusza: szerokosc, wysokosc, margines, odstep i `Obrot 90°`,
+  - dodano przycisk `Przygotuj arkusz`,
+  - podglad nestingu wysyla do viewportu tymczasowy dokument 2D z ramka arkusza i prostokatami czesci,
+  - panel pokazuje podsumowanie `Nesting: ... czesci / ... ark. / ...% / ... mm`,
+  - w menu `Export` dodano `Export Nested DXF...`, ktory zapisuje osobne pliki arkuszy i plik zbiorczy.
+- Testy:
+  - `FlatPartTests`,
+  - `MaterialUnfolderTests`,
+  - `FlatPartNestingPlannerTests`,
+  - `NestedSheetDxfExporterTests`,
+  - test regresyjny DXF dla modelu z kilkoma plytami i otworem.
+- Dokumentacja:
+  - dodano `docs/MATERIAL_UNFOLDING_QA.md`,
+  - dodano `docs/MATERIAL_NESTING_QA.md`,
+  - dodano `docs/NESTED_DXF_EXPORT_QA.md`,
+  - zaktualizowano `README.md`,
+  - zaktualizowano ograniczenia MVP w `docs/ROADMAP.md`,
+  - odhaczono `16.3.0`-`16.3.7`, `16.4.0`-`16.4.8`, `16.5.0`-`16.5.7` w `TASKS.md`.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `520/520`,
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - narysowac kilka plyt przez `Rysuj plyte materialowa 3D`,
+  - w `Properties` ustawic arkusz `300 x 300`, margines i odstep,
+  - kliknac `Przygotuj arkusz`; viewport powinien pokazac podglad 2D ulozenia,
+  - w `Properties` sprawdzic podsumowanie nestingu,
+  - uzyc `Export -> Export Nested DXF...` i wskazac katalog,
+  - sprawdzic pliki `*-sheet-001.dxf` oraz `*-all-sheets.dxf`.
+- Po przegladzie planu:
+  - sekcje `16.3`, `16.4` i `16.5` sa zamkniete,
+  - nastepna logiczna sekcja to `16.6 Szybki workflow do lasera`, start od `16.6.0 Dodac kreator Bryla trapezowa`,
+  - nadal otwarte sa kryteria Etapu 2 MVP, bo wymagaja pelnego szybkiego workflow i manualnej weryfikacji,
+  - warto w `16.6` polaczyc istniejace elementy w jedna akcje `Przygotuj do ciecia`: rozwiniecie, kontrole produkcyjne, nesting, podglad i eksport DXF.
+
 ## Aktualizacja po sekcji 16.2 Negatywy i wyciecia
 
 - Wykonano cala sekcje `16.2 Negatywy i wyciecia`.
