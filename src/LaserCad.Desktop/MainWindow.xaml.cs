@@ -288,6 +288,24 @@ public partial class MainWindow : Window
         PublishDocument();
     }
 
+    private void AddSlopedMaterialSolidFromPanel_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            viewModel.AddSlopedMaterialSolid(
+                ParseMillimeters(SlopedWidthTextBox.Text, "Szerokosc bryly"),
+                ParseMillimeters(SlopedDepthTextBox.Text, "Glebokosc bryly"),
+                ParseMillimeters(SlopedFrontHeightTextBox.Text, "Wysokosc przodu"),
+                ParseMillimeters(SlopedBackHeightTextBox.Text, "Wysokosc tylu"),
+                ParseMillimeters(SlopedKerfTextBox.Text, "Kerf bryly"));
+            PublishDocument();
+        }
+        catch (Exception ex) when (ex is FormatException or ArgumentOutOfRangeException or ArgumentException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
     private void AddLine_Click(object sender, RoutedEventArgs e)
     {
         SetDrawingTool(ViewportDrawingTool.Line);
@@ -785,6 +803,7 @@ public partial class MainWindow : Window
         SketchCountTextBlock.Text = "Szkice: " + viewModel.CurrentDocument.Sketches.Count;
         MaterialSolidCountTextBlock.Text = "Plyty 3D: " + viewModel.CurrentDocument.MaterialSolids.Count;
         SlopedMaterialSolidCountTextBlock.Text = "Bryly trapezowe: " + viewModel.CurrentDocument.SlopedMaterialSolids.Count;
+        SlopedMaterialNameTextBlock.Text = viewModel.SelectedMaterialProfile.Name;
         UndoCountTextBlock.Text = "Undo: " + viewModel.UndoCount;
         RedoCountTextBlock.Text = "Redo: " + viewModel.RedoCount;
         StatusTextBlock.Text = viewModel.StatusText;

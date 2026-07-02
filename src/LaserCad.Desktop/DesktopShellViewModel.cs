@@ -208,22 +208,32 @@ public sealed class DesktopShellViewModel
 
     public void AddDefaultSlopedMaterialSolid()
     {
-        var material = CurrentDocument.MaterialProfile ?? SelectedMaterialProfile;
+        AddSlopedMaterialSolid(120.0, 80.0, 50.0, 80.0, SelectedMaterialProfile.DefaultKerf.Millimeters);
+    }
+
+    public void AddSlopedMaterialSolid(
+        double widthMillimeters,
+        double depthMillimeters,
+        double frontHeightMillimeters,
+        double backHeightMillimeters,
+        double kerfMillimeters)
+    {
+        var material = SelectedMaterialProfile.WithDefaultKerf(Length.FromMillimeters(kerfMillimeters));
         var solid = new SlopedMaterialSolid(
             "Bryla trapezowa",
             material,
             new SlopedMaterialSolidOptions(
-                Length.FromMillimeters(120.0),
-                Length.FromMillimeters(80.0),
-                Length.FromMillimeters(50.0),
-                Length.FromMillimeters(80.0)));
+                Length.FromMillimeters(widthMillimeters),
+                Length.FromMillimeters(depthMillimeters),
+                Length.FromMillimeters(frontHeightMillimeters),
+                Length.FromMillimeters(backHeightMillimeters)));
 
         var document = CurrentDocument.SlopedMaterialSolids.Count == 0 && CurrentDocument.MaterialSolids.Count == 0
             ? new CadDocument(name: "Projekt bryly trapezowej").WithMaterialProfile(material)
-            : CurrentDocument;
+            : CurrentDocument.WithMaterialProfile(material);
 
         ReplaceDocument(document.AddSlopedMaterialSolid(solid));
-        StatusText = "Dodano bryle trapezowa";
+        StatusText = $"Dodano bryle trapezowa: {widthMillimeters:0.#} x {depthMillimeters:0.#} mm";
     }
 
     public void AddLine()
