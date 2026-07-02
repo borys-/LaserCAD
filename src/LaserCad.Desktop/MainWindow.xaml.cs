@@ -286,7 +286,7 @@ public partial class MainWindow : Window
     private void AddSlopedMaterialSolid_Click(object sender, RoutedEventArgs e)
     {
         viewModel.AddDefaultSlopedMaterialSolid();
-        PublishDocument();
+        PublishSlopedWorkflowPreview();
     }
 
     private void AddSlopedMaterialSolidFromPanel_Click(object sender, RoutedEventArgs e)
@@ -300,7 +300,7 @@ public partial class MainWindow : Window
                 ParseMillimeters(SlopedFrontHeightTextBox.Text, "Wysokosc przodu"),
                 ParseMillimeters(SlopedBackHeightTextBox.Text, "Wysokosc tylu"),
                 ParseMillimeters(SlopedKerfTextBox.Text, "Kerf bryly"));
-            PublishDocument();
+            PublishSlopedWorkflowPreview();
         }
         catch (Exception ex) when (ex is FormatException or ArgumentOutOfRangeException or ArgumentException)
         {
@@ -317,7 +317,7 @@ public partial class MainWindow : Window
                 ParseMillimeters(SlopedCutoutDiameterTextBox.Text, "Srednica otworu"),
                 ParseMillimeters(SlopedCutoutLeftTextBox.Text, "Odleglosc od lewej krawedzi"),
                 ParseMillimeters(SlopedCutoutBottomTextBox.Text, "Odleglosc od dolnej krawedzi"));
-            PublishDocument();
+            PublishSlopedWorkflowPreview();
         }
         catch (Exception ex) when (ex is FormatException or ArgumentOutOfRangeException or ArgumentException or InvalidOperationException)
         {
@@ -330,7 +330,7 @@ public partial class MainWindow : Window
         try
         {
             viewModel.CopyLatestCircularCutoutToOppositeFace();
-            PublishDocument();
+            PublishSlopedWorkflowPreview();
         }
         catch (Exception ex) when (ex is ArgumentException or InvalidOperationException)
         {
@@ -802,6 +802,12 @@ public partial class MainWindow : Window
     private void PublishDocument()
     {
         viewportIpcClient.SendDocument(viewModel.CurrentDocument);
+        RefreshDocumentSummary();
+    }
+
+    private void PublishSlopedWorkflowPreview()
+    {
+        viewportIpcClient.SendDocument(viewModel.CreateSlopedWorkflowPreviewDocument());
         RefreshDocumentSummary();
     }
 

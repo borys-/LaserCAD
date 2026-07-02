@@ -77,6 +77,11 @@ namespace LaserCad.Unity
                 DrawMaterialSolidFootprint(materialSolid, width);
             }
 
+            foreach (var materialSolid in applicationController.CurrentDocument.SlopedMaterialSolids)
+            {
+                DrawSlopedMaterialSolidFootprint(materialSolid, width);
+            }
+
             GL.End();
             GL.PopMatrix();
         }
@@ -192,6 +197,34 @@ namespace LaserCad.Unity
             var b = new Vector3((float)(bounds.MaxX + offset.X), (float)(bounds.MinY + offset.Y), 0f);
             var c = new Vector3((float)(bounds.MaxX + offset.X), (float)(bounds.MaxY + offset.Y), 0f);
             var d = new Vector3((float)(bounds.MinX + offset.X), (float)(bounds.MaxY + offset.Y), 0f);
+
+            DrawLine(a, b, width);
+            DrawLine(b, c, width);
+            DrawLine(c, d, width);
+            DrawLine(d, a, width);
+        }
+
+        private void DrawSlopedMaterialSolidFootprint(LaserCad.Core.MaterialModel.SlopedMaterialSolid materialSolid, float width)
+        {
+            var mesh = materialSolid.PreviewMesh;
+            var offset = materialSolid.Orientation.Position;
+            var minX = double.MaxValue;
+            var minY = double.MaxValue;
+            var maxX = double.MinValue;
+            var maxY = double.MinValue;
+
+            foreach (var vertex in mesh.Vertices)
+            {
+                minX = Math.Min(minX, vertex.X);
+                minY = Math.Min(minY, vertex.Y);
+                maxX = Math.Max(maxX, vertex.X);
+                maxY = Math.Max(maxY, vertex.Y);
+            }
+
+            var a = new Vector3((float)(minX + offset.X), (float)(minY + offset.Y), 0f);
+            var b = new Vector3((float)(maxX + offset.X), (float)(minY + offset.Y), 0f);
+            var c = new Vector3((float)(maxX + offset.X), (float)(maxY + offset.Y), 0f);
+            var d = new Vector3((float)(minX + offset.X), (float)(maxY + offset.Y), 0f);
 
             DrawLine(a, b, width);
             DrawLine(b, c, width);

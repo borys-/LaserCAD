@@ -524,6 +524,51 @@ public sealed class DesktopShellViewModel
         return CreateNestingPreviewDocument(sheet, sheets);
     }
 
+    public CadDocument CreateSlopedWorkflowPreviewDocument()
+    {
+        var document = new CadDocument(
+            id: CurrentDocument.Id,
+            name: CurrentDocument.Name + " - bryla i rozwiniecie",
+            formatVersion: CurrentDocument.FormatVersion,
+            parameters: CurrentDocument.Parameters,
+            layers: CurrentDocument.Layers,
+            sketches: CurrentDocument.Sketches,
+            generators: CurrentDocument.Generators,
+            materialProfile: CurrentDocument.MaterialProfile,
+            materialSolids: CurrentDocument.MaterialSolids,
+            slopedMaterialSolids: CurrentDocument.SlopedMaterialSolids);
+
+        if (CurrentDocument.SlopedMaterialSolids.Count == 0)
+        {
+            return document;
+        }
+
+        var sketch = new Sketch(name: "Rozwiniecie bryly trapezowej");
+        var offsetX = 180.0;
+        const double offsetY = 0.0;
+        const double gap = 12.0;
+
+        foreach (var solid in CurrentDocument.SlopedMaterialSolids)
+        {
+            foreach (var part in materialUnfolder.Unfold(solid, CurrentDocument.Layers))
+            {
+                var bounds = part.OuterContour.Bounds;
+                sketch = sketch.AddEntity(CreateClosedPolyline(part.OuterContour, offsetX - bounds.MinX, offsetY - bounds.MinY, "Cut"));
+
+                foreach (var innerContour in part.InnerContours)
+                {
+                    sketch = sketch.AddEntity(CreateClosedPolyline(innerContour, offsetX - bounds.MinX, offsetY - bounds.MinY, "Cut"));
+                }
+
+                offsetX += bounds.Width + gap;
+            }
+        }
+
+        StatusText = "Pokazano bryle 3D i rozwiniecie 2D";
+        return document.AddSketch(sketch);
+    }
+
+
     public CadDocument CreateKerfPreviewDocument(KerfCompensationOptions options, bool afterCompensation)
     {
         if (options is null)
@@ -644,6 +689,19 @@ public sealed class DesktopShellViewModel
             "Rynienka trapezowa" => ("Rynienka trapezowa", frontHeightMillimeters, backHeightMillimeters),
             _ => ("Bryla z pochyla gora", frontHeightMillimeters, backHeightMillimeters),
         };
+    }
+
+    private static PolylineEntity CreateClosedPolyline(
+        Polygon2D polygon,
+        double offsetX,
+        double offsetY,
+        string layerName)
+    {
+        return new PolylineEntity(
+            new Polyline2D(
+                polygon.Vertices.Select(point => new Point2D(point.X + offsetX, point.Y + offsetY)),
+                isClosed: true),
+            layerName: layerName);
     }
 
     private static string GetOppositeFaceName(string faceName)
