@@ -457,6 +457,27 @@
                             <TextBlock x:Name="DocumentNameTextBlock" Text="Dokument: Projekt pudelka" Margin="0,0,0,6" />
                             <TextBlock x:Name="SketchCountTextBlock" Text="Szkice: 1" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,6" />
                             <TextBlock x:Name="MaterialSolidCountTextBlock" Text="Plyty 3D: 0" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,6" />
+                            <TextBlock Text="Arkusz mm" Style="{StaticResource FieldLabelStyle}" />
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="SheetWidthTextBox" Text="300" Margin="0,0,4,0" />
+                                <TextBox x:Name="SheetHeightTextBox" Grid.Column="1" Text="300" Margin="4,0,0,0" />
+                            </Grid>
+                            <TextBlock Text="Margines / odstep" Style="{StaticResource FieldLabelStyle}" />
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="SheetMarginTextBox" Text="5" Margin="0,0,4,0" />
+                                <TextBox x:Name="SheetSpacingTextBox" Grid.Column="1" Text="5" Margin="4,0,0,0" />
+                            </Grid>
+                            <CheckBox x:Name="SheetAllowRotationCheckBox" Content="Obrot 90°" Margin="0,0,0,8" />
+                            <Button Content="Przygotuj arkusz" Click="PrepareSheet_Click" Margin="0,0,0,8" />
+                            <TextBlock x:Name="NestingSummaryTextBlock" Text="Nesting: -" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,10" />
                             <TextBlock x:Name="SelectedEntitiesTextBlock" Text="Zaznaczone: 0" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,10" />
                             <Button Content="Odswiez zaznaczenie" Click="RefreshSelection_Click" />
                         </StackPanel>

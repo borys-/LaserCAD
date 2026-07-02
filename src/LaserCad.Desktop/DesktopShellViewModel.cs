@@ -8,6 +8,7 @@ using LaserCad.Core.Generators;
 using LaserCad.Core.Kerf;
 using LaserCad.Core.Library;
 using LaserCad.Core.MaterialModel;
+using LaserCad.Core.Production;
 using LaserCad.Export.Dxf;
 using LaserCad.Export.Svg;
 using LaserCad.Geometry;
@@ -22,6 +23,9 @@ public sealed class DesktopShellViewModel
 {
     private readonly BoxGenerator boxGenerator = new();
     private readonly DocumentSerializer documentSerializer = new();
+    private readonly MaterialUnfolder materialUnfolder = new();
+    private readonly FlatPartNestingPlanner flatPartNestingPlanner = new();
+    private readonly ProductionStatisticsCalculator productionStatisticsCalculator = new();
     private UndoRedoStack history;
 
     public DesktopShellViewModel()
@@ -66,6 +70,14 @@ public sealed class DesktopShellViewModel
     public double KerfCalibrationMeasuredWidthMillimeters { get; private set; }
 
     public double? KerfCalibrationRecommendedKerfMillimeters { get; private set; }
+
+    public int LastNestedSheetCount { get; private set; }
+
+    public int LastNestedPartCount { get; private set; }
+
+    public double LastMaterialUsageRatio { get; private set; }
+
+    public double LastCuttingLengthMillimeters { get; private set; }
 
     public void NewDocument()
     {
@@ -297,6 +309,45 @@ public sealed class DesktopShellViewModel
         return path;
     }
 
+    public CadDocument CreateNestingPreviewDocument(
+        double sheetWidthMillimeters,
+        double sheetHeightMillimeters,
+        double marginMillimeters,
+        double spacingMillimeters,
+        bool allowRotation)
+    {
+        var sheet = new SheetSize(
+            Length.FromMillimeters(sheetWidthMillimeters),
+            Length.FromMillimeters(sheetHeightMillimeters),
+            Length.FromMillimeters(marginMillimeters));
+        var options = new NestingOptions(Length.FromMillimeters(spacingMillimeters), allowRotation);
+        var flatParts = materialUnfolder.Unfold(
+            CurrentDocument,
+            new MaterialUnfoldingOptions(mergeIdenticalParts: true));
+
+        if (flatParts.Count == 0)
+        {
+            StatusText = "Brak plyt 3D do przygotowania arkusza";
+            LastNestedSheetCount = 0;
+            LastNestedPartCount = 0;
+            LastMaterialUsageRatio = 0.0;
+            LastCuttingLengthMillimeters = 0.0;
+            return CurrentDocument;
+        }
+
+        var sheets = flatPartNestingPlanner.NestMultipleSheets(sheet, flatParts, options);
+        LastNestedSheetCount = sheets.Count;
+        LastNestedPartCount = sheets.Sum(result => result.Parts.Count);
+        var statistics = sheets
+            .Select(result => productionStatisticsCalculator.Calculate(sheet, result))
+            .ToArray();
+        LastMaterialUsageRatio = statistics.Sum(item => item.MaterialUsageRatio) / Math.Max(1, sheets.Count);
+        LastCuttingLengthMillimeters = statistics.Sum(item => item.CuttingLengthMillimeters);
+        StatusText = $"Przygotowano nesting: {LastNestedPartCount} czesci / {LastNestedSheetCount} ark.";
+
+        return CreateNestingPreviewDocument(sheet, sheets);
+    }
+
     public CadDocument CreateKerfPreviewDocument(KerfCompensationOptions options, bool afterCompensation)
     {
         if (options is null)
@@ -483,6 +534,35 @@ public sealed class DesktopShellViewModel
     private void ReplaceDocument(CadDocument document)
     {
         history = new UndoRedoStack(document);
+    }
+
+    private CadDocument CreateNestingPreviewDocument(SheetSize sheet, IReadOnlyList<NestingResult> sheets)
+    {
+        var document = new CadDocument(name: CurrentDocument.Name + " - nesting")
+            .WithMaterialProfile(CurrentDocument.MaterialProfile ?? SelectedMaterialProfile);
+        var sketch = new Sketch(name: "Nesting preview");
+        var sheetGap = 20.0;
+
+        for (var sheetIndex = 0; sheetIndex < sheets.Count; sheetIndex++)
+        {
+            var offsetX = sheetIndex * (sheet.Width.Millimeters + sheetGap);
+            sketch = sketch.AddEntity(new RectangleEntity(
+                new Point2D(offsetX, 0.0),
+                sheet.Width.Millimeters,
+                sheet.Height.Millimeters,
+                layerName: "Ignore"));
+
+            foreach (var part in sheets[sheetIndex].Parts)
+            {
+                sketch = sketch.AddEntity(new RectangleEntity(
+                    new Point2D(offsetX + part.X.Millimeters, part.Y.Millimeters),
+                    part.Width.Millimeters,
+                    part.Height.Millimeters,
+                    layerName: "Cut"));
+            }
+        }
+
+        return document.AddSketch(sketch);
     }
 
     private void Execute(ICommand command)
