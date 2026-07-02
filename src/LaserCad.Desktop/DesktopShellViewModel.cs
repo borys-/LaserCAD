@@ -218,22 +218,44 @@ public sealed class DesktopShellViewModel
         double backHeightMillimeters,
         double kerfMillimeters)
     {
+        AddSlopedMaterialSolid(
+            "Bryla z pochyla gora",
+            widthMillimeters,
+            depthMillimeters,
+            frontHeightMillimeters,
+            backHeightMillimeters,
+            kerfMillimeters);
+    }
+
+    public void AddSlopedMaterialSolid(
+        string constructionType,
+        double widthMillimeters,
+        double depthMillimeters,
+        double frontHeightMillimeters,
+        double backHeightMillimeters,
+        double kerfMillimeters)
+    {
         var material = SelectedMaterialProfile.WithDefaultKerf(Length.FromMillimeters(kerfMillimeters));
+        var normalized = NormalizeSlopedConstruction(
+            constructionType,
+            material,
+            frontHeightMillimeters,
+            backHeightMillimeters);
         var solid = new SlopedMaterialSolid(
-            "Bryla trapezowa",
+            normalized.Name,
             material,
             new SlopedMaterialSolidOptions(
                 Length.FromMillimeters(widthMillimeters),
                 Length.FromMillimeters(depthMillimeters),
-                Length.FromMillimeters(frontHeightMillimeters),
-                Length.FromMillimeters(backHeightMillimeters)));
+                Length.FromMillimeters(normalized.FrontHeightMillimeters),
+                Length.FromMillimeters(normalized.BackHeightMillimeters)));
 
         var document = CurrentDocument.SlopedMaterialSolids.Count == 0 && CurrentDocument.MaterialSolids.Count == 0
             ? new CadDocument(name: "Projekt bryly trapezowej").WithMaterialProfile(material)
             : CurrentDocument.WithMaterialProfile(material);
 
         ReplaceDocument(document.AddSlopedMaterialSolid(solid));
-        StatusText = $"Dodano bryle trapezowa: {widthMillimeters:0.#} x {depthMillimeters:0.#} mm";
+        StatusText = $"Dodano: {normalized.Name}, {widthMillimeters:0.#} x {depthMillimeters:0.#} mm";
     }
 
     public void AddLine()
@@ -523,6 +545,26 @@ public sealed class DesktopShellViewModel
         }
 
         return profiles;
+    }
+
+    private static (string Name, double FrontHeightMillimeters, double BackHeightMillimeters) NormalizeSlopedConstruction(
+        string constructionType,
+        MaterialProfile material,
+        double frontHeightMillimeters,
+        double backHeightMillimeters)
+    {
+        var type = string.IsNullOrWhiteSpace(constructionType)
+            ? "Bryla z pochyla gora"
+            : constructionType;
+
+        return type switch
+        {
+            "Prostopadloscian" => ("Prostopadloscian", frontHeightMillimeters, frontHeightMillimeters),
+            "Klin" => ("Klin", Math.Max(material.Thickness.Millimeters, 0.1), Math.Max(frontHeightMillimeters, backHeightMillimeters)),
+            "Obudowa z pochylonym panelem" => ("Obudowa z pochylonym panelem", frontHeightMillimeters, backHeightMillimeters),
+            "Rynienka trapezowa" => ("Rynienka trapezowa", frontHeightMillimeters, backHeightMillimeters),
+            _ => ("Bryla z pochyla gora", frontHeightMillimeters, backHeightMillimeters),
+        };
     }
 
     private Sketch CreateSketchFromTemplate(LibraryTemplate template)

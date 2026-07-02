@@ -817,7 +817,7 @@ Celem etapu 2 jest workflow: uzytkownik projektuje bryle z realnego materialu, l
 
 - [x] 16.6.0 Dodac kreator `Bryla trapezowa` jako najszybsza sciezke tworzenia modelu z pochyla sciana.
 - [x] 16.6.1 W kreatorze bryly trapezowej obslugiwac pola: szerokosc, glebokosc, wysokosc przod, wysokosc tyl, material i kerf.
-- [ ] 16.6.2 Dodac gotowe typy konstrukcji: prostopadloscian, bryla z pochyla gora, klin, obudowa z pochylonym panelem, rynienka trapezowa.
+- [x] 16.6.2 Dodac gotowe typy konstrukcji: prostopadloscian, bryla z pochyla gora, klin, obudowa z pochylonym panelem, rynienka trapezowa.
 - [ ] 16.6.3 Dodac akcje `Dodaj otwor okragly` po wybraniu sciany.
 - [ ] 16.6.4 Dodac pozycjonowanie otworu przez srednice oraz odleglosc od lewej i dolnej krawedzi sciany.
 - [ ] 16.6.5 Dodac akcje `Kopiuj otwor na przeciwlegla sciane`.

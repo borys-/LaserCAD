@@ -1,5 +1,6 @@
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
@@ -293,6 +294,7 @@ public partial class MainWindow : Window
         try
         {
             viewModel.AddSlopedMaterialSolid(
+                ReadSlopedConstructionType(),
                 ParseMillimeters(SlopedWidthTextBox.Text, "Szerokosc bryly"),
                 ParseMillimeters(SlopedDepthTextBox.Text, "Glebokosc bryly"),
                 ParseMillimeters(SlopedFrontHeightTextBox.Text, "Wysokosc przodu"),
@@ -795,6 +797,13 @@ public partial class MainWindow : Window
         return KerfModeComboBox.SelectedIndex == 1
             ? KerfCompensationMode.Negative
             : KerfCompensationMode.Positive;
+    }
+
+    private string ReadSlopedConstructionType()
+    {
+        return SlopedConstructionTypeComboBox.SelectedItem is ComboBoxItem item
+            ? item.Content?.ToString() ?? "Bryla z pochyla gora"
+            : "Bryla z pochyla gora";
     }
 
     private void RefreshDocumentSummary()

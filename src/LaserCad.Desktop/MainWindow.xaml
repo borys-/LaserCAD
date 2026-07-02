@@ -277,24 +277,35 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Szerokosc" Style="{StaticResource FieldLabelStyle}" />
-                            <TextBlock Grid.Row="0" Grid.Column="1" Text="Glebokosc" Style="{StaticResource FieldLabelStyle}" Margin="8,0,0,3" />
-                            <TextBox x:Name="SlopedWidthTextBox" Grid.Row="1" Grid.Column="0" Text="120" Margin="0,0,4,8" />
-                            <TextBox x:Name="SlopedDepthTextBox" Grid.Row="1" Grid.Column="1" Text="80" Margin="4,0,0,8" />
+                            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Typ konstrukcji" Style="{StaticResource FieldLabelStyle}" />
+                            <ComboBox x:Name="SlopedConstructionTypeComboBox" Grid.Row="1" Grid.ColumnSpan="2" SelectedIndex="1" Margin="0,0,0,8">
+                                <ComboBoxItem Content="Prostopadloscian" />
+                                <ComboBoxItem Content="Bryla z pochyla gora" />
+                                <ComboBoxItem Content="Klin" />
+                                <ComboBoxItem Content="Obudowa z pochylonym panelem" />
+                                <ComboBoxItem Content="Rynienka trapezowa" />
+                            </ComboBox>
 
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Wys. przod" Style="{StaticResource FieldLabelStyle}" />
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="Wys. tyl" Style="{StaticResource FieldLabelStyle}" Margin="8,0,0,3" />
-                            <TextBox x:Name="SlopedFrontHeightTextBox" Grid.Row="3" Grid.Column="0" Text="50" Margin="0,0,4,8" />
-                            <TextBox x:Name="SlopedBackHeightTextBox" Grid.Row="3" Grid.Column="1" Text="80" Margin="4,0,0,8" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Szerokosc" Style="{StaticResource FieldLabelStyle}" />
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="Glebokosc" Style="{StaticResource FieldLabelStyle}" Margin="8,0,0,3" />
+                            <TextBox x:Name="SlopedWidthTextBox" Grid.Row="3" Grid.Column="0" Text="120" Margin="0,0,4,8" />
+                            <TextBox x:Name="SlopedDepthTextBox" Grid.Row="3" Grid.Column="1" Text="80" Margin="4,0,0,8" />
 
-                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Kerf" Style="{StaticResource FieldLabelStyle}" />
-                            <TextBlock Grid.Row="4" Grid.Column="1" Text="Material" Style="{StaticResource FieldLabelStyle}" Margin="8,0,0,3" />
-                            <TextBox x:Name="SlopedKerfTextBox" Grid.Row="5" Grid.Column="0" Text="0,15" Margin="0,0,4,8" />
-                            <TextBlock x:Name="SlopedMaterialNameTextBlock" Grid.Row="5" Grid.Column="1" Text="Sklejka 3 mm" Foreground="{StaticResource MutedTextBrush}" TextWrapping="Wrap" Margin="8,5,0,8" />
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Wys. przod" Style="{StaticResource FieldLabelStyle}" />
+                            <TextBlock Grid.Row="4" Grid.Column="1" Text="Wys. tyl" Style="{StaticResource FieldLabelStyle}" Margin="8,0,0,3" />
+                            <TextBox x:Name="SlopedFrontHeightTextBox" Grid.Row="5" Grid.Column="0" Text="50" Margin="0,0,4,8" />
+                            <TextBox x:Name="SlopedBackHeightTextBox" Grid.Row="5" Grid.Column="1" Text="80" Margin="4,0,0,8" />
 
-                            <Button Grid.Row="6" Grid.ColumnSpan="2" Content="Dodaj bryle" Click="AddSlopedMaterialSolidFromPanel_Click" Style="{StaticResource PrimaryButtonStyle}" />
+                            <TextBlock Grid.Row="6" Grid.Column="0" Text="Kerf" Style="{StaticResource FieldLabelStyle}" />
+                            <TextBlock Grid.Row="6" Grid.Column="1" Text="Material" Style="{StaticResource FieldLabelStyle}" Margin="8,0,0,3" />
+                            <TextBox x:Name="SlopedKerfTextBox" Grid.Row="7" Grid.Column="0" Text="0,15" Margin="0,0,4,8" />
+                            <TextBlock x:Name="SlopedMaterialNameTextBlock" Grid.Row="7" Grid.Column="1" Text="Sklejka 3 mm" Foreground="{StaticResource MutedTextBrush}" TextWrapping="Wrap" Margin="8,5,0,8" />
+
+                            <Button Grid.Row="8" Grid.ColumnSpan="2" Content="Dodaj bryle" Click="AddSlopedMaterialSolidFromPanel_Click" Style="{StaticResource PrimaryButtonStyle}" />
                         </Grid>
                     </GroupBox>
 
