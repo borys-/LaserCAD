@@ -1,5 +1,74 @@
 # Kontekst dla nastepnej sesji Codex
 
+## Aktualizacja po sekcji 16.6 Szybki workflow do lasera
+
+- Wykonano cala sekcje `16.6 Szybki workflow do lasera`.
+- Nowe commity:
+  - `90002a0 16.6.0 Dodaj kreator bryly trapezowej`,
+  - `5036cc5 16.6.1 Dodaj pola kreatora bryly trapezowej`,
+  - `9ad9d89 16.6.2 Dodaj typy konstrukcji bryly`,
+  - `47ad2cf 16.6.3 Dodaj otwor okragly do bryly`,
+  - `c9fd97e 16.6.4 Dodaj pozycjonowanie otworu`,
+  - `00a8f61 16.6.5 Dodaj kopiowanie otworu`,
+  - `cb8d05d 16.6.6 Pokaz bryle i rozwiniecie`,
+  - `cbbe2d4 16.6.7 Dodaj przygotowanie do ciecia`,
+  - `4c7bf99 16.6.8 Zapamietaj ustawienia workflow`,
+  - `1c5d468 16.6.9 Dodaj etykiety grawerowane czesci`,
+  - `6656f36 16.6.10 Dodaj eksport DXF dla lasera`,
+  - `1cddf78 16.6.11 Opisz QA szybkiego workflow`.
+- Commity zostaly wypchniete na `origin/master`.
+- Dodano w `CadDocument`:
+  - kolekcje `SlopedMaterialSolids`,
+  - `AddSlopedMaterialSolid(...)`,
+  - `AddCutoutToSlopedMaterialSolid(...)`.
+- Rozszerzono `DocumentSerializer`:
+  - serializuje i deserializuje `slopedMaterialSolids`,
+  - zapisuje `id`, `name`, `materialProfile`, `options`, `orientation` i `cutouts`,
+  - `options` zawiera szerokosc, glebokosc, wysokosc przodu i wysokosc tylu w mm.
+- `MaterialUnfolder.Unfold(CadDocument)` rozwija teraz takze dokumentowe `SlopedMaterialSolids`.
+- Desktop shell:
+  - dodano toolbarowy przycisk `Bryla trapezowa`,
+  - dodano panel `Bryla trapezowa` z typem konstrukcji, wymiarami, kerfem, materialem, sciana otworu, srednica i pozycja otworu,
+  - dostepne typy konstrukcji: `Prostopadloscian`, `Bryla z pochyla gora`, `Klin`, `Obudowa z pochylonym panelem`, `Rynienka trapezowa`,
+  - dodano akcje `Dodaj bryle`, `Dodaj otwor`, `Kopiuj otwor na przeciwlegla sciane`,
+  - podglad workflow pokazuje bryle oraz rozwiniecie 2D z konturami wewnetrznymi,
+  - dodano opcje `Etykiety grawerowane`, ktora dodaje teksty na warstwie `Engrave` w podgladzie rozwiniecia,
+  - dodano `Przygotuj do ciecia`, ktore wykonuje rozwiniecie, kontrole produkcyjne, nesting i pokazuje podglad arkusza,
+  - dodano `Eksportuj DXF dla lasera` w `Export` i w panelu `Properties`,
+  - preferencje desktop shell pamietaja ostatni material, arkusz, margines, odstep, obrot, kerf i srednice otworu.
+- Unity viewport:
+  - `DocumentGeometryRenderer` rysuje uproszczony obrys `SlopedMaterialSolids`,
+  - jednoczesny podglad jest nadal MVP: 3D to footprint/obrys, a rozwiniecie jest szkicem 2D obok.
+- Testy:
+  - dodano testy `CadDocument` dla bryl trapezowych i wyciec w nich,
+  - dodano testy `DocumentSerializer` dla round-trip `SlopedMaterialSolid`,
+  - dodano testy `MaterialUnfolder` dla dokumentowych bryl trapezowych i otworow.
+- Dokumentacja:
+  - dodano `docs/SLOPED_LASER_WORKFLOW_QA.md`,
+  - dodano link w `README.md`,
+  - zaktualizowano `docs/PROJECT_FILE_FORMAT.md`,
+  - odhaczono `16.6.0`-`16.6.11` w `TASKS.md`.
+- Weryfikacja:
+  - `dotnet test LaserCad.sln --no-restore` przechodzi: `525/525`,
+  - `dotnet build LaserCad.sln --no-restore` przechodzi bez ostrzezen,
+  - `cmd /c build.bat` przechodzi,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - wygenerowano `C:\borys\CAD\bin\release\LaserCad.Desktop\Viewport\LaserCad.exe`.
+- Widoczne po odpaleniu aplikacji:
+  - uruchomic `C:\borys\CAD\bin\release\LaserCad.Desktop\LaserCad.Desktop.exe`,
+  - w panelu `Bryla trapezowa` ustawic typ, wymiary i kerf,
+  - kliknac `Dodaj bryle`; viewport powinien pokazac obrys bryly i rozwiniecie 2D,
+  - ustawic sciane, srednice oraz odleglosci otworu, kliknac `Dodaj otwor`,
+  - kliknac `Kopiuj otwor na przeciwlegla sciane`,
+  - wlaczyc/wylaczyc `Etykiety grawerowane` i sprawdzic teksty na rozwinieciu,
+  - w `Properties` kliknac `Przygotuj do ciecia` i sprawdzic `Nesting` oraz `Kontrole`,
+  - kliknac `Eksportuj DXF dla lasera` i sprawdzic pliki `*-sheet-001.dxf` oraz `*-all-sheets.dxf`.
+- Po przegladzie planu:
+  - sekcja `16.6` jest zamknieta,
+  - nadal otwarte sa kryteria `E2.MVP.*`, bo wymagaja recznej weryfikacji w aplikacji i/lub finalnej decyzji akceptacyjnej,
+  - nadal otwarte sa starsze manualne `MVP.0.15`, `MVP.1.4`, `MVP.1.5` oraz `3.6.27`,
+  - nastepny logiczny krok to manualna weryfikacja checklisty `docs/SLOPED_LASER_WORKFLOW_QA.md`, a potem odhaczanie lub doprecyzowanie kryteriow `E2.MVP.*`.
+
 ## Aktualizacja po sekcjach 16.3, 16.4 i 16.5
 
 - Wykonano sekcje:
