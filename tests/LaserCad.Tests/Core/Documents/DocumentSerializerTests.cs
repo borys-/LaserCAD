@@ -383,6 +383,32 @@ public sealed class DocumentSerializerTests
     }
 
     [Test]
+    public void RoundTrip_WithSlopedMaterialSolid_ShouldPreserveOptions()
+    {
+        var solid = new SlopedMaterialSolid(
+            "Bryla trapezowa",
+            DefaultMaterialProfiles.Plywood3Mm,
+            new SlopedMaterialSolidOptions(
+                Length.FromMillimeters(120.0),
+                Length.FromMillimeters(80.0),
+                Length.FromMillimeters(50.0),
+                Length.FromMillimeters(75.0)));
+        var document = new CadDocument(layers: Array.Empty<Layer>()).AddSlopedMaterialSolid(solid);
+        var serializer = new DocumentSerializer();
+
+        var roundTrippedDocument = serializer.Deserialize(serializer.Serialize(document));
+        var roundTrippedSolid = roundTrippedDocument.SlopedMaterialSolids.Single();
+
+        Assert.That(roundTrippedSolid.Id, Is.EqualTo(solid.Id));
+        Assert.That(roundTrippedSolid.Name, Is.EqualTo("Bryla trapezowa"));
+        Assert.That(roundTrippedSolid.MaterialProfile.Name, Is.EqualTo(DefaultMaterialProfiles.Plywood3Mm.Name));
+        Assert.That(roundTrippedSolid.Options.Width, Is.EqualTo(Length.FromMillimeters(120.0)));
+        Assert.That(roundTrippedSolid.Options.Depth, Is.EqualTo(Length.FromMillimeters(80.0)));
+        Assert.That(roundTrippedSolid.Options.FrontHeight, Is.EqualTo(Length.FromMillimeters(50.0)));
+        Assert.That(roundTrippedSolid.Options.BackHeight, Is.EqualTo(Length.FromMillimeters(75.0)));
+    }
+
+    [Test]
     public void RoundTrip_WithParametersAndLayers_ShouldPreserveDocumentValues()
     {
         var id = Guid.NewGuid();

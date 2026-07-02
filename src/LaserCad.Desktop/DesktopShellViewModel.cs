@@ -206,6 +206,26 @@ public sealed class DesktopShellViewModel
         StatusText = "Dodano plyte materialowa 3D";
     }
 
+    public void AddDefaultSlopedMaterialSolid()
+    {
+        var material = CurrentDocument.MaterialProfile ?? SelectedMaterialProfile;
+        var solid = new SlopedMaterialSolid(
+            "Bryla trapezowa",
+            material,
+            new SlopedMaterialSolidOptions(
+                Length.FromMillimeters(120.0),
+                Length.FromMillimeters(80.0),
+                Length.FromMillimeters(50.0),
+                Length.FromMillimeters(80.0)));
+
+        var document = CurrentDocument.SlopedMaterialSolids.Count == 0 && CurrentDocument.MaterialSolids.Count == 0
+            ? new CadDocument(name: "Projekt bryly trapezowej").WithMaterialProfile(material)
+            : CurrentDocument;
+
+        ReplaceDocument(document.AddSlopedMaterialSolid(solid));
+        StatusText = "Dodano bryle trapezowa";
+    }
+
     public void AddLine()
     {
         AddLine(new Point2D(0.0, 0.0), new Point2D(60.0, 0.0));

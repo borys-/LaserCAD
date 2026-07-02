@@ -46,7 +46,8 @@ public sealed class DocumentSerializer
             Layers = document.Layers.Select(ToDto).ToArray(),
             Sketches = document.Sketches.Select(ToDto).ToArray(),
             MaterialProfile = document.MaterialProfile is null ? null : ToDto(document.MaterialProfile),
-            MaterialSolids = document.MaterialSolids.Select(ToDto).ToArray()
+            MaterialSolids = document.MaterialSolids.Select(ToDto).ToArray(),
+            SlopedMaterialSolids = document.SlopedMaterialSolids.Select(ToDto).ToArray()
         };
 
         return JsonSerializer.Serialize(dto, JsonOptions);
@@ -70,6 +71,7 @@ public sealed class DocumentSerializer
         var sketches = (dto.Sketches ?? Array.Empty<SketchDto>()).Select(ToDomain).ToArray();
         var materialProfile = dto.MaterialProfile is null ? null : ToDomain(dto.MaterialProfile);
         var materialSolids = (dto.MaterialSolids ?? Array.Empty<MaterialSolidDto>()).Select(ToDomain).ToArray();
+        var slopedMaterialSolids = (dto.SlopedMaterialSolids ?? Array.Empty<SlopedMaterialSolidDto>()).Select(ToDomain).ToArray();
         var formatVersion = dto.FormatVersion == 0 ? SupportedFormatVersion : dto.FormatVersion;
         EnsureSupportedFormatVersion(formatVersion);
 
@@ -81,7 +83,8 @@ public sealed class DocumentSerializer
             layers,
             sketches,
             materialProfile: materialProfile,
-            materialSolids: materialSolids);
+            materialSolids: materialSolids,
+            slopedMaterialSolids: slopedMaterialSolids);
     }
 
     private static void EnsureSupportedFormatVersion(int formatVersion)
@@ -136,6 +139,50 @@ public sealed class DocumentSerializer
             ToDomain(RequiredMesh(dto.Mesh)),
             ToDomain(RequiredOrientation(dto.Orientation)),
             (dto.Cutouts ?? Array.Empty<CutoutFeatureDto>()).Select(ToDomain));
+    }
+
+    private static SlopedMaterialSolidDto ToDto(SlopedMaterialSolid materialSolid)
+    {
+        return new SlopedMaterialSolidDto
+        {
+            Id = materialSolid.Id,
+            Name = materialSolid.Name,
+            MaterialProfile = ToDto(materialSolid.MaterialProfile),
+            Options = ToDto(materialSolid.Options),
+            Orientation = ToDto(materialSolid.Orientation),
+            Cutouts = materialSolid.Cutouts.Select(ToDto).ToArray()
+        };
+    }
+
+    private static SlopedMaterialSolid ToDomain(SlopedMaterialSolidDto dto)
+    {
+        return new SlopedMaterialSolid(
+            dto.Id,
+            dto.Name,
+            ToDomain(RequiredMaterialProfile(dto.MaterialProfile)),
+            ToDomain(RequiredSlopedMaterialSolidOptions(dto.Options)),
+            ToDomain(RequiredOrientation(dto.Orientation)),
+            (dto.Cutouts ?? Array.Empty<CutoutFeatureDto>()).Select(ToDomain));
+    }
+
+    private static SlopedMaterialSolidOptionsDto ToDto(SlopedMaterialSolidOptions options)
+    {
+        return new SlopedMaterialSolidOptionsDto
+        {
+            WidthMillimeters = options.Width.Millimeters,
+            DepthMillimeters = options.Depth.Millimeters,
+            FrontHeightMillimeters = options.FrontHeight.Millimeters,
+            BackHeightMillimeters = options.BackHeight.Millimeters
+        };
+    }
+
+    private static SlopedMaterialSolidOptions ToDomain(SlopedMaterialSolidOptionsDto dto)
+    {
+        return new SlopedMaterialSolidOptions(
+            Length.FromMillimeters(dto.WidthMillimeters),
+            Length.FromMillimeters(dto.DepthMillimeters),
+            Length.FromMillimeters(dto.FrontHeightMillimeters),
+            Length.FromMillimeters(dto.BackHeightMillimeters));
     }
 
     private static CutoutFeatureDto ToDto(CutoutFeature cutout)
@@ -489,6 +536,11 @@ public sealed class DocumentSerializer
         return dto ?? throw new InvalidOperationException("Material solid requires orientation.");
     }
 
+    private static SlopedMaterialSolidOptionsDto RequiredSlopedMaterialSolidOptions(SlopedMaterialSolidOptionsDto? dto)
+    {
+        return dto ?? throw new InvalidOperationException("Sloped material solid requires options.");
+    }
+
     private static Point2D[] RequiredPoints(PointDto[]? points, string entityType)
     {
         return points?.Select(ToDomain).ToArray()
@@ -522,6 +574,8 @@ public sealed class DocumentSerializer
         public MaterialProfileDto? MaterialProfile { get; set; }
 
         public MaterialSolidDto[]? MaterialSolids { get; set; }
+
+        public SlopedMaterialSolidDto[]? SlopedMaterialSolids { get; set; }
     }
 
     private sealed class ParameterDto
@@ -576,6 +630,32 @@ public sealed class DocumentSerializer
         public OrientationDto? Orientation { get; set; }
 
         public CutoutFeatureDto[]? Cutouts { get; set; }
+    }
+
+    private sealed class SlopedMaterialSolidDto
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; } = string.Empty;
+
+        public MaterialProfileDto? MaterialProfile { get; set; }
+
+        public SlopedMaterialSolidOptionsDto? Options { get; set; }
+
+        public OrientationDto? Orientation { get; set; }
+
+        public CutoutFeatureDto[]? Cutouts { get; set; }
+    }
+
+    private sealed class SlopedMaterialSolidOptionsDto
+    {
+        public double WidthMillimeters { get; set; }
+
+        public double DepthMillimeters { get; set; }
+
+        public double FrontHeightMillimeters { get; set; }
+
+        public double BackHeightMillimeters { get; set; }
     }
 
     private sealed class CutoutFeatureDto

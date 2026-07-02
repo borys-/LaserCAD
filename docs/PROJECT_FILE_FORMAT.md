@@ -17,6 +17,8 @@ Plik zapisuje stabilny kontrakt DTO, a nie bezposrednia serializacje klas domeno
 - Encja `Text` zapisuje `text`, `position`, `height`, opcjonalne `fontFamily`, opcjonalne `fontFilePath` oraz opcjonalne `alignment`.
 - Powiazania wymiarow zapisuja `dimension` oraz `parameterId`, np. szerokosc prostokata -> `Width`.
 - Elementy materialowe 3D sa zapisywane w polu `materialSolids` jako lista obiektow z `id`, `name`, `materialProfile`, `mesh`, `orientation` i opcjonalnymi `cutouts`.
+- Bryly materialowe z pochyla sciana sa zapisywane w polu `slopedMaterialSolids` jako lista obiektow z `id`, `name`, `materialProfile`, `options`, `orientation` i opcjonalnymi `cutouts`.
+- `slopedMaterialSolids[].options` zapisuje `widthMillimeters`, `depthMillimeters`, `frontHeightMillimeters` i `backHeightMillimeters`.
 - Mesh elementu materialowego zapisuje wierzcholki 3D `{ "x": 0, "y": 0, "z": 0 }` oraz `triangleIndices`.
 - Orientacja elementu materialowego zapisuje `position`, `rotationRadians` oraz `surfaceNormal`.
 - Wyciecia materialowe zapisuje sie jako `cutouts` z `id`, `name`, `kind`, opcjonalnym `faceName` oraz `contour` jako lista punktow 2D. W MVP okragle wyciecie jest zapisywane jako wielokatowy kontur produkcyjny.

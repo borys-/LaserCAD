@@ -21,6 +21,7 @@ public sealed class MaterialUnfolder
 
         var parts = document.MaterialSolids
             .Select(solid => FromMaterialSolid(solid, document.Layers))
+            .Concat(document.SlopedMaterialSolids.SelectMany(solid => Unfold(solid, document.Layers)))
             .ToArray();
 
         return ApplyOptions(parts, options);

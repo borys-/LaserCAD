@@ -23,7 +23,8 @@ public sealed class CadDocument
         IEnumerable<Sketch>? sketches = null,
         IEnumerable<GeneratorInstance>? generators = null,
         MaterialProfile? materialProfile = null,
-        IEnumerable<MaterialSolid>? materialSolids = null)
+        IEnumerable<MaterialSolid>? materialSolids = null,
+        IEnumerable<SlopedMaterialSolid>? slopedMaterialSolids = null)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -44,6 +45,7 @@ public sealed class CadDocument
         Generators = generators?.ToArray() ?? Array.Empty<GeneratorInstance>();
         MaterialProfile = materialProfile;
         MaterialSolids = materialSolids?.ToArray() ?? Array.Empty<MaterialSolid>();
+        SlopedMaterialSolids = slopedMaterialSolids?.ToArray() ?? Array.Empty<SlopedMaterialSolid>();
 
         if (Layers.Any(layer => layer is null))
         {
@@ -63,6 +65,11 @@ public sealed class CadDocument
         if (MaterialSolids.Any(materialSolid => materialSolid is null))
         {
             throw new ArgumentException("Document material solids cannot contain null values.", nameof(materialSolids));
+        }
+
+        if (SlopedMaterialSolids.Any(materialSolid => materialSolid is null))
+        {
+            throw new ArgumentException("Document sloped material solids cannot contain null values.", nameof(slopedMaterialSolids));
         }
 
         if (Id == Guid.Empty)
@@ -117,12 +124,17 @@ public sealed class CadDocument
     public IReadOnlyList<MaterialSolid> MaterialSolids { get; }
 
     /// <summary>
+    /// Kontrolowane bryly materialowe z pochyla gorna sciana nalezace do dokumentu.
+    /// </summary>
+    public IReadOnlyList<SlopedMaterialSolid> SlopedMaterialSolids { get; }
+
+    /// <summary>
     /// Zwraca nowy dokument z dodanym parametrem.
     /// Uzywaj tej metody zamiast modyfikowania kolekcji bezposrednio, aby zachowac niemutowalny styl modelu.
     /// </summary>
     public CadDocument AddParameter(Parameter parameter)
     {
-        return new CadDocument(Id, Name, FormatVersion, Parameters.Add(parameter), Layers, Sketches, Generators, MaterialProfile, MaterialSolids);
+        return new CadDocument(Id, Name, FormatVersion, Parameters.Add(parameter), Layers, Sketches, Generators, MaterialProfile, MaterialSolids, SlopedMaterialSolids);
     }
 
     /// <summary>
@@ -136,7 +148,7 @@ public sealed class CadDocument
             throw new ArgumentNullException(nameof(layer));
         }
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers.Append(layer), Sketches, Generators, MaterialProfile, MaterialSolids);
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers.Append(layer), Sketches, Generators, MaterialProfile, MaterialSolids, SlopedMaterialSolids);
     }
 
     /// <summary>
@@ -150,7 +162,7 @@ public sealed class CadDocument
             throw new ArgumentNullException(nameof(sketch));
         }
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches.Append(sketch), Generators, MaterialProfile, MaterialSolids);
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches.Append(sketch), Generators, MaterialProfile, MaterialSolids, SlopedMaterialSolids);
     }
 
     /// <summary>
@@ -164,7 +176,7 @@ public sealed class CadDocument
             throw new ArgumentNullException(nameof(generator));
         }
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators.Append(generator), MaterialProfile, MaterialSolids);
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators.Append(generator), MaterialProfile, MaterialSolids, SlopedMaterialSolids);
     }
 
     /// <summary>
@@ -177,7 +189,20 @@ public sealed class CadDocument
             throw new ArgumentNullException(nameof(materialSolid));
         }
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, MaterialProfile, MaterialSolids.Append(materialSolid));
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, MaterialProfile, MaterialSolids.Append(materialSolid), SlopedMaterialSolids);
+    }
+
+    /// <summary>
+    /// Zwraca nowy dokument z dodana kontrolowana bryla materialowa z pochyla sciana.
+    /// </summary>
+    public CadDocument AddSlopedMaterialSolid(SlopedMaterialSolid materialSolid)
+    {
+        if (materialSolid is null)
+        {
+            throw new ArgumentNullException(nameof(materialSolid));
+        }
+
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, MaterialProfile, MaterialSolids, SlopedMaterialSolids.Append(materialSolid));
     }
 
     /// <summary>
@@ -194,7 +219,8 @@ public sealed class CadDocument
             Sketches,
             Generators,
             MaterialProfile,
-            MaterialSolids.Where(materialSolid => materialSolid.Id != materialSolidId));
+            MaterialSolids.Where(materialSolid => materialSolid.Id != materialSolidId),
+            SlopedMaterialSolids);
     }
 
     /// <summary>
@@ -237,7 +263,7 @@ public sealed class CadDocument
             throw new ArgumentNullException(nameof(materialProfile));
         }
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, materialProfile, MaterialSolids);
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, materialProfile, MaterialSolids, SlopedMaterialSolids);
     }
 
     private CadDocument ReplaceMaterialSolidOrientation(
@@ -268,6 +294,6 @@ public sealed class CadDocument
             throw new InvalidOperationException("Material solid was not found in document.");
         }
 
-        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, MaterialProfile, updatedSolids);
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, MaterialProfile, updatedSolids, SlopedMaterialSolids);
     }
 }

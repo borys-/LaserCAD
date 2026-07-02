@@ -122,6 +122,26 @@ public sealed class MaterialUnfolderTests
         Assert.That(parts.Single(part => part.Name.EndsWith("Left side", StringComparison.Ordinal)).OuterContour.Bounds.Height, Is.EqualTo(70.0));
     }
 
+    [Test]
+    public void Unfold_WithDocumentSlopedMaterialSolid_ShouldCreateFlatParts()
+    {
+        var solid = new SlopedMaterialSolid(
+            "Bryla trapezowa",
+            DefaultMaterialProfiles.Plywood3Mm,
+            new SlopedMaterialSolidOptions(
+                LaserCad.Geometry.Units.Length.FromMillimeters(120.0),
+                LaserCad.Geometry.Units.Length.FromMillimeters(80.0),
+                LaserCad.Geometry.Units.Length.FromMillimeters(50.0),
+                LaserCad.Geometry.Units.Length.FromMillimeters(75.0)));
+        var document = new CadDocument().AddSlopedMaterialSolid(solid);
+        var unfolder = new MaterialUnfolder();
+
+        var parts = unfolder.Unfold(document);
+
+        Assert.That(parts, Has.Count.EqualTo(6));
+        Assert.That(parts.Select(part => part.Name), Does.Contain("Bryla trapezowa - Left side"));
+    }
+
     private static MaterialSolid CreatePlate(string name, double width, double height)
     {
         var rectangle = new RectangleEntity(new Point2D(0.0, 0.0), width, height);

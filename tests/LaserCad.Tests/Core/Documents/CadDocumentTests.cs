@@ -3,6 +3,7 @@ using LaserCad.Core.MaterialModel;
 using LaserCad.Core.Parameters;
 using LaserCad.Core.Preview3D;
 using LaserCad.Geometry;
+using LaserCad.Geometry.Units;
 
 namespace LaserCad.Tests.Core.Documents;
 
@@ -267,11 +268,35 @@ public sealed class CadDocumentTests
         Assert.That(document.MaterialSolids, Has.Count.EqualTo(1));
     }
 
+    [Test]
+    public void AddSlopedMaterialSolid_ShouldReturnDocumentWithSlopedSolid()
+    {
+        var solid = CreateSlopedMaterialSolid();
+        var document = new CadDocument();
+
+        var updatedDocument = document.AddSlopedMaterialSolid(solid);
+
+        Assert.That(updatedDocument.SlopedMaterialSolids, Is.EqualTo(new[] { solid }));
+        Assert.That(document.SlopedMaterialSolids, Is.Empty);
+    }
+
     private static MaterialSolid CreateMaterialSolid()
     {
         return MaterialSolid.FromRectangle(
             "Plyta",
             new RectangleEntity(new Point2D(0.0, 0.0), 10.0, 5.0),
             DefaultMaterialProfiles.Plywood3Mm);
+    }
+
+    private static SlopedMaterialSolid CreateSlopedMaterialSolid()
+    {
+        return new SlopedMaterialSolid(
+            "Bryla trapezowa",
+            DefaultMaterialProfiles.Plywood3Mm,
+            new SlopedMaterialSolidOptions(
+                Length.FromMillimeters(120.0),
+                Length.FromMillimeters(80.0),
+                Length.FromMillimeters(50.0),
+                Length.FromMillimeters(80.0)));
     }
 }

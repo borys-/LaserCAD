@@ -282,6 +282,12 @@ public partial class MainWindow : Window
         SetDrawingTool(ViewportDrawingTool.MaterialPlate);
     }
 
+    private void AddSlopedMaterialSolid_Click(object sender, RoutedEventArgs e)
+    {
+        viewModel.AddDefaultSlopedMaterialSolid();
+        PublishDocument();
+    }
+
     private void AddLine_Click(object sender, RoutedEventArgs e)
     {
         SetDrawingTool(ViewportDrawingTool.Line);
@@ -778,6 +784,7 @@ public partial class MainWindow : Window
         DocumentNameTextBlock.Text = "Dokument: " + viewModel.CurrentDocument.Name;
         SketchCountTextBlock.Text = "Szkice: " + viewModel.CurrentDocument.Sketches.Count;
         MaterialSolidCountTextBlock.Text = "Plyty 3D: " + viewModel.CurrentDocument.MaterialSolids.Count;
+        SlopedMaterialSolidCountTextBlock.Text = "Bryly trapezowe: " + viewModel.CurrentDocument.SlopedMaterialSolids.Count;
         UndoCountTextBlock.Text = "Undo: " + viewModel.UndoCount;
         RedoCountTextBlock.Text = "Redo: " + viewModel.RedoCount;
         StatusTextBlock.Text = viewModel.StatusText;
