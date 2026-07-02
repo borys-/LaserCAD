@@ -16,6 +16,22 @@ public sealed class WorkspacePanelPreferences
 
     public bool IsHistoryPanelVisible { get; set; }
 
+    public string? LastMaterialProfileName { get; set; }
+
+    public double LastSheetWidthMillimeters { get; set; } = 300.0;
+
+    public double LastSheetHeightMillimeters { get; set; } = 300.0;
+
+    public double LastSheetMarginMillimeters { get; set; } = 5.0;
+
+    public double LastSheetSpacingMillimeters { get; set; } = 5.0;
+
+    public bool LastSheetAllowRotation { get; set; }
+
+    public double LastSlopedKerfMillimeters { get; set; } = 0.15;
+
+    public double LastCutoutDiameterMillimeters { get; set; } = 10.0;
+
     public static string DefaultPath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
         "LaserCad",

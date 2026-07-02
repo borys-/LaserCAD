@@ -139,6 +139,7 @@ public partial class MainWindow : Window
                 ParseMillimeters(SheetSpacingTextBox.Text, "Odstep czesci"),
                 SheetAllowRotationCheckBox.IsChecked == true);
 
+            SaveWorkflowPreferences();
             viewportIpcClient.SendDocument(previewDocument);
             RefreshDocumentSummary();
         }
@@ -159,6 +160,7 @@ public partial class MainWindow : Window
                 ParseMillimeters(SheetSpacingTextBox.Text, "Odstep czesci"),
                 SheetAllowRotationCheckBox.IsChecked == true);
 
+            SaveWorkflowPreferences();
             viewportIpcClient.SendDocument(previewDocument);
             RefreshDocumentSummary();
         }
@@ -320,6 +322,7 @@ public partial class MainWindow : Window
                 ParseMillimeters(SlopedFrontHeightTextBox.Text, "Wysokosc przodu"),
                 ParseMillimeters(SlopedBackHeightTextBox.Text, "Wysokosc tylu"),
                 ParseMillimeters(SlopedKerfTextBox.Text, "Kerf bryly"));
+            SaveWorkflowPreferences();
             PublishSlopedWorkflowPreview();
         }
         catch (Exception ex) when (ex is FormatException or ArgumentOutOfRangeException or ArgumentException)
@@ -337,6 +340,7 @@ public partial class MainWindow : Window
                 ParseMillimeters(SlopedCutoutDiameterTextBox.Text, "Srednica otworu"),
                 ParseMillimeters(SlopedCutoutLeftTextBox.Text, "Odleglosc od lewej krawedzi"),
                 ParseMillimeters(SlopedCutoutBottomTextBox.Text, "Odleglosc od dolnej krawedzi"));
+            SaveWorkflowPreferences();
             PublishSlopedWorkflowPreview();
         }
         catch (Exception ex) when (ex is FormatException or ArgumentOutOfRangeException or ArgumentException or InvalidOperationException)
@@ -446,6 +450,7 @@ public partial class MainWindow : Window
         }
 
         viewModel.SetMaterialProfile(materialProfile);
+        SaveWorkflowPreferences();
         viewportIpcClient.SendDocument(viewModel.CurrentDocument);
         RefreshDocumentSummary();
     }
@@ -536,6 +541,7 @@ public partial class MainWindow : Window
         TemplateLibraryPanelMenuItem.IsChecked = workspacePanelPreferences.IsTemplateLibraryPanelVisible;
         AdvancedPanelsMenuItem.IsChecked = workspacePanelPreferences.AreAdvancedPanelsVisible;
         HistoryPanelMenuItem.IsChecked = workspacePanelPreferences.IsHistoryPanelVisible;
+        ApplyWorkflowPreferences();
         ApplyWorkspacePanelVisibility();
     }
 
@@ -545,6 +551,45 @@ public partial class MainWindow : Window
         workspacePanelPreferences.IsTemplateLibraryPanelVisible = TemplateLibraryPanelMenuItem.IsChecked;
         workspacePanelPreferences.AreAdvancedPanelsVisible = AdvancedPanelsMenuItem.IsChecked;
         workspacePanelPreferences.IsHistoryPanelVisible = HistoryPanelMenuItem.IsChecked;
+        SaveWorkflowPreferencesToModel();
+        workspacePanelPreferences.Save();
+    }
+
+    private void ApplyWorkflowPreferences()
+    {
+        if (!string.IsNullOrWhiteSpace(workspacePanelPreferences.LastMaterialProfileName))
+        {
+            var material = viewModel.MaterialProfiles.FirstOrDefault(profile => profile.Name == workspacePanelPreferences.LastMaterialProfileName);
+            if (material is not null)
+            {
+                MaterialProfileComboBox.SelectedItem = material;
+            }
+        }
+
+        SheetWidthTextBox.Text = FormatPreferenceNumber(workspacePanelPreferences.LastSheetWidthMillimeters);
+        SheetHeightTextBox.Text = FormatPreferenceNumber(workspacePanelPreferences.LastSheetHeightMillimeters);
+        SheetMarginTextBox.Text = FormatPreferenceNumber(workspacePanelPreferences.LastSheetMarginMillimeters);
+        SheetSpacingTextBox.Text = FormatPreferenceNumber(workspacePanelPreferences.LastSheetSpacingMillimeters);
+        SheetAllowRotationCheckBox.IsChecked = workspacePanelPreferences.LastSheetAllowRotation;
+        SlopedKerfTextBox.Text = FormatPreferenceNumber(workspacePanelPreferences.LastSlopedKerfMillimeters);
+        SlopedCutoutDiameterTextBox.Text = FormatPreferenceNumber(workspacePanelPreferences.LastCutoutDiameterMillimeters);
+    }
+
+    private void SaveWorkflowPreferencesToModel()
+    {
+        workspacePanelPreferences.LastMaterialProfileName = viewModel.SelectedMaterialProfile.Name;
+        workspacePanelPreferences.LastSheetWidthMillimeters = TryReadPreferenceNumber(SheetWidthTextBox.Text, workspacePanelPreferences.LastSheetWidthMillimeters);
+        workspacePanelPreferences.LastSheetHeightMillimeters = TryReadPreferenceNumber(SheetHeightTextBox.Text, workspacePanelPreferences.LastSheetHeightMillimeters);
+        workspacePanelPreferences.LastSheetMarginMillimeters = TryReadPreferenceNumber(SheetMarginTextBox.Text, workspacePanelPreferences.LastSheetMarginMillimeters);
+        workspacePanelPreferences.LastSheetSpacingMillimeters = TryReadPreferenceNumber(SheetSpacingTextBox.Text, workspacePanelPreferences.LastSheetSpacingMillimeters);
+        workspacePanelPreferences.LastSheetAllowRotation = SheetAllowRotationCheckBox.IsChecked == true;
+        workspacePanelPreferences.LastSlopedKerfMillimeters = TryReadPreferenceNumber(SlopedKerfTextBox.Text, workspacePanelPreferences.LastSlopedKerfMillimeters);
+        workspacePanelPreferences.LastCutoutDiameterMillimeters = TryReadPreferenceNumber(SlopedCutoutDiameterTextBox.Text, workspacePanelPreferences.LastCutoutDiameterMillimeters);
+    }
+
+    private void SaveWorkflowPreferences()
+    {
+        SaveWorkflowPreferencesToModel();
         workspacePanelPreferences.Save();
     }
 
@@ -758,6 +803,16 @@ public partial class MainWindow : Window
         }
 
         return result;
+    }
+
+    private static string FormatPreferenceNumber(double value)
+    {
+        return value.ToString("0.###");
+    }
+
+    private static double TryReadPreferenceNumber(string value, double fallback)
+    {
+        return double.TryParse(value, out var result) ? result : fallback;
     }
 
     private IReadOnlyList<Guid> ReadSelectedEntityIds()
