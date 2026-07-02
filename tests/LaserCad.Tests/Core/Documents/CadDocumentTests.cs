@@ -280,6 +280,20 @@ public sealed class CadDocumentTests
         Assert.That(document.SlopedMaterialSolids, Is.Empty);
     }
 
+    [Test]
+    public void AddCutoutToSlopedMaterialSolid_ShouldReturnDocumentWithUpdatedSolid()
+    {
+        var solid = CreateSlopedMaterialSolid();
+        var cutout = CutoutFeature.Circle("Otwor", new Point2D(60.0, 25.0), 5.0, "Front");
+        var document = new CadDocument().AddSlopedMaterialSolid(solid);
+
+        var updatedDocument = document.AddCutoutToSlopedMaterialSolid(solid.Id, cutout);
+
+        Assert.That(updatedDocument.SlopedMaterialSolids.Single().Cutouts, Has.Count.EqualTo(1));
+        Assert.That(updatedDocument.SlopedMaterialSolids.Single().Cutouts[0].FaceName, Is.EqualTo("Front"));
+        Assert.That(document.SlopedMaterialSolids.Single().Cutouts, Is.Empty);
+    }
+
     private static MaterialSolid CreateMaterialSolid()
     {
         return MaterialSolid.FromRectangle(

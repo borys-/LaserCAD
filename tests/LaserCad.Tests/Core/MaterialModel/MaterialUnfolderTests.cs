@@ -142,6 +142,26 @@ public sealed class MaterialUnfolderTests
         Assert.That(parts.Select(part => part.Name), Does.Contain("Bryla trapezowa - Left side"));
     }
 
+    [Test]
+    public void Unfold_WithDocumentSlopedMaterialSolidCutout_ShouldPreserveInnerContour()
+    {
+        var solid = new SlopedMaterialSolid(
+            "Bryla trapezowa",
+            DefaultMaterialProfiles.Plywood3Mm,
+            new SlopedMaterialSolidOptions(
+                LaserCad.Geometry.Units.Length.FromMillimeters(120.0),
+                LaserCad.Geometry.Units.Length.FromMillimeters(80.0),
+                LaserCad.Geometry.Units.Length.FromMillimeters(50.0),
+                LaserCad.Geometry.Units.Length.FromMillimeters(75.0)))
+            .AddCutout(CutoutFeature.Circle("Otwor", new Point2D(60.0, 25.0), 5.0, "Front"));
+        var document = new CadDocument().AddSlopedMaterialSolid(solid);
+        var unfolder = new MaterialUnfolder();
+
+        var parts = unfolder.Unfold(document);
+
+        Assert.That(parts.Single(part => part.Name.EndsWith("Front", StringComparison.Ordinal)).InnerContours, Has.Count.EqualTo(1));
+    }
+
     private static MaterialSolid CreatePlate(string name, double width, double height)
     {
         var rectangle = new RectangleEntity(new Point2D(0.0, 0.0), width, height);

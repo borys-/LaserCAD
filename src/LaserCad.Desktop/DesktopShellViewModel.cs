@@ -258,6 +258,34 @@ public sealed class DesktopShellViewModel
         StatusText = $"Dodano: {normalized.Name}, {widthMillimeters:0.#} x {depthMillimeters:0.#} mm";
     }
 
+    public void AddCircularCutoutToLatestSlopedMaterialSolid(string faceName)
+    {
+        if (string.IsNullOrWhiteSpace(faceName))
+        {
+            throw new ArgumentException("Nazwa sciany nie moze byc pusta.", nameof(faceName));
+        }
+
+        var solid = CurrentDocument.SlopedMaterialSolids.LastOrDefault();
+        if (solid is null)
+        {
+            StatusText = "Najpierw dodaj bryle trapezowa";
+            return;
+        }
+
+        var face = solid.Unfold()
+            .FirstOrDefault(part => string.Equals(part.Name, faceName, StringComparison.OrdinalIgnoreCase))
+            ?? throw new InvalidOperationException("Bryla nie ma sciany: " + faceName);
+        var bounds = face.OuterContour.Bounds;
+        const double radiusMillimeters = 5.0;
+        var center = new Point2D(
+            bounds.MinX + (bounds.Width / 2.0),
+            bounds.MinY + (bounds.Height / 2.0));
+        var cutout = CutoutFeature.Circle("Otwor okragly", center, radiusMillimeters, face.Name);
+
+        ReplaceDocument(CurrentDocument.AddCutoutToSlopedMaterialSolid(solid.Id, cutout));
+        StatusText = "Dodano otwor okragly: " + face.Name;
+    }
+
     public void AddLine()
     {
         AddLine(new Point2D(0.0, 0.0), new Point2D(60.0, 0.0));

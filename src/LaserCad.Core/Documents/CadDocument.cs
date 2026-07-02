@@ -206,6 +206,43 @@ public sealed class CadDocument
     }
 
     /// <summary>
+    /// Zwraca nowy dokument z dodanym wycieciem do wskazanej bryly trapezowej.
+    /// </summary>
+    public CadDocument AddCutoutToSlopedMaterialSolid(Guid materialSolidId, CutoutFeature cutout)
+    {
+        if (materialSolidId == Guid.Empty)
+        {
+            throw new ArgumentException("Sloped material solid id cannot be empty.", nameof(materialSolidId));
+        }
+
+        if (cutout is null)
+        {
+            throw new ArgumentNullException(nameof(cutout));
+        }
+
+        var found = false;
+        var updatedSolids = SlopedMaterialSolids
+            .Select(materialSolid =>
+            {
+                if (materialSolid.Id != materialSolidId)
+                {
+                    return materialSolid;
+                }
+
+                found = true;
+                return materialSolid.AddCutout(cutout);
+            })
+            .ToArray();
+
+        if (!found)
+        {
+            throw new InvalidOperationException("Sloped material solid was not found in document.");
+        }
+
+        return new CadDocument(Id, Name, FormatVersion, Parameters, Layers, Sketches, Generators, MaterialProfile, MaterialSolids, updatedSolids);
+    }
+
+    /// <summary>
     /// Zwraca nowy dokument z usunietym elementem materialowym 3D.
     /// </summary>
     public CadDocument RemoveMaterialSolid(Guid materialSolidId)

@@ -240,6 +240,8 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Szerokosc" Style="{StaticResource FieldLabelStyle}" />
@@ -305,7 +307,18 @@
                             <TextBox x:Name="SlopedKerfTextBox" Grid.Row="7" Grid.Column="0" Text="0,15" Margin="0,0,4,8" />
                             <TextBlock x:Name="SlopedMaterialNameTextBlock" Grid.Row="7" Grid.Column="1" Text="Sklejka 3 mm" Foreground="{StaticResource MutedTextBrush}" TextWrapping="Wrap" Margin="8,5,0,8" />
 
-                            <Button Grid.Row="8" Grid.ColumnSpan="2" Content="Dodaj bryle" Click="AddSlopedMaterialSolidFromPanel_Click" Style="{StaticResource PrimaryButtonStyle}" />
+                            <Button Grid.Row="8" Grid.ColumnSpan="2" Content="Dodaj bryle" Click="AddSlopedMaterialSolidFromPanel_Click" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,0,8" />
+
+                            <TextBlock Grid.Row="9" Grid.ColumnSpan="2" Text="Sciana otworu" Style="{StaticResource FieldLabelStyle}" />
+                            <ComboBox x:Name="SlopedCutoutFaceComboBox" Grid.Row="10" Grid.Column="0" SelectedIndex="0" Margin="0,0,4,0">
+                                <ComboBoxItem Content="Front" />
+                                <ComboBoxItem Content="Back" />
+                                <ComboBoxItem Content="Left side" />
+                                <ComboBoxItem Content="Right side" />
+                                <ComboBoxItem Content="Bottom" />
+                                <ComboBoxItem Content="Sloped top" />
+                            </ComboBox>
+                            <Button Grid.Row="10" Grid.Column="1" Content="Dodaj otwor okragly" Click="AddCircularCutout_Click" Margin="4,0,0,0" />
                         </Grid>
                     </GroupBox>
 

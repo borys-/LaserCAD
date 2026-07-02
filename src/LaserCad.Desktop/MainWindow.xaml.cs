@@ -308,6 +308,19 @@ public partial class MainWindow : Window
         }
     }
 
+    private void AddCircularCutout_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            viewModel.AddCircularCutoutToLatestSlopedMaterialSolid(ReadSlopedCutoutFaceName());
+            PublishDocument();
+        }
+        catch (Exception ex) when (ex is ArgumentException or InvalidOperationException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
     private void AddLine_Click(object sender, RoutedEventArgs e)
     {
         SetDrawingTool(ViewportDrawingTool.Line);
@@ -804,6 +817,13 @@ public partial class MainWindow : Window
         return SlopedConstructionTypeComboBox.SelectedItem is ComboBoxItem item
             ? item.Content?.ToString() ?? "Bryla z pochyla gora"
             : "Bryla z pochyla gora";
+    }
+
+    private string ReadSlopedCutoutFaceName()
+    {
+        return SlopedCutoutFaceComboBox.SelectedItem is ComboBoxItem item
+            ? item.Content?.ToString() ?? "Front"
+            : "Front";
     }
 
     private void RefreshDocumentSummary()
