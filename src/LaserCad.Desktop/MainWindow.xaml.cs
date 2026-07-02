@@ -268,9 +268,19 @@ public partial class MainWindow : Window
 
     private void ExportNestedDxf_Click(object sender, RoutedEventArgs e)
     {
+        ExportLaserDxf("Wybierz katalog eksportu DXF z nestingu");
+    }
+
+    private void ExportLaserDxf_Click(object sender, RoutedEventArgs e)
+    {
+        ExportLaserDxf("Wybierz katalog eksportu DXF dla lasera");
+    }
+
+    private void ExportLaserDxf(string description)
+    {
         using var dialog = new System.Windows.Forms.FolderBrowserDialog
         {
-            Description = "Wybierz katalog eksportu DXF z nestingu",
+            Description = description,
             UseDescriptionForTitle = true,
         };
 
@@ -288,6 +298,7 @@ public partial class MainWindow : Window
                 ParseMillimeters(SheetMarginTextBox.Text, "Margines arkusza"),
                 ParseMillimeters(SheetSpacingTextBox.Text, "Odstep czesci"),
                 SheetAllowRotationCheckBox.IsChecked == true);
+            SaveWorkflowPreferences();
             RefreshDocumentSummary();
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or FormatException or ArgumentOutOfRangeException or ArgumentException or InvalidOperationException)

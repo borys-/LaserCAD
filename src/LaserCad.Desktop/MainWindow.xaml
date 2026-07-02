@@ -179,6 +179,7 @@
                 <MenuItem Header="Export _SVG..." InputGestureText="Ctrl+Shift+S" Click="ExportSvg_Click" />
                 <MenuItem Header="Export _DXF..." InputGestureText="Ctrl+Shift+D" Click="ExportDxf_Click" />
                 <MenuItem Header="Export _Nested DXF..." Click="ExportNestedDxf_Click" />
+                <MenuItem Header="Eksportuj DXF dla _lasera..." Click="ExportLaserDxf_Click" />
             </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="_About Laser CAD" Click="About_Click" />
@@ -563,6 +564,7 @@
                             <CheckBox x:Name="SheetAllowRotationCheckBox" Content="Obrot 90°" Margin="0,0,0,8" />
                             <Button Content="Przygotuj arkusz" Click="PrepareSheet_Click" Margin="0,0,0,8" />
                             <Button Content="Przygotuj do ciecia" Click="PrepareToCut_Click" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,0,8" />
+                            <Button Content="Eksportuj DXF dla lasera" Click="ExportLaserDxf_Click" Margin="0,0,0,8" />
                             <TextBlock x:Name="NestingSummaryTextBlock" Text="Nesting: -" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,10" />
                             <TextBlock x:Name="ManufacturingChecksSummaryTextBlock" Text="Kontrole: -" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,10" />
                             <TextBlock x:Name="SelectedEntitiesTextBlock" Text="Zaznaczone: 0" Foreground="{StaticResource MutedTextBrush}" Margin="0,0,0,10" />
