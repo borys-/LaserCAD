@@ -305,6 +305,38 @@ public sealed class DesktopShellViewModel
         StatusText = $"Dodano otwor okragly: {face.Name}, fi {diameterMillimeters:0.#} mm";
     }
 
+    public void CopyLatestCircularCutoutToOppositeFace()
+    {
+        var solid = CurrentDocument.SlopedMaterialSolids.LastOrDefault();
+        if (solid is null)
+        {
+            StatusText = "Najpierw dodaj bryle trapezowa";
+            return;
+        }
+
+        var source = solid.Cutouts.LastOrDefault(cutout => cutout.Kind == CutoutFeatureKind.Circle && cutout.FaceName is not null);
+        if (source is null)
+        {
+            StatusText = "Brak otworu okraglego do skopiowania";
+            return;
+        }
+
+        var targetFaceName = GetOppositeFaceName(source.FaceName!);
+        var sourceBounds = source.Bounds;
+        var diameter = Math.Max(sourceBounds.Width, sourceBounds.Height);
+        var center = new Point2D(
+            sourceBounds.MinX + (sourceBounds.Width / 2.0),
+            sourceBounds.MinY + (sourceBounds.Height / 2.0));
+        var copiedCutout = CutoutFeature.Circle(
+            source.Name + " kopia",
+            center,
+            diameter / 2.0,
+            targetFaceName);
+
+        ReplaceDocument(CurrentDocument.AddCutoutToSlopedMaterialSolid(solid.Id, copiedCutout));
+        StatusText = $"Skopiowano otwor: {source.FaceName} -> {targetFaceName}";
+    }
+
     public void AddLine()
     {
         AddLine(new Point2D(0.0, 0.0), new Point2D(60.0, 0.0));
@@ -611,6 +643,20 @@ public sealed class DesktopShellViewModel
             "Obudowa z pochylonym panelem" => ("Obudowa z pochylonym panelem", frontHeightMillimeters, backHeightMillimeters),
             "Rynienka trapezowa" => ("Rynienka trapezowa", frontHeightMillimeters, backHeightMillimeters),
             _ => ("Bryla z pochyla gora", frontHeightMillimeters, backHeightMillimeters),
+        };
+    }
+
+    private static string GetOppositeFaceName(string faceName)
+    {
+        return faceName switch
+        {
+            "Front" => "Back",
+            "Back" => "Front",
+            "Left side" => "Right side",
+            "Right side" => "Left side",
+            "Bottom" => "Sloped top",
+            "Sloped top" => "Bottom",
+            _ => throw new InvalidOperationException("Sciana nie ma przeciwleglej pary: " + faceName),
         };
     }
 

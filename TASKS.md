@@ -820,7 +820,7 @@ Celem etapu 2 jest workflow: uzytkownik projektuje bryle z realnego materialu, l
 - [x] 16.6.2 Dodac gotowe typy konstrukcji: prostopadloscian, bryla z pochyla gora, klin, obudowa z pochylonym panelem, rynienka trapezowa.
 - [x] 16.6.3 Dodac akcje `Dodaj otwor okragly` po wybraniu sciany.
 - [x] 16.6.4 Dodac pozycjonowanie otworu przez srednice oraz odleglosc od lewej i dolnej krawedzi sciany.
-- [ ] 16.6.5 Dodac akcje `Kopiuj otwor na przeciwlegla sciane`.
+- [x] 16.6.5 Dodac akcje `Kopiuj otwor na przeciwlegla sciane`.
 - [ ] 16.6.6 Pokazac jednoczesnie podglad 3D i automatyczne rozwiniecie 2D.
 - [ ] 16.6.7 Dodac przycisk `Przygotuj do ciecia`, ktory wykonuje rozwiniecie, kontrole produkcyjne, nesting i podglad eksportu.
 - [ ] 16.6.8 Pamietac ostatnio uzyte ustawienia: material, arkusz, kerf, margines, odstep i typowe srednice otworow.

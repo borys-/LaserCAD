@@ -325,6 +325,19 @@ public partial class MainWindow : Window
         }
     }
 
+    private void CopyCircularCutoutToOppositeFace_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            viewModel.CopyLatestCircularCutoutToOppositeFace();
+            PublishDocument();
+        }
+        catch (Exception ex) when (ex is ArgumentException or InvalidOperationException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
     private void AddLine_Click(object sender, RoutedEventArgs e)
     {
         SetDrawingTool(ViewportDrawingTool.Line);
