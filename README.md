@@ -31,6 +31,7 @@ Repozytorium zdalne:
 - [docs/DESKTOP_VIEWPORT_QA.md](docs/DESKTOP_VIEWPORT_QA.md) - manualna checklista QA dla desktop shell + Unity viewport.
 - [docs/DESKTOP_CLEAN_UI_QA.md](docs/DESKTOP_CLEAN_UI_QA.md) - manualna checklista QA dla czystego widoku desktop shell.
 - [docs/MATERIAL_SOLID_3D_QA.md](docs/MATERIAL_SOLID_3D_QA.md) - manualna checklista QA dla plyt materialowych 3D.
+- [docs/MATERIAL_UNFOLDING_QA.md](docs/MATERIAL_UNFOLDING_QA.md) - manualna checklista QA dla rozwiniecia 3D do czesci 2D.
 - [docs/RELEASE_QA_CHECKLIST.md](docs/RELEASE_QA_CHECKLIST.md) - checklista QA przed wydaniem.
 - [docs/MVP_WORKFLOW.md](docs/MVP_WORKFLOW.md) - minimalny workflow MVP: material, parametry, generowanie i eksport SVG.
 - [TASKS.md](TASKS.md) - szczegolowa lista taskow implementacyjnych.

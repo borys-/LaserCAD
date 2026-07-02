@@ -781,14 +781,14 @@ Celem etapu 2 jest workflow: uzytkownik projektuje bryle z realnego materialu, l
 
 ## 16.3 Rozwiniecie modelu 3D do czesci 2D
 
-- [ ] 16.3.0 Ustalic kontrakt `FlatPart` dla czesci do wyciecia.
-- [ ] 16.3.1 Dodac ekstrakcje obrysu plyty 3D jako konturu 2D.
-- [ ] 16.3.2 Dodac ekstrakcje wyciec negatywowych jako konturow wewnetrznych.
-- [ ] 16.3.3 Zachowac warstwy technologiczne: cut, engrave, score, ignore.
-- [ ] 16.3.4 Dodac oznaczenia czesci wynikajace z nazw elementow 3D.
-- [ ] 16.3.5 Dodac wykrywanie duplikatow identycznych czesci.
-- [ ] 16.3.6 Dodac test: kilka plyt 3D daje liste plaskich czesci 2D.
-- [ ] 16.3.7 Dodac manualna checkliste QA rozwiniecia 3D -> 2D.
+- [x] 16.3.0 Ustalic kontrakt `FlatPart` dla czesci do wyciecia.
+- [x] 16.3.1 Dodac ekstrakcje obrysu plyty 3D jako konturu 2D.
+- [x] 16.3.2 Dodac ekstrakcje wyciec negatywowych jako konturow wewnetrznych.
+- [x] 16.3.3 Zachowac warstwy technologiczne: cut, engrave, score, ignore.
+- [x] 16.3.4 Dodac oznaczenia czesci wynikajace z nazw elementow 3D.
+- [x] 16.3.5 Dodac wykrywanie duplikatow identycznych czesci.
+- [x] 16.3.6 Dodac test: kilka plyt 3D daje liste plaskich czesci 2D.
+- [x] 16.3.7 Dodac manualna checkliste QA rozwiniecia 3D -> 2D.
 
 ## 16.4 Arkusz materialu i nesting czesci
 

@@ -531,6 +531,10 @@ Mesh `PreviewMesh` sluzy do pogladowego podgladu 3D bryly, a metoda `Unfold` zwr
 
 `CutoutFeature` obsluguje prostokat, okrag przyblizony wielokatowym konturem oraz zamknieta polilinie. Wyciecie jest walidowane wzgledem lokalnego obrysu plyty albo rozwinietej sciany bryly trapezowej, a minimalny mostek materialu jest sprawdzany na podstawie bounding boxow konturu. To nie jest jeszcze pelna analiza polygonow z otworami, kolizjami wielu negatywow ani dokladna walidacja technologiczna wszystkich ksztaltow.
 
+### Ograniczenia rozwiniecia 3D do 2D MVP
+
+`FlatPart` jest neutralnym kontraktem czesci produkcyjnej: przechowuje kontur zewnetrzny, kontury wewnetrzne, warstwy technologiczne dokumentu, liczbe identycznych wystapien oraz nazwy elementow zrodlowych. `MaterialUnfolder` rozwija dokumentowe plyty `MaterialSolid` oraz kontrolowana bryle `SlopedMaterialSolid`, a opcjonalna deduplikacja porownuje znormalizowana geometrie konturow. To nie jest jeszcze nesting, kompensacja kerfu ani eksport DXF z arkuszy; te kroki sa zakresem kolejnych sekcji etapu 2.
+
 ## Wyrozniki produktu
 
 ### Pelna parametrycznosc
