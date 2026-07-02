@@ -535,6 +535,10 @@ Mesh `PreviewMesh` sluzy do pogladowego podgladu 3D bryly, a metoda `Unfold` zwr
 
 `FlatPart` jest neutralnym kontraktem czesci produkcyjnej: przechowuje kontur zewnetrzny, kontury wewnetrzne, warstwy technologiczne dokumentu, liczbe identycznych wystapien oraz nazwy elementow zrodlowych. `MaterialUnfolder` rozwija dokumentowe plyty `MaterialSolid` oraz kontrolowana bryle `SlopedMaterialSolid`, a opcjonalna deduplikacja porownuje znormalizowana geometrie konturow. To nie jest jeszcze nesting, kompensacja kerfu ani eksport DXF z arkuszy; te kroki sa zakresem kolejnych sekcji etapu 2.
 
+### Ograniczenia arkusza materialu i nestingu MVP
+
+`FlatPartNestingPlanner` traktuje czesci jako prostokatne bounding boxy wynikajace z konturu zewnetrznego. Uwzglednia margines arkusza, odstep technologiczny, opcjonalny obrot o 90 stopni i potrafi przeniesc kolejne elementy na nastepny arkusz. Podglad w desktop shell pokazuje prostokatne obrysy ulozonych czesci i ramke arkusza. To nie jest jeszcze nesting rzeczywistych polygonow z otworami, optymalizacja odpadu ani eksport DXF z ulozonych arkuszy.
+
 ## Wyrozniki produktu
 
 ### Pelna parametrycznosc

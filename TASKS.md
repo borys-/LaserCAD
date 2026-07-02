@@ -792,15 +792,15 @@ Celem etapu 2 jest workflow: uzytkownik projektuje bryle z realnego materialu, l
 
 ## 16.4 Arkusz materialu i nesting czesci
 
-- [ ] 16.4.0 Dodac UI ustawienia arkusza materialu, np. 300 mm x 300 mm.
-- [ ] 16.4.1 Podlaczyc `FlatPart` do istniejacego modelu nestingu.
-- [ ] 16.4.2 Ukladac czesci na arkuszu z marginesem i odstepem technologicznym.
-- [ ] 16.4.3 Dodac obrot czesci w nestingu.
-- [ ] 16.4.4 Dodac obsluge wielu arkuszy, gdy czesci nie mieszcza sie na jednym.
-- [ ] 16.4.5 Pokazac podglad ulozenia 2D przed eksportem.
-- [ ] 16.4.6 Dodac ostrzezenie, gdy czesc nie miesci sie na arkuszu.
-- [ ] 16.4.7 Dodac statystyki: liczba arkuszy, zuzycie materialu, dlugosc ciecia.
-- [ ] 16.4.8 Dodac test: elementy wieksze niz arkusz zwracaja czytelny blad.
+- [x] 16.4.0 Dodac UI ustawienia arkusza materialu, np. 300 mm x 300 mm.
+- [x] 16.4.1 Podlaczyc `FlatPart` do istniejacego modelu nestingu.
+- [x] 16.4.2 Ukladac czesci na arkuszu z marginesem i odstepem technologicznym.
+- [x] 16.4.3 Dodac obrot czesci w nestingu.
+- [x] 16.4.4 Dodac obsluge wielu arkuszy, gdy czesci nie mieszcza sie na jednym.
+- [x] 16.4.5 Pokazac podglad ulozenia 2D przed eksportem.
+- [x] 16.4.6 Dodac ostrzezenie, gdy czesc nie miesci sie na arkuszu.
+- [x] 16.4.7 Dodac statystyki: liczba arkuszy, zuzycie materialu, dlugosc ciecia.
+- [x] 16.4.8 Dodac test: elementy wieksze niz arkusz zwracaja czytelny blad.
 
 ## 16.5 Eksport DXF z ulozonych arkuszy
 
