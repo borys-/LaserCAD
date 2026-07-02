@@ -286,6 +286,14 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
                             <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Typ konstrukcji" Style="{StaticResource FieldLabelStyle}" />
@@ -333,6 +341,7 @@
                             <TextBox x:Name="SlopedCutoutBottomTextBox" Grid.Row="14" Grid.Column="0" Text="20" Margin="0,0,4,0" />
                             <Button Grid.Row="14" Grid.Column="1" Content="Dodaj otwor" ToolTip="Dodaj otwor okragly" Click="AddCircularCutout_Click" Margin="4,0,0,0" />
                             <Button Grid.Row="15" Grid.ColumnSpan="2" Content="Kopiuj otwor na przeciwlegla sciane" Click="CopyCircularCutoutToOppositeFace_Click" Margin="0,8,0,0" />
+                            <CheckBox x:Name="SlopedEngravedLabelsCheckBox" Grid.Row="16" Grid.ColumnSpan="2" Content="Etykiety grawerowane" IsChecked="True" Margin="0,8,0,0" />
                         </Grid>
                     </GroupBox>
 

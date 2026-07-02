@@ -532,9 +532,10 @@ public sealed class DesktopShellViewModel
         double sheetHeightMillimeters,
         double marginMillimeters,
         double spacingMillimeters,
-        bool allowRotation)
+        bool allowRotation,
+        bool includeEngravedLabels)
     {
-        var workflowPreview = CreateSlopedWorkflowPreviewDocument();
+        var workflowPreview = CreateSlopedWorkflowPreviewDocument(includeEngravedLabels);
         var checks = manufacturingCheckAnalyzer.Analyze(workflowPreview);
         var errors = checks.Count(check => check.Severity == ManufacturingCheckSeverity.Error);
         var warnings = checks.Count(check => check.Severity == ManufacturingCheckSeverity.Warning);
@@ -551,7 +552,7 @@ public sealed class DesktopShellViewModel
         return nestingPreview;
     }
 
-    public CadDocument CreateSlopedWorkflowPreviewDocument()
+    public CadDocument CreateSlopedWorkflowPreviewDocument(bool includeEngravedLabels = false)
     {
         var document = new CadDocument(
             id: CurrentDocument.Id,
@@ -585,6 +586,16 @@ public sealed class DesktopShellViewModel
                 foreach (var innerContour in part.InnerContours)
                 {
                     sketch = sketch.AddEntity(CreateClosedPolyline(innerContour, offsetX - bounds.MinX, offsetY - bounds.MinY, "Cut"));
+                }
+
+                if (includeEngravedLabels)
+                {
+                    sketch = sketch.AddEntity(new TextEntity(
+                        SimplifyPartLabel(part.Name),
+                        new Point2D(offsetX + (bounds.Width / 2.0), offsetY + (bounds.Height / 2.0)),
+                        Math.Max(3.0, Math.Min(bounds.Width, bounds.Height) / 10.0),
+                        layerName: "Engrave",
+                        alignment: TextAlignment.Center));
                 }
 
                 offsetX += bounds.Width + gap;
@@ -729,6 +740,14 @@ public sealed class DesktopShellViewModel
                 polygon.Vertices.Select(point => new Point2D(point.X + offsetX, point.Y + offsetY)),
                 isClosed: true),
             layerName: layerName);
+    }
+
+    private static string SimplifyPartLabel(string partName)
+    {
+        var separatorIndex = partName.LastIndexOf(" - ", StringComparison.Ordinal);
+        return separatorIndex >= 0
+            ? partName[(separatorIndex + 3)..]
+            : partName;
     }
 
     private static string GetOppositeFaceName(string faceName)

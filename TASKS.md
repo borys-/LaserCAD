@@ -824,7 +824,7 @@ Celem etapu 2 jest workflow: uzytkownik projektuje bryle z realnego materialu, l
 - [x] 16.6.6 Pokazac jednoczesnie podglad 3D i automatyczne rozwiniecie 2D.
 - [x] 16.6.7 Dodac przycisk `Przygotuj do ciecia`, ktory wykonuje rozwiniecie, kontrole produkcyjne, nesting i podglad eksportu.
 - [x] 16.6.8 Pamietac ostatnio uzyte ustawienia: material, arkusz, kerf, margines, odstep i typowe srednice otworow.
-- [ ] 16.6.9 Dodac opcjonalne etykiety grawerowane czesci: front, tyl, bok lewy, bok prawy, dno.
+- [x] 16.6.9 Dodac opcjonalne etykiety grawerowane czesci: front, tyl, bok lewy, bok prawy, dno.
 - [ ] 16.6.10 Dodac akcje `Eksportuj DXF dla lasera` z domyslnymi ustawieniami produkcyjnymi.
 - [ ] 16.6.11 Dodac manualna checkliste QA szybkiego workflow: kreator -> otwory -> przygotuj do ciecia -> eksport DXF.
 

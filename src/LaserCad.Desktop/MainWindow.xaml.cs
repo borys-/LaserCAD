@@ -158,7 +158,8 @@ public partial class MainWindow : Window
                 ParseMillimeters(SheetHeightTextBox.Text, "Wysokosc arkusza"),
                 ParseMillimeters(SheetMarginTextBox.Text, "Margines arkusza"),
                 ParseMillimeters(SheetSpacingTextBox.Text, "Odstep czesci"),
-                SheetAllowRotationCheckBox.IsChecked == true);
+                SheetAllowRotationCheckBox.IsChecked == true,
+                SlopedEngravedLabelsCheckBox.IsChecked == true);
 
             SaveWorkflowPreferences();
             viewportIpcClient.SendDocument(previewDocument);
@@ -882,7 +883,7 @@ public partial class MainWindow : Window
 
     private void PublishSlopedWorkflowPreview()
     {
-        viewportIpcClient.SendDocument(viewModel.CreateSlopedWorkflowPreviewDocument());
+        viewportIpcClient.SendDocument(viewModel.CreateSlopedWorkflowPreviewDocument(SlopedEngravedLabelsCheckBox.IsChecked == true));
         RefreshDocumentSummary();
     }
 
