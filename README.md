@@ -33,6 +33,7 @@ Repozytorium zdalne:
 - [docs/MATERIAL_SOLID_3D_QA.md](docs/MATERIAL_SOLID_3D_QA.md) - manualna checklista QA dla plyt materialowych 3D.
 - [docs/MATERIAL_UNFOLDING_QA.md](docs/MATERIAL_UNFOLDING_QA.md) - manualna checklista QA dla rozwiniecia 3D do czesci 2D.
 - [docs/MATERIAL_NESTING_QA.md](docs/MATERIAL_NESTING_QA.md) - manualna checklista QA dla arkusza materialu i nestingu.
+- [docs/NESTED_DXF_EXPORT_QA.md](docs/NESTED_DXF_EXPORT_QA.md) - manualna checklista QA eksportu DXF z ulozonych arkuszy.
 - [docs/RELEASE_QA_CHECKLIST.md](docs/RELEASE_QA_CHECKLIST.md) - checklista QA przed wydaniem.
 - [docs/MVP_WORKFLOW.md](docs/MVP_WORKFLOW.md) - minimalny workflow MVP: material, parametry, generowanie i eksport SVG.
 - [TASKS.md](TASKS.md) - szczegolowa lista taskow implementacyjnych.

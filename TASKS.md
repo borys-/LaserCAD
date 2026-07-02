@@ -804,14 +804,14 @@ Celem etapu 2 jest workflow: uzytkownik projektuje bryle z realnego materialu, l
 
 ## 16.5 Eksport DXF z ulozonych arkuszy
 
-- [ ] 16.5.0 Dodac eksport DXF z wyniku nestingu, a nie tylko z aktualnego dokumentu.
-- [ ] 16.5.1 Eksportowac kazdy arkusz jako osobny plik DXF.
-- [ ] 16.5.2 Dodac opcje eksportu jednego zbiorczego DXF z wieloma arkuszami obok siebie.
-- [ ] 16.5.3 Zachowac warstwy cut/engrave/score w DXF.
-- [ ] 16.5.4 Eksportowac otwory negatywowe jako kontury wewnetrzne na warstwie cut.
-- [ ] 16.5.5 Dodac nazewnictwo plikow: nazwa projektu + numer arkusza.
-- [ ] 16.5.6 Dodac test regresyjny eksportu DXF dla modelu z kilkoma plytami i otworem.
-- [ ] 16.5.7 Dodac manualna checkliste QA: model 3D -> rozwiniecie -> nesting 300x300 -> DXF.
+- [x] 16.5.0 Dodac eksport DXF z wyniku nestingu, a nie tylko z aktualnego dokumentu.
+- [x] 16.5.1 Eksportowac kazdy arkusz jako osobny plik DXF.
+- [x] 16.5.2 Dodac opcje eksportu jednego zbiorczego DXF z wieloma arkuszami obok siebie.
+- [x] 16.5.3 Zachowac warstwy cut/engrave/score w DXF.
+- [x] 16.5.4 Eksportowac otwory negatywowe jako kontury wewnetrzne na warstwie cut.
+- [x] 16.5.5 Dodac nazewnictwo plikow: nazwa projektu + numer arkusza.
+- [x] 16.5.6 Dodac test regresyjny eksportu DXF dla modelu z kilkoma plytami i otworem.
+- [x] 16.5.7 Dodac manualna checkliste QA: model 3D -> rozwiniecie -> nesting 300x300 -> DXF.
 
 ## 16.6 Szybki workflow do lasera
 

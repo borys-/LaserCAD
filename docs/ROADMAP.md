@@ -539,6 +539,10 @@ Mesh `PreviewMesh` sluzy do pogladowego podgladu 3D bryly, a metoda `Unfold` zwr
 
 `FlatPartNestingPlanner` traktuje czesci jako prostokatne bounding boxy wynikajace z konturu zewnetrznego. Uwzglednia margines arkusza, odstep technologiczny, opcjonalny obrot o 90 stopni i potrafi przeniesc kolejne elementy na nastepny arkusz. Podglad w desktop shell pokazuje prostokatne obrysy ulozonych czesci i ramke arkusza. To nie jest jeszcze nesting rzeczywistych polygonow z otworami, optymalizacja odpadu ani eksport DXF z ulozonych arkuszy.
 
+### Ograniczenia eksportu DXF z ulozonych arkuszy MVP
+
+`NestedSheetDxfExporter` eksportuje wynik nestingu `FlatPart` jako osobne pliki DXF dla kazdego arkusza oraz jeden zbiorczy DXF z arkuszami odsunietymi od siebie. Kontury zewnetrzne i wewnetrzne sa zapisywane jako zamkniete polilinie na warstwie `Cut`, a tabela warstw zachowuje `Cut`, `Engrave` i `Score`. Nazwy plikow wynikaja z nazwy projektu i numeru arkusza. To nadal eksport MVP: nie dodaje jeszcze etykiet grawerowanych, kolejnosci ciecia ani zaawansowanych ustawien maszyny.
+
 ## Wyrozniki produktu
 
 ### Pelna parametrycznosc
