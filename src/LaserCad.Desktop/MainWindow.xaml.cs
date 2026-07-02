@@ -312,10 +312,14 @@ public partial class MainWindow : Window
     {
         try
         {
-            viewModel.AddCircularCutoutToLatestSlopedMaterialSolid(ReadSlopedCutoutFaceName());
+            viewModel.AddCircularCutoutToLatestSlopedMaterialSolid(
+                ReadSlopedCutoutFaceName(),
+                ParseMillimeters(SlopedCutoutDiameterTextBox.Text, "Srednica otworu"),
+                ParseMillimeters(SlopedCutoutLeftTextBox.Text, "Odleglosc od lewej krawedzi"),
+                ParseMillimeters(SlopedCutoutBottomTextBox.Text, "Odleglosc od dolnej krawedzi"));
             PublishDocument();
         }
-        catch (Exception ex) when (ex is ArgumentException or InvalidOperationException)
+        catch (Exception ex) when (ex is FormatException or ArgumentOutOfRangeException or ArgumentException or InvalidOperationException)
         {
             StatusTextBlock.Text = ex.Message;
         }

@@ -260,9 +260,28 @@ public sealed class DesktopShellViewModel
 
     public void AddCircularCutoutToLatestSlopedMaterialSolid(string faceName)
     {
+        AddCircularCutoutToLatestSlopedMaterialSolid(faceName, 10.0, 20.0, 20.0);
+    }
+
+    public void AddCircularCutoutToLatestSlopedMaterialSolid(
+        string faceName,
+        double diameterMillimeters,
+        double leftMillimeters,
+        double bottomMillimeters)
+    {
         if (string.IsNullOrWhiteSpace(faceName))
         {
             throw new ArgumentException("Nazwa sciany nie moze byc pusta.", nameof(faceName));
+        }
+
+        if (diameterMillimeters <= 0.0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(diameterMillimeters), "Srednica otworu musi byc wieksza od zera.");
+        }
+
+        if (leftMillimeters < 0.0 || bottomMillimeters < 0.0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(leftMillimeters), "Odleglosci otworu od krawedzi nie moga byc ujemne.");
         }
 
         var solid = CurrentDocument.SlopedMaterialSolids.LastOrDefault();
@@ -276,14 +295,14 @@ public sealed class DesktopShellViewModel
             .FirstOrDefault(part => string.Equals(part.Name, faceName, StringComparison.OrdinalIgnoreCase))
             ?? throw new InvalidOperationException("Bryla nie ma sciany: " + faceName);
         var bounds = face.OuterContour.Bounds;
-        const double radiusMillimeters = 5.0;
+        var radiusMillimeters = diameterMillimeters / 2.0;
         var center = new Point2D(
-            bounds.MinX + (bounds.Width / 2.0),
-            bounds.MinY + (bounds.Height / 2.0));
+            bounds.MinX + leftMillimeters,
+            bounds.MinY + bottomMillimeters);
         var cutout = CutoutFeature.Circle("Otwor okragly", center, radiusMillimeters, face.Name);
 
         ReplaceDocument(CurrentDocument.AddCutoutToSlopedMaterialSolid(solid.Id, cutout));
-        StatusText = "Dodano otwor okragly: " + face.Name;
+        StatusText = $"Dodano otwor okragly: {face.Name}, fi {diameterMillimeters:0.#} mm";
     }
 
     public void AddLine()
