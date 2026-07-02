@@ -178,6 +178,7 @@
             <MenuItem Header="_Export">
                 <MenuItem Header="Export _SVG..." InputGestureText="Ctrl+Shift+S" Click="ExportSvg_Click" />
                 <MenuItem Header="Export _DXF..." InputGestureText="Ctrl+Shift+D" Click="ExportDxf_Click" />
+                <MenuItem Header="Export _Nested DXF..." Click="ExportNestedDxf_Click" />
             </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Header="_About Laser CAD" Click="About_Click" />

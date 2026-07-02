@@ -242,6 +242,36 @@ public partial class MainWindow : Window
         ExportFile("DXF files (*.dxf)|*.dxf", "laser-cad-box.dxf", viewModel.ExportDxf);
     }
 
+    private void ExportNestedDxf_Click(object sender, RoutedEventArgs e)
+    {
+        using var dialog = new System.Windows.Forms.FolderBrowserDialog
+        {
+            Description = "Wybierz katalog eksportu DXF z nestingu",
+            UseDescriptionForTitle = true,
+        };
+
+        if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+        {
+            return;
+        }
+
+        try
+        {
+            viewModel.ExportNestedDxf(
+                dialog.SelectedPath,
+                ParseMillimeters(SheetWidthTextBox.Text, "Szerokosc arkusza"),
+                ParseMillimeters(SheetHeightTextBox.Text, "Wysokosc arkusza"),
+                ParseMillimeters(SheetMarginTextBox.Text, "Margines arkusza"),
+                ParseMillimeters(SheetSpacingTextBox.Text, "Odstep czesci"),
+                SheetAllowRotationCheckBox.IsChecked == true);
+            RefreshDocumentSummary();
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or FormatException or ArgumentOutOfRangeException or ArgumentException or InvalidOperationException)
+        {
+            StatusTextBlock.Text = ex.Message;
+        }
+    }
+
     private void AddRectangle_Click(object sender, RoutedEventArgs e)
     {
         SetDrawingTool(ViewportDrawingTool.Rectangle);

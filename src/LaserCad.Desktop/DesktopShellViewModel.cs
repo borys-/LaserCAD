@@ -309,6 +309,51 @@ public sealed class DesktopShellViewModel
         return path;
     }
 
+    public IReadOnlyList<string> ExportNestedDxf(
+        string directoryPath,
+        double sheetWidthMillimeters,
+        double sheetHeightMillimeters,
+        double marginMillimeters,
+        double spacingMillimeters,
+        bool allowRotation)
+    {
+        if (string.IsNullOrWhiteSpace(directoryPath))
+        {
+            throw new ArgumentException("Katalog eksportu nie moze byc pusty.", nameof(directoryPath));
+        }
+
+        Directory.CreateDirectory(directoryPath);
+
+        var sheet = new SheetSize(
+            Length.FromMillimeters(sheetWidthMillimeters),
+            Length.FromMillimeters(sheetHeightMillimeters),
+            Length.FromMillimeters(marginMillimeters));
+        var options = new NestingOptions(Length.FromMillimeters(spacingMillimeters), allowRotation);
+        var flatParts = materialUnfolder.Unfold(
+            CurrentDocument,
+            new MaterialUnfoldingOptions(mergeIdenticalParts: true));
+        var sheets = flatPartNestingPlanner.NestFlatPartsMultipleSheets(sheet, flatParts, options);
+        var exporter = new NestedSheetDxfExporter();
+        var export = exporter.Export(CurrentDocument.Name, sheet, sheets, new DxfExportOptions());
+        var writtenFiles = new List<string>();
+
+        foreach (var file in export.SheetFiles)
+        {
+            var path = Path.Combine(directoryPath, file.Key);
+            File.WriteAllText(path, file.Value);
+            writtenFiles.Add(path);
+        }
+
+        var combinedPath = Path.Combine(directoryPath, CurrentDocument.Name + "-all-sheets.dxf");
+        File.WriteAllText(combinedPath, export.CombinedDxf);
+        writtenFiles.Add(combinedPath);
+
+        LastNestedSheetCount = sheets.Count;
+        LastNestedPartCount = sheets.Sum(sheetResult => sheetResult.Parts.Count);
+        StatusText = $"Wyeksportowano DXF nestingu: {writtenFiles.Count} plikow";
+        return writtenFiles;
+    }
+
     public CadDocument CreateNestingPreviewDocument(
         double sheetWidthMillimeters,
         double sheetHeightMillimeters,
