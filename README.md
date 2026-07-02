@@ -34,6 +34,7 @@ Repozytorium zdalne:
 - [docs/MATERIAL_UNFOLDING_QA.md](docs/MATERIAL_UNFOLDING_QA.md) - manualna checklista QA dla rozwiniecia 3D do czesci 2D.
 - [docs/MATERIAL_NESTING_QA.md](docs/MATERIAL_NESTING_QA.md) - manualna checklista QA dla arkusza materialu i nestingu.
 - [docs/NESTED_DXF_EXPORT_QA.md](docs/NESTED_DXF_EXPORT_QA.md) - manualna checklista QA eksportu DXF z ulozonych arkuszy.
+- [docs/SLOPED_LASER_WORKFLOW_QA.md](docs/SLOPED_LASER_WORKFLOW_QA.md) - manualna checklista QA szybkiego workflow do lasera.
 - [docs/RELEASE_QA_CHECKLIST.md](docs/RELEASE_QA_CHECKLIST.md) - checklista QA przed wydaniem.
 - [docs/MVP_WORKFLOW.md](docs/MVP_WORKFLOW.md) - minimalny workflow MVP: material, parametry, generowanie i eksport SVG.
 - [TASKS.md](TASKS.md) - szczegolowa lista taskow implementacyjnych.
