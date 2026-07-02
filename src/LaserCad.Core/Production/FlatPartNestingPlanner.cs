@@ -79,6 +79,36 @@ public sealed class FlatPartNestingPlanner
         return sheets;
     }
 
+    /// <summary>
+    /// Uklada czesci na wielu arkuszach, zachowujac referencje do oryginalnych konturow FlatPart.
+    /// </summary>
+    public IReadOnlyList<FlatPartSheetNestingResult> NestFlatPartsMultipleSheets(
+        SheetSize sheetSize,
+        IEnumerable<FlatPart> parts,
+        NestingOptions? options = null)
+    {
+        var partArray = parts?.ToArray() ?? throw new ArgumentNullException(nameof(parts));
+        var expandedParts = ExpandParts(partArray).ToArray();
+        var sheets = NestMultipleSheets(sheetSize, partArray, options);
+        var partIndex = 0;
+
+        return sheets
+            .Select((sheet, index) => new FlatPartSheetNestingResult(
+                index + 1,
+                sheet.Parts.Select(nested =>
+                {
+                    var sourcePart = expandedParts[partIndex++];
+                    return new NestedFlatPart(
+                        sourcePart,
+                        nested.X,
+                        nested.Y,
+                        nested.Width,
+                        nested.Height,
+                        nested.IsRotated);
+                })))
+            .ToArray();
+    }
+
     private static NestingItem CreateItem(FlatPart part, int index)
     {
         if (part is null)
@@ -92,6 +122,16 @@ public sealed class FlatPartNestingPlanner
             name,
             Length.FromMillimeters(bounds.Width),
             Length.FromMillimeters(bounds.Height));
+    }
+
+    private static IEnumerable<FlatPart> ExpandParts(IEnumerable<FlatPart> parts)
+    {
+        if (parts is null)
+        {
+            throw new ArgumentNullException(nameof(parts));
+        }
+
+        return parts.SelectMany(part => Enumerable.Range(0, part.Quantity).Select(_ => part));
     }
 
     private void EnsureItemFitsEmptySheet(SheetSize sheetSize, NestingItem item, NestingOptions? options)
